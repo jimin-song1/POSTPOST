@@ -1,0 +1,6 @@
+{
+  "ruleVersion": "noblemen-v1",
+  "status": "not_implemented",
+  "supported": ["천을귀인", "태극귀인", "문창귀인", "문곡귀인", "학당귀인"],
+  "sourceNote": "TODO: 학파별 기준표 출처 검증 후 입력"
+}

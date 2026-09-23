@@ -1,0 +1,7 @@
+{
+  "ruleVersion": "sinsal-v1",
+  "status": "not_implemented",
+  "supported": ["도화", "역마", "화개", "귀문관", "원진", "현침", "공망", "양인", "괴강", "백호", "12신살"],
+  "principle": "핵심 명리 판정을 뒤집지 않는 보조 해석 태그로만 사용",
+  "sourceNote": "MASTER SPEC v1.0의 표를 구현 전 검증할 것"
+}
