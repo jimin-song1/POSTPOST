@@ -4,4 +4,8 @@ out
 .env*
 !.env.example
 npm-debug.log*
+*.tsbuildinfo
 .DS_Store
+
+# Local private regression inputs must never be committed.
+tests/private/

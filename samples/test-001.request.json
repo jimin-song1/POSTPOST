@@ -1,9 +1,0 @@
-{
-  "name": "테스트 사용자",
-  "gender": "female",
-  "calendarType": "solar",
-  "birthDate": "2024-04-01",
-  "birthTime": "12:34",
-  "birthTimeKnown": true,
-  "birthCity": "가상도시"
-}
