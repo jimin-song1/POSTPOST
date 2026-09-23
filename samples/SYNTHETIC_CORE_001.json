@@ -98,22 +98,266 @@
     },
     "dayMaster": "乙",
     "tenGods": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "일간 기준 천간·지장간 십성 계산기 구현 필요"
+      "status": "implemented",
+      "value": {
+        "ruleVersion": "ten-gods-v1",
+        "dayMaster": "乙",
+        "heavenlyStems": {
+          "year": {
+            "korean": "겁재",
+            "hanja": "劫財"
+          },
+          "month": {
+            "korean": "식신",
+            "hanja": "食神"
+          },
+          "day": {
+            "korean": "비견",
+            "hanja": "比肩"
+          },
+          "hour": {
+            "korean": "정인",
+            "hanja": "正印"
+          }
+        },
+        "hiddenStems": {
+          "year": [
+            {
+              "role": "mainQi",
+              "stem": "戊",
+              "tenGod": {
+                "korean": "정재",
+                "hanja": "正財"
+              }
+            },
+            {
+              "role": "middleQi",
+              "stem": "癸",
+              "tenGod": {
+                "korean": "편인",
+                "hanja": "偏印"
+              }
+            },
+            {
+              "role": "residualQi",
+              "stem": "乙",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            }
+          ],
+          "month": [
+            {
+              "role": "mainQi",
+              "stem": "乙",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            }
+          ],
+          "day": [
+            {
+              "role": "mainQi",
+              "stem": "己",
+              "tenGod": {
+                "korean": "편재",
+                "hanja": "偏財"
+              }
+            },
+            {
+              "role": "middleQi",
+              "stem": "乙",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            },
+            {
+              "role": "residualQi",
+              "stem": "丁",
+              "tenGod": {
+                "korean": "식신",
+                "hanja": "食神"
+              }
+            }
+          ],
+          "hour": [
+            {
+              "role": "mainQi",
+              "stem": "丁",
+              "tenGod": {
+                "korean": "식신",
+                "hanja": "食神"
+              }
+            },
+            {
+              "role": "residualQi",
+              "stem": "己",
+              "tenGod": {
+                "korean": "편재",
+                "hanja": "偏財"
+              }
+            }
+          ]
+        }
+      },
+      "evidence": [
+        "ten-gods-v1: 일간 대비 오행 생극 거리와 천간 음양"
+      ]
     },
     "hiddenStems": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "hidden-stems-v1 표 확정 필요"
+      "status": "implemented",
+      "value": {
+        "ruleVersion": "hidden-stems-v1",
+        "branches": {
+          "year": {
+            "branch": "辰",
+            "mainQi": {
+              "role": "mainQi",
+              "stem": "戊",
+              "stemKorean": "무",
+              "element": "earth",
+              "polarity": "yang",
+              "tenGod": {
+                "korean": "정재",
+                "hanja": "正財"
+              }
+            },
+            "middleQi": {
+              "role": "middleQi",
+              "stem": "癸",
+              "stemKorean": "계",
+              "element": "water",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "편인",
+                "hanja": "偏印"
+              }
+            },
+            "residualQi": {
+              "role": "residualQi",
+              "stem": "乙",
+              "stemKorean": "을",
+              "element": "wood",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            }
+          },
+          "month": {
+            "branch": "卯",
+            "mainQi": {
+              "role": "mainQi",
+              "stem": "乙",
+              "stemKorean": "을",
+              "element": "wood",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            },
+            "middleQi": null,
+            "residualQi": null
+          },
+          "day": {
+            "branch": "未",
+            "mainQi": {
+              "role": "mainQi",
+              "stem": "己",
+              "stemKorean": "기",
+              "element": "earth",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "편재",
+                "hanja": "偏財"
+              }
+            },
+            "middleQi": {
+              "role": "middleQi",
+              "stem": "乙",
+              "stemKorean": "을",
+              "element": "wood",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "비견",
+                "hanja": "比肩"
+              }
+            },
+            "residualQi": {
+              "role": "residualQi",
+              "stem": "丁",
+              "stemKorean": "정",
+              "element": "fire",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "식신",
+                "hanja": "食神"
+              }
+            }
+          },
+          "hour": {
+            "branch": "午",
+            "mainQi": {
+              "role": "mainQi",
+              "stem": "丁",
+              "stemKorean": "정",
+              "element": "fire",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "식신",
+                "hanja": "食神"
+              }
+            },
+            "middleQi": null,
+            "residualQi": {
+              "role": "residualQi",
+              "stem": "己",
+              "stemKorean": "기",
+              "element": "earth",
+              "polarity": "yin",
+              "tenGod": {
+                "korean": "편재",
+                "hanja": "偏財"
+              }
+            }
+          }
+        }
+      },
+      "evidence": [
+        "hidden-stems-v1: 12지지 본기·중기·여기 고정 표"
+      ]
     },
     "twelveStages": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "10일간 × 12지지 전체 테이블 입력"
+      "status": "implemented",
+      "value": {
+        "ruleVersion": "twelve-stages-v1",
+        "stages": {
+          "year": {
+            "korean": "관대",
+            "hanja": "冠帶"
+          },
+          "month": {
+            "korean": "건록",
+            "hanja": "建祿"
+          },
+          "day": {
+            "korean": "양",
+            "hanja": "養"
+          },
+          "hour": {
+            "korean": "장생",
+            "hanja": "長生"
+          }
+        }
+      },
+      "evidence": [
+        "twelve-stages-v1: 10천간 장생 시작 지지·양순음역"
+      ]
     },
     "fiveElements": {
       "rawCount": {
@@ -207,7 +451,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-23T12:18:38.578Z",
+      "calculatedAt": "2026-09-23T12:57:43.138Z",
       "aiCalculationUsed": false
     }
   }

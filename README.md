@@ -15,3 +15,7 @@ POST
 - 결과는 `birthNormalized.birthPlace`에서 확인할 수 있습니다. 자세한 계약은 [MASTER_SPEC](docs/MASTER_SPEC.md#birth-place-rules-v1)을 참조하세요.
 
 검증: `npm ci`, `npm test`, `npm run typecheck`, `npm run build`. 세부 규칙과 근거는 [MASTER SPEC](docs/MASTER_SPEC.md)을 참조하세요.
+
+## SAJU CORE MILESTONE 2
+
+십성, 12지지 지장간(본기·중기·여기), 10천간 십이운성을 규칙표 기반으로 계산합니다. 각 모듈은 `implemented`와 규칙 버전·근거를 반환합니다. 오행 가중 세력, 신강신약, 합충형파해, 격국, 용신, 신살, 세운·월운, AI 해석은 아직 `not_implemented`입니다. [규칙표](docs/MASTER_SPEC.md#core-milestone-2--십성지장간십이운성)를 참고하세요.

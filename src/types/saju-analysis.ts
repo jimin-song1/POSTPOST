@@ -1,4 +1,7 @@
 import type { BirthPlaceResolution, SajuInput } from "./saju-input";
+import type { TenGod } from "@/lib/saju/interpretation/ten-gods";
+import type { BranchHiddenStems } from "@/lib/saju/interpretation/hidden-stems";
+import type { TwelveStage } from "@/lib/saju/interpretation/twelve-stages";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -19,6 +22,21 @@ export interface EvidenceResult<T = unknown> {
   value: T | null;
   evidence: string[];
   todo?: string;
+}
+
+export interface TenGodsValue {
+  ruleVersion: "ten-gods-v1";
+  dayMaster: Stem;
+  heavenlyStems: Record<PillarPosition, TenGod>;
+  hiddenStems: Record<PillarPosition, Array<{ role: "mainQi" | "middleQi" | "residualQi"; stem: Stem; tenGod: TenGod }>>;
+}
+export interface HiddenStemsValue {
+  ruleVersion: "hidden-stems-v1";
+  branches: Record<PillarPosition, BranchHiddenStems>;
+}
+export interface TwelveStagesValue {
+  ruleVersion: "twelve-stages-v1";
+  stages: Record<PillarPosition, TwelveStage>;
 }
 
 export interface LuckPeriod {
@@ -45,9 +63,9 @@ export interface SajuAnalysis {
   solarTerms: EvidenceResult;
   pillars: Record<PillarPosition, Pillar>;
   dayMaster: Stem | null;
-  tenGods: EvidenceResult;
-  hiddenStems: EvidenceResult;
-  twelveStages: EvidenceResult<Record<PillarPosition, string>>;
+  tenGods: EvidenceResult<TenGodsValue>;
+  hiddenStems: EvidenceResult<HiddenStemsValue>;
+  twelveStages: EvidenceResult<TwelveStagesValue>;
   fiveElements: {
     rawCount: Record<Element, number>;
     nativeStrength: EvidenceResult;

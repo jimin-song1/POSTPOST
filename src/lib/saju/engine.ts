@@ -4,9 +4,19 @@ import { calculatePillars } from "./pillars/calculate-pillars";
 import { normalizeBirthTime } from "./time/normalize-birth-time";
 import { solarTermProvider } from "./solarTerms";
 import { TIME_RULES_V1 } from "@/rules/time-rules.v1";
-import type { Pillar, SajuAnalysis } from "@/types/saju-analysis";
+import type { Pillar, PillarPosition, SajuAnalysis } from "@/types/saju-analysis";
 import type { LegacySajuInput, SajuInput } from "@/types/saju-input";
 import { normalizeBirthPlace, SEOUL_FALLBACK_NOTICE } from "./normalize-birth-place";
+import { getTenGod } from "./interpretation/ten-gods";
+import { getHiddenStems } from "./interpretation/hidden-stems";
+import { getTwelveStage } from "./interpretation/twelve-stages";
+import { TEN_GODS_V1 } from "@/rules/ten-gods.v1";
+import { HIDDEN_STEMS_V1 } from "@/rules/hidden-stems.v1";
+import { TWELVE_STAGES_V1 } from "@/rules/twelve-stages.v1";
+
+const positions: PillarPosition[] = ["year", "month", "day", "hour"];
+const byPosition = <T>(get: (position: PillarPosition) => T) =>
+  Object.fromEntries(positions.map((position) => [position, get(position)])) as Record<PillarPosition, T>;
 
 const emptyPillars = (): SajuAnalysis["pillars"] => Object.fromEntries(
   (["year", "month", "day", "hour"] as const).map((position) => [position, { position, stem: null, branch: null, hanja: null, korean: null } satisfies Pillar])
@@ -19,6 +29,33 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const normalized = normalizeBirthTime(input);
   const supportedInput = input.calendarType === "solar" && normalized.absoluteBirthInstant !== null;
   const pillars = supportedInput ? calculatePillars(normalized) : emptyPillars();
+  const dayStem = pillars.day.stem;
+  const hiddenBranches = dayStem ? byPosition((position) => getHiddenStems(pillars[position].branch!, dayStem)) : null;
+  const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
+    status: "implemented",
+    value: {
+      ruleVersion: TEN_GODS_V1.rulesetVersion, dayMaster: dayStem,
+      heavenlyStems: byPosition((position) => getTenGod(dayStem, pillars[position].stem!)),
+      hiddenStems: byPosition((position) => {
+        const branch = hiddenBranches[position];
+        return [branch.mainQi, branch.middleQi, branch.residualQi].filter((item) => item !== null)
+          .map(({ role, stem, tenGod }) => ({ role, stem, tenGod }));
+      })
+    },
+    evidence: ["ten-gods-v1: 일간 대비 오행 생극 거리와 천간 음양"]
+  } : notImplemented("일간을 계산할 수 없어 십성을 계산하지 않았습니다.");
+  const hiddenStems: SajuAnalysis["hiddenStems"] = hiddenBranches ? {
+    status: "implemented", value: { ruleVersion: HIDDEN_STEMS_V1.rulesetVersion, branches: hiddenBranches },
+    evidence: ["hidden-stems-v1: 12지지 본기·중기·여기 고정 표"]
+  } : notImplemented("일간과 지지를 계산할 수 없어 지장간을 계산하지 않았습니다.");
+  const twelveStages: SajuAnalysis["twelveStages"] = dayStem ? {
+    status: "implemented",
+    value: {
+      ruleVersion: TWELVE_STAGES_V1.rulesetVersion,
+      stages: byPosition((position) => getTwelveStage(dayStem, pillars[position].branch!))
+    },
+    evidence: ["twelve-stages-v1: 10천간 장생 시작 지지·양순음역"]
+  } : notImplemented("일간과 지지를 계산할 수 없어 십이운성을 계산하지 않았습니다.");
   const solarTerms = supportedInput && normalized.absoluteBirthInstant ? (() => {
     const previous = solarTermProvider.getPreviousJeol(normalized.absoluteBirthInstant);
     const next = solarTermProvider.getNextJeol(normalized.absoluteBirthInstant);
@@ -47,9 +84,9 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     solarTerms,
     pillars,
     dayMaster: pillars.day.stem,
-    tenGods: notImplemented("일간 기준 천간·지장간 십성 계산기 구현 필요"),
-    hiddenStems: notImplemented("hidden-stems-v1 표 확정 필요"),
-    twelveStages: notImplemented<Record<Pillar["position"], string>>("10일간 × 12지지 전체 테이블 입력"),
+    tenGods,
+    hiddenStems,
+    twelveStages,
     fiveElements: {
       rawCount: countRawElements(pillars),
       nativeStrength: notImplemented("element-strength-v1 가중 세력 계산기 구현 필요"),
