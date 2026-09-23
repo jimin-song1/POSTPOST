@@ -1,4 +1,4 @@
-import type { SajuInput } from "./saju-input";
+import type { BirthPlaceResolution, SajuInput } from "./saju-input";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -34,6 +34,8 @@ export interface SajuAnalysis {
   person: { name: string; gender: SajuInput["gender"] };
   birthInput: SajuInput;
   birthNormalized: {
+    birthPlace: BirthPlaceResolution;
+    absoluteBirthInstant: string | null;
     legalDateTime: string | null;
     adjustedDateTime: string | null;
     offsetMinutes: -30;
@@ -75,8 +77,8 @@ export interface SajuAnalysis {
   fortune: EvidenceResult;
   warnings: string[];
   engineMetadata: {
-    engineVersion: "0.1.0";
-    calculationMode: "test_fixture" | "unsupported_input";
+    engineVersion: "1.0.0";
+    calculationMode: "algorithmic" | "unsupported_input";
     calculatedAt: string;
     aiCalculationUsed: false;
   };

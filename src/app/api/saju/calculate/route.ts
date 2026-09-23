@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
-import { calculateSaju } from "@/lib/saju/engine";
-import type { SajuInput } from "@/types/saju-input";
+import { calculateSaju, UnsupportedBirthCountryError } from "@/lib/saju/engine";
+import { firstValidationMessage, parseSajuInput } from "@/lib/saju/validation";
+import { z } from "zod";
 
 export async function POST(request: Request) {
-  const input = (await request.json()) as Partial<SajuInput>;
-  if (!input.name || !input.gender || !input.calendarType || !input.birthDate || !input.birthCity || typeof input.birthTimeKnown !== "boolean") {
-    return NextResponse.json({ error: "필수 입력값을 확인해주세요." }, { status: 400 });
+  let body: unknown;
+  try { body = await request.json(); }
+  catch { return NextResponse.json({ error: "올바른 JSON 요청을 보내주세요." }, { status: 400 }); }
+  try {
+    return NextResponse.json(calculateSaju(parseSajuInput(body)));
+  } catch (error) {
+    if (error instanceof UnsupportedBirthCountryError) return NextResponse.json({ code: error.code, message: error.message }, { status: 422 });
+    const message = error instanceof z.ZodError ? firstValidationMessage(error) : error instanceof Error ? error.message : "입력값을 확인해주세요.";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
-  if (input.birthTimeKnown && !input.birthTime) return NextResponse.json({ error: "출생시간을 입력해주세요." }, { status: 400 });
-  if (input.calendarType === "lunar" && !input.lunarLeapMonth) return NextResponse.json({ error: "평달/윤달을 선택해주세요." }, { status: 400 });
-  return NextResponse.json(calculateSaju(input as SajuInput));
 }

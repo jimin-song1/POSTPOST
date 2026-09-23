@@ -1,0 +1,214 @@
+{
+  "caseId": "SYNTHETIC_CORE_001",
+  "isSynthetic": true,
+  "request": {
+    "name": "가상인물",
+    "gender": "female",
+    "calendarType": "solar",
+    "birthDate": "2024-04-01",
+    "birthTime": "12:34",
+    "birthTimeKnown": true,
+    "birthCountry": "KR",
+    "birthCityKnown": true,
+    "birthCity": "가상도시"
+  },
+  "response": {
+    "schemaVersion": "saju-analysis-v1",
+    "rulesetVersion": "saju-time-v1",
+    "person": {
+      "name": "가상인물",
+      "gender": "female"
+    },
+    "birthInput": {
+      "name": "가상인물",
+      "gender": "female",
+      "calendarType": "solar",
+      "birthDate": "2024-04-01",
+      "birthTime": "12:34",
+      "birthTimeKnown": true,
+      "birthCountry": "KR",
+      "birthCityKnown": true,
+      "birthCity": "가상도시"
+    },
+    "birthNormalized": {
+      "absoluteBirthInstant": "2024-04-01T03:34:00.000Z",
+      "legalDateTime": "2024-04-01T12:34:00+09:00",
+      "adjustedDateTime": "2024-04-01T12:04:00+09:00",
+      "birthPlace": {
+        "inputCity": "가상도시",
+        "resolvedCity": "가상도시",
+        "country": "KR",
+        "isEstimated": false,
+        "fallbackReason": null,
+        "fallbackRule": null
+      },
+      "offsetMinutes": -30,
+      "timezone": "Asia/Seoul",
+      "equationOfTimeApplied": false
+    },
+    "solarTerms": {
+      "status": "implemented",
+      "value": {
+        "previousJeol": {
+          "term": "경칩",
+          "instant": "2024-03-05T02:22:46.000Z"
+        },
+        "nextJeol": {
+          "term": "청명",
+          "instant": "2024-04-04T07:02:18.000Z"
+        },
+        "providerRange": [
+          1900,
+          2100
+        ]
+      },
+      "evidence": [
+        "lunisolar-ephemeris 0.4.1 / JPL DE440 / GB/T 33661-2017 apparent solar longitude"
+      ]
+    },
+    "pillars": {
+      "year": {
+        "position": "year",
+        "stem": "甲",
+        "branch": "辰",
+        "hanja": "甲辰",
+        "korean": "갑진"
+      },
+      "month": {
+        "position": "month",
+        "stem": "丁",
+        "branch": "卯",
+        "hanja": "丁卯",
+        "korean": "정묘"
+      },
+      "day": {
+        "position": "day",
+        "stem": "乙",
+        "branch": "未",
+        "hanja": "乙未",
+        "korean": "을미"
+      },
+      "hour": {
+        "position": "hour",
+        "stem": "壬",
+        "branch": "午",
+        "hanja": "壬午",
+        "korean": "임오"
+      }
+    },
+    "dayMaster": "乙",
+    "tenGods": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "일간 기준 천간·지장간 십성 계산기 구현 필요"
+    },
+    "hiddenStems": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "hidden-stems-v1 표 확정 필요"
+    },
+    "twelveStages": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "10일간 × 12지지 전체 테이블 입력"
+    },
+    "fiveElements": {
+      "rawCount": {
+        "wood": 3,
+        "fire": 2,
+        "earth": 2,
+        "metal": 0,
+        "water": 1
+      },
+      "nativeStrength": {
+        "status": "not_implemented",
+        "value": null,
+        "evidence": [],
+        "todo": "element-strength-v1 가중 세력 계산기 구현 필요"
+      },
+      "adjustedStrength": {
+        "status": "not_implemented",
+        "value": null,
+        "evidence": [],
+        "todo": "관계 엔진 적용 후 계산"
+      }
+    },
+    "relations": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "relations-v1 관계 탐지 및 합화 evaluator 구현 필요"
+    },
+    "strength": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "strength-weights-v1 기반 신강신약 evaluator 구현 필요"
+    },
+    "structure": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "격국 evaluator 구현 필요"
+    },
+    "usefulGods": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"
+    },
+    "stemPreferences": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "용신 evaluator 완성 후 계산"
+    },
+    "branchPreferences": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "지장간·관계·운 evaluator 완성 후 계산"
+    },
+    "nobleAndSpecialStars": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "noblemen-v1 및 sinsal-v1 테이블 구현 필요"
+    },
+    "samjae": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "생년지 그룹 기반 삼재 range 계산기 구현 필요"
+    },
+    "daeun": {
+      "status": "not_implemented",
+      "direction": null,
+      "directionLabel": null,
+      "referenceSolarTerm": null,
+      "exactStartAge": null,
+      "startAgeYears": null,
+      "startAgeMonths": null,
+      "startDatetime": null,
+      "periods": [],
+      "evidence": [],
+      "todo": "대운 방향 및 시작 시각 계산은 후속 마일스톤에서 구현"
+    },
+    "fortune": {
+      "status": "not_implemented",
+      "value": null,
+      "evidence": [],
+      "todo": "대운 45·세운 35·월운 20 규칙 기반 운 작용 엔진 구현 필요"
+    },
+    "warnings": [],
+    "engineMetadata": {
+      "engineVersion": "1.0.0",
+      "calculationMode": "algorithmic",
+      "calculatedAt": "2026-09-23T12:18:38.578Z",
+      "aiCalculationUsed": false
+    }
+  }
+}
