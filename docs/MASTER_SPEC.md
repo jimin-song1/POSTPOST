@@ -491,3 +491,19 @@ lookup key는 계산된 `dayStem`과 절기 `monthBranch`다. Gregorian month와
 `usefulGods.status=partial`, `eokbu.status=implemented`, `johu.status=implemented`다. `tonggwan`, `byeongyak`, `structure`, `synthesis`는 `not_implemented`다. eokbu와 johu는 서로 입력으로 쓰거나 덮어쓰지 않으며 최종 천간 선호·단일 용신·희신/기신을 결정하지 않는다.
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 甲+酉 cell을 사용한다. 10A는 水 +15 SUPPORTIVE, 木 +12 CONDITIONAL, 火 −3 NEUTRAL, 土 −7·金 −12 UNFAVORABLE이며 PRIMARY가 없다. 10B는 丁 30, 丙 20, 庚 10과 火 40·金 10이다. 두 독립 결과의 방향이 달라도 정상이며 어느 쪽도 다른 쪽을 수정하지 않는다.
+
+## CORE MILESTONE 10C — Tonggwan Useful-God Engine v1
+
+`tonggwan-useful-god-v1`, `tonggwan-conflict-v1`, `tonggwan-bridge-v1`은 **POSTPOST 통관 v1 operational rule**이다. 아래 threshold와 coefficient는 고전 명리의 고정 공식 수치가 아니라, 오행 세력의 실제 대립과 중간 생 흐름의 부족을 결정론적으로 표현하기 위한 versioned 운영 계수다. 억부·조후 점수와 합산하지 않으며 최종 용신을 결정하지 않는다.
+
+극 관계와 bridge는 evaluator의 분산된 조건문이 아니라 `TONGGWAN_BRIDGE_TABLE` 한 곳에 저장한다: 木→土는 火, 土→水는 金, 水→火는 木, 火→金은 土, 金→木은 水다. 우선 `fiveElements.adjustedStrength`를 사용하고, 사용할 수 없을 때만 `nativeStrength`로 fallback한다. rawCount는 사용하지 않는다.
+
+각 controller/controlled가 모두 20% 이상이고 합이 50% 이상일 때 balance ratio `min/max`를 평가한다. ratio 0.50 이상은 `STRONG_CONFLICT`, 0.35 이상 0.50 미만은 `CONDITIONAL_CONFLICT`다. 한쪽이 20% 미만이거나 ratio 0.35 미만이면 `ONE_SIDED`, 양쪽 모두 20% 미만이면 `WEAK`, 양쪽이 20% 이상이어도 합이 50% 미만이면 `NOT_APPLICABLE`이다. v1은 “약간 미달”에 별도 추정 보너스를 만들지 않는다.
+
+STRONG은 +25, CONDITIONAL은 +15다. bridge가 10% 미만이면 +10/HIGH, 10% 이상 20% 미만이면 +5/MEDIUM, 20% 이상 30% 미만이면 0/PRESENT, 30% 이상이면 −15/ALREADY_SUFFICIENT다. 35% 이상은 excessive metadata로도 표시한다. 최종 score 30 이상은 PRIMARY_BRIDGE, 20~29는 STRONG_BRIDGE, 10~19는 CONDITIONAL_BRIDGE, 1~9는 LOW_NEED, 0 이하는 NOT_NEEDED다.
+
+다섯 conflict를 모두 평가하고 qualifying conflict를 모두 유지한다. 후보 정렬은 score 내림차순, combined percentage 내림차순, balance ratio 내림차순, canonical element order 순이다. 같은 bridge가 확장 규칙에서 중복되면 `elementPreferences`는 합산하지 않고 최대 score를 사용한다. 천간충·지지충·형·파·해는 context evidence에만 저장하며 점수를 바꾸거나 적용성을 만들지 않는다. `QUALIFIED_CANDIDATE` 특수격이 있으면 계산은 유지하고 `applicabilityCaution=true`, `confidence=LOW`만 기록한다.
+
+충돌 조건이 없으면 `status=implemented`, `applicability=NOT_APPLICABLE`, `conflicts=[]`, `rankedCandidates=[]`, `elementPreferences=[]`가 정상 결과다. 지원되는 입력은 `eokbu`, `johu`, `tonggwan`이 각각 `implemented`이고 `byeongyak`, `structure`, `synthesis`는 계속 `not_implemented`다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`의 adjusted 분포에서는 金 29.955067398901647%와 木 29.60159760359461%가 합 59.55666500249626%, balance ratio 약 0.9882의 `STRONG_CONFLICT`를 이룬다. bridge는 水 24.587119321018474%로 PRESENT이며 score는 25, state/applicability는 `APPLICABLE`, role은 `STRONG_BRIDGE`다. 다른 네 극 관계는 hard requirements를 충족하지 않으므로 후보로 만들지 않는다.
