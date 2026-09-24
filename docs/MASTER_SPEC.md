@@ -431,10 +431,47 @@ synthetic 기둥 기반 통합검사와 선행 계산값을 명시적으로 조�
 
 `strength.adjusted`는 `status`, 두 rule version, `originalScore`, `originalLevel`, 조정 `score`, `level`, `deltas`, `evidence`를 제공한다. evidence는 원래 점수, 통근 조정, native/adjusted support·opposition·balance와 cap 전후 element delta, 필요한 최종 clamp를 기록한다. `originalScore + evidence의 모든 delta`로 최종 점수를 완전히 재구성할 수 있다. level은 별도 threshold를 만들지 않고 `strength-v1`의 기존 0/15/28/40/50/60/73/86 경계를 raw 소수 점수에 그대로 적용한다.
 
-선행 강약·통근·native/adjusted 오행 계산이 없는 입력은 `strength.adjusted.status=not_implemented`이며 null 점수와 빈 evidence를 반환한다. `usefulGods.status`는 계속 `not_implemented`다.
+선행 강약·통근·native/adjusted 오행 계산이 없는 입력은 `strength.adjusted.status=not_implemented`이며 null 점수와 빈 evidence를 반환한다. 이 단계에서는 `usefulGods.status`가 `not_implemented`였으며 아래 Milestone 10A부터 독립 용신 모듈을 추가한다.
 
 synthetic 검증은 관계 변화 없음, 8→6 뿌리 손실, balance ±10%p, 동시 조정, element cap, 전체 0/100 clamp, 49→50 및 60→59 경계, 모든 level 경계, COMBINATION_ONLY와 순변화 없는 TRANSFORMED, 충 이중감점 방지, 특수격 독립성, evidence 재구성, 결정론 및 엔진 통합을 포함한다.
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 원래 **49 / 중화신약**을 보존한다. 뿌리 손실은 0이고, 실제 PARTIAL 관계 이동으로 element balance delta가 **−0.43135297054418376**이므로 조정 결과는 **48.56864702945582 / 중화신약**이다. 외부 서비스 판정에 맞추기 위해 계수를 바꾸지 않는다.
 
 억부·조후·통관·병약·격국용신, 희신·기신, 신살, 운세, AI 해석은 이 milestone에서 계산하지 않는다.
+
+## CORE MILESTONE 10A — Eokbu Useful-God Engine v1
+
+`eokbu-useful-god-v1`과 `eokbu-element-preference-v1`은 **POSTPOST 억부 v1 선택 규칙**이다. 고전 전체나 특정 학파의 절대 점수표가 아니며 외부 서비스 결과에 맞추어 조정하지 않는다. 억부는 다섯 오행 각각을 평가하고 조후·통관·병약·격국용신을 섞지 않는다.
+
+강약 입력은 `strength.adjusted`가 implemented이면 그 raw 소수 `score/level`을 우선하고, 없을 때만 원래 `strength.score/level`로 fallback한다. 결과의 `strengthSource`에 `adjusted` 또는 `original`을 기록한다. 오행 현재 비율은 합화 이동을 반영한 `fiveElements.adjustedStrength`만 사용한다.
+
+### Zone별 관계 base table
+
+| 강약 | same | resource | output | wealth | officer |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 극약 | +30 | +35 | −25 | −30 | −35 |
+| 태약 | +25 | +30 | −18 | −22 | −28 |
+| 신약 | +20 | +24 | −10 | −14 | −18 |
+| 중화신약 | +12 | +15 | −3 | −5 | −8 |
+| 중화신강 | −5 | −8 | +8 | +10 | +12 |
+| 신강 | −15 | −18 | +18 | +22 | +24 |
+| 태강 | −25 | −28 | +25 | +30 | +32 |
+| 극왕 | −30 | −35 | +30 | +35 | +38 |
+
+same은 비겁, resource는 인성, output은 식상, wealth는 재성, officer는 관성이다. 약한 zone에서 resource를 same보다 약간 높게 둔 것은 POSTPOST v1의 선택이며 보편적 절대법칙이 아니다. 강한 zone에서는 설기·소모·제어를 구분한다. 극왕도 다섯 오행 점수를 설명용으로 계산하지만, 적격 특수격 후보가 있으면 일반 억부를 최종 결론으로 확정하지 않는다.
+
+### 부족·과다 보조 계수
+
+base가 양수인 필요한 오행은 adjusted percentage가 **10% 미만 +8**, **10% 이상 20% 미만 +4**, **20~35% 0**, **35% 초과 −4**다. 따라서 없는 오행도 관계 base가 불리하면 부족 가점을 받지 않는다. 필요한 오행이 풍부해도 −4의 완화만 적용하여 자동 금지하지 않는다.
+
+base가 음수인 부담 오행은 **10% 미만 0**, **10% 이상 20% 미만 −2**, **20~35% −4**, **35% 초과 −8**이다. 이는 이미 많은 부담 오행을 추가로 낮추는 excess factor다. 각 행의 `baseScore + scarcityAdjustment + excessAdjustment + specialStructureAdjustment(항상 0) = finalScore`이며 evidence delta 합으로 재구성할 수 있다.
+
+역할 경계는 **25 이상 PRIMARY**, **15~25 미만 SUPPORTIVE**, **5~15 미만 CONDITIONAL**, **−4~5 미만 NEUTRAL**, **−4 미만 UNFAVORABLE**이다. PRIMARY는 0개 또는 여러 개일 수 있다. 결과는 finalScore 내림차순이며 동점은 木→火→土→金→水 순으로 고정한다.
+
+`QUALIFIED_CANDIDATE` 특수격이 하나라도 있으면 `applicability=CAUTION_SPECIAL_STRUCTURE`, `conditional=true`, `confidence=LOW`로 기록하고 해당 후보를 evidence에 남긴다. 오행별 `specialStructureAdjustment`는 계속 0이므로 후보가 억부 점수를 뒤집거나 계산을 삭제하지 않는다. 적격 후보가 없으면 `STANDARD`, `conditional=false`, `confidence=MEDIUM`이다.
+
+지원되는 입력의 `usefulGods.status`는 `partial`, `eokbu.status`는 `implemented`다. `johu`, `tonggwan`, `byeongyak`, `structure`, `synthesis`는 각각 `not_implemented`다. 한자 천간 선호, 최종 단일 용신, 희신·기신, 신살, 운세, AI 해석은 계산하지 않는다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 adjusted **48.56864702945582 / 중화신약**을 사용한다. 조정 오행 비율은 木 29.60159760359461%, 火 0%, 土 15.856215676485268%, 金 29.955067398901647%, 水 24.587119321018474%다. 결과는 水 +15 SUPPORTIVE, 木 +12 CONDITIONAL, 火 −3 NEUTRAL, 土 −7 UNFAVORABLE, 金 −12 UNFAVORABLE이다. PRIMARY는 없으며 외부의 금 용신 판정에 맞추지 않는다.
+
+synthetic 검증은 8개 강약 zone, 모든 일간 오행의 5관계 mapping, 부족·과다, 불리한 결핍 오행, 필요한 풍부 오행, 특수격 caution, 역할 경계, 동점 정렬, adjusted 우선과 original fallback, evidence 합계, 결정론, 엔진 partial 상태를 포함한다. 실제 개인정보는 사용하지 않는다.

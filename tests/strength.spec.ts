@@ -124,7 +124,7 @@ describe("SYNTHETIC_STRENGTH_V1", () => {
     expect(result.relations.status).toBe("implemented");
     expect(result.relations.transformation.status).toBe("implemented");
     expect(result.structure.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("not_implemented");
+    expect(result.usefulGods.status).toBe("partial");
   });
   it("returns an explicit unavailable result when pillars cannot be calculated", () => {
     const result = calculateSaju({ ...SYNTHETIC_INPUT, calendarType: "lunar" });

@@ -27,3 +27,7 @@ POST
 ## SAJU CORE MILESTONE 9C
 
 `strength.adjusted`는 원래 `strength.score/level`을 보존하면서 관계 적용 후 일간 강약을 별도로 기록합니다. 원래 통근과 손상 후 통근의 차이를 한 번 반영하고, native/adjusted 오행의 비겁·인성 지원 대 식상·재성·관살 반대 비율 순변화를 5%p당 1점, 최대 ±10점으로 변환합니다. 관계 이름이나 특수격 후보에는 직접 보너스·감점을 주지 않습니다.
+
+## SAJU CORE MILESTONE 10A
+
+`usefulGods.eokbu`는 조정 강약과 조정 오행 비율로 木·火·土·金·水 각각의 억부 선호 점수와 역할을 계산합니다. 적격 특수격 후보는 caution으로 남기되 점수를 직접 바꾸지 않습니다. `usefulGods.status=partial`이며 조후·통관·병약·격국용신과 최종 synthesis는 계속 미구현입니다.
