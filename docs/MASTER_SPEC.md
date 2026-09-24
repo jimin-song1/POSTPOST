@@ -507,3 +507,17 @@ STRONG은 +25, CONDITIONAL은 +15다. bridge가 10% 미만이면 +10/HIGH, 10% �
 충돌 조건이 없으면 `status=implemented`, `applicability=NOT_APPLICABLE`, `conflicts=[]`, `rankedCandidates=[]`, `elementPreferences=[]`가 정상 결과다. 지원되는 입력은 `eokbu`, `johu`, `tonggwan`이 각각 `implemented`이고 `byeongyak`, `structure`, `synthesis`는 계속 `not_implemented`다.
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`의 adjusted 분포에서는 金 29.955067398901647%와 木 29.60159760359461%가 합 59.55666500249626%, balance ratio 약 0.9882의 `STRONG_CONFLICT`를 이룬다. bridge는 水 24.587119321018474%로 PRESENT이며 score는 25, state/applicability는 `APPLICABLE`, role은 `STRONG_BRIDGE`다. 다른 네 극 관계는 hard requirements를 충족하지 않으므로 후보로 만들지 않는다.
+
+## CORE MILESTONE 10D — Byeongyak Useful-God Engine v1
+
+`byeongyak-useful-god-v1`, `byeongyak-disease-v1`, `byeongyak-medicine-v1`은 **POSTPOST 병약 v1 operational rule**이다. 수치와 threshold는 고전 명리의 절대 공식이 아니라 실제 구조 손상과 조정 오행 과다를 보수적으로 탐지하기 위한 versioned 운영 규칙이다. 병 탐지→severity→medicine mapping→medicine need→candidate ranking 순서를 강제하며 오행 부족에서 약을 역추론하지 않는다.
+
+v1의 disease는 `STRUCTURE_DAMAGE`와 `DOMINANT_ELEMENT_EXCESS` 둘뿐이다. 구조병은 `structure.qualityEvaluation.damageSignals`를 그대로 사용하며 손상을 재판정하지 않는다. 연결된 `rescueSignals.rescuesDamageId`가 있으면 병 기록을 유지한 채 `ALREADY_RESCUED`, severity 10으로 두고, 없으면 `ACTIVE`, severity 30이다. 구조별 medicine은 `STRUCTURE_INTERACTIONS_V1.standard[type].rescue`를 source-of-truth로 재사용한다: 정관격·상관격 damage는 resource, 재격 damage는 officer, 식신격 damage는 wealth, 인격 damage는 companion category다. category는 일간 오행의 생극 거리로 결정론적으로 실제 medicine 오행으로 변환한다. 구조 medicine strategy base는 +10이다.
+
+과다병은 adjusted top element가 40% 이상이고 second highest와의 차이가 15%p 이상일 때만 성립한다. 40~50% 미만은 MODERATE/15, 50~60% 미만은 HIGH/25, 60% 이상은 SEVERE/35다. CONTROL/DRAIN 표는 木→金/火, 火→水/土, 土→木/金, 金→火/水, 水→土/木이며 CONTROL +20, DRAIN +15다. 관계나 transformation 자체는 병이 아니며 합화 결과가 반영된 adjustedStrength가 실제 threshold를 충족할 때만 과다병이 된다.
+
+medicine availability는 disease와 strategy가 먼저 정해진 뒤에만 적용한다. 10% 미만 +8, 10~20% 미만 +4, 20~35% 미만 0, 35~45% 미만 −8, 45% 이상 −15다. 최종 점수는 `diseaseScore + strategyScore + availabilityAdjustment`이고 evidence delta 합으로 재구성된다. 점수 40 이상 PRIMARY_MEDICINE, 30~39 STRONG_MEDICINE, 20~29 SUPPORTING_MEDICINE, 10~19 CONDITIONAL_MEDICINE, 1~9 LOW_NEED, 0 이하 NOT_NEEDED다.
+
+같은 element가 여러 disease의 약이면 후보 점수를 내림차순으로 정렬하여 `1.0, 0.5, 0.25` diminishing weight로 집계한다. 단순 합산하지 않는다. disease가 없으면 `NOT_APPLICABLE`, 모두 연결 구제되었으면 `ALREADY_TREATED`, active disease에 필요한 medicine이 있으면 `APPLICABLE`, disease는 있으나 필요한 candidate가 없으면 `PARTIALLY_APPLICABLE`이다. strength, relations, transformation, rootDamage, tonggwan은 context로 기록하되 그 자체로 disease를 생성하지 않는다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 정관격/UNEXPOSED, quality SUPPORTED/58이며 damage가 없다. adjusted top인 金도 약 29.96%로 40% 미만이다. 따라서 `byeongyak.status=implemented`, `applicability=NOT_APPLICABLE`, `diseases=[]`, `medicineCandidates=[]`, `elementPreferences=[]`다. 10A·10B·10C 결과는 복사하거나 변경하지 않는다. 지원되는 입력은 eokbu, johu, tonggwan, byeongyak이 implemented이고 structure-useful-god와 synthesis는 계속 not_implemented다.
