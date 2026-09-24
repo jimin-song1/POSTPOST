@@ -30,6 +30,7 @@ import { emptyUsefulGods, evaluateEokbuUsefulGod } from "./interpretation/eokbu-
 import { evaluateJohuUsefulGod } from "./interpretation/johu-useful-god";
 import { evaluateTonggwanUsefulGod } from "./interpretation/tonggwan-useful-god";
 import { evaluateByeongyakUsefulGod } from "./interpretation/byeongyak-useful-god";
+import { synthesizeUsefulGods } from "./interpretation/useful-god-synthesis";
 import { evaluateStructureUsefulGod } from "./interpretation/structure-useful-god";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
@@ -86,6 +87,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     usefulGods.byeongyak = evaluateByeongyakUsefulGod(dayStem, adjustedStrength,
       strengthResult, structure, relations, usefulGods.tonggwan);
     usefulGods.structure = evaluateStructureUsefulGod(dayStem, adjustedStrength, structure);
+    usefulGods.synthesis = synthesizeUsefulGods(usefulGods);
+    usefulGods.status = "implemented";
   }
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",

@@ -183,6 +183,6 @@ describe("SYNTHETIC_BYEONGYAK_USEFUL_GOD_V1", () => {
     expect(calculateSaju(SYNTHETIC_INPUT).usefulGods).toMatchObject({
       eokbu: { status: "implemented" }, johu: { status: "implemented" },
       tonggwan: { status: "implemented" }, byeongyak: { status: "implemented" },
-      structure: { status: "implemented" }, synthesis: { status: "not_implemented" } });
+      structure: { status: "implemented" }, synthesis: { status: "implemented" } });
   });
 });

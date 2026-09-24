@@ -226,12 +226,38 @@ export interface StructureUsefulResult {
   specialStructureCaution: boolean;
   evidence: StructureUsefulEvidence[];
 }
+export type SynthesisEngine = "eokbu" | "structure" | "johu" | "byeongyak" | "tonggwan";
+export type SynthesisRole = "PRIMARY" | "SECONDARY" | "FAVORABLE" | "CONDITIONAL" | "NEUTRAL" | "UNFAVORABLE";
+export interface SynthesisSignal {
+  engine: SynthesisEngine; rawScore: number; normalizedScore: number;
+  baseWeight: number; effectiveWeight: number;
+}
+export interface SynthesisElement {
+  element: Element; score: number; baseSynthesisScore: number; role: SynthesisRole;
+  confidence: "HIGH" | "MEDIUM" | "LOW";
+  coverage: { engineCount: number; effectiveWeight: number; engines: SynthesisEngine[] };
+  engineSignals: SynthesisSignal[]; consensusBonus: number; conflictPenalty: number;
+  conflictingSignals: boolean; evidence: string[];
+}
+export interface SynthesisResult {
+  status: "implemented"; ruleVersion: "useful-god-synthesis-v1";
+  normalizationVersion: "useful-god-normalization-v1"; weightVersion: "useful-god-weight-v1";
+  baseEngineWeights: Record<SynthesisEngine, number>;
+  effectiveEngineWeights: Record<SynthesisEngine, number>;
+  elements: SynthesisElement[];
+  primaryElements: Element[]; secondaryElements: Element[]; favorableElements: Element[];
+  conditionalElements: Element[]; neutralElements: Element[]; unfavorableElements: Element[];
+  highestElement: Element | null;
+  conflicts: Array<{ element: Element; positive: SynthesisSignal[]; negative: SynthesisSignal[] }>;
+  evidence: string[];
+  stemPreferences: JohuStemPreference[];
+}
 export interface UsefulGodsResult {
-  status: "partial" | "not_implemented";
+  status: "implemented" | "partial" | "not_implemented";
   eokbu: EokbuResult;
   johu: JohuResult;
   tonggwan: TonggwanResult;
   byeongyak: ByeongyakResult;
   structure: StructureUsefulResult;
-  synthesis: PendingUsefulGodModule;
+  synthesis: PendingUsefulGodModule | SynthesisResult;
 }

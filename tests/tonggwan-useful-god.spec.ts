@@ -162,10 +162,10 @@ describe("SYNTHETIC_TONGGWAN_USEFUL_GOD_V1", () => {
   });
 
   it("AB: integrates only tonggwan while later useful-god modules remain pending", () => {
-    expect(calculateSaju(SYNTHETIC_INPUT).usefulGods).toMatchObject({ status: "partial",
+    expect(calculateSaju(SYNTHETIC_INPUT).usefulGods).toMatchObject({ status: "implemented",
       eokbu: { status: "implemented" }, johu: { status: "implemented" },
       tonggwan: { status: "implemented" }, byeongyak: { status: "implemented" },
-      structure: { status: "implemented" }, synthesis: { status: "not_implemented" } });
+      structure: { status: "implemented" }, synthesis: { status: "implemented" } });
   });
 
   it.each([[30, "PRIMARY_BRIDGE"], [29, "STRONG_BRIDGE"], [19, "CONDITIONAL_BRIDGE"],
