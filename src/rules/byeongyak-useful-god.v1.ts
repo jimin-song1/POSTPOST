@@ -1,6 +1,7 @@
 import type { Element } from "@/types/saju-analysis";
+import type { TenGodCategory } from "./structure-useful-god.v1";
 
-export type MedicineCategory = "resource" | "companion" | "output" | "wealth" | "officer";
+export type MedicineCategory = TenGodCategory;
 
 export const BYEONGYAK_EXCESS_MEDICINE_TABLE: Readonly<Record<Element, {
   control: Element; drain: Element;
