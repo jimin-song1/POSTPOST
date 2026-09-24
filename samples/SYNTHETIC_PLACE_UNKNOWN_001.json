@@ -360,6 +360,11 @@
       ]
     },
     "fiveElements": {
+      "status": "implemented",
+      "ruleVersion": "five-elements-v1",
+      "weightRuleVersion": "element-weight-v1",
+      "seasonalStateRuleVersion": "seasonal-element-state-v1",
+      "seasonalStrengthRuleVersion": "seasonal-strength-v1",
       "rawCount": {
         "wood": 3,
         "fire": 2,
@@ -368,17 +373,192 @@
         "water": 1
       },
       "nativeStrength": {
-        "status": "not_implemented",
-        "value": null,
-        "evidence": [],
-        "todo": "element-strength-v1 가중 세력 계산기 구현 필요"
+        "wood": {
+          "score": 52.36,
+          "percentage": 50.44802004046633
+        },
+        "fire": {
+          "score": 21.21,
+          "percentage": 20.43549474901243
+        },
+        "earth": {
+          "score": 17.819999999999997,
+          "percentage": 17.16928413141921
+        },
+        "metal": {
+          "score": 0,
+          "percentage": 0
+        },
+        "water": {
+          "score": 12.4,
+          "percentage": 11.947201079102033
+        }
       },
       "adjustedStrength": {
         "status": "not_implemented",
         "value": null,
         "evidence": [],
         "todo": "관계 엔진 적용 후 계산"
-      }
+      },
+      "evidence": [
+        {
+          "source": "yearStem",
+          "stem": "甲",
+          "stemWeight": 10,
+          "baseContribution": 10,
+          "element": "wood",
+          "seasonalState": "旺",
+          "seasonalMultiplier": 1.1,
+          "finalContribution": 11
+        },
+        {
+          "source": "monthStem",
+          "stem": "丁",
+          "stemWeight": 10,
+          "baseContribution": 10,
+          "element": "fire",
+          "seasonalState": "相",
+          "seasonalMultiplier": 1.05,
+          "finalContribution": 10.5
+        },
+        {
+          "source": "dayStem",
+          "stem": "乙",
+          "stemWeight": 10,
+          "baseContribution": 10,
+          "element": "wood",
+          "seasonalState": "旺",
+          "seasonalMultiplier": 1.1,
+          "finalContribution": 11
+        },
+        {
+          "source": "hourStem",
+          "stem": "壬",
+          "stemWeight": 10,
+          "baseContribution": 10,
+          "element": "water",
+          "seasonalState": "休",
+          "seasonalMultiplier": 1,
+          "finalContribution": 10
+        },
+        {
+          "source": "yearBranch",
+          "branch": "辰",
+          "branchWeight": 12,
+          "hiddenStem": "戊",
+          "hiddenRole": "mainQi",
+          "allocationRatio": 0.7,
+          "baseContribution": 8.399999999999999,
+          "element": "earth",
+          "seasonalState": "死",
+          "seasonalMultiplier": 0.9,
+          "finalContribution": 7.559999999999999
+        },
+        {
+          "source": "yearBranch",
+          "branch": "辰",
+          "branchWeight": 12,
+          "hiddenStem": "癸",
+          "hiddenRole": "middleQi",
+          "allocationRatio": 0.2,
+          "baseContribution": 2.4000000000000004,
+          "element": "water",
+          "seasonalState": "休",
+          "seasonalMultiplier": 1,
+          "finalContribution": 2.4000000000000004
+        },
+        {
+          "source": "yearBranch",
+          "branch": "辰",
+          "branchWeight": 12,
+          "hiddenStem": "乙",
+          "hiddenRole": "residualQi",
+          "allocationRatio": 0.1,
+          "baseContribution": 1.2000000000000002,
+          "element": "wood",
+          "seasonalState": "旺",
+          "seasonalMultiplier": 1.1,
+          "finalContribution": 1.3200000000000003
+        },
+        {
+          "source": "monthBranch",
+          "branch": "卯",
+          "branchWeight": 24,
+          "hiddenStem": "乙",
+          "hiddenRole": "mainQi",
+          "allocationRatio": 1,
+          "baseContribution": 24,
+          "element": "wood",
+          "seasonalState": "旺",
+          "seasonalMultiplier": 1.1,
+          "finalContribution": 26.400000000000002
+        },
+        {
+          "source": "dayBranch",
+          "branch": "未",
+          "branchWeight": 12,
+          "hiddenStem": "己",
+          "hiddenRole": "mainQi",
+          "allocationRatio": 0.7,
+          "baseContribution": 8.399999999999999,
+          "element": "earth",
+          "seasonalState": "死",
+          "seasonalMultiplier": 0.9,
+          "finalContribution": 7.559999999999999
+        },
+        {
+          "source": "dayBranch",
+          "branch": "未",
+          "branchWeight": 12,
+          "hiddenStem": "乙",
+          "hiddenRole": "middleQi",
+          "allocationRatio": 0.2,
+          "baseContribution": 2.4000000000000004,
+          "element": "wood",
+          "seasonalState": "旺",
+          "seasonalMultiplier": 1.1,
+          "finalContribution": 2.6400000000000006
+        },
+        {
+          "source": "dayBranch",
+          "branch": "未",
+          "branchWeight": 12,
+          "hiddenStem": "丁",
+          "hiddenRole": "residualQi",
+          "allocationRatio": 0.1,
+          "baseContribution": 1.2000000000000002,
+          "element": "fire",
+          "seasonalState": "相",
+          "seasonalMultiplier": 1.05,
+          "finalContribution": 1.2600000000000002
+        },
+        {
+          "source": "hourBranch",
+          "branch": "午",
+          "branchWeight": 12,
+          "hiddenStem": "丁",
+          "hiddenRole": "mainQi",
+          "allocationRatio": 0.75,
+          "baseContribution": 9,
+          "element": "fire",
+          "seasonalState": "相",
+          "seasonalMultiplier": 1.05,
+          "finalContribution": 9.450000000000001
+        },
+        {
+          "source": "hourBranch",
+          "branch": "午",
+          "branchWeight": 12,
+          "hiddenStem": "己",
+          "hiddenRole": "residualQi",
+          "allocationRatio": 0.25,
+          "baseContribution": 3,
+          "element": "earth",
+          "seasonalState": "死",
+          "seasonalMultiplier": 0.9,
+          "finalContribution": 2.7
+        }
+      ]
     },
     "relations": {
       "status": "not_implemented",
@@ -453,7 +633,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-23T12:57:43.140Z",
+      "calculatedAt": "2026-09-24T10:53:07.984Z",
       "aiCalculationUsed": false
     }
   }
