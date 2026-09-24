@@ -120,7 +120,7 @@ describe("SYNTHETIC_STRENGTH_V1", () => {
     expect(result.strength.evidence.length).toBeGreaterThan(0);
     expect(result.strength.evidence.reduce((sum, item) => sum + item.scoreDelta, 0)).toBe(result.strength.score);
     expect(result.strength.relationAdjustmentApplied).toBe(false);
-    expect(result.fiveElements.adjustedStrength.status).toBe("not_implemented");
+    expect(result.fiveElements.adjustedStrength.status).toBe("implemented");
     expect(result.relations.status).toBe("implemented");
     expect(result.relations.transformation.status).toBe("implemented");
     expect(result.structure.status).toBe("not_implemented");

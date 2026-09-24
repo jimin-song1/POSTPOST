@@ -200,7 +200,7 @@ describe("SYNTHETIC_TRANSFORMATION_V1 — configuration and factors", () => {
     expect(result.relations.transformation.status).toBe("implemented");
     expect(result.relations.transformation.ruleVersion).toBe("transformation-v1");
     expect(result.fiveElements.nativeStrength).toEqual(native.nativeStrength);
-    expect(result.fiveElements.adjustedStrength.status).toBe("not_implemented");
+    expect(result.fiveElements.adjustedStrength.status).toBe("implemented");
     expect(result.strength.score).toBe(expected.score);
     expect(result.relations.strengthAdjustmentApplied).toBe(false);
   });
