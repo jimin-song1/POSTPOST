@@ -119,6 +119,68 @@ export interface StrengthResult {
   evidence: StrengthEvidence[];
 }
 
+export type RelationRuleVersion = "stem-relations-v1" | "branch-relations-v1" | "punishment-v1";
+export type RelationPairType = "STEM_COMBINATION" | "STEM_CLASH" | "SIX_COMBINATION" |
+  "BRANCH_CLASH" | "BRANCH_BREAK" | "BRANCH_HARM" | "WONJIN" | "MUTUAL_PUNISHMENT" | "SELF_PUNISHMENT";
+export interface RelationPair<Character extends Stem | Branch = Stem | Branch> {
+  id: string;
+  type: RelationPairType;
+  members: [Character, Character];
+  positions: [PillarPosition, PillarPosition];
+  ruleVersion: RelationRuleVersion;
+  rule: string;
+  exists: true;
+  targetElement?: Element;
+  transformed: null;
+  kind?: "MUTUAL_PUNISHMENT" | "SELF_PUNISHMENT";
+  branch?: Branch;
+  complete?: true;
+}
+export interface RelationGroup {
+  id: string;
+  type: "THREE_HARMONY" | "DIRECTIONAL_COMBINATION" | "THREE_PUNISHMENT";
+  kind?: "THREE_PUNISHMENT";
+  group: [Branch, Branch, Branch];
+  present: Branch[];
+  memberPositions: Array<{ branch: Branch; position: PillarPosition }>;
+  positions: PillarPosition[];
+  complete: boolean;
+  partial: boolean;
+  targetElement?: Element;
+  transformed: null;
+  ruleVersion: RelationRuleVersion;
+  rule: string;
+}
+export interface RelationEvidence {
+  relationId: string;
+  ruleVersion: RelationRuleVersion;
+  type: RelationPairType | RelationGroup["type"];
+  positions: PillarPosition[];
+  characters: Array<Stem | Branch>;
+  rule: string;
+  targetElement?: Element;
+  complete?: boolean;
+  partial?: boolean;
+}
+export interface RelationsResult {
+  status: ModuleStatus;
+  ruleVersion: "relations-v1";
+  heavenlyStems: { combinations: RelationPair<Stem>[]; clashes: RelationPair<Stem>[] };
+  earthlyBranches: {
+    sixCombinations: RelationPair<Branch>[];
+    threeHarmonies: RelationGroup[];
+    directionalCombinations: RelationGroup[];
+    clashes: RelationPair<Branch>[];
+    punishments: Array<RelationPair<Branch> | RelationGroup>;
+    breaks: RelationPair<Branch>[];
+    harms: RelationPair<Branch>[];
+    wonjin: RelationPair<Branch>[];
+  };
+  transformation: EvidenceResult;
+  strengthAdjustmentApplied: false;
+  evidence: RelationEvidence[];
+}
+
 export interface LuckPeriod {
   ageRange: string;
   pillar: string;
@@ -147,7 +209,7 @@ export interface SajuAnalysis {
   hiddenStems: EvidenceResult<HiddenStemsValue>;
   twelveStages: EvidenceResult<TwelveStagesValue>;
   fiveElements: FiveElementsResult;
-  relations: EvidenceResult;
+  relations: RelationsResult;
   strength: StrengthResult;
   structure: EvidenceResult;
   usefulGods: EvidenceResult;
