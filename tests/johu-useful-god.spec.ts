@@ -126,7 +126,7 @@ describe("SYNTHETIC_JOHU_QIONGTONG_V1 — curated 120-cell table", () => {
   it("U: integrates johu while preserving all pending modules", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.usefulGods).toMatchObject({ status: "partial", eokbu: { status: "implemented" },
-      johu: { status: "implemented" }, tonggwan: { status: "not_implemented" },
+      johu: { status: "implemented" }, tonggwan: { status: "implemented" },
       byeongyak: { status: "not_implemented" }, structure: { status: "not_implemented" },
       synthesis: { status: "not_implemented" } });
     expect(calculateSaju({ ...SYNTHETIC_INPUT, birthTimeKnown: false }).usefulGods.johu.status).toBe("not_implemented");
