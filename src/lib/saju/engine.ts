@@ -137,7 +137,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     relations,
     strength: strengthResult,
     structure,
-    usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"),
+    usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 Useful-God Synthesis 구현 필요"),
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
     branchPreferences: notImplemented("지장간·관계·운 evaluator 완성 후 계산"),
     nobleAndSpecialStars: notImplemented("noblemen-v1 및 sinsal-v1 테이블 구현 필요"),

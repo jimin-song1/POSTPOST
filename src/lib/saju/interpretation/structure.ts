@@ -1,4 +1,4 @@
-import { notImplemented } from "../contracts";
+import { emptySpecialStructure, evaluateSpecialStructure } from "./special-structure";
 import { STRUCTURE_V1 } from "@/rules/structure.v1";
 import { STANDARD_STRUCTURE_V1 } from "@/rules/standard-structure.v1";
 import { MONTH_COMMAND_V1 } from "@/rules/month-command.v1";
@@ -26,7 +26,7 @@ export function emptyStructure(): StructureResult {
     mixedPatterns: [], dayMasterStrength: null,
     adjustedElementContext: { status: "not_implemented", ruleVersion: "adjusted-strength-v1" },
     transformationContext: [],
-    specialStructure: notImplemented("종격·전왕격·화기격 판정은 향후 구현"),
+    specialStructure: emptySpecialStructure(),
     qualityEvaluation: emptyStructureQuality(), evidence: [] };
 }
 
@@ -121,6 +121,6 @@ export function evaluateStructure(
     classificationStatus: primary?.status ?? "UNRESOLVED", primary, secondary, specialCandidates,
     exposures, mixedPatterns, dayMasterStrength: { score: strength.score, level: strength.level },
     adjustedElementContext: { status: adjustedStrength.status, ruleVersion: adjustedStrength.ruleVersion },
-    transformationContext, specialStructure: notImplemented("종격·전왕격·화기격 판정은 향후 구현"),
+    transformationContext, specialStructure: evaluateSpecialStructure(pillars, strength, adjustedStrength, relations),
     qualityEvaluation, evidence };
 }

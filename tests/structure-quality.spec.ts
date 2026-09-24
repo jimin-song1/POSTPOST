@@ -129,10 +129,10 @@ describe("SYNTHETIC_STRUCTURE_QUALITY_V1 — explicit interactions", () => {
     expect(STRUCTURE_QUALITY_V1.baseline).toBe(50);
     expect(STRUCTURE_INTERACTIONS_V1.standard.식신격.damage).toEqual(["편인"]);
   });
-  it("integrates real calculated synthetic pillars without implementing special structures or useful gods", () => {
+  it("integrates real calculated synthetic pillars with special candidates and without implementing useful gods", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.structure.qualityEvaluation.status).toBe("implemented");
-    expect(result.structure.specialStructure.status).toBe("not_implemented");
+    expect(result.structure.specialStructure.status).toBe("implemented");
     expect(result.usefulGods.status).toBe("not_implemented");
   });
 });

@@ -354,3 +354,62 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 무손상+무혼잡+무지원이면 `CLEAN`, 지원만 있으면 `SUPPORTED`, 무손상+혼잡이면 `MIXED`, 손상+유효 구제면 `RESCUED`, 손상만 있으면 `DAMAGED` 순으로 결정한다. 점수가 높다는 이유로 integrity를 뒤집지 않는다. 월지에 연관된 합·충·형·파·해는 `relationContext`에 남기되 점수 가감은 하지 않는다. 합화 후보 상태, `strength-v1.score`, 파생 오행 점수도 qualityScore에 가산하거나 primary를 교체하는 근거로 사용하지 않는다. 제한 평가 `UNRESOLVED`는 이 표준 8격 상태 순서 밖이다. 특수격은 Milestone 9B, 독립 용신 엔진은 Milestone 10에서만 다룬다.
 
 순수 합성 기둥 `乙亥 / 乙酉 / 甲子 / 戊辰`은 정관격 본기가 미투간(`UNEXPOSED`)이고, 시간 戊의 편재가 지원 신호로 한 번 기록된다. 손상·구제 신호는 없으므로 `integrity=SUPPORTED`, `qualityScore=58`(기준 50 + 지원 8)이다. 이 결과는 개인 출생 입력이나 외부 서비스 판정을 사용하지 않는다.
+
+## CORE MILESTONE 9B — Conservative Special Structure Engine v1
+
+**POSTPOST의 보수적 후보 탐지 규칙**이다. 학파 간 차이가 큰 특수격의 확정 판정이나 보편적 기준이 아니다. `src/rules/special-structure.v1.ts`의 `special-structure-v1`, `follow-structure-v1`, `dominant-structure-v1`, `transformed-qi-structure-v1`가 모든 임계값과 점수 계수를 관리한다.
+
+`structure.specialStructure`는 지원되는 입력에서 `status=implemented`, `selected=null`, `standardStructurePreserved=true`다. 종재·종관살·종아/종식상·전왕/전강을 각각 평가한다. 화기는 일간이 참여한 천간합 관계마다 별도 후보를 남기고, 참여 관계가 없으면 `NOT_APPLICABLE` 후보 한 개를 남긴다. `primary`, `secondary`, 기존 건록·양인 `specialCandidates`, `qualityEvaluation`을 교체하지 않는다. 입력이 불완전하여 선행 계산이 없으면 특수격도 `not_implemented`, 빈 후보 목록을 유지한다.
+
+각 후보는 `type`, 후보형 한글 `label`, 하위 `ruleVersion`, `state`, `confidence`, `score`, `requirements`, `requirementsPassed`, `requirementsFailed`, `blockers`, `evidence`, `metadata`를 제공한다. requirements에는 실제 값, 기준값, 비교 연산, 통과 여부, 중대한 실패 여부(`critical`)를 기록한다. blocker는 모두 보존하며 `HARD` 또는 `BOUNDARY`와 출처를 기록한다. `confidence`는 후보 조건 충족 정도(HIGH/MEDIUM/LOW)이며 특수격의 확정 확률이 아니다.
+
+### 독립 factor와 지원의 정의
+
+- `strength-v1.score`, 원래 통근, `root-damage-v1`의 남은 개별 뿌리, `strength.adjustments.adjustedRootingScore`, 조정 오행 백분율을 독립 factor로 읽는다. 합산하여 새로운 adjusted 신강신약 점수를 만들지 않는다.
+- 직접 evaluator 호출에서 합산 adjustedRootingScore가 아직 연결되지 않았다면 기존 root-damage 결과의 남은 점수를 원래 rooting cap으로 제한해 사용한다. 합화나 root damage 조건을 새로 평가하지 않는다. 손상 행이 없는 뿌리는 원래 점수를 유지한다.
+- 남은 개별 뿌리 점수 **5 이상**을 strong root로 본다. 종격·화기는 합산 adjustedRootingScore **3 이하**, strong root 없음이 필수다. 원래 root가 손상되면 원래 점수만으로 탈락시키지 않는다.
+- 투간 지원은 일간을 제외한 **년간·월간·시간**이다. 같은 지원 범주의 오행이 조정 세력 **10% 이상**이면서 한 글자 이상 보이거나, **동일 지원 범주가 2개 이상** 보이면 강한 비겁/인성 지원이다. 단일 약한 지원 글자는 자동 탈락시키지 않는다.
+- 월령은 기존 seasonal-element-state-v1의 target 旺/相을 점수 근거로 사용한다. 월령 지지가 있다는 것만으로 후보 자격을 부여하지 않는다.
+- `UPSTREAM_CONTEXT` evidence에 원래 strength/rooting, 조정 rooting, 원래·조정 오행, visible 십성, 월령, transformation-v1 결과를 보존한다. nativeStrength는 adjustedStrength에 보존된 nativeScore와 그 합으로 복원한 동일 백분율이다. 입력 객체를 수정하지 않는다.
+
+### 종격 공통 및 유형별 hard requirements
+
+모든 종격 후보는 **strength ≤27**, **adjusted rooting ≤3**, **strong root 없음**, **강한 투간 비겁/인성 없음**, **same+resource ≤20%**, **단일 반대 방향 편중**이 필요하다. 재·관살·식상 중 **25% 이상인 범주가 2개 이상**이면 경쟁 세력이므로 탈락한다. 인성 **20% 이상**도 별도 blocker다.
+
+| 후보 | 추가 필수 dominance | 특이사항 |
+| --- | --- | --- |
+| FOLLOW_WEALTH / 종재 후보 | 재성 adjusted percentage ≥50% | 강한 비겁 지원은 재성 방해로도 작용하므로 공통 blocker 적용 |
+| FOLLOW_OFFICER / 종관살 후보 | 관살 adjusted percentage ≥50% | 년·월·시간의 정관/편관 혼재와 각 신호를 metadata에 기록; 혼재 자체는 탈락 사유 아님 |
+| FOLLOW_OUTPUT / 종아·종식상 후보 | 식상 adjusted percentage ≥50% | 강한 편인/정인 투간 및 인성 우세는 blocker |
+
+다른 조건을 모두 만족하고 target이 **45% 이상 50% 미만**인 단일 경계 실패이면 `CONDITIONAL`. 45% 미만 또는 다른 중요한 조건 실패·hard blocker이면 `REJECTED`다. 점수로 실패를 상쇄할 수 없다.
+
+### 전왕·전강 후보
+
+`DOMINANT_SELF`는 **strength ≥73**, **same+resource ≥70%**가 필수다. 적격은 **strength ≥86**이거나, **adjusted rooting ≥12 및 강한 visible 지원 1개 이상**을 함께 만족해야 한다. 후자의 보강조건만 부족하면 `CONDITIONAL`이다.
+
+관살·재성·식상의 실제 조정 비율이 각 **20% 이상**이면 해당 범주의 hard blocker, **10% 이상 20% 미만**이면 boundary blocker다. 10% 이상인 반대 범주가 **2개 이상**이면 hard blocker다. 단순히 반대 글자가 있다는 이유로 탈락시키지 않는다.
+
+### 화기 후보
+
+일간이 실제 탐지된 천간 오합의 당사자이고, **동일 relationId의 transformation-v1 평가가 TRANSFORMED**여야 한다. 기존 평가의 targetElement를 그대로 읽는다. 甲己→土, 乙庚→金, 丙辛→水, 丁壬→木, 戊癸→火 관계를 재탐지하거나 합화 성립 조건을 재계산하지 않는다. 참여 합이 있으나 COMBINATION_ONLY/PARTIAL/WEAK 또는 평가가 없으면 `REJECTED`다.
+
+target 조정 비율 **≥45%**, 오행 중 **단독 1위**, 나머지 오행 최대치보다 **≥10 percentage points**, adjusted rooting **≤3**, 원래 오행의 남은 strong root 없음이 필수다. target **40~45% 미만** 또는 margin **5~10pp 미만**은 각각 경계 실패이며, 둘 다 실패하면 `REJECTED`다. competition/blocking의 고유 관련 relationId가 **1개**면 boundary blocker, **2개 이상**이면 hard blocker다. 한 일간의 여러 합을 합쳐 유리한 상태 하나로 덮어쓰지 않는다.
+
+### 전체 blocker 및 상태·점수 재구성
+
+- 종격 공통: `STRONG_DAYMASTER_ROOT`, `VISIBLE_COMPANION_SUPPORT`, `VISIBLE_RESOURCE_SUPPORT`, `RESOURCE_DOMINANCE`, `ADJUSTED_ROOTING_TOO_HIGH`, `MULTIPLE_COMPETING_DOMINANCES`.
+- 전왕: `STRONG_OFFICER_OPPOSITION`, `STRONG_WEALTH_OPPOSITION`, `STRONG_OUTPUT_OPPOSITION`, `MULTIPLE_OPPOSITION_CATEGORIES`.
+- 화기: `STRONG_DAYMASTER_ROOT`, `ADJUSTED_ROOTING_TOO_HIGH`, `TRANSFORMATION_COMPETITION_OR_BLOCKING`.
+
+판정 순서는 비적용→중대한 실패/hard blocker→경계→적격이다. `NOT_APPLICABLE`을 제외하고, critical requirement 실패나 hard blocker 또는 2개 이상의 requirement 실패는 `REJECTED`; 그 외 실패 1개 또는 boundary blocker가 있으면 `CONDITIONAL`; 모든 requirement 통과와 blocker 없음이면 `QUALIFIED_CANDIDATE`다.
+
+점수는 baseline **0**, 통과 requirement **+2**, 실패 requirement **−4**, hard blocker **−4**, boundary blocker **−2**, 월령 target 旺/相 **+2**의 합이다. 모든 delta를 evidence에 남기며 별도 clamp는 없다. 진단 점수이므로 음수가 가능하고 `NOT_APPLICABLE`에도 근거를 남긴다. 중복된 requirement/blocker 감점도 설명용 계수이며, **자격 판정은 점수와 독립**이다.
+
+### 검증과 후속 범위
+
+synthetic 기둥 기반 통합검사와 선행 계산값을 명시적으로 조절한 경계 unit fixture를 구분한다. 후자는 실제 원국에서 그 조합이 반드시 발생한다는 주장이 아니다. 극약+strong root, 세 종격 target 60%, strength 35, 지원 30%, 극왕+지원 80%, 반대세력, 단순 합/성립 합/원래 뿌리/경쟁, threshold 경계, 복수 일간합, 원본 불변성, 결정론, evidence 재구성, 엔진 상태를 검사한다. 실제 개인정보는 사용하지 않는다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 **49 / 중화신약**, **정관격 / UNEXPOSED**, **SUPPORTED / 58**을 유지한다. 종재·종관살·종아 후보는 모두 `REJECTED`, 전왕/전강도 `REJECTED`, 일간의 천간합이 없으므로 화기는 `NOT_APPLICABLE`, selected는 null이다.
+
+`usefulGods.status=not_implemented`를 유지한다. 최종 adjusted 신강신약, 용신·희신·기신, 신살, 운 작용, AI 해석을 계산하지 않는다. 후속은 10A 억부, 10B 조후, 10C 통관, 10D 병약, 10E 격국용신의 독립 모듈이며, 11 Useful-God Synthesis에서만 primary/secondary/favorable/conditional/unfavorable을 합성한다.
