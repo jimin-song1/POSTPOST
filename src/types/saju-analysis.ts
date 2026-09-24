@@ -1,4 +1,5 @@
 import type { SpecialStructureResult } from "./special-structure";
+import type { UsefulGodsResult } from "./useful-gods";
 import type { BirthPlaceResolution, SajuInput } from "./saju-input";
 import type { TenGod } from "@/lib/saju/interpretation/ten-gods";
 import type { BranchHiddenStems } from "@/lib/saju/interpretation/hidden-stems";
@@ -432,7 +433,7 @@ export interface SajuAnalysis {
   relations: RelationsResult;
   strength: StrengthResult;
   structure: StructureResult;
-  usefulGods: EvidenceResult;
+  usefulGods: UsefulGodsResult;
   stemPreferences: EvidenceResult;
   branchPreferences: EvidenceResult;
   nobleAndSpecialStars: EvidenceResult;

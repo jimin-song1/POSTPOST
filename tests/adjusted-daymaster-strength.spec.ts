@@ -126,7 +126,7 @@ describe("SYNTHETIC_ADJUSTED_DAYMASTER_STRENGTH_V1", () => {
     expect(result.strength.score).toBe(result.strength.adjusted.originalScore);
     expect(result.strength.level).toBe(result.strength.adjusted.originalLevel);
     expect(result.strength.adjustments.adjustedScore).toBeNull();
-    expect(result.usefulGods.status).toBe("not_implemented");
+    expect(result.usefulGods.status).toBe("partial");
     expect(calculateSaju({ ...SYNTHETIC_INPUT, birthTimeKnown: false }).strength.adjusted.status)
       .toBe("not_implemented");
   });

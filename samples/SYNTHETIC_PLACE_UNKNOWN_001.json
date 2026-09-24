@@ -9005,10 +9005,200 @@
       ]
     },
     "usefulGods": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "억부·조후·통관·병약·격국용신 및 Useful-God Synthesis 구현 필요"
+      "status": "partial",
+      "eokbu": {
+        "status": "implemented",
+        "ruleVersion": "eokbu-useful-god-v1",
+        "elementPreferenceRuleVersion": "eokbu-element-preference-v1",
+        "strengthSource": "adjusted",
+        "strengthScore": 92.99682050293862,
+        "strengthLevel": "극왕",
+        "applicability": "STANDARD",
+        "conditional": false,
+        "confidence": "MEDIUM",
+        "specialCandidates": [
+          {
+            "type": "FOLLOW_WEALTH",
+            "state": "REJECTED"
+          },
+          {
+            "type": "FOLLOW_OFFICER",
+            "state": "REJECTED"
+          },
+          {
+            "type": "FOLLOW_OUTPUT",
+            "state": "REJECTED"
+          },
+          {
+            "type": "DOMINANT_SELF",
+            "state": "REJECTED"
+          },
+          {
+            "type": "TRANSFORMED_QI_STRUCTURE",
+            "state": "NOT_APPLICABLE"
+          }
+        ],
+        "elements": [
+          {
+            "element": "metal",
+            "relationToDayMaster": "officer",
+            "baseScore": 38,
+            "scarcityAdjustment": 8,
+            "excessAdjustment": 0,
+            "specialStructureAdjustment": 0,
+            "finalScore": 46,
+            "role": "PRIMARY",
+            "evidence": [
+              {
+                "factor": "STRENGTH_RELATION_BASE",
+                "strengthLevel": "극왕",
+                "element": "metal",
+                "relation": "officer",
+                "delta": 38
+              },
+              {
+                "factor": "ELEMENT_SCARCITY",
+                "element": "metal",
+                "relation": "officer",
+                "adjustedPercentage": 0,
+                "delta": 8
+              }
+            ]
+          },
+          {
+            "element": "earth",
+            "relationToDayMaster": "wealth",
+            "baseScore": 35,
+            "scarcityAdjustment": 4,
+            "excessAdjustment": 0,
+            "specialStructureAdjustment": 0,
+            "finalScore": 39,
+            "role": "PRIMARY",
+            "evidence": [
+              {
+                "factor": "STRENGTH_RELATION_BASE",
+                "strengthLevel": "극왕",
+                "element": "earth",
+                "relation": "wealth",
+                "delta": 35
+              },
+              {
+                "factor": "ELEMENT_SCARCITY",
+                "element": "earth",
+                "relation": "wealth",
+                "adjustedPercentage": 12.018498891993445,
+                "delta": 4
+              }
+            ]
+          },
+          {
+            "element": "fire",
+            "relationToDayMaster": "output",
+            "baseScore": 30,
+            "scarcityAdjustment": 4,
+            "excessAdjustment": 0,
+            "specialStructureAdjustment": 0,
+            "finalScore": 34,
+            "role": "PRIMARY",
+            "evidence": [
+              {
+                "factor": "STRENGTH_RELATION_BASE",
+                "strengthLevel": "극왕",
+                "element": "fire",
+                "relation": "output",
+                "delta": 30
+              },
+              {
+                "factor": "ELEMENT_SCARCITY",
+                "element": "fire",
+                "relation": "output",
+                "adjustedPercentage": 18.094228731091626,
+                "delta": 4
+              }
+            ]
+          },
+          {
+            "element": "water",
+            "relationToDayMaster": "resource",
+            "baseScore": -35,
+            "scarcityAdjustment": 0,
+            "excessAdjustment": 0,
+            "specialStructureAdjustment": 0,
+            "finalScore": -35,
+            "role": "UNFAVORABLE",
+            "evidence": [
+              {
+                "factor": "STRENGTH_RELATION_BASE",
+                "strengthLevel": "극왕",
+                "element": "water",
+                "relation": "resource",
+                "delta": -35
+              },
+              {
+                "factor": "ELEMENT_SCARCITY_NO_BONUS",
+                "element": "water",
+                "relation": "resource",
+                "adjustedPercentage": 5.472588881395125,
+                "delta": 0
+              }
+            ]
+          },
+          {
+            "element": "wood",
+            "relationToDayMaster": "same",
+            "baseScore": -30,
+            "scarcityAdjustment": 0,
+            "excessAdjustment": -8,
+            "specialStructureAdjustment": 0,
+            "finalScore": -38,
+            "role": "UNFAVORABLE",
+            "evidence": [
+              {
+                "factor": "STRENGTH_RELATION_BASE",
+                "strengthLevel": "극왕",
+                "element": "wood",
+                "relation": "same",
+                "delta": -30
+              },
+              {
+                "factor": "ELEMENT_SEVERE_EXCESS",
+                "element": "wood",
+                "relation": "same",
+                "adjustedPercentage": 64.41468349551978,
+                "delta": -8
+              }
+            ]
+          }
+        ],
+        "primaryElements": [
+          "metal",
+          "earth",
+          "fire"
+        ],
+        "supportiveElements": [],
+        "conditionalElements": [],
+        "neutralElements": [],
+        "unfavorableElements": [
+          "water",
+          "wood"
+        ],
+        "evidence": []
+      },
+      "johu": {
+        "status": "not_implemented"
+      },
+      "tonggwan": {
+        "status": "not_implemented"
+      },
+      "byeongyak": {
+        "status": "not_implemented"
+      },
+      "structure": {
+        "status": "not_implemented"
+      },
+      "synthesis": {
+        "status": "not_implemented"
+      }
     },
     "stemPreferences": {
       "status": "not_implemented",

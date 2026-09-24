@@ -26,6 +26,7 @@ import { assessRootDamage, calculateAdjustedStrength, emptyAdjustedStrength } fr
 import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
 import { emptyStructure, evaluateStructure } from "./interpretation/structure";
 import { emptyAdjustedDayMasterStrength, evaluateAdjustedDayMasterStrength } from "./interpretation/adjusted-daymaster-strength";
+import { emptyUsefulGods, evaluateEokbuUsefulGod } from "./interpretation/eokbu-useful-god";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -71,6 +72,9 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     strengthResult, strength?.nativeStrength ?? null, adjustedStrength);
   const structure = hiddenBranches && adjustedStrength.status === "implemented"
     ? evaluateStructure(pillars, hiddenBranches, strengthResult, adjustedStrength, relations) : emptyStructure();
+  const usefulGods = structure.specialStructure.status === "implemented"
+    ? evaluateEokbuUsefulGod(strengthResult, adjustedStrength, structure.specialStructure)
+    : emptyUsefulGods();
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -141,7 +145,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     relations,
     strength: strengthResult,
     structure,
-    usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 Useful-God Synthesis 구현 필요"),
+    usefulGods,
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
     branchPreferences: notImplemented("지장간·관계·운 evaluator 완성 후 계산"),
     nobleAndSpecialStars: notImplemented("noblemen-v1 및 sinsal-v1 테이블 구현 필요"),

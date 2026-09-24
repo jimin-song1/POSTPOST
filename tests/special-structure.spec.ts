@@ -8,6 +8,7 @@ import { calculateStrength } from "@/lib/saju/interpretation/strength";
 import { evaluateStructure } from "@/lib/saju/interpretation/structure";
 import { evaluateSpecialStructure } from "@/lib/saju/interpretation/special-structure";
 import { evaluateAdjustedDayMasterStrength } from "@/lib/saju/interpretation/adjusted-daymaster-strength";
+import { evaluateEokbuUsefulGod } from "@/lib/saju/interpretation/eokbu-useful-god";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
 import type { SpecialStructureType } from "@/types/special-structure";
@@ -214,7 +215,7 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
   it("S: integrates special structures and leaves useful gods unimplemented", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.structure.specialStructure.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("not_implemented");
+    expect(result.usefulGods.status).toBe("partial");
     expect(calculateSaju({ ...SYNTHETIC_INPUT, birthTimeKnown: false }).structure.specialStructure.status).toBe("not_implemented");
   });
   it("preserves the pure 乙亥/乙酉/甲子/戊辰 regression end to end", () => {
@@ -226,8 +227,20 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
     expect(result.specialStructure.candidates.map((row) => row.state)).toEqual([
       "REJECTED", "REJECTED", "REJECTED", "REJECTED", "NOT_APPLICABLE",
     ]);
-    expect(evaluateAdjustedDayMasterStrength(value.strength, value.native.nativeStrength, value.adjusted))
+    value.strength.adjusted = evaluateAdjustedDayMasterStrength(value.strength, value.native.nativeStrength, value.adjusted);
+    expect(value.strength.adjusted)
       .toMatchObject({ originalScore: 49, originalLevel: "중화신약",
         score: 48.56864702945582, level: "중화신약" });
+    expect(evaluateEokbuUsefulGod(value.strength, value.adjusted, result.specialStructure).eokbu)
+      .toMatchObject({ strengthSource: "adjusted", applicability: "STANDARD",
+        primaryElements: [], supportiveElements: ["water"], conditionalElements: ["wood"],
+        neutralElements: ["fire"], unfavorableElements: ["earth", "metal"],
+        elements: [
+          { element: "water", finalScore: 15, role: "SUPPORTIVE" },
+          { element: "wood", finalScore: 12, role: "CONDITIONAL" },
+          { element: "fire", finalScore: -3, role: "NEUTRAL" },
+          { element: "earth", finalScore: -7, role: "UNFAVORABLE" },
+          { element: "metal", finalScore: -12, role: "UNFAVORABLE" },
+        ] });
   });
 });

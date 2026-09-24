@@ -156,7 +156,7 @@ describe("SYNTHETIC_STRUCTURE_V1 — 建祿, 羊刃, and preserved axes", () => 
     expect(result.structure.ruleVersion).toBe("structure-v1");
     expect(result.structure.specialStructure.status).toBe("implemented");
     expect(result.structure.qualityEvaluation.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("not_implemented");
+    expect(result.usefulGods.status).toBe("partial");
   });
   it("keeps unavailable input explicit and unclassified", () => {
     expect(emptyStructure()).toMatchObject({ status: "not_implemented", primary: null,
