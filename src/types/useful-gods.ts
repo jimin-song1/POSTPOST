@@ -1,7 +1,8 @@
 import type { Branch, Element, ModuleStatus, PillarPosition, Stem,
-  StrengthLevel, StructureIntegrity, StructureType } from "./saju-analysis";
+  StructureIntegrity, StructureType } from "./saju-analysis";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { SpecialStructureState, SpecialStructureType } from "./special-structure";
+import type { TenGodCategory } from "@/rules/structure-useful-god.v1";
 
 export type EokbuElementRole = "PRIMARY" | "SUPPORTIVE" | "CONDITIONAL" | "NEUTRAL" | "UNFAVORABLE";
 export interface EokbuEvidence {
@@ -178,12 +179,59 @@ export interface ByeongyakResult {
   };
   evidence: ByeongyakEvidence[];
 }
+export type StructureUsefulRole = "PRIMARY_STRUCTURE" | "STRONG_STRUCTURE" |
+  "SUPPORTING_STRUCTURE" | "CONDITIONAL_STRUCTURE" | "NOT_NEEDED";
+export interface StructureUsefulSource {
+  type: "CORE" | "SUPPORT" | "RESCUE";
+  score: number;
+  structure: StructureType;
+  tenGodCategory: TenGodCategory;
+  currentlyActive: boolean;
+  damageId?: string;
+  rescueState?: "UNRESOLVED" | "ALREADY_RESCUED";
+}
+export interface StructureUsefulEvidence {
+  factor: "STRUCTURE_CORE" | "STRUCTURE_SUPPORT" | "STRUCTURE_RESCUE" |
+    "ELEMENT_AVAILABILITY" | "PRIMARY_STATUS" | "MIXED_CONTEXT" | "SPECIAL_STRUCTURE_CONTEXT";
+  delta: number;
+  details: Record<string, unknown>;
+}
+export interface StructureUsefulCandidate {
+  element: Element;
+  tenGodCategories: TenGodCategory[];
+  sources: StructureUsefulSource[];
+  availabilityPercentage: number;
+  availabilityAdjustment: number;
+  structuralScore: number;
+  finalScore: number;
+  role: StructureUsefulRole;
+  evidence: StructureUsefulEvidence[];
+}
+export interface StructureUsefulResult {
+  status: ModuleStatus;
+  ruleVersion: "structure-useful-god-v1";
+  coreRuleVersion: "structure-core-v1";
+  preferenceRuleVersion: "structure-useful-preference-v1";
+  interactionRuleVersion: "structure-interactions-v1";
+  rescueRuleVersion: "structure-rescue-v1";
+  structureType: StructureType | null;
+  applicability: "STANDARD" | "CAUTION_SPECIAL_STRUCTURE" | "LIMITED" | "NOT_APPLICABLE";
+  confidence: "HIGH" | "MEDIUM" | "LOW";
+  core: { tenGodCategory: TenGodCategory; element: Element } | null;
+  candidates: StructureUsefulCandidate[];
+  elementPreferences: Array<{ element: Element; score: number; role: StructureUsefulRole }>;
+  damageContext: Array<{ id: string; tenGod: string }>;
+  rescueContext: Array<{ id: string; tenGod: string; rescuesDamageId: string }>;
+  mixedContext: Array<{ candidate: StructureType; positions: PillarPosition[] }>;
+  specialStructureCaution: boolean;
+  evidence: StructureUsefulEvidence[];
+}
 export interface UsefulGodsResult {
   status: "partial" | "not_implemented";
   eokbu: EokbuResult;
   johu: JohuResult;
   tonggwan: TonggwanResult;
   byeongyak: ByeongyakResult;
-  structure: PendingUsefulGodModule;
+  structure: StructureUsefulResult;
   synthesis: PendingUsefulGodModule;
 }
