@@ -2,6 +2,8 @@ import type { BirthPlaceResolution, SajuInput } from "./saju-input";
 import type { TenGod } from "@/lib/saju/interpretation/ten-gods";
 import type { BranchHiddenStems } from "@/lib/saju/interpretation/hidden-stems";
 import type { TwelveStage } from "@/lib/saju/interpretation/twelve-stages";
+import type { SeasonalState } from "@/rules/seasonal-element-state.v1";
+import type { QiRole } from "@/lib/saju/interpretation/hidden-stems";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -39,6 +41,34 @@ export interface TwelveStagesValue {
   stages: Record<PillarPosition, TwelveStage>;
 }
 
+export interface ElementContribution {
+  source: `${PillarPosition}Stem` | `${PillarPosition}Branch`;
+  stem?: Stem;
+  stemWeight?: number;
+  branch?: Branch;
+  branchWeight?: number;
+  hiddenStem?: Stem;
+  hiddenRole?: QiRole;
+  allocationRatio?: number;
+  baseContribution: number;
+  element: Element;
+  seasonalState: SeasonalState;
+  seasonalMultiplier: number;
+  finalContribution: number;
+}
+
+export interface FiveElementsResult {
+  status: ModuleStatus;
+  ruleVersion: "five-elements-v1";
+  weightRuleVersion: "element-weight-v1";
+  seasonalStateRuleVersion: "seasonal-element-state-v1";
+  seasonalStrengthRuleVersion: "seasonal-strength-v1";
+  rawCount: Record<Element, number>;
+  nativeStrength: Record<Element, { score: number; percentage: number }> | null;
+  adjustedStrength: EvidenceResult;
+  evidence: ElementContribution[];
+}
+
 export interface LuckPeriod {
   ageRange: string;
   pillar: string;
@@ -66,11 +96,7 @@ export interface SajuAnalysis {
   tenGods: EvidenceResult<TenGodsValue>;
   hiddenStems: EvidenceResult<HiddenStemsValue>;
   twelveStages: EvidenceResult<TwelveStagesValue>;
-  fiveElements: {
-    rawCount: Record<Element, number>;
-    nativeStrength: EvidenceResult;
-    adjustedStrength: EvidenceResult;
-  };
+  fiveElements: FiveElementsResult;
   relations: EvidenceResult;
   strength: EvidenceResult<{ score: number; level: string }>;
   structure: EvidenceResult;

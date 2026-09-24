@@ -1,5 +1,6 @@
 import { notImplemented } from "./contracts";
 import { countRawElements } from "./fiveElements/raw-count";
+import { calculateNativeStrength } from "./fiveElements/native-strength";
 import { calculatePillars } from "./pillars/calculate-pillars";
 import { normalizeBirthTime } from "./time/normalize-birth-time";
 import { solarTermProvider } from "./solarTerms";
@@ -13,6 +14,9 @@ import { getTwelveStage } from "./interpretation/twelve-stages";
 import { TEN_GODS_V1 } from "@/rules/ten-gods.v1";
 import { HIDDEN_STEMS_V1 } from "@/rules/hidden-stems.v1";
 import { TWELVE_STAGES_V1 } from "@/rules/twelve-stages.v1";
+import { ELEMENT_WEIGHT_V1 } from "@/rules/element-weight.v1";
+import { SEASONAL_ELEMENT_STATE_V1 } from "@/rules/seasonal-element-state.v1";
+import { SEASONAL_STRENGTH_V1 } from "@/rules/seasonal-strength.v1";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -31,6 +35,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const pillars = supportedInput ? calculatePillars(normalized) : emptyPillars();
   const dayStem = pillars.day.stem;
   const hiddenBranches = dayStem ? byPosition((position) => getHiddenStems(pillars[position].branch!, dayStem)) : null;
+  const strength = hiddenBranches ? calculateNativeStrength(pillars, hiddenBranches) : null;
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -88,9 +93,15 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     hiddenStems,
     twelveStages,
     fiveElements: {
+      status: strength ? "implemented" : "not_implemented",
+      ruleVersion: "five-elements-v1",
+      weightRuleVersion: ELEMENT_WEIGHT_V1.rulesetVersion,
+      seasonalStateRuleVersion: SEASONAL_ELEMENT_STATE_V1.rulesetVersion,
+      seasonalStrengthRuleVersion: SEASONAL_STRENGTH_V1.rulesetVersion,
       rawCount: countRawElements(pillars),
-      nativeStrength: notImplemented("element-strength-v1 가중 세력 계산기 구현 필요"),
-      adjustedStrength: notImplemented("관계 엔진 적용 후 계산")
+      nativeStrength: strength?.nativeStrength ?? null,
+      adjustedStrength: notImplemented("관계 엔진 적용 후 계산"),
+      evidence: strength?.evidence ?? []
     },
     relations: notImplemented("relations-v1 관계 탐지 및 합화 evaluator 구현 필요"),
     strength: notImplemented<{ score: number; level: string }>("strength-weights-v1 기반 신강신약 evaluator 구현 필요"),
