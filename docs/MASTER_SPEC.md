@@ -212,7 +212,7 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 
 ## CORE MILESTONE 5 — 원국 관계 존재 탐지
 
-`relations-v1`은 완전한 네 기둥의 **존재 관계만** 찾는다. 천간 `stem-relations-v1`, 지지 `branch-relations-v1`, 형 `punishment-v1` 표를 사용한다. `targetElement`는 관행상 연관 오행에 대한 메타데이터이며 합화의 성립이나 오행 교체를 뜻하지 않는다. 모든 결과의 `transformed=null`, `transformation.status=not_implemented`, `strengthAdjustmentApplied=false`다. 원국의 `fiveElements.nativeStrength`, `fiveElements.adjustedStrength`, `strength`, 지장간과 통근 점수는 변경하지 않는다. 합과 충 등의 경쟁 여부·상쇄·우선순위도 평가하지 않는다.
+`relations-v1`은 완전한 네 기둥의 **존재 관계만** 찾는다. 천간 `stem-relations-v1`, 지지 `branch-relations-v1`, 형 `punishment-v1` 표를 사용한다. `targetElement`는 관행상 연관 오행에 대한 메타데이터이며 합화의 성립이나 오행 교체를 뜻하지 않는다. 모든 탐지 결과의 `transformed=null`, `strengthAdjustmentApplied=false`다. 원국의 `fiveElements.nativeStrength`, `fiveElements.adjustedStrength`, `strength`, 지장간과 통근 점수는 변경하지 않는다. 합과 충 등의 경쟁·방해 가능성은 아래 Milestone 6에서 탐지 결과를 입력으로 별도 평가한다.
 
 ### 천간 표 `stem-relations-v1`
 
@@ -246,3 +246,30 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 두 지지만 관찰된 삼합·방합·삼형은 `partial=true`, `complete=false`인 **부분 구성 탐지**로 기록한다. 반합 성립 또는 합화 판정은 하지 않는다. 세 글자 모두 있으면 `complete=true`, `partial=false`이며 해당 완성 구성의 부분 결과를 별도로 중복 반환하지 않는다. 같은 글자가 여러 기둥에 있으면 그룹 내 각 글자의 실제 위치 선택마다 별도 결과를 낸다.
 
 각 pair는 순서 없는 두 글자를 **서로 다른 위치 두 곳**에서 한 번만 탐지한다. 같은 조합이 다른 위치 쌍에 있으면 별도 `id`와 `positions`로 유지한다. 자형도 서로 다른 두 위치가 필수다. 삼합·방합·삼형은 `memberPositions`에 각 글자와 기둥의 대응을 저장한다. `present`는 표의 구성 순서이고 `evidence.characters`는 `evidence.positions`의 실제 기둥 순서다. 관계마다 `ruleVersion`·종류·위치·글자·표 규칙을 `evidence`에 남긴다. 동일한 기둥이 육합과 파 등 서로 다른 규칙에 걸리면 두 관계를 모두 반환한다. 형/파/해/원진으로 흉점수나 특정 사건을 추정하지 않는다.
+
+## CORE MILESTONE 6 — 합화 조건 및 상호작용 평가
+
+`transformation-v1`은 기존 `relations-v1`의 결과만 후보로 사용하고 관계 자체를 재탐지하지 않는다. 이 점수는 **POSTPOST 서비스의 custom evaluation coefficient**이며 고전 명리의 공식 수치가 아니다. `TRANSFORMED`는 **v1 조건의 충족도가 높다는 평가 상태**일 뿐 실제 오행 변환을 실행했다는 뜻이 아니다. 원래 천간·지장간·오행 기여도는 그대로다. `nativeStrength`, `strength-v1.score`, `adjustedStrength.status=not_implemented`도 그대로 유지한다.
+
+`transformation-v1` 점수 요인:
+
+| 요인 | 판정 | delta |
+| --- | --- | ---: |
+| 월령 상태 | `seasonal-element-state-v1`의 목표 오행: 旺 / 相 / 休 / 囚 / 死 | +3 / +3 / 0 / −1 / −2 |
+| 목표 오행 통근 | 네 지지의 `hidden-stems-v1` 본기·중기·여기 중 하나 이상 | +2, 한 번만 |
+| 목표 오행 투간 | 원국 네 천간 중 하나 이상. 합 당사자와 제3자 위치를 별도로 기록 | +1, 한 번만 |
+| 인접 | 두 글자 합의 위치가 년–월, 월–일, 일–시 | +1 |
+| 생조 | 목표 오행을 생하는 오행의 `fiveElements.nativeStrength.percentage` ≥ 10% | +1 |
+| 원래 오행의 강한 뿌리 | 천간합 당사자의 원래 오행이 어느 지지든 본기(mainQi)에 존재 | −1, 후보당 한 번 |
+
+`relation-interaction-v1`에서는 같은 영역(천간끼리 또는 지지끼리)의 **합 후보가 동일 기둥 위치를 공유할 때** 다른 후보마다 `COMPETING` −2를 남긴다. 천간합·육합·삼합·방합 중 완성/부분 구성 모두 합 후보에 포함한다. 후보 하나가 공유하는 충(`STEM_CLASH` 또는 `BRANCH_CLASH`)마다 `BLOCKING` −2를 남긴다. 서로 다른 영역의 동일 기둥 위치만으로는 경쟁이나 충 방해로 처리하지 않는다. 파·해·형·원진은 현재 방해 계수로 사용하지 않는다. 경쟁 후보나 충이 있어도 원래 관계나 후보를 삭제하지 않는다. 삼합·방합의 완전 연속 위치는 `adjacent` 메타데이터로 기록하지만 추가 점수는 주지 않는다.
+
+`score = Σ factors.delta`. 평가의 `evidence`는 factor별 근거와 delta를 보존하며 델타 합이 score와 일치한다. 임계값은 `score ≥ 5` `TRANSFORMED`, `3–4` `PARTIAL`, `0–2` `COMBINATION_ONLY`, `score < 0` `WEAK`다. 삼합·방합의 `partial=true`는 점수가 5 이상이어도 `PARTIAL`로 제한하며 음수라면 `WEAK`를 유지한다. 합 후보가 아닌 충·형·파·해·원진은 `NOT_APPLICABLE`, score 0, factors []로 반환한다. 지원되지 않는 출생 입력의 transformation은 `not_implemented`와 빈 evaluations다.
+
+`branch-combination-target-v1`은 육합에 한해 사용하는 **POSTPOST 선택 목표 오행 표**다. 학파별 차이가 있을 수 있으므로 `relations-v1`의 육합 존재 정보는 수정하지 않고 이 평가에만 사용한다.
+
+| 육합 | 子丑 | 寅亥 | 卯戌 | 辰酉 | 巳申 | 午未 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 목표 오행 | 土 | 木 | 火 | 金 | 水 | 土 |
+
+각 합 후보에는 `relationId`, 목표 오행, 요인, 경쟁 후보 ID, 방해 관계 ID를 저장한다. `interactions`는 source ID, 상대 ID, `COMPETING`/`BLOCKING`, 적용 delta와 규칙 버전을 별도로 기록한다. 모든 계수·임계값과 위 표를 변경할 때에는 규칙 버전을 올려 재검증한다. 원국 오행 기여도 이동·통근 손상·신강신약 재판정 및 실제 합화 적용은 다음 단계다.

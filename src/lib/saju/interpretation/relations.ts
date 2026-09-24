@@ -1,4 +1,4 @@
-import { notImplemented } from "../contracts";
+import { emptyTransformation } from "./transformation";
 import { RELATIONS_V1 } from "@/rules/relations.v1";
 import { STEM_RELATIONS_V1 } from "@/rules/stem-relations.v1";
 import { BRANCH_RELATIONS_V1 } from "@/rules/branch-relations.v1";
@@ -76,7 +76,7 @@ export function emptyRelations(): RelationsResult {
     heavenlyStems: { combinations: [], clashes: [] },
     earthlyBranches: { sixCombinations: [], threeHarmonies: [], directionalCombinations: [],
       clashes: [], punishments: [], breaks: [], harms: [], wonjin: [] },
-    transformation: notImplemented("합화 및 관계 간 상호작용은 후속 단계에서 평가"),
+    transformation: emptyTransformation(),
     strengthAdjustmentApplied: false, evidence: []
   };
 }
@@ -109,7 +109,7 @@ export function detectRelations(pillars: Record<PillarPosition, Pillar>): Relati
   const all = [...Object.values(heavenlyStems).flat(), ...Object.values(earthlyBranches).flat()];
   return {
     status: "implemented", ruleVersion: RELATIONS_V1.rulesetVersion, heavenlyStems, earthlyBranches,
-    transformation: notImplemented("합화 여부 및 관계 간 상호작용은 후속 단계에서 평가"),
+    transformation: emptyTransformation(),
     strengthAdjustmentApplied: false,
     evidence: all.map((relation) => ({ relationId: relation.id, ruleVersion: relation.ruleVersion,
       type: relation.type, positions: relation.positions,

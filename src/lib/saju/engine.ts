@@ -21,6 +21,7 @@ import { calculateStrength } from "./interpretation/strength";
 import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1 } from "@/rules/strength.v1";
 import { ROOTING_V1 } from "@/rules/rooting.v1";
 import { detectRelations, emptyRelations } from "./interpretation/relations";
+import { evaluateTransformation } from "./interpretation/transformation";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -40,6 +41,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const dayStem = pillars.day.stem;
   const hiddenBranches = dayStem ? byPosition((position) => getHiddenStems(pillars[position].branch!, dayStem)) : null;
   const strength = hiddenBranches ? calculateNativeStrength(pillars, hiddenBranches) : null;
+  const relations = supportedInput ? detectRelations(pillars) : emptyRelations();
+  if (hiddenBranches && strength) relations.transformation = evaluateTransformation(relations, pillars, hiddenBranches, strength.nativeStrength);
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -107,7 +110,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       adjustedStrength: notImplemented("관계 엔진 적용 후 계산"),
       evidence: strength?.evidence ?? []
     },
-    relations: supportedInput ? detectRelations(pillars) : emptyRelations(),
+    relations,
     strength: strength && hiddenBranches ? calculateStrength(pillars, hiddenBranches, strength.evidence) : {
       status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
       rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
