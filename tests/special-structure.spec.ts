@@ -10,6 +10,7 @@ import { evaluateSpecialStructure } from "@/lib/saju/interpretation/special-stru
 import { evaluateAdjustedDayMasterStrength } from "@/lib/saju/interpretation/adjusted-daymaster-strength";
 import { evaluateEokbuUsefulGod } from "@/lib/saju/interpretation/eokbu-useful-god";
 import { evaluateJohuUsefulGod } from "@/lib/saju/interpretation/johu-useful-god";
+import { evaluateTonggwanUsefulGod } from "@/lib/saju/interpretation/tonggwan-useful-god";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
 import type { SpecialStructureType } from "@/types/special-structure";
@@ -254,5 +255,14 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
           { element: "fire", score: 40, contributingStems: ["丁", "丙"] },
           { element: "metal", score: 10, contributingStems: ["庚"] },
         ] });
+    expect(evaluateTonggwanUsefulGod(value.adjusted, value.native.nativeStrength,
+      value.relations, result.specialStructure)).toMatchObject({
+        status: "implemented", strengthSource: "adjusted", applicability: "APPLICABLE",
+        conflicts: [{ controller: "metal", controlled: "wood", bridge: "water",
+          conflictState: "STRONG_CONFLICT" }],
+        rankedCandidates: [{ controller: "metal", controlled: "wood", bridge: "water",
+          conflictState: "STRONG_CONFLICT", bridgeNeed: "PRESENT", score: 25, state: "APPLICABLE" }],
+        elementPreferences: [{ element: "water", score: 25, role: "STRONG_BRIDGE" }],
+      });
   });
 });
