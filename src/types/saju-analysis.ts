@@ -1,3 +1,4 @@
+import type { SpecialStructureResult } from "./special-structure";
 import type { BirthPlaceResolution, SajuInput } from "./saju-input";
 import type { TenGod } from "@/lib/saju/interpretation/ten-gods";
 import type { BranchHiddenStems } from "@/lib/saju/interpretation/hidden-stems";
@@ -372,7 +373,7 @@ export interface StructureResult {
   dayMasterStrength: { score: number; level: StrengthLevel } | null;
   adjustedElementContext: { status: ModuleStatus; ruleVersion: "adjusted-strength-v1" };
   transformationContext: Array<{ relationId: string; state: TransformationState }>;
-  specialStructure: EvidenceResult;
+  specialStructure: SpecialStructureResult;
   qualityEvaluation: StructureQualityResult;
   evidence: StructureEvidence[];
 }

@@ -141,12 +141,12 @@ describe("SYNTHETIC_STRUCTURE_V1 — 建祿, 羊刃, and preserved axes", () => 
     expect(a.structure().primary?.source).toEqual(b.structure().primary?.source);
     expect(a.structure().primary?.type).toBe("정관격");
   });
-  it("returns deterministic evidence, separate strength metadata and pending advanced evaluations", () => {
+  it("returns deterministic evidence, separate strength metadata and conservative special candidates", () => {
     const value = synthetic(["乙", "辛", "甲", "戊"], ["亥", "酉", "子", "辰"]);
     const result = value.structure();
     expect(result).toEqual(value.structure());
     expect(result.adjustedElementContext).toMatchObject({ status: "implemented", ruleVersion: "adjusted-strength-v1" });
-    expect(result.specialStructure.status).toBe("not_implemented");
+    expect(result.specialStructure.status).toBe("implemented");
     expect(result.qualityEvaluation.status).toBe("implemented");
     expect(result.evidence).toContainEqual(expect.objectContaining({ factor: "EXPOSURE", stem: "辛", positions: ["month"] }));
   });
@@ -154,7 +154,7 @@ describe("SYNTHETIC_STRUCTURE_V1 — 建祿, 羊刃, and preserved axes", () => 
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.structure.status).toBe("implemented");
     expect(result.structure.ruleVersion).toBe("structure-v1");
-    expect(result.structure.specialStructure.status).toBe("not_implemented");
+    expect(result.structure.specialStructure.status).toBe("implemented");
     expect(result.structure.qualityEvaluation.status).toBe("implemented");
     expect(result.usefulGods.status).toBe("not_implemented");
   });
