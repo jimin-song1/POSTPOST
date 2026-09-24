@@ -7,6 +7,7 @@ import type { EokbuElementPreference, EokbuElementRole, EokbuEvidence,
 import { emptyJohu } from "./johu-useful-god";
 import { emptyTonggwan } from "./tonggwan-useful-god";
 import { emptyByeongyak } from "./byeongyak-useful-god";
+import { emptyStructureUseful } from "./structure-useful-god";
 
 const pending = { status: "not_implemented" } as const;
 export function emptyUsefulGods(): UsefulGodsResult {
@@ -16,7 +17,8 @@ export function emptyUsefulGods(): UsefulGodsResult {
     strengthScore: null, strengthLevel: null, applicability: "STANDARD", conditional: false,
     confidence: "LOW", specialCandidates: [], elements: [], primaryElements: [],
     supportiveElements: [], conditionalElements: [], neutralElements: [], unfavorableElements: [], evidence: [],
-  }, johu: emptyJohu(), tonggwan: emptyTonggwan(), byeongyak: emptyByeongyak(), structure: pending, synthesis: pending };
+  }, johu: emptyJohu(), tonggwan: emptyTonggwan(), byeongyak: emptyByeongyak(),
+  structure: emptyStructureUseful(), synthesis: pending };
 }
 
 export function eokbuRole(score: number): EokbuElementRole {
@@ -76,5 +78,6 @@ export function evaluateEokbuUsefulGod(strength: StrengthResult,
     elements, primaryElements: byRole("PRIMARY"), supportiveElements: byRole("SUPPORTIVE"),
     conditionalElements: byRole("CONDITIONAL"), neutralElements: byRole("NEUTRAL"),
     unfavorableElements: byRole("UNFAVORABLE"), evidence: overallEvidence,
-  }, johu: emptyJohu(), tonggwan: emptyTonggwan(), byeongyak: emptyByeongyak(), structure: pending, synthesis: pending };
+  }, johu: emptyJohu(), tonggwan: emptyTonggwan(), byeongyak: emptyByeongyak(),
+  structure: emptyStructureUseful(), synthesis: pending };
 }
