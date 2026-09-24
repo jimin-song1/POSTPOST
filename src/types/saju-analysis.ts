@@ -286,6 +286,63 @@ export interface RelationsResult {
   evidence: RelationEvidence[];
 }
 
+export type StructureType = "정관격" | "편관격" | "정재격" | "편재격" |
+  "식신격" | "상관격" | "정인격" | "편인격" | "건록격" | "양인격";
+export type StructureStatus = "ESTABLISHED" | "UNEXPOSED" | "MIXED" | "SPECIAL_CANDIDATE" | "UNRESOLVED";
+export interface StructureSource {
+  branch: Branch;
+  hiddenStem: Stem;
+  hiddenRole: QiRole;
+  tenGod: TenGod["korean"];
+  tenGodHanja: TenGod["hanja"];
+}
+export interface StructureEvidence {
+  factor: "MONTH_MAIN_QI" | "EXPOSURE" | "SECONDARY_CANDIDATE" | "MIXED_PATTERN" |
+    "SPECIAL_RULE" | "TRANSFORMATION_CONTEXT" | "UNRESOLVED";
+  monthBranch: Branch;
+  hiddenStem?: Stem;
+  role?: QiRole;
+  dayMaster?: Stem;
+  tenGod?: TenGod["korean"];
+  candidate?: StructureType;
+  stem?: Stem;
+  positions?: PillarPosition[];
+  exposed?: boolean;
+  result?: StructureType | null;
+  ruleVersion?: string;
+  relationId?: string;
+  transformationState?: TransformationState;
+}
+export interface StructureCandidate {
+  type: StructureType;
+  source: StructureSource;
+  exposed: boolean;
+  exposedPositions: PillarPosition[];
+  status: StructureStatus;
+  confidence: "HIGH" | "MEDIUM" | "LOW";
+  evidence: StructureEvidence[];
+}
+export interface StructureResult {
+  status: ModuleStatus;
+  ruleVersion: "structure-v1";
+  standardRuleVersion: "standard-structure-v1";
+  monthCommandRuleVersion: "month-command-v1";
+  deokRokRuleVersion: "deok-rok-structure-v1";
+  yangBladeRuleVersion: "yang-blade-structure-v1";
+  classificationStatus: StructureStatus;
+  primary: StructureCandidate | null;
+  secondary: StructureCandidate[];
+  specialCandidates: StructureCandidate[];
+  exposures: Array<{ stem: Stem; role: QiRole; exposed: boolean; positions: PillarPosition[] }>;
+  mixedPatterns: Array<{ candidate: StructureType; sourceRole: QiRole; exposed: true; positions: PillarPosition[] }>;
+  dayMasterStrength: { score: number; level: StrengthLevel } | null;
+  adjustedElementContext: { status: ModuleStatus; ruleVersion: "adjusted-strength-v1" };
+  transformationContext: Array<{ relationId: string; state: TransformationState }>;
+  specialStructure: EvidenceResult;
+  qualityEvaluation: EvidenceResult;
+  evidence: StructureEvidence[];
+}
+
 export interface LuckPeriod {
   ageRange: string;
   pillar: string;
@@ -316,7 +373,7 @@ export interface SajuAnalysis {
   fiveElements: FiveElementsResult;
   relations: RelationsResult;
   strength: StrengthResult;
-  structure: EvidenceResult;
+  structure: StructureResult;
   usefulGods: EvidenceResult;
   stemPreferences: EvidenceResult;
   branchPreferences: EvidenceResult;

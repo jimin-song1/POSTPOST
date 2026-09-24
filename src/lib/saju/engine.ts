@@ -24,6 +24,7 @@ import { detectRelations, emptyRelations } from "./interpretation/relations";
 import { evaluateTransformation } from "./interpretation/transformation";
 import { assessRootDamage, calculateAdjustedStrength, emptyAdjustedStrength } from "./fiveElements/relation-effects";
 import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
+import { emptyStructure, evaluateStructure } from "./interpretation/structure";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -64,6 +65,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       adjustedRootingScore: assessed.adjustedRootingScore,
       rootDamage: assessed.rootDamage, adjustedScore: null };
   }
+  const structure = hiddenBranches && adjustedStrength.status === "implemented"
+    ? evaluateStructure(pillars, hiddenBranches, strengthResult, adjustedStrength, relations) : emptyStructure();
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -133,7 +136,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     },
     relations,
     strength: strengthResult,
-    structure: notImplemented("격국 evaluator 구현 필요"),
+    structure,
     usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"),
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
     branchPreferences: notImplemented("지장간·관계·운 evaluator 완성 후 계산"),

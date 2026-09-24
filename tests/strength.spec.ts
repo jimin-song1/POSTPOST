@@ -123,7 +123,7 @@ describe("SYNTHETIC_STRENGTH_V1", () => {
     expect(result.fiveElements.adjustedStrength.status).toBe("implemented");
     expect(result.relations.status).toBe("implemented");
     expect(result.relations.transformation.status).toBe("implemented");
-    expect(result.structure.status).toBe("not_implemented");
+    expect(result.structure.status).toBe("implemented");
     expect(result.usefulGods.status).toBe("not_implemented");
   });
   it("returns an explicit unavailable result when pillars cannot be calculated", () => {
