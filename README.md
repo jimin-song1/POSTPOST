@@ -18,4 +18,4 @@ POST
 
 ## SAJU CORE MILESTONE 2
 
-십성, 12지지 지장간(본기·중기·여기), 10천간 십이운성, 오행 기본 가중 세력과 일간 세력, 원국 천간·지지 관계의 **존재 여부**를 규칙표 기반으로 계산합니다. `fiveElements.rawCount`는 보이는 여덟 글자, `nativeStrength`는 지장간 배분과 월령 배율을 반영한 점수입니다. `strength`는 득령·통근·득지·득세·득시를 사용합니다. `relations`는 합·충·형·파·해·원진을 찾지만 합화나 영향력은 판정하지 않습니다. `adjustedStrength`, 합화, 격국, 용신, 신살, 세운·월운, AI 해석은 아직 `not_implemented`입니다. [규칙표](docs/MASTER_SPEC.md#core-milestone-5--원국-관계-존재-탐지)를 참고하세요.
+십성, 12지지 지장간(본기·중기·여기), 10천간 십이운성, 오행 기본 가중 세력과 일간 세력, 원국 천간·지지 관계를 규칙표 기반으로 계산합니다. `fiveElements.rawCount`는 보이는 여덟 글자, `nativeStrength`는 지장간 배분과 월령 배율을 반영한 점수입니다. `strength`는 득령·통근·득지·득세·득시를 사용합니다. `relations`는 합·충·형·파·해·원진을 찾고, `transformation`은 합의 작동 조건과 경쟁·방해를 평가합니다. 실제 오행 변환과 `adjustedStrength`, 격국, 용신, 신살, 세운·월운, AI 해석은 아직 `not_implemented`입니다. [규칙표](docs/MASTER_SPEC.md#core-milestone-6--합화-조건-및-상호작용-평가)를 참고하세요.

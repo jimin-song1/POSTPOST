@@ -162,6 +162,43 @@ export interface RelationEvidence {
   complete?: boolean;
   partial?: boolean;
 }
+export type TransformationState = "TRANSFORMED" | "PARTIAL" | "COMBINATION_ONLY" | "WEAK" | "NOT_APPLICABLE";
+export interface TransformationFactor {
+  factor: "season" | "targetRoot" | "targetExposure" | "adjacency" | "generatingSupport" |
+    "blockingClash" | "competition" | "originalStrongRoot";
+  delta: number;
+  reason: string;
+  relatedRelationId?: string;
+  details?: Record<string, unknown>;
+}
+export interface TransformationEvaluation {
+  relationId: string;
+  relationType: RelationPairType | RelationGroup["type"];
+  targetElement: Element | null;
+  score: number;
+  state: TransformationState;
+  factors: TransformationFactor[];
+  competingRelations: string[];
+  blockingRelations: string[];
+  adjacent: boolean | null;
+  complete: boolean | null;
+  evidence: TransformationFactor[];
+}
+export interface RelationInteraction {
+  sourceRelationId: string;
+  interactingRelationId: string;
+  interactionType: "COMPETING" | "BLOCKING";
+  scoreDelta: number;
+  ruleVersion: "relation-interaction-v1";
+}
+export interface TransformationResult {
+  status: ModuleStatus;
+  ruleVersion: "transformation-v1";
+  interactionRuleVersion: "relation-interaction-v1";
+  branchTargetRuleVersion: "branch-combination-target-v1";
+  evaluations: TransformationEvaluation[];
+  interactions: RelationInteraction[];
+}
 export interface RelationsResult {
   status: ModuleStatus;
   ruleVersion: "relations-v1";
@@ -176,7 +213,7 @@ export interface RelationsResult {
     harms: RelationPair<Branch>[];
     wonjin: RelationPair<Branch>[];
   };
-  transformation: EvidenceResult;
+  transformation: TransformationResult;
   strengthAdjustmentApplied: false;
   evidence: RelationEvidence[];
 }

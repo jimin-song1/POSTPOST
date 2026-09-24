@@ -748,10 +748,919 @@
         "wonjin": []
       },
       "transformation": {
-        "status": "not_implemented",
-        "value": null,
-        "evidence": [],
-        "todo": "합화 여부 및 관계 간 상호작용은 후속 단계에서 평가"
+        "status": "implemented",
+        "ruleVersion": "transformation-v1",
+        "interactionRuleVersion": "relation-interaction-v1",
+        "branchTargetRuleVersion": "branch-combination-target-v1",
+        "evaluations": [
+          {
+            "relationId": "STEM_COMBINATION:month-hour",
+            "relationType": "STEM_COMBINATION",
+            "targetElement": "wood",
+            "score": 6,
+            "state": "TRANSFORMED",
+            "factors": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [],
+                  "thirdPartyPositions": [
+                    "year",
+                    "day"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "originalStrongRoot",
+                "delta": -1,
+                "reason": "합 참여 천간의 원래 오행에 본기 뿌리 존재",
+                "details": {
+                  "originalStrongRoots": [
+                    {
+                      "stem": "丁",
+                      "participantPosition": "month",
+                      "rootBranch": "午",
+                      "rootPosition": "hour",
+                      "role": "mainQi"
+                    }
+                  ]
+                }
+              }
+            ],
+            "evidence": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [],
+                  "thirdPartyPositions": [
+                    "year",
+                    "day"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "originalStrongRoot",
+                "delta": -1,
+                "reason": "합 참여 천간의 원래 오행에 본기 뿌리 존재",
+                "details": {
+                  "originalStrongRoots": [
+                    {
+                      "stem": "丁",
+                      "participantPosition": "month",
+                      "rootBranch": "午",
+                      "rootPosition": "hour",
+                      "role": "mainQi"
+                    }
+                  ]
+                }
+              }
+            ],
+            "competingRelations": [],
+            "blockingRelations": [],
+            "adjacent": false,
+            "complete": null
+          },
+          {
+            "relationId": "SIX_COMBINATION:day-hour",
+            "relationType": "SIX_COMBINATION",
+            "targetElement": "earth",
+            "score": -2,
+            "state": "WEAK",
+            "factors": [
+              {
+                "factor": "season",
+                "delta": -2,
+                "reason": "월지 卯의 목표 오행 earth: 死",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "死",
+                  "targetElement": "earth"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "戊",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "己",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "hour",
+                      "branch": "午",
+                      "hiddenStem": "己",
+                      "role": "residualQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "adjacency",
+                "delta": 1,
+                "reason": "두 기둥 인접",
+                "details": {
+                  "positions": [
+                    "day",
+                    "hour"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "fire",
+                  "percentage": 20.43549474901243,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+              }
+            ],
+            "evidence": [
+              {
+                "factor": "season",
+                "delta": -2,
+                "reason": "월지 卯의 목표 오행 earth: 死",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "死",
+                  "targetElement": "earth"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "戊",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "己",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "hour",
+                      "branch": "午",
+                      "hiddenStem": "己",
+                      "role": "residualQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "adjacency",
+                "delta": 1,
+                "reason": "두 기둥 인접",
+                "details": {
+                  "positions": [
+                    "day",
+                    "hour"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "fire",
+                  "percentage": 20.43549474901243,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+              }
+            ],
+            "competingRelations": [
+              "THREE_HARMONY:亥卯未:month-day",
+              "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+            ],
+            "blockingRelations": [],
+            "adjacent": true,
+            "complete": null
+          },
+          {
+            "relationId": "THREE_HARMONY:亥卯未:month-day",
+            "relationType": "THREE_HARMONY",
+            "targetElement": "wood",
+            "score": 1,
+            "state": "COMBINATION_ONLY",
+            "factors": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [
+                    "day"
+                  ],
+                  "thirdPartyPositions": [
+                    "year"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "SIX_COMBINATION:day-hour"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+              }
+            ],
+            "evidence": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [
+                    "day"
+                  ],
+                  "thirdPartyPositions": [
+                    "year"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "SIX_COMBINATION:day-hour"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+              }
+            ],
+            "competingRelations": [
+              "SIX_COMBINATION:day-hour",
+              "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+              "DIRECTIONAL_COMBINATION:巳午未:day-hour"
+            ],
+            "blockingRelations": [],
+            "adjacent": true,
+            "complete": false
+          },
+          {
+            "relationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+            "relationType": "DIRECTIONAL_COMBINATION",
+            "targetElement": "wood",
+            "score": 5,
+            "state": "PARTIAL",
+            "factors": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [
+                    "year"
+                  ],
+                  "thirdPartyPositions": [
+                    "day"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              }
+            ],
+            "evidence": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 wood: 旺",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "旺",
+                  "targetElement": "wood"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "year",
+                      "branch": "辰",
+                      "hiddenStem": "乙",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "month",
+                      "branch": "卯",
+                      "hiddenStem": "乙",
+                      "role": "mainQi"
+                    },
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "乙",
+                      "role": "middleQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "year",
+                    "day"
+                  ],
+                  "participantPositions": [
+                    "year"
+                  ],
+                  "thirdPartyPositions": [
+                    "day"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "water",
+                  "percentage": 11.947201079102033,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              }
+            ],
+            "competingRelations": [
+              "THREE_HARMONY:亥卯未:month-day"
+            ],
+            "blockingRelations": [],
+            "adjacent": true,
+            "complete": false
+          },
+          {
+            "relationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "relationType": "DIRECTIONAL_COMBINATION",
+            "targetElement": "fire",
+            "score": 3,
+            "state": "PARTIAL",
+            "factors": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 fire: 相",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "相",
+                  "targetElement": "fire"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "丁",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "hour",
+                      "branch": "午",
+                      "hiddenStem": "丁",
+                      "role": "mainQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "month"
+                  ],
+                  "participantPositions": [],
+                  "thirdPartyPositions": [
+                    "month"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "wood",
+                  "percentage": 50.44802004046633,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "SIX_COMBINATION:day-hour"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              }
+            ],
+            "evidence": [
+              {
+                "factor": "season",
+                "delta": 3,
+                "reason": "월지 卯의 목표 오행 fire: 相",
+                "details": {
+                  "monthBranch": "卯",
+                  "seasonalState": "相",
+                  "targetElement": "fire"
+                }
+              },
+              {
+                "factor": "targetRoot",
+                "delta": 2,
+                "reason": "목표 오행 지장간 통근",
+                "details": {
+                  "roots": [
+                    {
+                      "position": "day",
+                      "branch": "未",
+                      "hiddenStem": "丁",
+                      "role": "residualQi"
+                    },
+                    {
+                      "position": "hour",
+                      "branch": "午",
+                      "hiddenStem": "丁",
+                      "role": "mainQi"
+                    }
+                  ]
+                }
+              },
+              {
+                "factor": "targetExposure",
+                "delta": 1,
+                "reason": "목표 오행 천간 투출",
+                "details": {
+                  "exposedPositions": [
+                    "month"
+                  ],
+                  "participantPositions": [],
+                  "thirdPartyPositions": [
+                    "month"
+                  ]
+                }
+              },
+              {
+                "factor": "generatingSupport",
+                "delta": 1,
+                "reason": "목표 오행을 생하는 오행의 원국 비중 충족",
+                "details": {
+                  "generator": "wood",
+                  "percentage": 50.44802004046633,
+                  "minimum": 10
+                }
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "SIX_COMBINATION:day-hour"
+              },
+              {
+                "factor": "competition",
+                "delta": -2,
+                "reason": "합 후보의 참여 위치 공유",
+                "relatedRelationId": "THREE_HARMONY:亥卯未:month-day"
+              }
+            ],
+            "competingRelations": [
+              "SIX_COMBINATION:day-hour",
+              "THREE_HARMONY:亥卯未:month-day"
+            ],
+            "blockingRelations": [],
+            "adjacent": true,
+            "complete": false
+          },
+          {
+            "relationId": "BRANCH_BREAK:month-hour",
+            "relationType": "BRANCH_BREAK",
+            "targetElement": null,
+            "score": 0,
+            "state": "NOT_APPLICABLE",
+            "factors": [],
+            "evidence": [],
+            "competingRelations": [],
+            "blockingRelations": [],
+            "adjacent": null,
+            "complete": null
+          },
+          {
+            "relationId": "BRANCH_HARM:year-month",
+            "relationType": "BRANCH_HARM",
+            "targetElement": null,
+            "score": 0,
+            "state": "NOT_APPLICABLE",
+            "factors": [],
+            "evidence": [],
+            "competingRelations": [],
+            "blockingRelations": [],
+            "adjacent": null,
+            "complete": null
+          }
+        ],
+        "interactions": [
+          {
+            "sourceRelationId": "SIX_COMBINATION:day-hour",
+            "interactingRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "SIX_COMBINATION:day-hour",
+            "interactingRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactingRelationId": "SIX_COMBINATION:day-hour",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactingRelationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactingRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+            "interactingRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "interactingRelationId": "SIX_COMBINATION:day-hour",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          },
+          {
+            "sourceRelationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "interactingRelationId": "THREE_HARMONY:亥卯未:month-day",
+            "interactionType": "COMPETING",
+            "scoreDelta": -2,
+            "ruleVersion": "relation-interaction-v1"
+          }
+        ]
       },
       "strengthAdjustmentApplied": false,
       "evidence": [
@@ -1181,7 +2090,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-24T12:19:00.840Z",
+      "calculatedAt": "2026-09-24T12:32:47.412Z",
       "aiCalculationUsed": false
     }
   }

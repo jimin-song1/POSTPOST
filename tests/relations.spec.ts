@@ -165,7 +165,7 @@ describe("SYNTHETIC_RELATIONS_V1 — groups and position identity", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.relations.status).toBe("implemented");
     expect(result.relations.ruleVersion).toBe("relations-v1");
-    expect(result.relations.transformation.status).toBe("not_implemented");
+    expect(result.relations.transformation.status).toBe("implemented");
     expect(result.relations.strengthAdjustmentApplied).toBe(false);
     expect(result.fiveElements.adjustedStrength.status).toBe("not_implemented");
     expect(result.strength.ruleVersion).toBe("strength-v1");
