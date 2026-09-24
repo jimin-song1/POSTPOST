@@ -561,10 +561,309 @@
       ]
     },
     "relations": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "relations-v1 관계 탐지 및 합화 evaluator 구현 필요"
+      "status": "implemented",
+      "ruleVersion": "relations-v1",
+      "heavenlyStems": {
+        "combinations": [
+          {
+            "id": "STEM_COMBINATION:month-hour",
+            "type": "STEM_COMBINATION",
+            "members": [
+              "丁",
+              "壬"
+            ],
+            "positions": [
+              "month",
+              "hour"
+            ],
+            "ruleVersion": "stem-relations-v1",
+            "rule": "丁壬合木",
+            "exists": true,
+            "transformed": null,
+            "targetElement": "wood"
+          }
+        ],
+        "clashes": []
+      },
+      "earthlyBranches": {
+        "sixCombinations": [
+          {
+            "id": "SIX_COMBINATION:day-hour",
+            "type": "SIX_COMBINATION",
+            "members": [
+              "未",
+              "午"
+            ],
+            "positions": [
+              "day",
+              "hour"
+            ],
+            "ruleVersion": "branch-relations-v1",
+            "rule": "午未六合",
+            "exists": true,
+            "transformed": null
+          }
+        ],
+        "threeHarmonies": [
+          {
+            "id": "THREE_HARMONY:亥卯未:month-day",
+            "type": "THREE_HARMONY",
+            "group": [
+              "亥",
+              "卯",
+              "未"
+            ],
+            "present": [
+              "卯",
+              "未"
+            ],
+            "memberPositions": [
+              {
+                "branch": "卯",
+                "position": "month"
+              },
+              {
+                "branch": "未",
+                "position": "day"
+              }
+            ],
+            "positions": [
+              "month",
+              "day"
+            ],
+            "complete": false,
+            "partial": true,
+            "ruleVersion": "branch-relations-v1",
+            "rule": "亥卯未三合木",
+            "transformed": null,
+            "targetElement": "wood"
+          }
+        ],
+        "directionalCombinations": [
+          {
+            "id": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+            "type": "DIRECTIONAL_COMBINATION",
+            "group": [
+              "寅",
+              "卯",
+              "辰"
+            ],
+            "present": [
+              "卯",
+              "辰"
+            ],
+            "memberPositions": [
+              {
+                "branch": "卯",
+                "position": "month"
+              },
+              {
+                "branch": "辰",
+                "position": "year"
+              }
+            ],
+            "positions": [
+              "year",
+              "month"
+            ],
+            "complete": false,
+            "partial": true,
+            "ruleVersion": "branch-relations-v1",
+            "rule": "寅卯辰方合木",
+            "transformed": null,
+            "targetElement": "wood"
+          },
+          {
+            "id": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+            "type": "DIRECTIONAL_COMBINATION",
+            "group": [
+              "巳",
+              "午",
+              "未"
+            ],
+            "present": [
+              "午",
+              "未"
+            ],
+            "memberPositions": [
+              {
+                "branch": "午",
+                "position": "hour"
+              },
+              {
+                "branch": "未",
+                "position": "day"
+              }
+            ],
+            "positions": [
+              "day",
+              "hour"
+            ],
+            "complete": false,
+            "partial": true,
+            "ruleVersion": "branch-relations-v1",
+            "rule": "巳午未方合火",
+            "transformed": null,
+            "targetElement": "fire"
+          }
+        ],
+        "clashes": [],
+        "punishments": [],
+        "breaks": [
+          {
+            "id": "BRANCH_BREAK:month-hour",
+            "type": "BRANCH_BREAK",
+            "members": [
+              "卯",
+              "午"
+            ],
+            "positions": [
+              "month",
+              "hour"
+            ],
+            "ruleVersion": "branch-relations-v1",
+            "rule": "卯午破",
+            "exists": true,
+            "transformed": null
+          }
+        ],
+        "harms": [
+          {
+            "id": "BRANCH_HARM:year-month",
+            "type": "BRANCH_HARM",
+            "members": [
+              "辰",
+              "卯"
+            ],
+            "positions": [
+              "year",
+              "month"
+            ],
+            "ruleVersion": "branch-relations-v1",
+            "rule": "卯辰害",
+            "exists": true,
+            "transformed": null
+          }
+        ],
+        "wonjin": []
+      },
+      "transformation": {
+        "status": "not_implemented",
+        "value": null,
+        "evidence": [],
+        "todo": "합화 여부 및 관계 간 상호작용은 후속 단계에서 평가"
+      },
+      "strengthAdjustmentApplied": false,
+      "evidence": [
+        {
+          "relationId": "STEM_COMBINATION:month-hour",
+          "ruleVersion": "stem-relations-v1",
+          "type": "STEM_COMBINATION",
+          "positions": [
+            "month",
+            "hour"
+          ],
+          "characters": [
+            "丁",
+            "壬"
+          ],
+          "rule": "丁壬合木",
+          "targetElement": "wood"
+        },
+        {
+          "relationId": "SIX_COMBINATION:day-hour",
+          "ruleVersion": "branch-relations-v1",
+          "type": "SIX_COMBINATION",
+          "positions": [
+            "day",
+            "hour"
+          ],
+          "characters": [
+            "未",
+            "午"
+          ],
+          "rule": "午未六合"
+        },
+        {
+          "relationId": "THREE_HARMONY:亥卯未:month-day",
+          "ruleVersion": "branch-relations-v1",
+          "type": "THREE_HARMONY",
+          "positions": [
+            "month",
+            "day"
+          ],
+          "characters": [
+            "卯",
+            "未"
+          ],
+          "rule": "亥卯未三合木",
+          "targetElement": "wood",
+          "complete": false,
+          "partial": true
+        },
+        {
+          "relationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+          "ruleVersion": "branch-relations-v1",
+          "type": "DIRECTIONAL_COMBINATION",
+          "positions": [
+            "year",
+            "month"
+          ],
+          "characters": [
+            "辰",
+            "卯"
+          ],
+          "rule": "寅卯辰方合木",
+          "targetElement": "wood",
+          "complete": false,
+          "partial": true
+        },
+        {
+          "relationId": "DIRECTIONAL_COMBINATION:巳午未:day-hour",
+          "ruleVersion": "branch-relations-v1",
+          "type": "DIRECTIONAL_COMBINATION",
+          "positions": [
+            "day",
+            "hour"
+          ],
+          "characters": [
+            "未",
+            "午"
+          ],
+          "rule": "巳午未方合火",
+          "targetElement": "fire",
+          "complete": false,
+          "partial": true
+        },
+        {
+          "relationId": "BRANCH_BREAK:month-hour",
+          "ruleVersion": "branch-relations-v1",
+          "type": "BRANCH_BREAK",
+          "positions": [
+            "month",
+            "hour"
+          ],
+          "characters": [
+            "卯",
+            "午"
+          ],
+          "rule": "卯午破"
+        },
+        {
+          "relationId": "BRANCH_HARM:year-month",
+          "ruleVersion": "branch-relations-v1",
+          "type": "BRANCH_HARM",
+          "positions": [
+            "year",
+            "month"
+          ],
+          "characters": [
+            "辰",
+            "卯"
+          ],
+          "rule": "卯辰害"
+        }
+      ]
     },
     "strength": {
       "status": "implemented",
@@ -882,7 +1181,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-24T11:59:43.949Z",
+      "calculatedAt": "2026-09-24T12:19:00.840Z",
       "aiCalculationUsed": false
     }
   }

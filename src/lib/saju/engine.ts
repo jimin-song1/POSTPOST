@@ -20,6 +20,7 @@ import { SEASONAL_STRENGTH_V1 } from "@/rules/seasonal-strength.v1";
 import { calculateStrength } from "./interpretation/strength";
 import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1 } from "@/rules/strength.v1";
 import { ROOTING_V1 } from "@/rules/rooting.v1";
+import { detectRelations, emptyRelations } from "./interpretation/relations";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -106,7 +107,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       adjustedStrength: notImplemented("관계 엔진 적용 후 계산"),
       evidence: strength?.evidence ?? []
     },
-    relations: notImplemented("relations-v1 관계 탐지 및 합화 evaluator 구현 필요"),
+    relations: supportedInput ? detectRelations(pillars) : emptyRelations(),
     strength: strength && hiddenBranches ? calculateStrength(pillars, hiddenBranches, strength.evidence) : {
       status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
       rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
