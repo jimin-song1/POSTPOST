@@ -70,7 +70,7 @@ describe("SYNTHETIC_FIVE_ELEMENTS_v1", () => {
     expect(result.fiveElements.ruleVersion).toBe("five-elements-v1");
     expect(result.fiveElements.nativeStrength?.wood.score).toBeGreaterThan(0);
     expect(result.fiveElements.adjustedStrength.status).toBe("not_implemented");
-    expect(result.strength.status).toBe("not_implemented");
+    expect(result.strength.status).toBe("implemented");
     expect(result.fiveElements.evidence.some((item) => item.source === "monthBranch" && item.branchWeight === 24)).toBe(true);
   });
 });
