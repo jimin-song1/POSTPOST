@@ -521,3 +521,15 @@ medicine availability는 disease와 strategy가 먼저 정해진 뒤에만 적�
 같은 element가 여러 disease의 약이면 후보 점수를 내림차순으로 정렬하여 `1.0, 0.5, 0.25` diminishing weight로 집계한다. 단순 합산하지 않는다. disease가 없으면 `NOT_APPLICABLE`, 모두 연결 구제되었으면 `ALREADY_TREATED`, active disease에 필요한 medicine이 있으면 `APPLICABLE`, disease는 있으나 필요한 candidate가 없으면 `PARTIALLY_APPLICABLE`이다. strength, relations, transformation, rootDamage, tonggwan은 context로 기록하되 그 자체로 disease를 생성하지 않는다.
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 정관격/UNEXPOSED, quality SUPPORTED/58이며 damage가 없다. adjusted top인 金도 약 29.96%로 40% 미만이다. 따라서 `byeongyak.status=implemented`, `applicability=NOT_APPLICABLE`, `diseases=[]`, `medicineCandidates=[]`, `elementPreferences=[]`다. 10A·10B·10C 결과는 복사하거나 변경하지 않는다. 지원되는 입력은 eokbu, johu, tonggwan, byeongyak이 implemented이고 structure-useful-god와 synthesis는 계속 not_implemented다.
+
+## CORE MILESTONE 10E — Structure Useful-God Engine v1
+
+`structure-useful-god-v1`, `structure-core-v1`, `structure-useful-preference-v1`은 **POSTPOST 격국용신 v1 operational rule**이다. 고전 명리의 절대 수치가 아니라 표준격의 중심 유지와 실제 손상 구제를 결정론적으로 표현하는 versioned 운영 계수다. 신강·신약, 조후, 통관, 병약 점수와 합산하지 않으며 최종 용신을 결정하지 않는다.
+
+표준 8격 CORE category는 정관격·편관격→officer, 정재격·편재격→wealth, 식신격·상관격→output, 정인격·편인격→resource다. SUPPORT는 별도 표를 만들지 않고 `structure-interactions-v1`의 support 십성을 category로 변환한다. RESCUE도 `structure-rescue-v1`과 quality의 실제 damage/rescue 연결을 그대로 재사용하며 손상이 없으면 후보를 만들지 않는다. category→element는 일간 기준 생극 거리의 공유 변환을 사용한다.
+
+구조 source score는 CORE +25, SUPPORT +15, 미해결 손상 RESCUE +30, 이미 연결 구제된 RESCUE +10이다. 같은 element의 복수 역할은 점수 내림차순 `1.0, 0.5, 0.25`로 집계한 뒤 availability를 한 번 적용한다. 후보 element가 10% 미만이면 +5, 10~20% 미만 +2, 20~35% 미만 0, 35~45% 미만 −5, 45% 이상 −10이다. 이 보정은 후보 선정 이후의 need modifier이며 오행 부족에서 후보를 역추론하지 않는다. 최종 30 이상 PRIMARY_STRUCTURE, 20~29 STRONG_STRUCTURE, 10~19 SUPPORTING_STRUCTURE, 1~9 CONDITIONAL_STRUCTURE, 0 이하는 NOT_NEEDED다.
+
+ESTABLISHED는 HIGH, UNEXPOSED는 MEDIUM confidence다. MIXED는 primary를 유지하고 secondary/mixed pattern을 context only로 기록하며 LOW confidence다. `QUALIFIED_CANDIDATE` 특수격이 있으면 점수는 유지하고 `CAUTION_SPECIAL_STRUCTURE`/LOW로 표시한다. 건록격·양인격은 검증되지 않은 표를 만들지 않고 `LIMITED`, 빈 preferences를 반환한다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 甲 일간 정관격/UNEXPOSED이므로 CORE 金 25, SUPPORT 土 15와 水 15이며 damage가 없어 RESCUE는 없다. adjusted 土가 10~20% 구간이라 +2가 적용되어 최종 preference는 金 25, 土 17, 水 15다. 이는 억부의 金 −12, 조후의 火 40/金 10, 통관의 水 25, 병약 NOT_APPLICABLE과 독립적으로 함께 보존된다. 지원되는 입력은 eokbu, johu, tonggwan, byeongyak, structure가 모두 implemented이고 synthesis만 not_implemented다.

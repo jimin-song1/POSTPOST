@@ -12,6 +12,7 @@ import { evaluateEokbuUsefulGod } from "@/lib/saju/interpretation/eokbu-useful-g
 import { evaluateJohuUsefulGod } from "@/lib/saju/interpretation/johu-useful-god";
 import { evaluateTonggwanUsefulGod } from "@/lib/saju/interpretation/tonggwan-useful-god";
 import { evaluateByeongyakUsefulGod } from "@/lib/saju/interpretation/byeongyak-useful-god";
+import { evaluateStructureUsefulGod } from "@/lib/saju/interpretation/structure-useful-god";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
 import type { SpecialStructureType } from "@/types/special-structure";
@@ -269,5 +270,13 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
     expect(evaluateByeongyakUsefulGod("甲", value.adjusted, value.strength,
       result, value.relations, tonggwan)).toMatchObject({ status: "implemented",
         applicability: "NOT_APPLICABLE", diseases: [], medicineCandidates: [], elementPreferences: [] });
+    expect(evaluateStructureUsefulGod("甲", value.adjusted, result)).toMatchObject({
+      status: "implemented", structureType: "정관격", applicability: "STANDARD", confidence: "MEDIUM",
+      core: { tenGodCategory: "officer", element: "metal" },
+      elementPreferences: [
+        { element: "metal", score: 25, role: "STRONG_STRUCTURE" },
+        { element: "earth", score: 17, role: "SUPPORTING_STRUCTURE" },
+        { element: "water", score: 15, role: "SUPPORTING_STRUCTURE" },
+      ], damageContext: [], rescueContext: [] });
   });
 });
