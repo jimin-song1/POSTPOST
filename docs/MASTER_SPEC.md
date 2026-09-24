@@ -412,4 +412,29 @@ synthetic 기둥 기반 통합검사와 선행 계산값을 명시적으로 조�
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 **49 / 중화신약**, **정관격 / UNEXPOSED**, **SUPPORTED / 58**을 유지한다. 종재·종관살·종아 후보는 모두 `REJECTED`, 전왕/전강도 `REJECTED`, 일간의 천간합이 없으므로 화기는 `NOT_APPLICABLE`, selected는 null이다.
 
-`usefulGods.status=not_implemented`를 유지한다. 최종 adjusted 신강신약, 용신·희신·기신, 신살, 운 작용, AI 해석을 계산하지 않는다. 후속은 10A 억부, 10B 조후, 10C 통관, 10D 병약, 10E 격국용신의 독립 모듈이며, 11 Useful-God Synthesis에서만 primary/secondary/favorable/conditional/unfavorable을 합성한다.
+`usefulGods.status=not_implemented`를 유지한다. 이 단계에서는 최종 adjusted 신강신약을 계산하지 않았으며, 이는 아래 Milestone 9C에서 별도 축으로 구현한다. 용신·희신·기신, 신살, 운 작용, AI 해석은 계산하지 않는다. 후속은 10A 억부, 10B 조후, 10C 통관, 10D 병약, 10E 격국용신의 독립 모듈이며, 11 Useful-God Synthesis에서만 primary/secondary/favorable/conditional/unfavorable을 합성한다.
+
+## CORE MILESTONE 9C — Adjusted Day-Master Strength v1
+
+`adjusted-daymaster-strength-v1`과 `adjusted-strength-evaluation-v1`은 **POSTPOST custom adjustment model**이다. 관계 적용 후 일간 강약은 `strength.adjusted`에 별도로 저장하고, 원래 `strength-v1`의 `score`, `level`, evidence를 덮어쓰지 않는다. `fiveElements.nativeStrength`, `fiveElements.adjustedStrength`, `rootDamage`, `adjustedRootingScore`, 구조 및 특수격 후보도 입력 그대로 보존한다.
+
+계산식은 다음과 같다.
+
+`adjustedScore = clamp(originalScore + rootingDelta + elementBalanceDelta, 0, 100)`
+
+- `rootingDelta = adjustedRootingScore - originalRootingScore`. 원래 strength 점수에 통근이 이미 포함되어 있으므로 손실량에 별도 계수를 곱하지 않고 정확히 한 번만 반영한다.
+- 일간의 same·resource 오행 백분율 합을 support, output·wealth·officer 합을 opposition으로 분류한다. nativeStrength와 adjustedStrength 각각에서 `balance = support - opposition`을 구한다.
+- `balanceDelta = adjustedBalance - nativeBalance`, `uncappedElementBalanceDelta = balanceDelta / 5`다. 5 percentage points당 strength 1점이며, element delta만 **−10~+10점**으로 제한한다.
+- root delta와 element delta를 합한 뒤 전체 점수를 0~100으로 제한한다. 내부 소수는 반올림하지 않는다.
+
+실제 contribution 이동은 `adjustedStrength-v1` 결과만 읽는다. `TRANSFORMED`, `PARTIAL`, `COMBINATION_ONLY` 같은 상태에 직접 점수를 주지 않는다. 충·형·파·해·원진에도 직접 가감하지 않는다. 충이 만든 뿌리 손상은 upstream `adjustedRootingScore` 차이로만 반영하므로 이중감점하지 않는다. `specialStructure` 상태 역시 공식 입력이 아니다.
+
+`strength.adjusted`는 `status`, 두 rule version, `originalScore`, `originalLevel`, 조정 `score`, `level`, `deltas`, `evidence`를 제공한다. evidence는 원래 점수, 통근 조정, native/adjusted support·opposition·balance와 cap 전후 element delta, 필요한 최종 clamp를 기록한다. `originalScore + evidence의 모든 delta`로 최종 점수를 완전히 재구성할 수 있다. level은 별도 threshold를 만들지 않고 `strength-v1`의 기존 0/15/28/40/50/60/73/86 경계를 raw 소수 점수에 그대로 적용한다.
+
+선행 강약·통근·native/adjusted 오행 계산이 없는 입력은 `strength.adjusted.status=not_implemented`이며 null 점수와 빈 evidence를 반환한다. `usefulGods.status`는 계속 `not_implemented`다.
+
+synthetic 검증은 관계 변화 없음, 8→6 뿌리 손실, balance ±10%p, 동시 조정, element cap, 전체 0/100 clamp, 49→50 및 60→59 경계, 모든 level 경계, COMBINATION_ONLY와 순변화 없는 TRANSFORMED, 충 이중감점 방지, 특수격 독립성, evidence 재구성, 결정론 및 엔진 통합을 포함한다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 원래 **49 / 중화신약**을 보존한다. 뿌리 손실은 0이고, 실제 PARTIAL 관계 이동으로 element balance delta가 **−0.43135297054418376**이므로 조정 결과는 **48.56864702945582 / 중화신약**이다. 외부 서비스 판정에 맞추기 위해 계수를 바꾸지 않는다.
+
+억부·조후·통관·병약·격국용신, 희신·기신, 신살, 운세, AI 해석은 이 milestone에서 계산하지 않는다.

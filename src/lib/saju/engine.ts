@@ -25,6 +25,7 @@ import { evaluateTransformation } from "./interpretation/transformation";
 import { assessRootDamage, calculateAdjustedStrength, emptyAdjustedStrength } from "./fiveElements/relation-effects";
 import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
 import { emptyStructure, evaluateStructure } from "./interpretation/structure";
+import { emptyAdjustedDayMasterStrength, evaluateAdjustedDayMasterStrength } from "./interpretation/adjusted-daymaster-strength";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -53,7 +54,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       score: null, level: null, dayMaster: null, deukRyeong: null, deukJi: null, deukSe: null, deukSi: null,
       rooting: null, support: null, drain: null, control: null, relationAdjustmentApplied: false, evidence: [],
       adjustments: { status: "not_implemented", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
-        originalRootingScore: null, adjustedRootingScore: null, rootDamage: [], adjustedScore: null }
+        originalRootingScore: null, adjustedRootingScore: null, rootDamage: [], adjustedScore: null },
+      adjusted: emptyAdjustedDayMasterStrength()
     };
   const adjustedStrength = strength && strengthResult.rooting ? calculateAdjustedStrength({
     nativeStrength: strength.nativeStrength, evidence: strength.evidence
@@ -65,6 +67,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       adjustedRootingScore: assessed.adjustedRootingScore,
       rootDamage: assessed.rootDamage, adjustedScore: null };
   }
+  strengthResult.adjusted = evaluateAdjustedDayMasterStrength(
+    strengthResult, strength?.nativeStrength ?? null, adjustedStrength);
   const structure = hiddenBranches && adjustedStrength.status === "implemented"
     ? evaluateStructure(pillars, hiddenBranches, strengthResult, adjustedStrength, relations) : emptyStructure();
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {

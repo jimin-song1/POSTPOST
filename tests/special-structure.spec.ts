@@ -7,6 +7,7 @@ import { detectRelations } from "@/lib/saju/interpretation/relations";
 import { calculateStrength } from "@/lib/saju/interpretation/strength";
 import { evaluateStructure } from "@/lib/saju/interpretation/structure";
 import { evaluateSpecialStructure } from "@/lib/saju/interpretation/special-structure";
+import { evaluateAdjustedDayMasterStrength } from "@/lib/saju/interpretation/adjusted-daymaster-strength";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
 import type { SpecialStructureType } from "@/types/special-structure";
@@ -26,7 +27,8 @@ function fixture(stems: [Stem, Stem, Stem, Stem] = ["庚", "丙", "甲", "戊"],
   const strength = calculateStrength(pillars, hidden, native.evidence);
   const adjusted = calculateAdjustedStrength(native, relations, strength);
   const rootDamage = assessRootDamage(strength, relations);
-  strength.adjustments = { ...strength.adjustments, status: "partial", ...rootDamage };
+  strength.adjustments = { ...strength.adjustments, status: "partial",
+    originalRootingScore: strength.rooting!.score, ...rootDamage };
   const run = () => evaluateSpecialStructure(pillars, strength, adjusted, relations);
   const candidate = (type: SpecialStructureType) => run().candidates.find((row) => row.type === type)!;
   // Controlled upstream outputs isolate eligibility boundaries; no personal birth data.
@@ -224,5 +226,8 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
     expect(result.specialStructure.candidates.map((row) => row.state)).toEqual([
       "REJECTED", "REJECTED", "REJECTED", "REJECTED", "NOT_APPLICABLE",
     ]);
+    expect(evaluateAdjustedDayMasterStrength(value.strength, value.native.nativeStrength, value.adjusted))
+      .toMatchObject({ originalScore: 49, originalLevel: "중화신약",
+        score: 48.56864702945582, level: "중화신약" });
   });
 });

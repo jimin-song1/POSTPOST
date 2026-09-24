@@ -2450,6 +2450,51 @@
         "adjustedRootingScore": 16,
         "rootDamage": [],
         "adjustedScore": null
+      },
+      "adjusted": {
+        "status": "implemented",
+        "ruleVersion": "adjusted-daymaster-strength-v1",
+        "evaluationRuleVersion": "adjusted-strength-evaluation-v1",
+        "originalScore": 90,
+        "originalLevel": "극왕",
+        "score": 92.99682050293862,
+        "level": "극왕",
+        "deltas": [
+          {
+            "factor": "ROOTING_ADJUSTMENT",
+            "delta": 0
+          },
+          {
+            "factor": "ELEMENT_BALANCE_ADJUSTMENT",
+            "delta": 2.996820502938623
+          }
+        ],
+        "evidence": [
+          {
+            "factor": "ORIGINAL_STRENGTH",
+            "value": 90,
+            "delta": 0
+          },
+          {
+            "factor": "ROOTING_ADJUSTMENT",
+            "originalRootingScore": 16,
+            "adjustedRootingScore": 16,
+            "delta": 0
+          },
+          {
+            "factor": "ELEMENT_BALANCE_ADJUSTMENT",
+            "nativeSupportPercentage": 62.39522111956836,
+            "adjustedSupportPercentage": 69.88727237691491,
+            "nativeOppositionPercentage": 37.60477888043164,
+            "adjustedOppositionPercentage": 30.11272762308507,
+            "nativeBalancePercentagePoints": 24.790442239136723,
+            "adjustedBalancePercentagePoints": 39.77454475382984,
+            "balanceDeltaPercentagePoints": 14.984102514693113,
+            "uncappedScoreDelta": 2.996820502938623,
+            "scoreDelta": 2.996820502938623,
+            "delta": 2.996820502938623
+          }
+        ]
       }
     },
     "structure": {

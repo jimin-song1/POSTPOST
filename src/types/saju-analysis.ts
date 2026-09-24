@@ -158,6 +158,28 @@ export interface StrengthBalance {
   sources: Array<{ source: ElementContribution["source"]; element: Element; relation: ElementRelation; contribution: number }>;
 }
 
+export type AdjustedDayMasterStrengthEvidence =
+  | { factor: "ORIGINAL_STRENGTH"; value: number; delta: 0 }
+  | { factor: "ROOTING_ADJUSTMENT"; originalRootingScore: number; adjustedRootingScore: number; delta: number }
+  | { factor: "ELEMENT_BALANCE_ADJUSTMENT"; nativeSupportPercentage: number;
+      adjustedSupportPercentage: number; nativeOppositionPercentage: number;
+      adjustedOppositionPercentage: number; nativeBalancePercentagePoints: number;
+      adjustedBalancePercentagePoints: number; balanceDeltaPercentagePoints: number;
+      uncappedScoreDelta: number; scoreDelta: number; delta: number }
+  | { factor: "CLAMP"; before: number; after: number; delta: number };
+
+export interface AdjustedDayMasterStrengthResult {
+  status: ModuleStatus;
+  ruleVersion: "adjusted-daymaster-strength-v1";
+  evaluationRuleVersion: "adjusted-strength-evaluation-v1";
+  originalScore: number | null;
+  originalLevel: StrengthLevel | null;
+  score: number | null;
+  level: StrengthLevel | null;
+  deltas: Array<{ factor: "ROOTING_ADJUSTMENT" | "ELEMENT_BALANCE_ADJUSTMENT" | "CLAMP"; delta: number }>;
+  evidence: AdjustedDayMasterStrengthEvidence[];
+}
+
 export interface StrengthResult {
   status: ModuleStatus;
   ruleVersion: "strength-v1";
@@ -186,6 +208,7 @@ export interface StrengthResult {
     rootDamage: RootDamageEntry[];
     adjustedScore: null;
   };
+  adjusted: AdjustedDayMasterStrengthResult;
 }
 
 export type RelationRuleVersion = "stem-relations-v1" | "branch-relations-v1" | "punishment-v1";
