@@ -39,3 +39,7 @@ POST
 ## SAJU CORE MILESTONE 10C
 
 `usefulGods.tonggwan`은 adjusted 오행 세력에서 실제로 강하게 대립하는 다섯 극 관계를 모두 검사하고, 두 세력을 생 흐름으로 연결하는 bridge 오행이 필요한 경우에만 후보를 냅니다. balance ratio와 bridge scarcity를 versioned threshold로 평가하며, 충돌이 부족하면 `NOT_APPLICABLE`을 정상 반환합니다. 관계 충·형·파·해와 특수격은 context/caution으로만 기록하고 억부·조후·강약·격국 결과를 변경하지 않습니다. 병약·격국용신·최종 synthesis는 계속 미구현입니다.
+
+## SAJU CORE MILESTONE 10D
+
+`usefulGods.byeongyak`은 실제 structure-quality damage와 adjusted 오행의 보수적 단독 과다만 병으로 인정한 뒤, 기존 structure-rescue 규칙 또는 CONTROL/DRAIN 표에서 약 오행을 계산합니다. 오행 부재, 신강·신약, 관계·합화·통관·조후 자체는 병으로 만들지 않습니다. 기존 구제는 병 기록을 보존하면서 필요도를 낮추고, 여러 병의 같은 약은 diminishing weight로 집계합니다. 격국용신과 최종 synthesis는 계속 미구현입니다.
