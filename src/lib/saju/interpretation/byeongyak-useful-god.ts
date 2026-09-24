@@ -6,24 +6,14 @@ import type { AdjustedStrengthResult, Element, RelationsResult, Stem,
 import type { ByeongyakDisease, ByeongyakElementPreference, ByeongyakEvidence,
   ByeongyakMedicineCandidate, ByeongyakMedicineRole, ByeongyakResult,
   TonggwanResult } from "@/types/useful-gods";
-import { stemTrait, type TenGodName } from "./ten-gods";
+import { categoryElement, tenGodCategory } from "./ten-god-category";
 
 type StandardStructure = keyof typeof STRUCTURE_INTERACTIONS_V1.standard;
 const isStandard = (type: StructureType | undefined): type is StandardStructure =>
   type !== undefined && type in STRUCTURE_INTERACTIONS_V1.standard;
 
-function category(tenGod: TenGodName): MedicineCategory {
-  if (tenGod === "비견" || tenGod === "겁재") return "companion";
-  if (tenGod === "식신" || tenGod === "상관") return "output";
-  if (tenGod === "정재" || tenGod === "편재") return "wealth";
-  if (tenGod === "정관" || tenGod === "편관") return "officer";
-  return "resource";
-}
-
 export function medicineElement(dayStem: Stem, medicineCategory: MedicineCategory): Element {
-  const dayElement = stemTrait(dayStem).element;
-  const dayIndex = RULE.canonicalElementOrder.indexOf(dayElement);
-  return RULE.canonicalElementOrder[(dayIndex + RULE.categoryDistance[medicineCategory]) % 5];
+  return categoryElement(dayStem, medicineCategory);
 }
 
 export function byeongyakRole(score: number): ByeongyakMedicineRole {
@@ -70,7 +60,7 @@ function structureDiseases(structure: StructureResult): Array<{ disease: Byeongy
       structureType: type, damagingTenGod: damage.tenGod,
       ...(rescue ? { existingRescue: { id: rescue.id, tenGod: rescue.tenGod,
         stem: rescue.stem, position: rescue.position } } : {}), evidence },
-      medicineCategory: category(rescueTenGods[0]) };
+      medicineCategory: tenGodCategory(rescueTenGods[0]) };
   });
 }
 
