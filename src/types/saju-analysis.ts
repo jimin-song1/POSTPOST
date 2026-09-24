@@ -4,6 +4,7 @@ import type { BranchHiddenStems } from "@/lib/saju/interpretation/hidden-stems";
 import type { TwelveStage } from "@/lib/saju/interpretation/twelve-stages";
 import type { SeasonalState } from "@/rules/seasonal-element-state.v1";
 import type { QiRole } from "@/lib/saju/interpretation/hidden-stems";
+import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -69,6 +70,55 @@ export interface FiveElementsResult {
   evidence: ElementContribution[];
 }
 
+export interface StrengthEvidence {
+  factor: "baseline" | "monthCommand" | "visibleStem" | "root" | "deukJi" | "deukSe" | "deukSi" | "clamp";
+  scoreDelta: number;
+  pillar?: PillarPosition;
+  branch?: Branch;
+  stem?: Stem;
+  hiddenStem?: Stem;
+  role?: QiRole;
+  tenGod?: TenGod;
+  relation?: ElementRelation;
+  rawScore?: number;
+  reason?: string;
+}
+
+export interface StrengthSignal {
+  isObtained: boolean;
+  relation: ElementRelation | null;
+  score: number;
+  evidence: string[];
+}
+
+export interface StrengthBalance {
+  count: number;
+  weightedContribution: number;
+  sources: Array<{ source: ElementContribution["source"]; element: Element; relation: ElementRelation; contribution: number }>;
+}
+
+export interface StrengthResult {
+  status: ModuleStatus;
+  ruleVersion: "strength-v1";
+  rootingRuleVersion: "rooting-v1";
+  supportRuleVersion: "day-master-support-v1";
+  score: number | null;
+  level: StrengthLevel | null;
+  dayMaster: { stem: Stem; element: Element; yinYang: "yin" | "yang" } | null;
+  deukRyeong: StrengthSignal | null;
+  deukJi: StrengthSignal | null;
+  deukSe: StrengthSignal | null;
+  deukSi: StrengthSignal | null;
+  rooting: { rawScore: number; score: number; cap: number; roots: Array<{
+    pillar: PillarPosition; branch: Branch; hiddenStem: Stem; role: QiRole; score: number; appliedScore: number
+  }> } | null;
+  support: StrengthBalance | null;
+  drain: StrengthBalance | null;
+  control: StrengthBalance | null;
+  relationAdjustmentApplied: false;
+  evidence: StrengthEvidence[];
+}
+
 export interface LuckPeriod {
   ageRange: string;
   pillar: string;
@@ -98,7 +148,7 @@ export interface SajuAnalysis {
   twelveStages: EvidenceResult<TwelveStagesValue>;
   fiveElements: FiveElementsResult;
   relations: EvidenceResult;
-  strength: EvidenceResult<{ score: number; level: string }>;
+  strength: StrengthResult;
   structure: EvidenceResult;
   usefulGods: EvidenceResult;
   stemPreferences: EvidenceResult;

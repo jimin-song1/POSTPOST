@@ -97,7 +97,7 @@ describe("합성 입력의 엔진 통합", () => {
           result.hiddenStems.value?.branches[position].residualQi].filter((entry) => entry !== null).map((entry) => entry?.stem)
       );
     }
-    expect(result.strength.status).toBe("not_implemented");
+    expect(result.strength.status).toBe("implemented");
     expect(result.usefulGods.status).toBe("not_implemented");
     expect(result.engineMetadata.aiCalculationUsed).toBe(false);
   });

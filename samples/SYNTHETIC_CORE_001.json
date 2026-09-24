@@ -567,10 +567,261 @@
       "todo": "relations-v1 관계 탐지 및 합화 evaluator 구현 필요"
     },
     "strength": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "strength-weights-v1 기반 신강신약 evaluator 구현 필요"
+      "status": "implemented",
+      "ruleVersion": "strength-v1",
+      "rootingRuleVersion": "rooting-v1",
+      "supportRuleVersion": "day-master-support-v1",
+      "score": 90,
+      "level": "극왕",
+      "dayMaster": {
+        "stem": "乙",
+        "element": "wood",
+        "yinYang": "yin"
+      },
+      "deukRyeong": {
+        "isObtained": true,
+        "relation": "same",
+        "score": 18,
+        "evidence": [
+          "월지 卯 본기 乙의 same 관계: 18"
+        ]
+      },
+      "deukJi": {
+        "isObtained": true,
+        "relation": "same",
+        "score": 5,
+        "evidence": [
+          "일지 未의 동일 오행 지장간: 있음"
+        ]
+      },
+      "deukSe": {
+        "isObtained": false,
+        "relation": null,
+        "score": -5,
+        "evidence": [
+          "월지·일간 제외 기여도: support 27.36, opposition 39.03; 차이 -11.670000000000002"
+        ]
+      },
+      "deukSi": {
+        "isObtained": false,
+        "relation": "output",
+        "score": 0,
+        "evidence": [
+          "시지 午 본기 丁의 output 관계"
+        ]
+      },
+      "rooting": {
+        "rawScore": 16,
+        "score": 16,
+        "cap": 20,
+        "roots": [
+          {
+            "pillar": "year",
+            "branch": "辰",
+            "hiddenStem": "乙",
+            "role": "residualQi",
+            "score": 3,
+            "appliedScore": 3
+          },
+          {
+            "pillar": "month",
+            "branch": "卯",
+            "hiddenStem": "乙",
+            "role": "mainQi",
+            "score": 8,
+            "appliedScore": 8
+          },
+          {
+            "pillar": "day",
+            "branch": "未",
+            "hiddenStem": "乙",
+            "role": "middleQi",
+            "score": 5,
+            "appliedScore": 5
+          }
+        ]
+      },
+      "support": {
+        "count": 6,
+        "weightedContribution": 53.760000000000005,
+        "sources": [
+          {
+            "source": "yearStem",
+            "element": "wood",
+            "relation": "same",
+            "contribution": 11
+          },
+          {
+            "source": "hourStem",
+            "element": "water",
+            "relation": "resource",
+            "contribution": 10
+          },
+          {
+            "source": "yearBranch",
+            "element": "water",
+            "relation": "resource",
+            "contribution": 2.4000000000000004
+          },
+          {
+            "source": "yearBranch",
+            "element": "wood",
+            "relation": "same",
+            "contribution": 1.3200000000000003
+          },
+          {
+            "source": "monthBranch",
+            "element": "wood",
+            "relation": "same",
+            "contribution": 26.400000000000002
+          },
+          {
+            "source": "dayBranch",
+            "element": "wood",
+            "relation": "same",
+            "contribution": 2.6400000000000006
+          }
+        ]
+      },
+      "drain": {
+        "count": 6,
+        "weightedContribution": 39.03,
+        "sources": [
+          {
+            "source": "monthStem",
+            "element": "fire",
+            "relation": "output",
+            "contribution": 10.5
+          },
+          {
+            "source": "yearBranch",
+            "element": "earth",
+            "relation": "wealth",
+            "contribution": 7.559999999999999
+          },
+          {
+            "source": "dayBranch",
+            "element": "earth",
+            "relation": "wealth",
+            "contribution": 7.559999999999999
+          },
+          {
+            "source": "dayBranch",
+            "element": "fire",
+            "relation": "output",
+            "contribution": 1.2600000000000002
+          },
+          {
+            "source": "hourBranch",
+            "element": "fire",
+            "relation": "output",
+            "contribution": 9.450000000000001
+          },
+          {
+            "source": "hourBranch",
+            "element": "earth",
+            "relation": "wealth",
+            "contribution": 2.7
+          }
+        ]
+      },
+      "control": {
+        "count": 0,
+        "weightedContribution": 0,
+        "sources": []
+      },
+      "relationAdjustmentApplied": false,
+      "evidence": [
+        {
+          "factor": "baseline",
+          "scoreDelta": 50
+        },
+        {
+          "factor": "monthCommand",
+          "pillar": "month",
+          "branch": "卯",
+          "relation": "same",
+          "scoreDelta": 18
+        },
+        {
+          "factor": "visibleStem",
+          "pillar": "year",
+          "stem": "甲",
+          "tenGod": {
+            "korean": "겁재",
+            "hanja": "劫財"
+          },
+          "relation": "same",
+          "scoreDelta": 5
+        },
+        {
+          "factor": "visibleStem",
+          "pillar": "month",
+          "stem": "丁",
+          "tenGod": {
+            "korean": "식신",
+            "hanja": "食神"
+          },
+          "relation": "output",
+          "scoreDelta": -4
+        },
+        {
+          "factor": "visibleStem",
+          "pillar": "hour",
+          "stem": "壬",
+          "tenGod": {
+            "korean": "정인",
+            "hanja": "正印"
+          },
+          "relation": "resource",
+          "scoreDelta": 5
+        },
+        {
+          "factor": "root",
+          "pillar": "year",
+          "branch": "辰",
+          "hiddenStem": "乙",
+          "role": "residualQi",
+          "rawScore": 3,
+          "scoreDelta": 3
+        },
+        {
+          "factor": "root",
+          "pillar": "month",
+          "branch": "卯",
+          "hiddenStem": "乙",
+          "role": "mainQi",
+          "rawScore": 8,
+          "scoreDelta": 8
+        },
+        {
+          "factor": "root",
+          "pillar": "day",
+          "branch": "未",
+          "hiddenStem": "乙",
+          "role": "middleQi",
+          "rawScore": 5,
+          "scoreDelta": 5
+        },
+        {
+          "factor": "deukJi",
+          "pillar": "day",
+          "branch": "未",
+          "scoreDelta": 5
+        },
+        {
+          "factor": "deukSi",
+          "pillar": "hour",
+          "branch": "午",
+          "relation": "output",
+          "scoreDelta": 0
+        },
+        {
+          "factor": "deukSe",
+          "scoreDelta": -5,
+          "reason": "supportWeight=27.36; oppositionWeight=39.03; neutralThreshold=1"
+        }
+      ]
     },
     "structure": {
       "status": "not_implemented",
@@ -631,7 +882,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-24T10:53:07.979Z",
+      "calculatedAt": "2026-09-24T11:59:43.949Z",
       "aiCalculationUsed": false
     }
   }

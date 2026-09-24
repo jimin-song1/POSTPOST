@@ -17,6 +17,9 @@ import { TWELVE_STAGES_V1 } from "@/rules/twelve-stages.v1";
 import { ELEMENT_WEIGHT_V1 } from "@/rules/element-weight.v1";
 import { SEASONAL_ELEMENT_STATE_V1 } from "@/rules/seasonal-element-state.v1";
 import { SEASONAL_STRENGTH_V1 } from "@/rules/seasonal-strength.v1";
+import { calculateStrength } from "./interpretation/strength";
+import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1 } from "@/rules/strength.v1";
+import { ROOTING_V1 } from "@/rules/rooting.v1";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -104,7 +107,12 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       evidence: strength?.evidence ?? []
     },
     relations: notImplemented("relations-v1 관계 탐지 및 합화 evaluator 구현 필요"),
-    strength: notImplemented<{ score: number; level: string }>("strength-weights-v1 기반 신강신약 evaluator 구현 필요"),
+    strength: strength && hiddenBranches ? calculateStrength(pillars, hiddenBranches, strength.evidence) : {
+      status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
+      rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
+      score: null, level: null, dayMaster: null, deukRyeong: null, deukJi: null, deukSe: null, deukSi: null,
+      rooting: null, support: null, drain: null, control: null, relationAdjustmentApplied: false, evidence: []
+    },
     structure: notImplemented("격국 evaluator 구현 필요"),
     usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"),
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
