@@ -1,4 +1,5 @@
-import type { Branch, Element, ModuleStatus, PillarPosition, Stem } from "./saju-analysis";
+import type { Branch, Element, ModuleStatus, PillarPosition, Stem,
+  StrengthLevel, StructureIntegrity, StructureType } from "./saju-analysis";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { SpecialStructureState, SpecialStructureType } from "./special-structure";
 
@@ -121,12 +122,68 @@ export interface TonggwanResult {
   explicitRelations: string[];
   evidence: TonggwanEvidence[];
 }
+export type ByeongyakDiseaseType = "STRUCTURE_DAMAGE" | "DOMINANT_ELEMENT_EXCESS";
+export type ByeongyakMedicineRole = "PRIMARY_MEDICINE" | "STRONG_MEDICINE" |
+  "SUPPORTING_MEDICINE" | "CONDITIONAL_MEDICINE" | "LOW_NEED" | "NOT_NEEDED";
+export interface ByeongyakEvidence {
+  factor: "STRUCTURE_DAMAGE_SEVERITY" | "DOMINANT_EXCESS_SEVERITY" |
+    "MEDICINE_STRATEGY" | "MEDICINE_AVAILABILITY" | "EXISTING_RESCUE" |
+    "RELATION_CONTEXT" | "TRANSFORMATION_CONTEXT" | "ROOT_DAMAGE_CONTEXT" |
+    "TONGGWAN_CONTEXT";
+  delta: number;
+  details: Record<string, unknown>;
+}
+export interface ByeongyakDisease {
+  id: string; type: ByeongyakDiseaseType;
+  state: "ACTIVE" | "ALREADY_RESCUED";
+  severityLevel: "MODERATE" | "HIGH" | "SEVERE" | "STRUCTURAL";
+  severityScore: number;
+  sourceDamageId?: string;
+  structureType?: StructureType;
+  damagingTenGod?: string;
+  dominantElement?: Element;
+  dominantPercentage?: number;
+  secondHighestPercentage?: number;
+  gapPercentagePoints?: number;
+  existingRescue?: { id: string; tenGod: string; stem: Stem; position: PillarPosition };
+  evidence: ByeongyakEvidence[];
+}
+export interface ByeongyakMedicineCandidate {
+  element: Element; treatsDiseaseId: string;
+  strategy: "STRUCTURE_RESCUE" | "CONTROL" | "DRAIN";
+  diseaseScore: number; strategyScore: number; availabilityAdjustment: number;
+  medicinePercentage: number; finalScore: number; role: ByeongyakMedicineRole;
+  state: "NEEDED" | "ALREADY_RESCUED" | "NOT_NEEDED";
+  evidence: ByeongyakEvidence[];
+}
+export interface ByeongyakElementPreference {
+  element: Element; score: number; role: ByeongyakMedicineRole;
+  candidateIndexes: number[]; evidence: ByeongyakEvidence[];
+}
+export interface ByeongyakResult {
+  status: ModuleStatus;
+  ruleVersion: "byeongyak-useful-god-v1";
+  diseaseRuleVersion: "byeongyak-disease-v1";
+  medicineRuleVersion: "byeongyak-medicine-v1";
+  applicability: "APPLICABLE" | "PARTIALLY_APPLICABLE" | "ALREADY_TREATED" | "NOT_APPLICABLE";
+  diseases: ByeongyakDisease[];
+  medicineCandidates: ByeongyakMedicineCandidate[];
+  elementPreferences: ByeongyakElementPreference[];
+  context: {
+    strength: { originalScore: number | null; originalLevel: StrengthLevel | null;
+      adjustedScore: number | null; adjustedLevel: StrengthLevel | null };
+    structure: { type: StructureType | null; integrity: StructureIntegrity; qualityScore: number | null };
+    tonggwan: { applicability: TonggwanResult["applicability"]; candidateElements: Element[] };
+    relationIds: string[]; transformedRelationIds: string[]; rootDamageIds: string[];
+  };
+  evidence: ByeongyakEvidence[];
+}
 export interface UsefulGodsResult {
   status: "partial" | "not_implemented";
   eokbu: EokbuResult;
   johu: JohuResult;
   tonggwan: TonggwanResult;
-  byeongyak: PendingUsefulGodModule;
+  byeongyak: ByeongyakResult;
   structure: PendingUsefulGodModule;
   synthesis: PendingUsefulGodModule;
 }
