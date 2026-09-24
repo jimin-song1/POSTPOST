@@ -35,3 +35,7 @@ POST
 ## SAJU CORE MILESTONE 10B
 
 `usefulGods.johu`는 《窮通寶鑑》/《欄江網》 계열 원문의 10일간×12절기 월지 120-cell 규칙으로 천간별 조후 우선순위와 availability를 계산합니다. 조건부 순위 변경과 blocker context를 분리하며, 천간 결과를 diminishing weight로 오행에 집계합니다. 억부 결과는 변경하지 않고 통관·병약·격국용신·최종 synthesis는 계속 미구현입니다.
+
+## SAJU CORE MILESTONE 10C
+
+`usefulGods.tonggwan`은 adjusted 오행 세력에서 실제로 강하게 대립하는 다섯 극 관계를 모두 검사하고, 두 세력을 생 흐름으로 연결하는 bridge 오행이 필요한 경우에만 후보를 냅니다. balance ratio와 bridge scarcity를 versioned threshold로 평가하며, 충돌이 부족하면 `NOT_APPLICABLE`을 정상 반환합니다. 관계 충·형·파·해와 특수격은 context/caution으로만 기록하고 억부·조후·강약·격국 결과를 변경하지 않습니다. 병약·격국용신·최종 synthesis는 계속 미구현입니다.

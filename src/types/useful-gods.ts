@@ -79,11 +79,53 @@ export interface JohuResult {
   activeBlockers: Array<{ id: string; targetStems: Stem[]; effect: "CONTEXT_ONLY" }>;
   sourceEvidence: Array<{ section: string; sourceNote: string; curationVersion: string; curationNote?: string }>;
 }
+export type TonggwanConflictState = "STRONG_CONFLICT" | "CONDITIONAL_CONFLICT" |
+  "ONE_SIDED" | "WEAK" | "NOT_APPLICABLE";
+export type TonggwanCandidateState = "APPLICABLE" | "CONDITIONAL" |
+  "ALREADY_SUFFICIENT" | "NOT_APPLICABLE";
+export type TonggwanBridgeRole = "PRIMARY_BRIDGE" | "STRONG_BRIDGE" |
+  "CONDITIONAL_BRIDGE" | "LOW_NEED" | "NOT_NEEDED";
+export interface TonggwanEvidence {
+  factor: "CONFLICT_PAIR" | "BRIDGE_SCARCITY" | "BRIDGE_ALREADY_SUFFICIENT" |
+    "EXPLICIT_RELATIONS_CONTEXT" | "SPECIAL_STRUCTURE_CONTEXT";
+  delta: number;
+  details: Record<string, unknown>;
+}
+export interface TonggwanConflict {
+  controller: Element; controlled: Element; bridge: Element;
+  controllerPercentage: number; controlledPercentage: number;
+  combinedPercentage: number; balanceRatio: number;
+  conflictState: TonggwanConflictState;
+}
+export interface TonggwanCandidate extends TonggwanConflict {
+  bridgePercentage: number;
+  bridgeNeed: "HIGH" | "MEDIUM" | "PRESENT" | "ALREADY_SUFFICIENT";
+  score: number; state: TonggwanCandidateState; evidence: TonggwanEvidence[];
+}
+export interface TonggwanElementPreference {
+  element: Element; score: number; role: TonggwanBridgeRole;
+  candidateIndexes: number[]; evidence: TonggwanEvidence[];
+}
+export interface TonggwanResult {
+  status: ModuleStatus;
+  ruleVersion: "tonggwan-useful-god-v1";
+  conflictRuleVersion: "tonggwan-conflict-v1";
+  bridgeRuleVersion: "tonggwan-bridge-v1";
+  strengthSource: "adjusted" | "native" | null;
+  applicability: "APPLICABLE" | "CONDITIONAL" | "ALREADY_SUFFICIENT" | "NOT_APPLICABLE";
+  applicabilityCaution: boolean;
+  confidence: "MEDIUM" | "LOW";
+  conflicts: TonggwanConflict[];
+  rankedCandidates: TonggwanCandidate[];
+  elementPreferences: TonggwanElementPreference[];
+  explicitRelations: string[];
+  evidence: TonggwanEvidence[];
+}
 export interface UsefulGodsResult {
   status: "partial" | "not_implemented";
   eokbu: EokbuResult;
   johu: JohuResult;
-  tonggwan: PendingUsefulGodModule;
+  tonggwan: TonggwanResult;
   byeongyak: PendingUsefulGodModule;
   structure: PendingUsefulGodModule;
   synthesis: PendingUsefulGodModule;
