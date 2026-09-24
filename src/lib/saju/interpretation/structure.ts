@@ -5,6 +5,7 @@ import { MONTH_COMMAND_V1 } from "@/rules/month-command.v1";
 import { DEOK_ROK_STRUCTURE_V1 } from "@/rules/deok-rok-structure.v1";
 import { YANG_BLADE_STRUCTURE_V1 } from "@/rules/yang-blade-structure.v1";
 import { getTwelveStage } from "./twelve-stages";
+import { emptyStructureQuality, evaluateStructureQuality } from "./structure-quality";
 import type { BranchHiddenStems, HiddenStemDetail } from "./hidden-stems";
 import type { AdjustedStrengthResult, Branch, Pillar, PillarPosition, RelationsResult,
   Stem, StructureCandidate, StructureEvidence, StructureResult, StructureSource, StructureStatus,
@@ -26,7 +27,7 @@ export function emptyStructure(): StructureResult {
     adjustedElementContext: { status: "not_implemented", ruleVersion: "adjusted-strength-v1" },
     transformationContext: [],
     specialStructure: notImplemented("종격·전왕격·화기격 판정은 향후 구현"),
-    qualityEvaluation: notImplemented("격국 성패·파격·구응 평가 미구현"), evidence: [] };
+    qualityEvaluation: emptyStructureQuality(), evidence: [] };
 }
 
 /** The month branch's original mainQi decides the standard candidate; exposure never replaces it. */
@@ -111,6 +112,7 @@ export function evaluateStructure(
     .map(({ relationId, state }) => ({ relationId, state }));
   for (const entry of transformationContext) evidence.push({ factor: "TRANSFORMATION_CONTEXT", monthBranch,
     relationId: entry.relationId, transformationState: entry.state });
+  const qualityEvaluation = evaluateStructureQuality(pillars, { primary, secondary, mixedPatterns }, relations);
   return { status: "implemented", ruleVersion: STRUCTURE_V1.rulesetVersion,
     standardRuleVersion: STANDARD_STRUCTURE_V1.rulesetVersion,
     monthCommandRuleVersion: MONTH_COMMAND_V1.rulesetVersion,
@@ -120,5 +122,5 @@ export function evaluateStructure(
     exposures, mixedPatterns, dayMasterStrength: { score: strength.score, level: strength.level },
     adjustedElementContext: { status: adjustedStrength.status, ruleVersion: adjustedStrength.ruleVersion },
     transformationContext, specialStructure: notImplemented("종격·전왕격·화기격 판정은 향후 구현"),
-    qualityEvaluation: notImplemented("격국 성패·파격·구응 평가 미구현"), evidence };
+    qualityEvaluation, evidence };
 }

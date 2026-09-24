@@ -147,7 +147,7 @@ describe("SYNTHETIC_STRUCTURE_V1 — 建祿, 羊刃, and preserved axes", () => 
     expect(result).toEqual(value.structure());
     expect(result.adjustedElementContext).toMatchObject({ status: "implemented", ruleVersion: "adjusted-strength-v1" });
     expect(result.specialStructure.status).toBe("not_implemented");
-    expect(result.qualityEvaluation.status).toBe("not_implemented");
+    expect(result.qualityEvaluation.status).toBe("implemented");
     expect(result.evidence).toContainEqual(expect.objectContaining({ factor: "EXPOSURE", stem: "辛", positions: ["month"] }));
   });
   it("integrates actual synthetic calculated pillars without calculating useful gods", () => {
@@ -155,7 +155,7 @@ describe("SYNTHETIC_STRUCTURE_V1 — 建祿, 羊刃, and preserved axes", () => 
     expect(result.structure.status).toBe("implemented");
     expect(result.structure.ruleVersion).toBe("structure-v1");
     expect(result.structure.specialStructure.status).toBe("not_implemented");
-    expect(result.structure.qualityEvaluation.status).toBe("not_implemented");
+    expect(result.structure.qualityEvaluation.status).toBe("implemented");
     expect(result.usefulGods.status).toBe("not_implemented");
   });
   it("keeps unavailable input explicit and unclassified", () => {

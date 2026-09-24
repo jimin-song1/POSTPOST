@@ -322,6 +322,40 @@ export interface StructureCandidate {
   confidence: "HIGH" | "MEDIUM" | "LOW";
   evidence: StructureEvidence[];
 }
+export type StructureIntegrity = "CLEAN" | "SUPPORTED" | "MIXED" | "DAMAGED" | "RESCUED" | "UNRESOLVED";
+export interface StructureQualitySignal {
+  id: string;
+  type: "SUPPORT" | "DAMAGE" | "RESCUE" | "MIXED";
+  tenGod: TenGod["korean"];
+  stem: Stem;
+  position: PillarPosition;
+  source: "visibleStem" | "exposedMonthHiddenStem";
+  sourceRole?: QiRole;
+  rescuesDamageId?: string;
+  severity?: "FULL" | "WEAKER";
+}
+export interface StructureQualityEvidence {
+  factor: "BASELINE" | "SOURCE_EXPOSED" | "STRUCTURE_SUPPORT" | "STRUCTURE_DAMAGE" |
+    "STRUCTURE_RESCUE" | "STRUCTURE_MIXED" | "CAP" | "CLAMP";
+  delta: number;
+  signalId?: string;
+  rescuesDamageId?: string;
+}
+export interface StructureQualityResult {
+  status: ModuleStatus;
+  ruleVersion: "structure-quality-v1";
+  interactionRuleVersion: "structure-interactions-v1";
+  rescueRuleVersion: "structure-rescue-v1";
+  evaluationScope: "STANDARD" | "LIMITED" | "UNAVAILABLE";
+  integrity: StructureIntegrity;
+  qualityScore: number | null;
+  supportSignals: StructureQualitySignal[];
+  damageSignals: StructureQualitySignal[];
+  rescueSignals: StructureQualitySignal[];
+  mixedSignals: StructureQualitySignal[];
+  relationContext: Array<{ relationId: string; relationType: string; sourcePillar: "month" }>;
+  evidence: StructureQualityEvidence[];
+}
 export interface StructureResult {
   status: ModuleStatus;
   ruleVersion: "structure-v1";
@@ -339,7 +373,7 @@ export interface StructureResult {
   adjustedElementContext: { status: ModuleStatus; ruleVersion: "adjusted-strength-v1" };
   transformationContext: Array<{ relationId: string; state: TransformationState }>;
   specialStructure: EvidenceResult;
-  qualityEvaluation: EvidenceResult;
+  qualityEvaluation: StructureQualityResult;
   evidence: StructureEvidence[];
 }
 
