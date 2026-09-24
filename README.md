@@ -43,3 +43,7 @@ POST
 ## SAJU CORE MILESTONE 10D
 
 `usefulGods.byeongyak`은 실제 structure-quality damage와 adjusted 오행의 보수적 단독 과다만 병으로 인정한 뒤, 기존 structure-rescue 규칙 또는 CONTROL/DRAIN 표에서 약 오행을 계산합니다. 오행 부재, 신강·신약, 관계·합화·통관·조후 자체는 병으로 만들지 않습니다. 기존 구제는 병 기록을 보존하면서 필요도를 낮추고, 여러 병의 같은 약은 diminishing weight로 집계합니다. 격국용신과 최종 synthesis는 계속 미구현입니다.
+
+## SAJU CORE MILESTONE 10E
+
+`usefulGods.structure`는 표준 8격의 CORE를 `structure-core-v1`로 결정하고, 기존 `structure-interactions-v1`과 `structure-rescue-v1`을 단일 원천으로 재사용해 SUPPORT와 실제 손상의 RESCUE를 계산합니다. 후보가 구조적으로 선정된 뒤에만 adjusted 오행 비율을 필요량 보정으로 사용하며, 다중 역할은 diminishing weight로 집계합니다. UNEXPOSED/MIXED 및 특수격 후보는 confidence/context로 보존하고 건록·양인은 v1에서 LIMITED입니다. 다섯 독립 엔진은 모두 구현되었으며 최종 synthesis만 계속 미구현입니다.
