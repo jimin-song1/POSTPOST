@@ -1,5 +1,6 @@
 import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1, type ElementRelation } from "@/rules/strength.v1";
 import { ROOTING_V1 } from "@/rules/rooting.v1";
+import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
 import { stemTrait, getTenGod } from "./ten-gods";
 import type { BranchHiddenStems } from "./hidden-stems";
 import type { Element, ElementContribution, Pillar, PillarPosition, Stem, StrengthBalance, StrengthEvidence, StrengthResult } from "@/types/saju-analysis";
@@ -116,6 +117,8 @@ export function calculateStrength(
     score, level: strengthLevel(score), dayMaster: { stem: dayStem, element: day.element, yinYang: day.polarity },
     deukRyeong, deukJi, deukSe, deukSi, rooting,
     support: balance(summaries.support), drain: balance(summaries.drain), control: balance(summaries.control),
-    relationAdjustmentApplied: false, evidence
+    relationAdjustmentApplied: false, evidence,
+    adjustments: { status: "not_implemented", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
+      originalRootingScore: null, adjustedRootingScore: null, rootDamage: [], adjustedScore: null }
   };
 }

@@ -22,6 +22,8 @@ import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1 } from "@/rules/strength.v1";
 import { ROOTING_V1 } from "@/rules/rooting.v1";
 import { detectRelations, emptyRelations } from "./interpretation/relations";
 import { evaluateTransformation } from "./interpretation/transformation";
+import { assessRootDamage, calculateAdjustedStrength, emptyAdjustedStrength } from "./fiveElements/relation-effects";
+import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -43,6 +45,25 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const strength = hiddenBranches ? calculateNativeStrength(pillars, hiddenBranches) : null;
   const relations = supportedInput ? detectRelations(pillars) : emptyRelations();
   if (hiddenBranches && strength) relations.transformation = evaluateTransformation(relations, pillars, hiddenBranches, strength.nativeStrength);
+  const strengthResult: SajuAnalysis["strength"] = strength && hiddenBranches ?
+    calculateStrength(pillars, hiddenBranches, strength.evidence) : {
+      status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
+      rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
+      score: null, level: null, dayMaster: null, deukRyeong: null, deukJi: null, deukSe: null, deukSi: null,
+      rooting: null, support: null, drain: null, control: null, relationAdjustmentApplied: false, evidence: [],
+      adjustments: { status: "not_implemented", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
+        originalRootingScore: null, adjustedRootingScore: null, rootDamage: [], adjustedScore: null }
+    };
+  const adjustedStrength = strength && strengthResult.rooting ? calculateAdjustedStrength({
+    nativeStrength: strength.nativeStrength, evidence: strength.evidence
+  }, relations, strengthResult) : emptyAdjustedStrength();
+  if (strengthResult.rooting) {
+    const assessed = assessRootDamage(strengthResult, relations);
+    strengthResult.adjustments = { status: "partial", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
+      originalRootingScore: strengthResult.rooting.score,
+      adjustedRootingScore: assessed.adjustedRootingScore,
+      rootDamage: assessed.rootDamage, adjustedScore: null };
+  }
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -107,16 +128,11 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       seasonalStrengthRuleVersion: SEASONAL_STRENGTH_V1.rulesetVersion,
       rawCount: countRawElements(pillars),
       nativeStrength: strength?.nativeStrength ?? null,
-      adjustedStrength: notImplemented("관계 엔진 적용 후 계산"),
+      adjustedStrength,
       evidence: strength?.evidence ?? []
     },
     relations,
-    strength: strength && hiddenBranches ? calculateStrength(pillars, hiddenBranches, strength.evidence) : {
-      status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
-      rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
-      score: null, level: null, dayMaster: null, deukRyeong: null, deukJi: null, deukSe: null, deukSi: null,
-      rooting: null, support: null, drain: null, control: null, relationAdjustmentApplied: false, evidence: []
-    },
+    strength: strengthResult,
     structure: notImplemented("격국 evaluator 구현 필요"),
     usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"),
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),

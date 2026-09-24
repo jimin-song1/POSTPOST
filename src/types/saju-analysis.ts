@@ -43,6 +43,12 @@ export interface TwelveStagesValue {
 }
 
 export interface ElementContribution {
+  id: string;
+  sourceType: "VISIBLE_STEM" | "HIDDEN_STEM";
+  pillar: PillarPosition;
+  character: Stem;
+  originalElement: Element;
+  nativeContribution: number;
   source: `${PillarPosition}Stem` | `${PillarPosition}Branch`;
   stem?: Stem;
   stemWeight?: number;
@@ -58,6 +64,60 @@ export interface ElementContribution {
   finalContribution: number;
 }
 
+export interface TransferLedgerEntry {
+  relationId: string;
+  sourceContributionId: string;
+  sourceType: ElementContribution["sourceType"];
+  pillar: PillarPosition;
+  character: Stem;
+  state: TransformationState;
+  transferRatio: number;
+  nativeContribution: number;
+  requestedAmount: number;
+  scale: number;
+  actualAmount: number;
+  remainingSourceContribution: number;
+  fromElement: Element;
+  toElement: Element;
+  netElementChange: number;
+  reason: string;
+}
+
+export interface RootDamageEntry {
+  rootId: string;
+  pillar: PillarPosition;
+  branch: Branch;
+  hiddenStem: Stem;
+  role: QiRole;
+  originalRootScore: number;
+  damageRatio: number;
+  damagedAmount: number;
+  remainingRootScore: number;
+  causedByRelationIds: string[];
+}
+
+export interface AdjustedElementEvidence {
+  relationId: string;
+  sourceContributionId: string;
+  fromElement: Element;
+  toElement: Element;
+  actualAmount: number;
+  deltaFrom: number;
+  deltaTo: number;
+}
+
+export interface AdjustedStrengthResult {
+  status: ModuleStatus;
+  ruleVersion: "adjusted-strength-v1";
+  effectRuleVersion: "relation-effects-v1";
+  transferRuleVersion: "transformation-transfer-v1";
+  rootDamageRuleVersion: "root-damage-v1";
+  elements: Record<Element, { nativeScore: number; adjustment: number; adjustedScore: number; percentage: number }> | null;
+  transferLedger: TransferLedgerEntry[];
+  rootDamage: RootDamageEntry[];
+  evidence: AdjustedElementEvidence[];
+}
+
 export interface FiveElementsResult {
   status: ModuleStatus;
   ruleVersion: "five-elements-v1";
@@ -66,7 +126,7 @@ export interface FiveElementsResult {
   seasonalStrengthRuleVersion: "seasonal-strength-v1";
   rawCount: Record<Element, number>;
   nativeStrength: Record<Element, { score: number; percentage: number }> | null;
-  adjustedStrength: EvidenceResult;
+  adjustedStrength: AdjustedStrengthResult;
   evidence: ElementContribution[];
 }
 
@@ -117,6 +177,14 @@ export interface StrengthResult {
   control: StrengthBalance | null;
   relationAdjustmentApplied: false;
   evidence: StrengthEvidence[];
+  adjustments: {
+    status: "partial" | "not_implemented";
+    ruleVersion: "root-damage-v1";
+    originalRootingScore: number | null;
+    adjustedRootingScore: number | null;
+    rootDamage: RootDamageEntry[];
+    adjustedScore: null;
+  };
 }
 
 export type RelationRuleVersion = "stem-relations-v1" | "branch-relations-v1" | "punishment-v1";

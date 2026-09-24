@@ -17,10 +17,20 @@ export function calculateNativeStrength(
   if (!monthBranch) throw new Error("Month branch is required for native strength");
   const states = SEASONAL_ELEMENT_STATE_V1.byMonthBranch[monthBranch];
   const evidence: ElementContribution[] = [];
-  const add = (entry: Omit<ElementContribution, "seasonalState" | "seasonalMultiplier" | "finalContribution">) => {
+  const add = (entry: Omit<ElementContribution, "id" | "sourceType" | "pillar" | "character" | "originalElement" |
+    "nativeContribution" | "seasonalState" | "seasonalMultiplier" | "finalContribution">) => {
     const seasonalState = states[entry.element];
     const seasonalMultiplier = SEASONAL_STRENGTH_V1.multipliers[seasonalState];
-    evidence.push({ ...entry, seasonalState, seasonalMultiplier, finalContribution: entry.baseContribution * seasonalMultiplier });
+    const pillar = positions.find((position) => entry.source === `${position}Stem` || entry.source === `${position}Branch`);
+    if (!pillar) throw new Error(`Unknown contribution source ${entry.source}`);
+    const visible = entry.stem !== undefined;
+    const character = visible ? entry.stem! : entry.hiddenStem;
+    if (!character || (!visible && !entry.hiddenRole)) throw new Error(`Incomplete contribution ${entry.source}`);
+    const nativeContribution = entry.baseContribution * seasonalMultiplier;
+    evidence.push({ ...entry, id: visible ? `stem:${pillar}` : `branch:${pillar}:hidden:${entry.hiddenRole}`,
+      sourceType: visible ? "VISIBLE_STEM" : "HIDDEN_STEM", pillar, character,
+      originalElement: entry.element, nativeContribution, seasonalState, seasonalMultiplier,
+      finalContribution: nativeContribution });
   };
   for (const position of positions) {
     const stem = pillars[position].stem;

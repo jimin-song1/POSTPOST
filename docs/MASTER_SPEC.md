@@ -144,7 +144,7 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 
 ## CORE MILESTONE 3 — 오행 원국 가중 세력
 
-`five-elements-v1`: `rawCount`는 천간 네 글자와 지지 대표 오행 네 글자만 센다(항상 총 8). 지장간은 개수에 넣지 않는다. `nativeStrength`는 각 원국 기여도의 점수와 백분율을 오행별로 반환한다. `adjustedStrength`는 `not_implemented`이며 통근 재가산, 합충형파해, 합화는 적용하지 않는다. 이 수치는 전통 명리의 공식 수치가 아닌 **POSTPOST 서비스의 custom coefficient**이며 학파별 차이가 있을 수 있다.
+`five-elements-v1`: `rawCount`는 천간 네 글자와 지지 대표 오행 네 글자만 센다(항상 총 8). 지장간은 개수에 넣지 않는다. `nativeStrength`는 각 원국 기여도의 점수와 백분율을 오행별로 반환한다. 후속 `adjustedStrength`는 아래 Milestone 7에서 **별도 파생값**으로 계산한다. nativeStrength에 통근 재가산, 합충형파해, 합화는 적용하지 않는다. 이 수치는 전통 명리의 공식 수치가 아닌 **POSTPOST 서비스의 custom coefficient**이며 학파별 차이가 있을 수 있다.
 
 `element-weight-v1` 기본 비중: 년간/월간/일간/시간 각 10, 년지/월지/일지/시지 각각 12/24/12/12. 총 100이다. 지지의 비중을 `hidden-stems-v1`의 본기·중기·여기에 분배한다.
 
@@ -212,7 +212,7 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 
 ## CORE MILESTONE 5 — 원국 관계 존재 탐지
 
-`relations-v1`은 완전한 네 기둥의 **존재 관계만** 찾는다. 천간 `stem-relations-v1`, 지지 `branch-relations-v1`, 형 `punishment-v1` 표를 사용한다. `targetElement`는 관행상 연관 오행에 대한 메타데이터이며 합화의 성립이나 오행 교체를 뜻하지 않는다. 모든 탐지 결과의 `transformed=null`, `strengthAdjustmentApplied=false`다. 원국의 `fiveElements.nativeStrength`, `fiveElements.adjustedStrength`, `strength`, 지장간과 통근 점수는 변경하지 않는다. 합과 충 등의 경쟁·방해 가능성은 아래 Milestone 6에서 탐지 결과를 입력으로 별도 평가한다.
+`relations-v1`은 완전한 네 기둥의 **존재 관계만** 찾는다. 천간 `stem-relations-v1`, 지지 `branch-relations-v1`, 형 `punishment-v1` 표를 사용한다. `targetElement`는 관행상 연관 오행에 대한 메타데이터이며 합화의 성립이나 오행 교체를 뜻하지 않는다. 모든 탐지 결과의 `transformed=null`, `strengthAdjustmentApplied=false`다. 원국의 `fiveElements.nativeStrength`, `strength.score`, 지장간과 원래 통근 점수는 변경하지 않는다. 합과 충 등의 경쟁·방해 가능성은 아래 Milestone 6에서 평가하고 그 결과의 별도 파생 세력은 Milestone 7에서 계산한다.
 
 ### 천간 표 `stem-relations-v1`
 
@@ -249,7 +249,7 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 
 ## CORE MILESTONE 6 — 합화 조건 및 상호작용 평가
 
-`transformation-v1`은 기존 `relations-v1`의 결과만 후보로 사용하고 관계 자체를 재탐지하지 않는다. 이 점수는 **POSTPOST 서비스의 custom evaluation coefficient**이며 고전 명리의 공식 수치가 아니다. `TRANSFORMED`는 **v1 조건의 충족도가 높다는 평가 상태**일 뿐 실제 오행 변환을 실행했다는 뜻이 아니다. 원래 천간·지장간·오행 기여도는 그대로다. `nativeStrength`, `strength-v1.score`, `adjustedStrength.status=not_implemented`도 그대로 유지한다.
+`transformation-v1`은 기존 `relations-v1`의 결과만 후보로 사용하고 관계 자체를 재탐지하지 않는다. 이 점수는 **POSTPOST 서비스의 custom evaluation coefficient**이며 고전 명리의 공식 수치가 아니다. `TRANSFORMED`는 **v1 조건의 충족도가 높다는 평가 상태**일 뿐 원래 천간·지장간·원국 오행 기여도를 삭제했다는 뜻이 아니다. `nativeStrength`, `strength-v1.score`는 그대로 유지하며 별도의 adjustedStrength는 Milestone 7에서 계산한다.
 
 `transformation-v1` 점수 요인:
 
@@ -273,3 +273,23 @@ UI는 기본 KR 국가 선택, 국내의 '태어난 지역을 모릅니다' 체�
 | 목표 오행 | 土 | 木 | 火 | 金 | 水 | 土 |
 
 각 합 후보에는 `relationId`, 목표 오행, 요인, 경쟁 후보 ID, 방해 관계 ID를 저장한다. `interactions`는 source ID, 상대 ID, `COMPETING`/`BLOCKING`, 적용 delta와 규칙 버전을 별도로 기록한다. 모든 계수·임계값과 위 표를 변경할 때에는 규칙 버전을 올려 재검증한다. 원국 오행 기여도 이동·통근 손상·신강신약 재판정 및 실제 합화 적용은 다음 단계다.
+
+## CORE MILESTONE 7 — 별도 파생 오행 세력 및 충 뿌리 손상
+
+`adjusted-strength-v1`은 원래의 `nativeStrength`와 `strength-v1.score`를 보존하고 별도의 파생 오행 점수만 만든다. `relation-effects-v1`, `transformation-transfer-v1`, `root-damage-v1` 계수는 **POSTPOST 서비스용 custom coefficient**이며 전통 명리의 절대 공식 수치가 아니다. 이후 다수의 합성 사례를 검증할 때 새 버전에서 변경할 수 있다. 원래 천간·지장간을 삭제하거나 원국 기여도를 덮어쓰지 않는다.
+
+`fiveElements.evidence`의 모든 원국 기여도에는 결정적인 ID를 부여한다. 보이는 천간 `stem:year`·`stem:month`·`stem:day`·`stem:hour`, 지장간 `branch:year:hidden:mainQi` 같은 형식이다. 원래 오행·천간·기둥·원국 기여 점수 `nativeContribution`도 각 출처에 남긴다. 지지의 이동 대상은 대표 오행이 아니라 **해당 지지의 모든 지장간 기여도**다.
+
+| `transformation-v1` 상태 | `transformation-transfer-v1` 요청 비율 |
+| --- | ---: |
+| `TRANSFORMED` | 원래 출처 기여도의 60% |
+| `PARTIAL` | 30% |
+| `COMBINATION_ONLY`, `WEAK`, `NOT_APPLICABLE` | 0% |
+
+부분 삼합·방합은 평가 상태가 잘못 높게 전달되어도 요청 비율을 최대 30%로 제한한다. 대상이 원래 오행과 같더라도 요청과 실제 이동을 ledger에 남기며 오행 순변화는 0이다. 모든 천간합·육합·삼합·방합의 이동 요청에는 우선순위가 없다.
+
+출처 기여도 `C`가 여러 관계에 들어가면 각 관계의 `requestedAmount = C × 상태별 비율`을 계산한다. `requestedTotal = Σ requestedAmount`, `scale = min(1, C / requestedTotal)`, `actualAmount = requestedAmount × scale`이다. 요청이 없는 출처는 이동하지 않는다. `transferLedger`는 관계 ID, 출처 ID, 상태·비율, 요청·실제량, scale, 남은 출처량, 원래/목표 오행과 근거를 보존한다. 따라서 출처별 전체 실제 이동량은 원래 기여도를 넘지 않는다. 합화가 관측되어도 천간·지장간 자체가 사라지지 않는다.
+
+오행별 `adjustment[element] = Σ 해당 오행으로 이동한 실제량 − Σ 해당 오행에서 이동한 실제량`이며 `adjustedScore = nativeScore + adjustment`, `percentage = adjustedScore / Σ adjustedScore × 100`이다. 같은 오행 안으로의 이동은 ledger에 남지만 오행별 순점수 변화는 0이다. 원칙적으로 `Σ adjustedScore ≈ Σ nativeScore`이고 부동소수 오차만 허용한다. 중간 과정에서 반올림하지 않는다. `evidence`는 각 이동의 from/to delta를 기록하므로 모든 조정 점수를 출처별로 재구성할 수 있다. 표시 단계에서만 반올림한다.
+
+`root-damage-v1`은 일간과 **동일 오행**의 `rooting-v1` 뿌리가 위치한 지지가 `relations-v1` 지지 충에 참여할 때만 사용한다. 본기 충당 25%, 중기 20%, 여기 15%를 뿌리의 원점수(8/5/3)에 적용한다. 동일 뿌리가 여러 충을 겪으면 비율을 더하되 최대 50%로 제한한다. 관계 ID 모두와 남은 원점수를 `rootDamage`에 기록한다. 형·파·해·원진만으로는 손상이 없다. `adjustedRootingScore = min(rooting-v1의 20점 상한, 원래 rawRootScore − 뿌리별 damagedAmount 합)`이다. 이 값과 손상 내역을 `strength.adjustments`에도 기록하고 `adjustedScore`는 `null`로 둔다. 원래 `strength.score`와 `strength.rooting`은 유지한다. 지장간 오행 기여도를 뿌리 손상 때문에 또 깎지 않아 같은 원인을 이중 계산하지 않는다.
