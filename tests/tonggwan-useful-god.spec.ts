@@ -165,7 +165,7 @@ describe("SYNTHETIC_TONGGWAN_USEFUL_GOD_V1", () => {
     expect(calculateSaju(SYNTHETIC_INPUT).usefulGods).toMatchObject({ status: "partial",
       eokbu: { status: "implemented" }, johu: { status: "implemented" },
       tonggwan: { status: "implemented" }, byeongyak: { status: "implemented" },
-      structure: { status: "not_implemented" }, synthesis: { status: "not_implemented" } });
+      structure: { status: "implemented" }, synthesis: { status: "not_implemented" } });
   });
 
   it.each([[30, "PRIMARY_BRIDGE"], [29, "STRONG_BRIDGE"], [19, "CONDITIONAL_BRIDGE"],
