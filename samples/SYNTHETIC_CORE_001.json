@@ -9185,7 +9185,107 @@
         "evidence": []
       },
       "johu": {
-        "status": "not_implemented"
+        "status": "implemented",
+        "ruleVersion": "johu-useful-god-v1",
+        "sourceVersion": "johu-qiongtong-v1",
+        "conditionRuleVersion": "johu-condition-v1",
+        "sourceTradition": "QIONG_TONG_BAO_JIAN",
+        "dayStem": "乙",
+        "monthBranch": "卯",
+        "urgency": "MEDIUM",
+        "climateTags": [
+          "SPRING",
+          "卯_MONTH"
+        ],
+        "stemPreferences": [
+          {
+            "stem": "丙",
+            "element": "fire",
+            "preferenceRank": 1,
+            "preferenceScore": 30,
+            "role": "PRIMARY",
+            "availability": {
+              "state": "ABSENT",
+              "visible": false,
+              "visiblePositions": [],
+              "dayStemSelf": false,
+              "hidden": false,
+              "hiddenLocations": [],
+              "rooted": false,
+              "relationContext": []
+            },
+            "evidence": [
+              {
+                "factor": "CURATED_STEM_PRIORITY",
+                "delta": 30,
+                "details": {
+                  "rank": 1,
+                  "role": "PRIMARY",
+                  "sourceSection": "二月乙木"
+                }
+              }
+            ]
+          },
+          {
+            "stem": "癸",
+            "element": "water",
+            "preferenceRank": 2,
+            "preferenceScore": 20,
+            "role": "SECONDARY",
+            "availability": {
+              "state": "HIDDEN",
+              "visible": false,
+              "visiblePositions": [],
+              "dayStemSelf": false,
+              "hidden": true,
+              "hiddenLocations": [
+                {
+                  "pillar": "year",
+                  "branch": "辰",
+                  "role": "middleQi"
+                }
+              ],
+              "rooted": true,
+              "relationContext": []
+            },
+            "evidence": [
+              {
+                "factor": "CURATED_STEM_PRIORITY",
+                "delta": 20,
+                "details": {
+                  "rank": 2,
+                  "role": "SECONDARY",
+                  "sourceSection": "二月乙木"
+                }
+              }
+            ]
+          }
+        ],
+        "elementPreferences": [
+          {
+            "element": "fire",
+            "score": 30,
+            "contributingStems": [
+              "丙"
+            ]
+          },
+          {
+            "element": "water",
+            "score": 20,
+            "contributingStems": [
+              "癸"
+            ]
+          }
+        ],
+        "activeConditions": [],
+        "activeBlockers": [],
+        "sourceEvidence": [
+          {
+            "section": "二月乙木",
+            "sourceNote": "二月 乙 일간 절에서 선후·전용·참작 표현만 보수적으로 추출",
+            "curationVersion": "johu-qiongtong-v1"
+          }
+        ]
       },
       "tonggwan": {
         "status": "not_implemented"

@@ -9,6 +9,7 @@ import { evaluateStructure } from "@/lib/saju/interpretation/structure";
 import { evaluateSpecialStructure } from "@/lib/saju/interpretation/special-structure";
 import { evaluateAdjustedDayMasterStrength } from "@/lib/saju/interpretation/adjusted-daymaster-strength";
 import { evaluateEokbuUsefulGod } from "@/lib/saju/interpretation/eokbu-useful-god";
+import { evaluateJohuUsefulGod } from "@/lib/saju/interpretation/johu-useful-god";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
 import type { SpecialStructureType } from "@/types/special-structure";
@@ -241,6 +242,17 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
           { element: "fire", finalScore: -3, role: "NEUTRAL" },
           { element: "earth", finalScore: -7, role: "UNFAVORABLE" },
           { element: "metal", finalScore: -12, role: "UNFAVORABLE" },
+        ] });
+    expect(evaluateJohuUsefulGod(value.pillars, value.hidden, value.adjusted, value.relations))
+      .toMatchObject({ status: "implemented", dayStem: "甲", monthBranch: "酉",
+        stemPreferences: [
+          { stem: "丁", preferenceRank: 1, preferenceScore: 30 },
+          { stem: "丙", preferenceRank: 2, preferenceScore: 20 },
+          { stem: "庚", preferenceRank: 3, preferenceScore: 10 },
+        ],
+        elementPreferences: [
+          { element: "fire", score: 40, contributingStems: ["丁", "丙"] },
+          { element: "metal", score: 10, contributingStems: ["庚"] },
         ] });
   });
 });

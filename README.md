@@ -31,3 +31,7 @@ POST
 ## SAJU CORE MILESTONE 10A
 
 `usefulGods.eokbu`는 조정 강약과 조정 오행 비율로 木·火·土·金·水 각각의 억부 선호 점수와 역할을 계산합니다. 적격 특수격 후보는 caution으로 남기되 점수를 직접 바꾸지 않습니다. `usefulGods.status=partial`이며 조후·통관·병약·격국용신과 최종 synthesis는 계속 미구현입니다.
+
+## SAJU CORE MILESTONE 10B
+
+`usefulGods.johu`는 《窮通寶鑑》/《欄江網》 계열 원문의 10일간×12절기 월지 120-cell 규칙으로 천간별 조후 우선순위와 availability를 계산합니다. 조건부 순위 변경과 blocker context를 분리하며, 천간 결과를 diminishing weight로 오행에 집계합니다. 억부 결과는 변경하지 않고 통관·병약·격국용신·최종 synthesis는 계속 미구현입니다.

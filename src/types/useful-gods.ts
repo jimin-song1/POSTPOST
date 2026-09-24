@@ -1,4 +1,4 @@
-import type { Element, ModuleStatus } from "./saju-analysis";
+import type { Branch, Element, ModuleStatus, PillarPosition, Stem } from "./saju-analysis";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { SpecialStructureState, SpecialStructureType } from "./special-structure";
 
@@ -45,10 +45,44 @@ export interface EokbuResult {
   evidence: EokbuEvidence[];
 }
 export interface PendingUsefulGodModule { status: "not_implemented" }
+export interface JohuAvailability {
+  state: "VISIBLE" | "HIDDEN" | "ABSENT";
+  visible: boolean;
+  visiblePositions: PillarPosition[];
+  dayStemSelf: boolean;
+  hidden: boolean;
+  hiddenLocations: Array<{ pillar: PillarPosition; branch: Branch;
+    role: "mainQi" | "middleQi" | "residualQi" }>;
+  rooted: boolean;
+  relationContext: Array<{ relationId: string; state: string }>;
+}
+export interface JohuStemPreference {
+  stem: Stem; element: Element; preferenceRank: number; preferenceScore: number;
+  role: "PRIMARY" | "SECONDARY" | "SUPPORTING" | "OPTIONAL" | "AVOID";
+  availability: JohuAvailability;
+  evidence: Array<{ factor: string; delta: number; details: Record<string, unknown> }>;
+}
+export interface JohuElementPreference { element: Element; score: number; contributingStems: Stem[] }
+export interface JohuResult {
+  status: ModuleStatus;
+  ruleVersion: "johu-useful-god-v1";
+  sourceVersion: "johu-qiongtong-v1";
+  conditionRuleVersion: "johu-condition-v1";
+  sourceTradition: "QIONG_TONG_BAO_JIAN";
+  dayStem: Stem | null;
+  monthBranch: Branch | null;
+  urgency: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | null;
+  climateTags: string[];
+  stemPreferences: JohuStemPreference[];
+  elementPreferences: JohuElementPreference[];
+  activeConditions: Array<{ id: string; effect: string }>;
+  activeBlockers: Array<{ id: string; targetStems: Stem[]; effect: "CONTEXT_ONLY" }>;
+  sourceEvidence: Array<{ section: string; sourceNote: string; curationVersion: string; curationNote?: string }>;
+}
 export interface UsefulGodsResult {
   status: "partial" | "not_implemented";
   eokbu: EokbuResult;
-  johu: PendingUsefulGodModule;
+  johu: JohuResult;
   tonggwan: PendingUsefulGodModule;
   byeongyak: PendingUsefulGodModule;
   structure: PendingUsefulGodModule;

@@ -475,3 +475,19 @@ base가 음수인 부담 오행은 **10% 미만 0**, **10% 이상 20% 미만 −
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 adjusted **48.56864702945582 / 중화신약**을 사용한다. 조정 오행 비율은 木 29.60159760359461%, 火 0%, 土 15.856215676485268%, 金 29.955067398901647%, 水 24.587119321018474%다. 결과는 水 +15 SUPPORTIVE, 木 +12 CONDITIONAL, 火 −3 NEUTRAL, 土 −7 UNFAVORABLE, 金 −12 UNFAVORABLE이다. PRIMARY는 없으며 외부의 금 용신 판정에 맞추지 않는다.
 
 synthetic 검증은 8개 강약 zone, 모든 일간 오행의 5관계 mapping, 부족·과다, 불리한 결핍 오행, 필요한 풍부 오행, 특수격 caution, 역할 경계, 동점 정렬, adjusted 우선과 original fallback, evidence 합계, 결정론, 엔진 partial 상태를 포함한다. 실제 개인정보는 사용하지 않는다.
+
+## CORE MILESTONE 10B — Johu Useful-God Engine v1
+
+`johu-useful-god-v1`, `johu-qiongtong-v1`, `johu-condition-v1`은 《窮通寶鑑》/《欄江網》 계열의 일간×절기 월령 조후 문맥을 천간 수준으로 구조화한 POSTPOST 규칙이다. 출처·120칸 우선순위·편집 원칙은 [JOHU_RULE_SOURCE.md](JOHU_RULE_SOURCE.md)에 기록한다. 예언·질병·수명·빈부·신분·성별 판단은 저장하거나 사용자 해석에 전달하지 않는다.
+
+lookup key는 계산된 `dayStem`과 절기 `monthBranch`다. Gregorian month와 음력 달 번호는 사용하지 않는다. 10천간×12월지의 **120 cells**가 정확히 존재하며 runtime fallback은 없다. 모듈 로드와 테스트에서 cell 수, 중복 key, 일간별 12개월, 유효 천간, rank 중복, source section 및 condition/blocker 참조를 검증한다.
+
+각 cell은 천간별 rank/role, 조건부 override, blocker context, climateTags, explicit urgency, source section/note/curationVersion과 선택적 curationNote를 가진다. role 점수는 PRIMARY 30, SECONDARY 20, SUPPORTING 10, OPTIONAL 5, AVOID −15다. availability는 VISIBLE/HIDDEN/ABSENT 및 위치·지장간 역할·일간 자체 여부·합화 관계 context를 기록하되 preference를 가감하지 않는다.
+
+조건은 기본 순위를 별도 보존한 뒤 실제 명식이 일치할 때만 override 또는 delta를 적용한다. v1의 `甲+酉`는 기본 丁→丙→庚이며, 완전한 木局과 visible companion이 함께 있으면 원문 문맥대로 庚→丁으로 교체한다. adjusted water 35% 이상의 명시 blocker는 丁·丙의 방해 context를 evidence에 남기되 필요도와 점수를 삭제하지 않는다. adjustedStrength와 relations는 조건 context에만 사용한다.
+
+오행 집계는 천간 결과 이후에 수행한다. 같은 오행 점수를 내림차순으로 정렬하고 `1.0, 0.5, 0.25, 0.125`를 곱해 합한다. 甲+酉 기본 결과는 丁 +30 PRIMARY, 丙 +20 SECONDARY, 庚 +10 SUPPORTING이며 火 40, 金 10이다.
+
+`usefulGods.status=partial`, `eokbu.status=implemented`, `johu.status=implemented`다. `tonggwan`, `byeongyak`, `structure`, `synthesis`는 `not_implemented`다. eokbu와 johu는 서로 입력으로 쓰거나 덮어쓰지 않으며 최종 천간 선호·단일 용신·희신/기신을 결정하지 않는다.
+
+순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 甲+酉 cell을 사용한다. 10A는 水 +15 SUPPORTIVE, 木 +12 CONDITIONAL, 火 −3 NEUTRAL, 土 −7·金 −12 UNFAVORABLE이며 PRIMARY가 없다. 10B는 丁 30, 丙 20, 庚 10과 火 40·金 10이다. 두 독립 결과의 방향이 달라도 정상이며 어느 쪽도 다른 쪽을 수정하지 않는다.
