@@ -17,7 +17,7 @@ describe("SYNTHETIC_CORE_001 회귀 테스트", () => {
   it("fixture 없이 알고리즘 계산 모드로 반환한다", () => expect(result.engineMetadata.calculationMode).toBe("algorithmic"));
   it("후속 명리 모듈은 명확한 미구현 상태를 유지한다", () => {
     expect(result.daeun.status).toBe("not_implemented");
-    expect(result.structure.status).toBe("not_implemented");
+    expect(result.structure.status).toBe("implemented");
     expect(result.strength.status).toBe("implemented");
   });
   it("AI 계산을 사용하지 않는다", () => expect(result.engineMetadata.aiCalculationUsed).toBe(false));

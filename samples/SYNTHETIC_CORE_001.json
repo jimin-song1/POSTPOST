@@ -2453,10 +2453,169 @@
       }
     },
     "structure": {
-      "status": "not_implemented",
-      "value": null,
-      "evidence": [],
-      "todo": "격국 evaluator 구현 필요"
+      "status": "implemented",
+      "ruleVersion": "structure-v1",
+      "standardRuleVersion": "standard-structure-v1",
+      "monthCommandRuleVersion": "month-command-v1",
+      "deokRokRuleVersion": "deok-rok-structure-v1",
+      "yangBladeRuleVersion": "yang-blade-structure-v1",
+      "classificationStatus": "SPECIAL_CANDIDATE",
+      "primary": {
+        "type": "건록격",
+        "source": {
+          "branch": "卯",
+          "hiddenStem": "乙",
+          "hiddenRole": "mainQi",
+          "tenGod": "비견",
+          "tenGodHanja": "比肩"
+        },
+        "exposed": false,
+        "exposedPositions": [],
+        "status": "SPECIAL_CANDIDATE",
+        "confidence": "MEDIUM",
+        "evidence": [
+          {
+            "factor": "SPECIAL_RULE",
+            "monthBranch": "卯",
+            "dayMaster": "乙",
+            "candidate": "건록격",
+            "ruleVersion": "deok-rok-structure-v1"
+          }
+        ]
+      },
+      "secondary": [],
+      "specialCandidates": [
+        {
+          "type": "건록격",
+          "source": {
+            "branch": "卯",
+            "hiddenStem": "乙",
+            "hiddenRole": "mainQi",
+            "tenGod": "비견",
+            "tenGodHanja": "比肩"
+          },
+          "exposed": false,
+          "exposedPositions": [],
+          "status": "SPECIAL_CANDIDATE",
+          "confidence": "MEDIUM",
+          "evidence": [
+            {
+              "factor": "SPECIAL_RULE",
+              "monthBranch": "卯",
+              "dayMaster": "乙",
+              "candidate": "건록격",
+              "ruleVersion": "deok-rok-structure-v1"
+            }
+          ]
+        }
+      ],
+      "exposures": [
+        {
+          "stem": "乙",
+          "role": "mainQi",
+          "positions": [],
+          "exposed": false
+        }
+      ],
+      "mixedPatterns": [],
+      "dayMasterStrength": {
+        "score": 90,
+        "level": "극왕"
+      },
+      "adjustedElementContext": {
+        "status": "implemented",
+        "ruleVersion": "adjusted-strength-v1"
+      },
+      "transformationContext": [
+        {
+          "relationId": "STEM_COMBINATION:month-hour",
+          "state": "TRANSFORMED"
+        },
+        {
+          "relationId": "THREE_HARMONY:亥卯未:month-day",
+          "state": "COMBINATION_ONLY"
+        },
+        {
+          "relationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+          "state": "PARTIAL"
+        },
+        {
+          "relationId": "BRANCH_BREAK:month-hour",
+          "state": "NOT_APPLICABLE"
+        },
+        {
+          "relationId": "BRANCH_HARM:year-month",
+          "state": "NOT_APPLICABLE"
+        }
+      ],
+      "specialStructure": {
+        "status": "not_implemented",
+        "value": null,
+        "evidence": [],
+        "todo": "종격·전왕격·화기격 판정은 향후 구현"
+      },
+      "qualityEvaluation": {
+        "status": "not_implemented",
+        "value": null,
+        "evidence": [],
+        "todo": "격국 성패·파격·구응 평가 미구현"
+      },
+      "evidence": [
+        {
+          "factor": "MONTH_MAIN_QI",
+          "monthBranch": "卯",
+          "hiddenStem": "乙",
+          "role": "mainQi",
+          "dayMaster": "乙",
+          "tenGod": "비견",
+          "result": null
+        },
+        {
+          "factor": "EXPOSURE",
+          "monthBranch": "卯",
+          "stem": "乙",
+          "role": "mainQi",
+          "positions": [],
+          "exposed": false
+        },
+        {
+          "factor": "SPECIAL_RULE",
+          "monthBranch": "卯",
+          "dayMaster": "乙",
+          "candidate": "건록격",
+          "ruleVersion": "deok-rok-structure-v1"
+        },
+        {
+          "factor": "TRANSFORMATION_CONTEXT",
+          "monthBranch": "卯",
+          "relationId": "STEM_COMBINATION:month-hour",
+          "transformationState": "TRANSFORMED"
+        },
+        {
+          "factor": "TRANSFORMATION_CONTEXT",
+          "monthBranch": "卯",
+          "relationId": "THREE_HARMONY:亥卯未:month-day",
+          "transformationState": "COMBINATION_ONLY"
+        },
+        {
+          "factor": "TRANSFORMATION_CONTEXT",
+          "monthBranch": "卯",
+          "relationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+          "transformationState": "PARTIAL"
+        },
+        {
+          "factor": "TRANSFORMATION_CONTEXT",
+          "monthBranch": "卯",
+          "relationId": "BRANCH_BREAK:month-hour",
+          "transformationState": "NOT_APPLICABLE"
+        },
+        {
+          "factor": "TRANSFORMATION_CONTEXT",
+          "monthBranch": "卯",
+          "relationId": "BRANCH_HARM:year-month",
+          "transformationState": "NOT_APPLICABLE"
+        }
+      ]
     },
     "usefulGods": {
       "status": "not_implemented",
@@ -2511,7 +2670,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-24T12:49:32.830Z",
+      "calculatedAt": "2026-09-24T13:04:31.451Z",
       "aiCalculationUsed": false
     }
   }
