@@ -58,6 +58,13 @@ describe("SYNTHETIC_JOHU_QIONGTONG_V1 — curated 120-cell table", () => {
       { stem: "庚", preferenceRank: 3, preferenceScore: 10 },
     ]);
   });
+  it("keeps the 十二月甲木 source order 庚 then 丁 without an unsupported 丙", () => {
+    const cell = JOHU_QIONGTONG_V1.cells.find((row) => row.dayStem === "甲" && row.monthBranch === "丑")!;
+    expect(cell.priorities.map((row) => row.stem)).toEqual(["庚", "丁"]);
+    expect(cell.source.sourceNote).toContain("庚 선행");
+    expect(fixture(undefined, ["亥", "丑", "子", "辰"]).run().stemPreferences.map((row) => row.stem))
+      .toEqual(["庚", "丁"]);
+  });
   it("F: aggregates same-element stems with 1.0/0.5 diminishing weights", () => {
     expect(fixture().run().elementPreferences).toEqual([
       { element: "fire", score: 40, contributingStems: ["丁", "丙"] },

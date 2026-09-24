@@ -31,7 +31,7 @@ export interface JohuRuleCell {
 const branches = ["寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子", "丑"] as const;
 const monthNames = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"] as const;
 const priorityStems: Record<Stem, readonly string[]> = {
-  甲: ["丙癸", "庚丁丙", "庚壬丁", "癸丁庚", "癸丁庚", "丁庚癸", "丁庚", "丁丙庚", "丁癸庚", "庚丁丙戊", "丁庚丙", "丁庚丙"],
+  甲: ["丙癸", "庚丁丙", "庚壬丁", "癸丁庚", "癸丁庚", "丁庚癸", "丁庚", "丁丙庚", "丁癸庚", "庚丁丙戊", "丁庚丙", "庚丁"],
   乙: ["丙癸", "丙癸", "癸丙", "癸丙辛", "癸丙", "癸丙", "丙癸己", "癸丙", "癸辛", "丙戊", "丙", "丙"],
   丙: ["壬庚", "壬己", "壬甲", "壬庚癸", "壬庚", "壬庚", "壬戊", "壬癸", "甲壬", "甲戊庚壬", "壬戊己", "壬甲"],
   丁: ["庚甲", "庚甲", "甲庚", "甲庚", "壬庚癸", "甲壬庚", "甲庚丙", "甲庚丙", "甲庚", "甲庚", "甲庚丙", "甲庚"],
@@ -81,7 +81,9 @@ export const JOHU_QIONGTONG_V1 = {
         sourceNote: "八月甲木 문맥의 癸水가 丁·丙을 제약한다는 조건을 과다 水 context로만 기록" }] : [],
       climateTags: [...tags(monthBranch), `${monthBranch}_MONTH`], urgency: urgencyRows[dayStem][index],
       source: { tradition: "QIONG_TONG_BAO_JIAN", section: `${monthNames[index]}${stemLabel[dayStem]}`,
-        sourceNote: `${monthNames[index]} ${dayStem} 일간 절에서 선후·전용·참작 표현만 보수적으로 추출`,
+        sourceNote: key === "甲丑"
+          ? "十二月甲木 절의 庚 선행, 丁 차선 순서를 반영; 丙은 해당 절에서 별도 우선 천간으로 지정되지 않음"
+          : `${monthNames[index]} ${dayStem} 일간 절에서 선후·전용·참작 표현만 보수적으로 추출`,
         curationVersion: "johu-qiongtong-v1" },
       ...(ambiguousKeys.has(key) ? { curationNote: "원문에 복수 조건·참작 용법이 있어 기본 순위만 정규화하고 세부 명식 단정은 보류" } : {}),
     };
