@@ -5,7 +5,7 @@ POST
 
 양력·한국 출생·출생시간 확인 입력은 fixture 없이 년주·월주·일주·시주를 계산합니다. 현대 한국 시간규칙은 법정시각 −30분, 균시차·야자시 미적용, 보정시각 00:00 일주 변경입니다. 년주는 입춘, 월주는 12절의 정확한 절입 순간을 기준으로 하며 절기 데이터는 JPL DE440 기반 provider를 사용합니다. 절기 데이터 범위는 1900~2100년이며, 출생 입력 범위는 이전·다음 절기 조회가 가능한 1900-01-07~2099-12-31입니다. 년주·월주는 실제 출생 순간과 절입을 비교하고, 일주·시주는 보정 시각을 사용합니다.
 
-음력 변환, 출생시간 미상 원국, 해외 시간대·경도 보정과 신강신약·격국·용신·신살·운 계산은 아직 구현하지 않았으며 응답에 `not_implemented` 또는 `unsupported_input`으로 표시합니다.
+음력 변환, 출생시간 미상 원국, 해외 시간대·경도 보정과 용신·신살·운 계산은 아직 구현하지 않았으며 응답에 `not_implemented` 또는 `unsupported_input`으로 표시합니다.
 
 ## 출생지 처리 규칙 v1
 
@@ -15,3 +15,15 @@ POST
 - 결과는 `birthNormalized.birthPlace`에서 확인할 수 있습니다. 자세한 계약은 [MASTER_SPEC](docs/MASTER_SPEC.md#birth-place-rules-v1)을 참조하세요.
 
 검증: `npm ci`, `npm test`, `npm run typecheck`, `npm run build`. 세부 규칙과 근거는 [MASTER SPEC](docs/MASTER_SPEC.md)을 참조하세요.
+
+## SAJU CORE MILESTONE 2
+
+십성, 12지지 지장간(본기·중기·여기), 10천간 십이운성, 오행 기본 가중 세력과 일간 세력, 원국 천간·지지 관계를 규칙표 기반으로 계산합니다. `fiveElements.rawCount`는 보이는 여덟 글자, `nativeStrength`는 원국 그대로의 가중 점수, `adjustedStrength`는 합 후보의 기여도 일부를 이동한 별도 파생 점수입니다. `strength`는 득령·통근·득지·득세·득시를 사용하고 원래 점수를 보존합니다. `strength.adjusted`는 실제 뿌리 손상과 조정 오행의 지원 균형 순변화만 원래 점수에 적용합니다. `relations`는 합·충·형·파·해·원진을 찾고, `transformation`은 합의 조건과 경쟁·방해를 평가합니다. `structure`는 월지 본기와 투간을 중심으로 기본 격과 건록·양인 후보를 분리하고 `qualityEvaluation`은 기본 8격의 지원·손상·구제를 별도로 평가합니다. 용신, 신살, 세운·월운, AI 해석은 아직 `not_implemented`입니다. [격국 규칙표](docs/MASTER_SPEC.md#core-milestone-9a--구조적-상태손상구제)를 참고하세요.
+
+## SAJU CORE MILESTONE 9B
+
+`structure.specialStructure`는 종재·종관살·종아/종식상·전왕/전강·화기의 보수적 후보를 별도로 기록합니다. 모든 후보에 필수조건·방해 요소·점수 근거를 제공하며 `selected=null`과 기존 표준격을 보존합니다. 조정 오행과 손상 후 뿌리를 사용하고 원래 strength 점수는 바꾸지 않습니다. 용신은 계속 미구현입니다. 기준은 MASTER_SPEC의 **POSTPOST의 보수적 후보 탐지 규칙**을 참고하세요.
+
+## SAJU CORE MILESTONE 9C
+
+`strength.adjusted`는 원래 `strength.score/level`을 보존하면서 관계 적용 후 일간 강약을 별도로 기록합니다. 원래 통근과 손상 후 통근의 차이를 한 번 반영하고, native/adjusted 오행의 비겁·인성 지원 대 식상·재성·관살 반대 비율 순변화를 5%p당 1점, 최대 ±10점으로 변환합니다. 관계 이름이나 특수격 후보에는 직접 보너스·감점을 주지 않습니다.

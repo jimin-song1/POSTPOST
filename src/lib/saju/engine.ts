@@ -1,12 +1,35 @@
 import { notImplemented } from "./contracts";
 import { countRawElements } from "./fiveElements/raw-count";
+import { calculateNativeStrength } from "./fiveElements/native-strength";
 import { calculatePillars } from "./pillars/calculate-pillars";
 import { normalizeBirthTime } from "./time/normalize-birth-time";
 import { solarTermProvider } from "./solarTerms";
 import { TIME_RULES_V1 } from "@/rules/time-rules.v1";
-import type { Pillar, SajuAnalysis } from "@/types/saju-analysis";
+import type { Pillar, PillarPosition, SajuAnalysis } from "@/types/saju-analysis";
 import type { LegacySajuInput, SajuInput } from "@/types/saju-input";
 import { normalizeBirthPlace, SEOUL_FALLBACK_NOTICE } from "./normalize-birth-place";
+import { getTenGod } from "./interpretation/ten-gods";
+import { getHiddenStems } from "./interpretation/hidden-stems";
+import { getTwelveStage } from "./interpretation/twelve-stages";
+import { TEN_GODS_V1 } from "@/rules/ten-gods.v1";
+import { HIDDEN_STEMS_V1 } from "@/rules/hidden-stems.v1";
+import { TWELVE_STAGES_V1 } from "@/rules/twelve-stages.v1";
+import { ELEMENT_WEIGHT_V1 } from "@/rules/element-weight.v1";
+import { SEASONAL_ELEMENT_STATE_V1 } from "@/rules/seasonal-element-state.v1";
+import { SEASONAL_STRENGTH_V1 } from "@/rules/seasonal-strength.v1";
+import { calculateStrength } from "./interpretation/strength";
+import { STRENGTH_V1, DAY_MASTER_SUPPORT_V1 } from "@/rules/strength.v1";
+import { ROOTING_V1 } from "@/rules/rooting.v1";
+import { detectRelations, emptyRelations } from "./interpretation/relations";
+import { evaluateTransformation } from "./interpretation/transformation";
+import { assessRootDamage, calculateAdjustedStrength, emptyAdjustedStrength } from "./fiveElements/relation-effects";
+import { ROOT_DAMAGE_V1 } from "@/rules/root-damage.v1";
+import { emptyStructure, evaluateStructure } from "./interpretation/structure";
+import { emptyAdjustedDayMasterStrength, evaluateAdjustedDayMasterStrength } from "./interpretation/adjusted-daymaster-strength";
+
+const positions: PillarPosition[] = ["year", "month", "day", "hour"];
+const byPosition = <T>(get: (position: PillarPosition) => T) =>
+  Object.fromEntries(positions.map((position) => [position, get(position)])) as Record<PillarPosition, T>;
 
 const emptyPillars = (): SajuAnalysis["pillars"] => Object.fromEntries(
   (["year", "month", "day", "hour"] as const).map((position) => [position, { position, stem: null, branch: null, hanja: null, korean: null } satisfies Pillar])
@@ -19,6 +42,60 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const normalized = normalizeBirthTime(input);
   const supportedInput = input.calendarType === "solar" && normalized.absoluteBirthInstant !== null;
   const pillars = supportedInput ? calculatePillars(normalized) : emptyPillars();
+  const dayStem = pillars.day.stem;
+  const hiddenBranches = dayStem ? byPosition((position) => getHiddenStems(pillars[position].branch!, dayStem)) : null;
+  const strength = hiddenBranches ? calculateNativeStrength(pillars, hiddenBranches) : null;
+  const relations = supportedInput ? detectRelations(pillars) : emptyRelations();
+  if (hiddenBranches && strength) relations.transformation = evaluateTransformation(relations, pillars, hiddenBranches, strength.nativeStrength);
+  const strengthResult: SajuAnalysis["strength"] = strength && hiddenBranches ?
+    calculateStrength(pillars, hiddenBranches, strength.evidence) : {
+      status: "not_implemented", ruleVersion: STRENGTH_V1.rulesetVersion,
+      rootingRuleVersion: ROOTING_V1.rulesetVersion, supportRuleVersion: DAY_MASTER_SUPPORT_V1.rulesetVersion,
+      score: null, level: null, dayMaster: null, deukRyeong: null, deukJi: null, deukSe: null, deukSi: null,
+      rooting: null, support: null, drain: null, control: null, relationAdjustmentApplied: false, evidence: [],
+      adjustments: { status: "not_implemented", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
+        originalRootingScore: null, adjustedRootingScore: null, rootDamage: [], adjustedScore: null },
+      adjusted: emptyAdjustedDayMasterStrength()
+    };
+  const adjustedStrength = strength && strengthResult.rooting ? calculateAdjustedStrength({
+    nativeStrength: strength.nativeStrength, evidence: strength.evidence
+  }, relations, strengthResult) : emptyAdjustedStrength();
+  if (strengthResult.rooting) {
+    const assessed = assessRootDamage(strengthResult, relations);
+    strengthResult.adjustments = { status: "partial", ruleVersion: ROOT_DAMAGE_V1.rulesetVersion,
+      originalRootingScore: strengthResult.rooting.score,
+      adjustedRootingScore: assessed.adjustedRootingScore,
+      rootDamage: assessed.rootDamage, adjustedScore: null };
+  }
+  strengthResult.adjusted = evaluateAdjustedDayMasterStrength(
+    strengthResult, strength?.nativeStrength ?? null, adjustedStrength);
+  const structure = hiddenBranches && adjustedStrength.status === "implemented"
+    ? evaluateStructure(pillars, hiddenBranches, strengthResult, adjustedStrength, relations) : emptyStructure();
+  const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
+    status: "implemented",
+    value: {
+      ruleVersion: TEN_GODS_V1.rulesetVersion, dayMaster: dayStem,
+      heavenlyStems: byPosition((position) => getTenGod(dayStem, pillars[position].stem!)),
+      hiddenStems: byPosition((position) => {
+        const branch = hiddenBranches[position];
+        return [branch.mainQi, branch.middleQi, branch.residualQi].filter((item) => item !== null)
+          .map(({ role, stem, tenGod }) => ({ role, stem, tenGod }));
+      })
+    },
+    evidence: ["ten-gods-v1: 일간 대비 오행 생극 거리와 천간 음양"]
+  } : notImplemented("일간을 계산할 수 없어 십성을 계산하지 않았습니다.");
+  const hiddenStems: SajuAnalysis["hiddenStems"] = hiddenBranches ? {
+    status: "implemented", value: { ruleVersion: HIDDEN_STEMS_V1.rulesetVersion, branches: hiddenBranches },
+    evidence: ["hidden-stems-v1: 12지지 본기·중기·여기 고정 표"]
+  } : notImplemented("일간과 지지를 계산할 수 없어 지장간을 계산하지 않았습니다.");
+  const twelveStages: SajuAnalysis["twelveStages"] = dayStem ? {
+    status: "implemented",
+    value: {
+      ruleVersion: TWELVE_STAGES_V1.rulesetVersion,
+      stages: byPosition((position) => getTwelveStage(dayStem, pillars[position].branch!))
+    },
+    evidence: ["twelve-stages-v1: 10천간 장생 시작 지지·양순음역"]
+  } : notImplemented("일간과 지지를 계산할 수 없어 십이운성을 계산하지 않았습니다.");
   const solarTerms = supportedInput && normalized.absoluteBirthInstant ? (() => {
     const previous = solarTermProvider.getPreviousJeol(normalized.absoluteBirthInstant);
     const next = solarTermProvider.getNextJeol(normalized.absoluteBirthInstant);
@@ -47,18 +124,24 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     solarTerms,
     pillars,
     dayMaster: pillars.day.stem,
-    tenGods: notImplemented("일간 기준 천간·지장간 십성 계산기 구현 필요"),
-    hiddenStems: notImplemented("hidden-stems-v1 표 확정 필요"),
-    twelveStages: notImplemented<Record<Pillar["position"], string>>("10일간 × 12지지 전체 테이블 입력"),
+    tenGods,
+    hiddenStems,
+    twelveStages,
     fiveElements: {
+      status: strength ? "implemented" : "not_implemented",
+      ruleVersion: "five-elements-v1",
+      weightRuleVersion: ELEMENT_WEIGHT_V1.rulesetVersion,
+      seasonalStateRuleVersion: SEASONAL_ELEMENT_STATE_V1.rulesetVersion,
+      seasonalStrengthRuleVersion: SEASONAL_STRENGTH_V1.rulesetVersion,
       rawCount: countRawElements(pillars),
-      nativeStrength: notImplemented("element-strength-v1 가중 세력 계산기 구현 필요"),
-      adjustedStrength: notImplemented("관계 엔진 적용 후 계산")
+      nativeStrength: strength?.nativeStrength ?? null,
+      adjustedStrength,
+      evidence: strength?.evidence ?? []
     },
-    relations: notImplemented("relations-v1 관계 탐지 및 합화 evaluator 구현 필요"),
-    strength: notImplemented<{ score: number; level: string }>("strength-weights-v1 기반 신강신약 evaluator 구현 필요"),
-    structure: notImplemented("격국 evaluator 구현 필요"),
-    usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 종격 evaluator 구현 필요"),
+    relations,
+    strength: strengthResult,
+    structure,
+    usefulGods: notImplemented("억부·조후·통관·병약·격국용신 및 Useful-God Synthesis 구현 필요"),
     stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
     branchPreferences: notImplemented("지장간·관계·운 evaluator 완성 후 계산"),
     nobleAndSpecialStars: notImplemented("noblemen-v1 및 sinsal-v1 테이블 구현 필요"),
