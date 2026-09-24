@@ -2555,10 +2555,40 @@
         "todo": "종격·전왕격·화기격 판정은 향후 구현"
       },
       "qualityEvaluation": {
-        "status": "not_implemented",
-        "value": null,
-        "evidence": [],
-        "todo": "격국 성패·파격·구응 평가 미구현"
+        "status": "implemented",
+        "ruleVersion": "structure-quality-v1",
+        "interactionRuleVersion": "structure-interactions-v1",
+        "rescueRuleVersion": "structure-rescue-v1",
+        "evaluationScope": "LIMITED",
+        "integrity": "UNRESOLVED",
+        "qualityScore": null,
+        "supportSignals": [],
+        "damageSignals": [],
+        "rescueSignals": [],
+        "mixedSignals": [],
+        "relationContext": [
+          {
+            "relationId": "THREE_HARMONY:亥卯未:month-day",
+            "relationType": "THREE_HARMONY",
+            "sourcePillar": "month"
+          },
+          {
+            "relationId": "DIRECTIONAL_COMBINATION:寅卯辰:year-month",
+            "relationType": "DIRECTIONAL_COMBINATION",
+            "sourcePillar": "month"
+          },
+          {
+            "relationId": "BRANCH_BREAK:month-hour",
+            "relationType": "BRANCH_BREAK",
+            "sourcePillar": "month"
+          },
+          {
+            "relationId": "BRANCH_HARM:year-month",
+            "relationType": "BRANCH_HARM",
+            "sourcePillar": "month"
+          }
+        ],
+        "evidence": []
       },
       "evidence": [
         {
@@ -2672,7 +2702,7 @@
     "engineMetadata": {
       "engineVersion": "1.0.0",
       "calculationMode": "algorithmic",
-      "calculatedAt": "2026-09-24T13:04:31.462Z",
+      "calculatedAt": "2026-09-24T13:16:22.999Z",
       "aiCalculationUsed": false
     }
   }
