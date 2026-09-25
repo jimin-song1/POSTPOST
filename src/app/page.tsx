@@ -2,10 +2,20 @@
 
 import { useState } from "react";
 import { SajuInputForm } from "@/components/SajuInputForm";
-import { SajuResultDebug } from "@/components/SajuResultDebug";
-import type { SajuAnalysis } from "@/types/saju-analysis";
+import { CustomerResult } from "@/components/CustomerResult";
+import type { CustomerResultPayload, InterpretationUiState } from "@/types/customer-result";
 
 export default function Home() {
-  const [result, setResult] = useState<SajuAnalysis | null>(null);
-  return <main className="shell"><header className="hero"><span className="eyebrow">SAJU ENGINE · MVP</span><h1>내 사주 입력하기</h1><p>계산 엔진과 해석 엔진을 분리한 개발용 첫 화면입니다.</p></header><SajuInputForm onResult={(value) => setResult(value as SajuAnalysis)} /><section className="ruleNote"><strong>시간 규칙 saju-time-v1</strong><p>현대 한국 −30분 자연시 보정 · 균시차 및 야자시 미적용 · 보정시간 00:00 일주 변경</p></section>{result && <SajuResultDebug result={result} />}</main>;
+  const [result, setResult] = useState<CustomerResultPayload | null>(null);
+  const [interpretation, setInterpretation] = useState<InterpretationUiState>({ status: "not_requested" });
+  async function requestInterpretation() {
+    if (!result) return;
+    setInterpretation({ status: "pending" });
+    try {
+      const response = await fetch("/api/saju/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ analysis: result.analysis, reportType: "COMPREHENSIVE" }) });
+      setInterpretation(await response.json() as InterpretationUiState);
+    } catch { setInterpretation({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "PROVIDER_ERROR", message: "네트워크 오류" } }); }
+  }
+  if (result) return <CustomerResult analysis={result.analysis} current={result.current} interpretation={interpretation} onInterpret={requestInterpretation} onRetry={requestInterpretation} />;
+  return <main className="shell"><header className="hero"><span className="eyebrow">POSTPOST · SAJU</span><h1>나의 흐름을<br />차분히 읽어보세요</h1><p>태어난 순간의 기운부터 지금의 흐름까지, 계산 근거를 바탕으로 정리해 드립니다.</p></header><SajuInputForm onResult={(value) => { setResult(value); setInterpretation({ status: "not_requested" }); }} /><section className="ruleNote"><strong>안내</strong><p>결과는 전통 명리 이론에 따른 참고 정보이며 중요한 결정을 대신하지 않습니다.</p></section></main>;
 }

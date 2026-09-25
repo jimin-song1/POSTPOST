@@ -1,0 +1,53 @@
+import { readFile } from "node:fs/promises";
+import { describe, expect, it } from "vitest";
+import { selectCurrentPeriods } from "@/lib/saju/presentation/current-period";
+import { ACTIVATION_LABELS, FAVORABILITY_LABELS, roundPresentationScore } from "@/lib/saju/presentation/format";
+import type { SajuAnalysis } from "@/types/saju-analysis";
+
+describe("CUSTOMER_RESULT_UI_V1", () => {
+  it("rounds for presentation without mutating the source value", () => {
+    const raw = 66.04642861387065;
+    expect(roundPresentationScore(raw)).toBe(66);
+    expect(roundPresentationScore(raw, 1)).toBe(66);
+    expect(raw).toBe(66.04642861387065);
+  });
+
+  it("keeps favorability and activation semantics separate", () => {
+    expect(FAVORABILITY_LABELS.CONDITIONAL).toBe("조건부");
+    expect(ACTIVATION_LABELS.VERY_HIGH).toBe("매우 높음");
+    expect(ACTIVATION_LABELS.VERY_HIGH).not.toContain("나쁨");
+  });
+
+  it("uses server-selected absolute intervals including exact boundaries", () => {
+    const analysis = {
+      daeun: { periods: [{ startInstant: "2026-01-01T00:00:00.000Z", endInstant: "2027-01-01T00:00:00.000Z" }] },
+      fortune: { seun: { status: "implemented", periods: [{ year: 2026, period: { startInstant: "2026-02-04T00:00:00.000Z", endInstant: "2027-02-04T00:00:00.000Z" } }] },
+        wolun: { status: "implemented", periods: [{ indexInSeun: 0, period: { startInstant: "2026-02-04T00:00:00.000Z", endInstant: "2026-03-05T00:00:00.000Z" } }] } }
+    } as unknown as SajuAnalysis;
+    expect(selectCurrentPeriods(analysis, "2026-02-04T00:00:00.000Z")).toMatchObject({ daeunIndex: 0, seunYear: 2026, wolunIndex: 0 });
+    expect(selectCurrentPeriods(analysis, "2027-02-04T00:00:00.000Z").seunYear).toBeNull();
+  });
+
+  it("renders only the selected seun year's twelve solar-term months", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain("filter((item) => item.seunYear === year).slice(0, 12)");
+    expect(source).toContain("절기 경계");
+    expect(source).not.toContain("2월 운");
+  });
+
+  it("keeps support, activity and expense pressure independent", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain('label="지원도"');
+    expect(source).toContain('label="활성도"');
+    expect(source).toContain('label="지출 압력"');
+    expect(source).not.toContain("종합운");
+    expect(source).not.toContain("결혼 확률");
+  });
+
+  it("keeps the OpenAI key and debug JSON out of the production customer bundle", async () => {
+    const page = await readFile("src/app/page.tsx", "utf8");
+    const component = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(page).not.toContain("OPENAI_API_KEY");
+    expect(component).toContain('process.env.NODE_ENV !== "production"');
+  });
+});
