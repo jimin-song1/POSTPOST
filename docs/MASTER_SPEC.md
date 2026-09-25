@@ -709,3 +709,35 @@ synthetic 회귀는 입춘·경칩 1ms 경계, 寅卯辰巳午未申酉戌亥子
 transfer ID는 `{snapshotId}:{relationId}:{sourceContributionId}`다. ledger에는 layer, source contribution, from/to element, 상태, ratio, requested/actual amount, scale, remaining amount를 저장하여 adjusted profile을 재구성할 수 있게 한다. 각 layer별로 `sum(base)=sum(adjusted)=22`를 허용 오차 안에서 보존한다. 세운 snapshot combined total은 44, 월운 snapshot combined total은 66이며 combined base/adjusted 총량도 같다. combined profile은 diagnostic일 뿐 activation, favorability 또는 최종 운세 점수와 합산하지 않는다. 신살·공망·삼재도 평가와 transfer에 사용하지 않는다.
 
 synthetic 회귀는 원국 甲+세운 己에서 세운 측만 이동, 대운 甲+세운 己에서 두 fortune layer 이동, 월운이 완성하는 다층 branch combination, partial group 30% cap, 동일 contribution 복수 후보의 비례 축소와 layer/combined conservation을 고정한다. 통합 fixture는 대운 snapshot 10개, exact segment 기준 세운 snapshot 73개, 월운 snapshot 808개를 만들며 결과가 동일 입력에 deterministic함을 검증한다.
+
+## FORTUNE MILESTONE 15 — Fortune Synthesis Engine v1
+
+버전은 `fortune-synthesis-v1`, `fortune-layer-weight-v1`, `fortune-transformation-alignment-v1`, `fortune-period-summary-v1`이다. 14A/B/C의 favorability·activation과 14D의 layer profile을 read-only로 소비한다. FAVORABILITY, ACTIVATION, TRANSFORMATION ALIGNMENT는 끝까지 별도 축이며 overall fortune score를 만들지 않는다. 기존 관계, 천간·지지 선호도 또는 transformation을 다시 계산하지 않는다.
+
+### Layer weight와 segment
+
+POSTPOST 시간계층 base weight는 DAEUN 0.45, SEUN 0.35, WOLUN 0.20이다. 현재 snapshot에 존재하는 layer만 분모에 포함한다. 따라서 대운 단독은 1.0, 세운 snapshot은 DAEUN `0.45/0.80=0.5625`, SEUN `0.35/0.80=0.4375`, 월운 snapshot은 0.45/0.35/0.20이다. 존재하지 않는 layer를 0점으로 넣지 않는다.
+
+세운·월운은 14D snapshot ID와 1:1로 연결한다. 하나의 period 중 대운이 바뀌면 `SEUN-{year}:DAEUN-{index}` 및 `WOLUN-{year}-{branch}:DAEUN-{index}`별 synthesis를 별도로 만든다. 서로 다른 대운의 간지·interaction·transformation profile을 한 snapshot에 섞지 않는다. Daeun은 index, Seun/Wolun은 원본 absolute start instant와 stable ID 순으로 deterministic하게 유지한다.
+
+### Favorability와 activation
+
+`favorabilityScore=Σ(existing layer baseFavorabilityScore×normalizedLayerWeight)`이며 기존 fortune favorability 역할 경계를 재사용한다. `activationScore=clamp(Σ(existing layer activationScore×normalizedLayerWeight),0,100)`이며 0~14 LOW, 15~29 MODERATE, 30~49 HIGH, 50 이상 VERY_HIGH를 재사용한다. relation point를 다시 합산하지 않으며 activation은 길흉 점수가 아니다. 두 축은 서로 또는 transformation delta와 합산하지 않는다.
+
+### Transformation alignment
+
+오행 선호도 source는 `usefulGods.synthesis.elements[].score`다. 각 14D layer profile에서 `alignment=Σ(elementAmount/profileTotal×natalElementPreferenceScore)`로 base와 adjusted alignment를 각각 계산한다. `layerDelta=adjustedAlignment-baseAlignment`다. Snapshot base/adjusted alignment는 combinedProfile이 아니라 각 layer alignment에 0.45/0.35/0.20 normalized layer weight를 적용해 구한다. `transformationAlignmentDelta=adjustedScore-baseScore`이며 favorability에 더하지 않는다.
+
+Delta 방향은 5 이상 `MORE_ALIGNED`, 1 이상 5 미만 `SLIGHTLY_MORE_ALIGNED`, -1 초과 1 미만 `UNCHANGED`, -5 초과 -1 이하 `SLIGHTLY_LESS_ALIGNED`, -5 이하 `LESS_ALIGNED`다. Adjusted alignment level은 80 이상 `VERY_HIGH_ALIGNMENT`, 70 이상 `HIGH_ALIGNMENT`, 60 이상 `FAVORABLE_ALIGNMENT`, 45 이상 `MIXED_ALIGNMENT`, 35 이상 `LOW_ALIGNMENT`, 미만 `VERY_LOW_ALIGNMENT`다. Candidate 또는 실제 transfer가 없어 delta가 0이어도 현재 base profile의 alignment는 계산한다.
+
+### Ten-god flow와 context
+
+각 layer의 adjusted element share에 normalized layer weight를 적용한 뒤, 기존 `categoryElement(dayMaster, category)`를 역 lookup하여 `companion/resource/output/wealth/officer` 5-category distribution으로 제공한다. 합계는 100%다. 이는 현재 오행 흐름의 diagnostic 분포이며 정재/편재 같은 음양 세분이나 category 길흉 점수를 만들지 않는다.
+
+14A/B/C의 star activation, 삼재와 공망은 중복 제거한 tag context로만 모은다. 어떤 tag도 favorability, activation, alignment 또는 ten-god flow를 변경하지 않는다. `topInteractions`는 기존 source interaction ID와 기존 activation point를 정렬해 참조할 뿐 새 관계를 생성하거나 재점수하지 않는다.
+
+### Period summary
+
+Segment가 하나면 그 synthesis 값을 그대로 summary로 사용한다. 둘 이상이면 `segmentWeight=segmentDurationMilliseconds/periodDurationMilliseconds`로 favorability, activation, base/adjusted alignment와 delta를 duration-weighted 한다. 단순 평균이나 첫·마지막 대운 선택은 금지한다. 편의 summary에는 `peakActivationScore/peakSegmentId`, `maxPositiveDelta`, `maxNegativeDelta`를 추가하고 authoritative detail은 segment synthesis로 유지한다. 분석 가능한 Daeun segment가 없는 provider 범위 가장자리 period는 summary를 생성하지 않는다.
+
+Synthetic 회귀는 Daeun 80/20, Seun 60/60일 때 favorability 71.25와 activation 37.5가 독립적으로 계산되는지 고정한다. 월운 70/60/90 favorability는 70.5다. 70%/30% multi-Daeun period는 duration weight를 그대로 적용하고 짧은 segment의 peak activation과 양·음 transformation delta 극값을 별도로 보존한다.

@@ -102,6 +102,6 @@ describe("SYNTHETIC_FORTUNE_TRANSFORMATION_V1",()=>{
     expect((result.fortune as FortuneResult).seun).toEqual(before.seun);expect((result.fortune as FortuneResult).wolun).toEqual(before.wolun);
     expect(result.usefulGods).toEqual(before.useful);expect(result.stemPreferences).toEqual(before.stems);
     expect(result.branchPreferences).toEqual(before.branches);expect(result.nobleAndSpecialStars).toEqual(before.stars);
-    expect((result.fortune as FortuneResult).transformation.status).toBe("implemented");expect((result.fortune as FortuneResult).synthesis.status).toBe("not_implemented");
+    expect((result.fortune as FortuneResult).transformation.status).toBe("implemented");expect((result.fortune as FortuneResult).synthesis.status).toBe("implemented");
   });
 });

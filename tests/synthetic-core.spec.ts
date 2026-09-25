@@ -19,7 +19,7 @@ describe("SYNTHETIC_CORE_001 회귀 테스트", () => {
     expect(result.daeun.status).toBe("implemented");
     expect(result.fortune).toMatchObject({ status: "partial", daeun: { status: "implemented" },
       seun: { status: "implemented" }, wolun: { status: "implemented" },
-      transformation: { status: "implemented" }, synthesis: { status: "not_implemented" } });
+      transformation: { status: "implemented" }, synthesis: { status: "implemented" } });
     expect(result.structure.status).toBe("implemented");
     expect(result.strength.status).toBe("implemented");
   });
