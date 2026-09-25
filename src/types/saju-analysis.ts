@@ -454,6 +454,9 @@ export interface SajuAnalysis {
     directionLabel: "순행" | "역행" | null;
     referenceSolarTerm: "next" | "previous" | null;
     exactStartAge: number | null;
+    exactTermDifferenceMilliseconds: number | null;
+    exactTermDifferenceDays: number | null;
+    exactConvertedDuration: { years: number; milliseconds: number } | null;
     startAgeYears: number | null;
     startAgeMonths: number | null;
     startDatetime: string | null;

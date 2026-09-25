@@ -20,6 +20,8 @@ const addCalendarAge=(instant:Date,age:number)=>{
 };
 export interface DaeunSourceResult {status:"implemented";direction:"forward"|"reverse";
   directionLabel:"순행"|"역행";referenceSolarTerm:"next"|"previous";exactStartAge:number;
+  exactTermDifferenceMilliseconds:number;exactTermDifferenceDays:number;
+  exactConvertedDuration:{years:number;milliseconds:number};
   startAgeYears:number;startAgeMonths:number;startDatetime:string;periods:LuckPeriod[];evidence:string[];}
 
 export function generateDaeun(yearStem:Stem,monthPillar:Pillar,gender:SajuInput["gender"],
@@ -47,7 +49,10 @@ export function generateDaeun(yearStem:Stem,monthPillar:Pillar,gender:SajuInput[
       startAgeYears:periodStartAge,endAgeYears:periodEndAge,startAgeMonths,endAgeMonths:startAgeMonths,
       startInstant,endInstant,startDatetime:startInstant,endDatetime:endInstant};});
   return{status:"implemented",direction,directionLabel:forward?"순행":"역행",referenceSolarTerm:forward?"next":"previous",
-    exactStartAge,startAgeYears,startAgeMonths,startDatetime:startDatetime.toISOString(),periods,
+    exactStartAge,exactTermDifferenceMilliseconds:Math.abs(reference.getTime()-birthInstant.getTime()),
+    exactTermDifferenceDays:differenceDays,exactConvertedDuration:{years:exactStartAge,
+      milliseconds:startDatetime.getTime()-birthInstant.getTime()},
+    startAgeYears,startAgeMonths,startDatetime:startDatetime.toISOString(),periods,
     evidence:[`${RULE.directionVersion}: ${yearStem}/${polarity}/${gender} -> ${direction}`,
       `${RULE.startAgeVersion}: 절입 차이 ${differenceDays}일 ÷ ${RULE.daysPerYearOfLuck}`,
       `${RULE.sequenceVersion}: 월주 ${monthPillar.stem}${monthPillar.branch}에서 ${forward?"순":"역"}방향 10개`]};

@@ -27,7 +27,9 @@ describe("SYNTHETIC_DAEUN_GENERATION_AND_ACTIVATION_V1",()=>{
     const month={position:"month" as const,stem:"丁" as const,branch:"卯" as const,hanja:null,korean:null};
     const birth=new Date("2024-01-01T00:00:00Z"),previous=new Date("2023-12-29T00:00:00Z"),next=new Date("2024-01-04T00:00:00Z");
     const forward=generateDaeun("甲",month,"male",birth,previous,next),reverse=generateDaeun("甲",month,"female",birth,previous,next);
-    expect(forward).toMatchObject({direction:"forward",referenceSolarTerm:"next",exactStartAge:1,startAgeYears:1,startAgeMonths:0});
+    expect(forward).toMatchObject({direction:"forward",referenceSolarTerm:"next",exactStartAge:1,
+      exactTermDifferenceMilliseconds:3*86_400_000,exactTermDifferenceDays:3,
+      exactConvertedDuration:{years:1,milliseconds:366*86_400_000},startAgeYears:1,startAgeMonths:0});
     expect(forward.periods.map(row=>row.pillar)).toEqual(["戊辰","己巳","庚午","辛未","壬申","癸酉","甲戌","乙亥","丙子","丁丑"]);
     expect(forward.periods[0]).toMatchObject({startInstant:"2025-01-01T00:00:00.000Z",endInstant:"2035-01-01T00:00:00.000Z"});
     expect(forward.periods[1].startInstant).toBe(forward.periods[0].endInstant);

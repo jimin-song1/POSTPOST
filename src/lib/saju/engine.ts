@@ -148,7 +148,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       return generateDaeun(pillars.year.stem!,pillars.month,input.gender,normalized.absoluteBirthInstant!,
         new Date(previous.instantIso),new Date(next.instantIso)); })()
     : {status:"not_implemented" as const,direction:null,directionLabel:null,referenceSolarTerm:null,
-      exactStartAge:null,startAgeYears:null,startAgeMonths:null,startDatetime:null,periods:[],evidence:[],
+      exactStartAge:null,exactTermDifferenceMilliseconds:null,exactTermDifferenceDays:null,exactConvertedDuration:null,
+      startAgeYears:null,startAgeMonths:null,startDatetime:null,periods:[],evidence:[],
       todo:"완성된 원국과 절입 시각이 필요"};
   const fortune = daeun.status === "implemented" && stemPreferences.status === "implemented" && "stems" in stemPreferences &&
     branchPreferences.status === "implemented" && "branches" in branchPreferences &&
