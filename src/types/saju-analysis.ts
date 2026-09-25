@@ -8,6 +8,7 @@ import type { SeasonalState } from "@/rules/seasonal-element-state.v1";
 import type { QiRole } from "@/lib/saju/interpretation/hidden-stems";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { StemPreferencesResult } from "./stem-preferences";
+import type { BranchPreferencesResult } from "./branch-preferences";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -436,7 +437,7 @@ export interface SajuAnalysis {
   structure: StructureResult;
   usefulGods: UsefulGodsResult;
   stemPreferences: EvidenceResult | StemPreferencesResult;
-  branchPreferences: EvidenceResult;
+  branchPreferences: EvidenceResult | BranchPreferencesResult;
   nobleAndSpecialStars: EvidenceResult;
   samjae: EvidenceResult;
   daeun: {
