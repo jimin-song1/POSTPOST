@@ -135,6 +135,6 @@ describe("SYNTHETIC_WOLUN_ACTIVATION_V1",()=>{
     expect(first.fiveElements.adjustedStrength).toEqual(before.adjusted);expect(first.usefulGods).toEqual(before.useful);
     expect(first.stemPreferences).toEqual(before.stems);expect(first.branchPreferences).toEqual(before.branches);expect(first.nobleAndSpecialStars).toEqual(before.stars);
     expect(first.fortune).toMatchObject({status:"partial",daeun:{status:"implemented"},seun:{status:"implemented"},wolun:{status:"implemented"},
-      transformation:{status:"implemented"},synthesis:{status:"not_implemented"}});
+      transformation:{status:"implemented"},synthesis:{status:"implemented"}});
   });
 });
