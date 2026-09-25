@@ -771,3 +771,21 @@ Change support는 `favorability×0.50+adjustedAlignment×0.50`, activity는 acti
 Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`로 1:1 연결한다. Seun/Wolun의 multi-Daeun period는 authoritative segment category 결과를 유지하며 Milestone 15의 exact duration weight를 그대로 사용한다. Summary는 각 분야 support/activity 및 wealth pressure/expansion을 duration-weighted하고, 전체 분야 중 peak activity score/category/segment와 peak expense pressure segment를 별도로 보존한다. 첫·마지막 대운 선택이나 단순 평균은 사용하지 않는다.
 
 신살·삼재·공망·도화·역마·귀인·양인·괴강·백호는 tags/context로만 전달한다. Structure type과 usefulGod highest element도 설명용 context다. 어느 항목도 category score를 변경하지 않으며 돈, 매출, 승진, 합격, 연애, 결혼, 이직, 사고 같은 deterministic event field를 생성하지 않는다.
+
+## MILESTONE 17 — AI Interpretation Layer v1
+
+버전은 `ai-interpretation-v1`, `interpretation-input-v1`, `interpretation-schema-v1`, `interpretation-prompt-v1`, `interpretation-grounding-v1`이다. 이 계층은 완성된 deterministic `SajuAnalysis`를 설명할 뿐 pillars, 십성, 오행, 강약, 격국, 용신, 신살, 운 및 category score를 재계산하거나 수정하지 않는다. 계산 엔진과 provider는 `InterpretationProvider.generate()` 경계로 분리하며 OpenAI Responses API 호출은 `OpenAIInterpretationProvider` adapter 안에서만 수행한다. CI는 live API key 없이 mock provider를 사용한다.
+
+모든 section과 timeline entry는 하나 이상의 evidence ID를 가져야 한다. 숫자·연도·간지·강약·격국·용신 label lock은 전체 입력에 존재하는지만 보지 않고 각 section이 실제로 인용한 evidence 값 범위에서 검증한다. timeline entry는 자신의 deterministic period에 배정된 evidence만 인용할 수 있다. 따라서 다른 기간이나 다른 category의 숫자·label을 가져오는 cross-evidence substitution도 grounding failure다.
+
+### 최소 입력과 report filtering
+
+지원 report는 `COMPREHENSIVE`, `WEALTH`, `BUSINESS`, `CAREER`, `RELATIONSHIP`, `STUDY`, `YEARLY`다. Input builder는 이름, 원문 생년월일, 출생도시와 원본 birth metadata를 provider 입력에서 제외한다. 성별은 relationship report에만 최소 context로 전달한다. 일반 report의 현재 대운·세운·월운은 서버가 명시적인 `referenceInstant`로 선택하고, YEARLY는 요청 year의 세운 segment와 그 year의 월운 segment만 선택한다. LLM이 기간을 검색하거나 결정하지 않는다.
+
+각 deterministic fact에는 `NATAL:*`, `USEFUL_GOD:*`, `FORTUNE:{synthesisId}:*`, `CATEGORY:{synthesisId}:*` 형식의 stable evidence ID를 붙인다. Cache key는 필요한 canonical input의 SHA-256인 `analysisHash`, report type, prompt version, model config version을 stable serialize하여 다시 SHA-256한 값이다.
+
+### Structured output와 grounding
+
+Provider 출력은 headline, summary, sections, highlights, cautions, timeline, disclaimer를 갖는 strict JSON schema로 검증한다. 각 section과 timeline은 실제 input의 evidence ID를 참조해야 한다. Grounding validator는 unknown evidence/period ID, 입력에 없는 연도·간지·점수, presentation rounding 범위를 벗어난 숫자, 강약·격국·용신 role label 변경, 확정 사건 표현과 신살 기반 의료·사고 단정을 거부한다. Support/favorability와 activity는 서로 다른 의미로 유지한다.
+
+첫 결과가 schema 또는 grounding 검증에 실패하면 동일 engine fact를 유지한 채 스키마/grounding만 고치는 repair를 최대 1회 수행한다. 두 번째 결과도 실패하면 각각 `SCHEMA_VALIDATION_FAILED` 또는 `GROUNDING_VALIDATION_FAILED`를 반환한다. Provider 장애와 timeout은 `PROVIDER_ERROR`, `PROVIDER_TIMEOUT`으로 격리하며 deterministic 분석 성공 결과를 변경하지 않는다. Production adapter log는 request ID, report type, prompt/model config version, provider/model, latency와 token usage metadata만 전달하고 전체 birth input이나 prompt를 기록하지 않는다.
