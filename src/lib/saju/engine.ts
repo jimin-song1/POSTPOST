@@ -32,6 +32,7 @@ import { evaluateTonggwanUsefulGod } from "./interpretation/tonggwan-useful-god"
 import { evaluateByeongyakUsefulGod } from "./interpretation/byeongyak-useful-god";
 import { synthesizeUsefulGods } from "./interpretation/useful-god-synthesis";
 import { evaluateStructureUsefulGod } from "./interpretation/structure-useful-god";
+import { evaluateStemPreferences } from "./interpretation/stem-preferences";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -90,6 +91,9 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     usefulGods.synthesis = synthesizeUsefulGods(usefulGods);
     usefulGods.status = "implemented";
   }
+  const stemPreferences = hiddenBranches && usefulGods.status === "implemented"
+    ? evaluateStemPreferences(pillars, hiddenBranches, relations, usefulGods)
+    : notImplemented("용신 종합 결과를 계산할 수 없어 천간 선호도를 계산하지 않았습니다.");
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -161,7 +165,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     strength: strengthResult,
     structure,
     usefulGods,
-    stemPreferences: notImplemented("용신 evaluator 완성 후 계산"),
+    stemPreferences,
     branchPreferences: notImplemented("지장간·관계·운 evaluator 완성 후 계산"),
     nobleAndSpecialStars: notImplemented("noblemen-v1 및 sinsal-v1 테이블 구현 필요"),
     samjae: notImplemented("생년지 그룹 기반 삼재 range 계산기 구현 필요"),
