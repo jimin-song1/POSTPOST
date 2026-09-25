@@ -5,6 +5,13 @@ const matrix=(companion:number,resource:number,output:number,wealth:number,offic
 export const CATEGORY_FORTUNE_V1={
   ruleVersion:"category-fortune-v1",scoreVersion:"category-score-v1",flowMatrixVersion:"category-flow-matrix-v1",
   wealthVersion:"wealth-category-v1",relationshipVersion:"relationship-category-v1",
+  scoreRange:{min:0,max:100},
+  flowNormalization:{base:50,signedFlowDivisor:2},
+  thresholds:{
+    support:{verySupportive:80,supportive:70,moderatelySupportive:60,mixed:45,lowSupport:35},
+    activity:{veryHigh:50,high:30,moderate:15},
+    pressure:{veryHigh:75,high:50,moderate:25},
+  },
   weights:{overallSupport:{favorability:.55,alignment:.45},categorySupport:{favorability:.45,alignment:.35,flowQuality:.20},
     categoryActivity:{activation:.70,flowActivity:.30},changeSupport:{favorability:.50,alignment:.50},
     expensePressure:{activation:.35,flowPressure:.30,inverseFavorability:.20,inverseAlignment:.15},
