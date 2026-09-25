@@ -5,14 +5,18 @@ import type { CategoryAxis,CategoryFortunePeriod,CategoryFortuneResult,CategoryP
 import type { FortunePeriodSummary,FortuneSynthesisPeriod,FortuneSynthesisResult } from "@/types/fortune-synthesis";
 import type { SajuInput } from "@/types/saju-input";
 
-const categories:TenGodCategory[]=["companion","resource","output","wealth","officer"],clamp=(value:number)=>Math.max(0,Math.min(100,value));
-export const categorySupportLevel=(score:number)=>score>=80?"VERY_SUPPORTIVE" as const:score>=70?"SUPPORTIVE" as const:
-  score>=60?"MODERATELY_SUPPORTIVE" as const:score>=45?"MIXED" as const:score>=35?"LOW_SUPPORT" as const:"PRESSURED" as const;
-export const categoryActivityLevel=(score:number)=>score>=50?"VERY_HIGH" as const:score>=30?"HIGH" as const:score>=15?"MODERATE" as const:"LOW" as const;
-export const categoryPressureLevel=(score:number)=>score>=75?"VERY_HIGH" as const:score>=50?"HIGH" as const:score>=25?"MODERATE" as const:"LOW" as const;
+const categories:TenGodCategory[]=["companion","resource","output","wealth","officer"],clamp=(value:number)=>
+  Math.max(RULE.scoreRange.min,Math.min(RULE.scoreRange.max,value));
+export const categorySupportLevel=(score:number)=>score>=RULE.thresholds.support.verySupportive?"VERY_SUPPORTIVE" as const:
+  score>=RULE.thresholds.support.supportive?"SUPPORTIVE" as const:score>=RULE.thresholds.support.moderatelySupportive?"MODERATELY_SUPPORTIVE" as const:
+  score>=RULE.thresholds.support.mixed?"MIXED" as const:score>=RULE.thresholds.support.lowSupport?"LOW_SUPPORT" as const:"PRESSURED" as const;
+export const categoryActivityLevel=(score:number)=>score>=RULE.thresholds.activity.veryHigh?"VERY_HIGH" as const:
+  score>=RULE.thresholds.activity.high?"HIGH" as const:score>=RULE.thresholds.activity.moderate?"MODERATE" as const:"LOW" as const;
+export const categoryPressureLevel=(score:number)=>score>=RULE.thresholds.pressure.veryHigh?"VERY_HIGH" as const:
+  score>=RULE.thresholds.pressure.high?"HIGH" as const:score>=RULE.thresholds.pressure.moderate?"MODERATE" as const:"LOW" as const;
 export function calculateFlow(flow:Record<TenGodCategory,number>,matrix:FlowMatrix):FlowCalculation{const signedFlow=categories.reduce((sum,key)=>sum+flow[key]*matrix[key],0),
   flowActivityScore=categories.reduce((sum,key)=>sum+flow[key]*Math.abs(matrix[key]),0);
-  return{signedFlow,flowQualityScore:clamp(50+signedFlow/2),flowActivityScore:clamp(flowActivityScore)};}
+  return{signedFlow,flowQualityScore:clamp(RULE.flowNormalization.base+signedFlow/RULE.flowNormalization.signedFlowDivisor),flowActivityScore:clamp(flowActivityScore)};}
 const evidence=(factor:string,value:number,weight:number):ScoreEvidence=>({factor,value,weight,contribution:value*weight});
 export const categorySupportScore=(favorability:number,alignment:number,flowQuality:number)=>clamp(
   favorability*RULE.weights.categorySupport.favorability+alignment*RULE.weights.categorySupport.alignment+flowQuality*RULE.weights.categorySupport.flowQuality);
