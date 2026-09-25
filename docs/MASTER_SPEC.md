@@ -569,3 +569,33 @@ ESTABLISHED는 HIGH, UNEXPOSED는 MEDIUM confidence다. MIXED는 primary를 유�
 prospective relation context는 candidate branch와 원국 네 지지가 만들 수 있는 육합·삼합·방합·충·삼형·상형·자형·해·파·원진을 `branch-relations-v1`과 `punishment-v1`에서 탐지한다. pair는 PAIR, 삼합·방합·삼형은 candidate를 포함해 서로 다른 구성원 2개면 PARTIAL, 3개면 COMPLETE로 기록한다. 원국의 해당 지지 위치를 모두 보존한다. 이는 잠재 관계 metadata이며 점수 delta는 항상 0이다. prospective branch로 transformation을 재실행하거나 adjustedStrength를 변경하지 않는다. availability도 PRESENT/ABSENT, positions, count만 기록하고 점수에는 반영하지 않는다.
 
 순수 기둥 `乙亥 / 乙酉 / 甲子 / 戊辰`의 12지지 결과는 子 69.91758241758242 FAVORABLE, 亥 68.68818681318682 FAVORABLE, 卯 65 FAVORABLE, 寅 62.133366633366634 FAVORABLE, 午 59.052509990009995 CONDITIONAL, 辰 57.551698301698295 CONDITIONAL, 未 56.176698301698295 CONDITIONAL, 申 55.83627439975754 CONDITIONAL, 巳 55.423090673371576 CONDITIONAL, 戌 54.3033966033966 CONDITIONAL, 丑 54.09630369630369 CONDITIONAL, 酉 50.18181818181818 CONDITIONAL이다. 단일 지장간인 子=癸, 卯=乙, 酉=辛은 정확히 일치한다. PRIMARY·SECONDARY·NEUTRAL·UNFAVORABLE은 없고 FAVORABLE은 子亥卯寅, CONDITIONAL은 午辰未申巳戌丑酉다. 원국 亥酉子辰을 기준으로 candidate 酉의 자형, 午의 子午충, 申의 申子辰 완전 삼합 등을 기록하지만 점수는 변경하지 않는다.
+
+## CORE MILESTONE 13 — Noble & Special Stars Engine v1
+
+`noble-special-stars-v1`은 원국의 간지와 기존 관계 결과에서 귀인·신살의 존재, 기준, 위치, 중복 횟수와 근거만 탐지하는 tag layer다. 하위 표는 `noble-stars-v1`, `mobility-stars-v1`, `special-stars-v1`, `void-v1`, `twelve-sinsal-v1`, `samjae-v1`으로 고정한다. 어떤 신살도 strength, structure, usefulGods, stemPreferences, branchPreferences를 변경하거나 길흉 총점을 만들지 않는다. 문곡귀인은 v1 채택표의 출전·정의가 충분히 고정되지 않아 포함하지 않는다.
+
+### 귀인 채택표 (`noble-stars-v1`)
+
+모두 일간 기준이며 표의 지지가 원국의 어느 위치에 있는지 각각 기록한다. 천을귀인: 甲戊庚→丑未, 乙己→子申, 丙丁→亥酉, 辛→寅午, 壬癸→卯巳. 태극귀인: 甲乙→子午, 丙丁→卯酉, 戊己→辰戌丑未, 庚辛→寅亥, 壬癸→巳申. 문창귀인: 甲→巳, 乙→午, 丙戊→申, 丁己→酉, 庚→亥, 辛→子, 壬→寅, 癸→卯. 학당귀인: 甲→亥, 乙→午, 丙戊→寅, 丁己→酉, 庚→巳, 辛→子, 壬→申, 癸→卯.
+
+### 도화·역마·화개 (`mobility-stars-v1`)
+
+생년지와 일지 basis를 분리해 모두 계산한다. 申子辰→도화 酉/역마 寅/화개 辰, 亥卯未→子/巳/未, 寅午戌→卯/申/戌, 巳酉丑→午/亥/丑이다. 동일 위치가 양쪽 basis에 해당하면 두 detection을 모두 보존한다.
+
+### 특수 신살 (`special-stars-v1`)
+
+귀문관은 unordered pair 子酉·丑午·寅未·卯申·辰亥·巳戌을 네 지지의 모든 위치 쌍에서 검사한다. 원진은 별도 재탐지하지 않고 `relations.earthlyBranches.wonjin` 결과를 그대로 변환한다. 현침은 학교별 차이를 명시한 POSTPOST CUSTOM_RULE로 천간 甲辛, 지지 卯午未申의 각 출현을 기록한다. 괴강 extended-6은 庚辰·庚戌·壬辰·壬戌·戊辰·戊戌, 백호는 甲辰·乙未·丙戌·丁丑·戊辰·壬戌·癸丑이며 모든 pillar를 검사하고 `isDayPillar`를 따로 기록한다. 양인은 기존 `yang-blade-structure-v1`을 공유하여 甲→卯, 丙戊→午, 庚→酉, 壬→子만 적용하고 음간은 NOT_APPLICABLE이다.
+
+### 공망 (`void-v1`)
+
+일주가 속한 旬을 간지 index로 결정한다. 甲子旬→戌亥, 甲戌旬→申酉, 甲申旬→午未, 甲午旬→辰巳, 甲辰旬→寅卯, 甲寅旬→子丑이다. 결과는 dayPillar, xunStart, voidBranches와 일지를 제외한 year/month/hour matches를 기록한다. 일지 자체는 旬 판정 기준이므로 `dayBranchPolicy=EXCLUDED_SELF`로 고정한다.
+
+### 12신살 (`twelve-sinsal-v1`)
+
+순서는 겁살·재살·천살·지살·년살·월살·망신살·장성살·반안살·역마살·육해살·화개살이다. 申子辰의 목표 지지는 巳午未申酉戌亥子丑寅卯辰, 亥卯未는 申酉戌亥子丑寅卯辰巳午未, 寅午戌은 亥子丑寅卯辰巳午未申酉戌, 巳酉丑은 寅卯辰巳午未申酉戌亥子丑이다. yearBasis와 dayBasis 각각 12개 전체 mapping을 내보내며 targetBranch, matchedPositions, detected를 기록한다. 도화·역마·화개와 의미가 겹쳐도 별도 시스템 결과로 보존한다.
+
+### 삼재 (`samjae-v1`)
+
+생년지 기준으로 申子辰→寅(들)·卯(눌)·辰(날), 亥卯未→巳·午·未, 寅午戌→申·酉·戌, 巳酉丑→亥·子·丑을 기록한다. 원국에서는 basisYearBranch, group, samjaeBranches와 세 단계만 산출하며 특정 연도 활성화는 세운 엔진 범위다.
+
+순수 기둥 `乙亥 / 乙酉 / 甲子 / 戊辰`의 회귀 결과는 다음과 같다. 귀인은 태극귀인(day 子), 학당귀인(year 亥). 도화는 year basis 亥→day 子와 day basis 子→month 酉의 2건, 역마는 없음, 화개는 day basis 子→hour 辰. 귀문은 year 亥-hour 辰과 month 酉-day 子, 원진은 기존 relation의 year 亥-hour 辰, 현침은 day stem 甲이다. 甲子旬 공망은 戌亥이며 year 亥가 match된다. 양인은 적용 가능하지만 卯가 없어 detection 없음. 괴강과 백호는 hour 戊辰이 각각 1건이며 day pillar가 아니다. 12신살 year basis 亥에서는 재살 酉·지살 亥·년살 子·반안살 辰, day basis 子에서는 년살 酉·망신살 亥·장성살 子·화개살 辰이 검출된다. 생년지 亥의 삼재는 巳(들)·午(눌)·未(날)이다.

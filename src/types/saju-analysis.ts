@@ -9,6 +9,7 @@ import type { QiRole } from "@/lib/saju/interpretation/hidden-stems";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { StemPreferencesResult } from "./stem-preferences";
 import type { BranchPreferencesResult } from "./branch-preferences";
+import type { NobleSpecialStarsResult } from "./noble-special-stars";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -438,7 +439,7 @@ export interface SajuAnalysis {
   usefulGods: UsefulGodsResult;
   stemPreferences: EvidenceResult | StemPreferencesResult;
   branchPreferences: EvidenceResult | BranchPreferencesResult;
-  nobleAndSpecialStars: EvidenceResult;
+  nobleAndSpecialStars: EvidenceResult | NobleSpecialStarsResult;
   samjae: EvidenceResult;
   daeun: {
     status: ModuleStatus;
