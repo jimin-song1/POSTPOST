@@ -599,3 +599,25 @@ prospective relation context는 candidate branch와 원국 네 지지가 만들 
 생년지 기준으로 申子辰→寅(들)·卯(눌)·辰(날), 亥卯未→巳·午·未, 寅午戌→申·酉·戌, 巳酉丑→亥·子·丑을 기록한다. 원국에서는 basisYearBranch, group, samjaeBranches와 세 단계만 산출하며 특정 연도 활성화는 세운 엔진 범위다.
 
 순수 기둥 `乙亥 / 乙酉 / 甲子 / 戊辰`의 회귀 결과는 다음과 같다. 귀인은 태극귀인(day 子), 학당귀인(year 亥). 도화는 year basis 亥→day 子와 day basis 子→month 酉의 2건, 역마는 없음, 화개는 day basis 子→hour 辰. 귀문은 year 亥-hour 辰과 month 酉-day 子, 원진은 기존 relation의 year 亥-hour 辰, 현침은 day stem 甲이다. 甲子旬 공망은 戌亥이며 year 亥가 match된다. 양인은 적용 가능하지만 卯가 없어 detection 없음. 괴강과 백호는 hour 戊辰이 각각 1건이며 day pillar가 아니다. 12신살 year basis 亥에서는 재살 酉·지살 亥·년살 子·반안살 辰, day basis 子에서는 년살 酉·망신살 亥·장성살 子·화개살 辰이 검출된다. 생년지 亥의 삼재는 巳(들)·午(눌)·未(날)이다.
+
+## FORTUNE MILESTONE 14A — Daeun Generation & Activation v1
+
+### 대운 원본 생성
+
+`daeun-generation-v1`은 대운 작용 분석과 분리된 source 단계다. 방향은 `daeun-direction-v1`에서 연간의 음양과 성별을 사용한다. 양간 남성·음간 여성은 순행, 음간 남성·양간 여성은 역행이다. 순행은 다음 절입, 역행은 이전 절입을 기준으로 하며 `daeun-start-age-v1`에서 출생 절대시각과 기준 절입의 실제 시간 차이를 일수로 바꾼 뒤 `3일=대운 1년`으로 환산한다. `exactStartAge=abs(referenceJeol-birthInstant)/3일`, 표기용 연·월은 정수 연과 반올림한 월로 분리한다. 시작 datetime은 exactStartAge에 평균 태양년 365.2425일을 적용한 deterministic operational timestamp다.
+
+`daeun-sequence-v1`은 월주를 source-of-truth로 삼아 순행이면 다음 간지, 역행이면 이전 간지부터 10개를 생성한다. 각 기간은 10년이며 원본 `daeun.periods`에 간지, 연령 범위와 datetime 범위를 저장한다. 14A activation consumer는 방향·시작 나이·기간·간지를 재계산하거나 수정하지 않는다.
+
+### 작용 분석과 버전
+
+작용 결과 버전은 `daeun-activation-v1`, 관계 계약은 `fortune-interaction-v1`, 활성 점수는 `fortune-activation-score-v1`, 간지 선호 합성 계수는 `daeun-pillar-preference-v1`이다. 각 대운의 천간 선호도는 12A, 지지 선호도와 지장간 구성은 12B 및 기존 hidden-stems/element-weight 규칙에서 lookup한다. 일간 대비 대운 천간 십성과 대운 지지의 지장간별 십성·기존 비중을 기록한다.
+
+`baseFavorabilityScore=stemPreferenceScore×0.45+branchPreferenceScore×0.55`다. 역할은 80 이상 PRIMARY_FAVORABLE, 70 이상 STRONG_FAVORABLE, 60 이상 FAVORABLE, 45 이상 CONDITIONAL, 35 이상 NEUTRAL, 미만 UNFAVORABLE이다. 이는 간지 자체의 선호도이며 관계 활성도와 합산하지 않는다.
+
+활성 점수는 길흉이 아닌 변화량이다. 천간합 6, 천간충 7, 육합 6, 삼합 partial 4/complete 10, 방합 partial 4/complete 10, 지지충 10, 삼형 partial 7/complete 9, 상형 7, 자형 6, 해 5, 파 4, 원진 5다. `rawActivationScore=Σ(interaction.activationPoints)`, `activationScore=clamp(raw,0,100)`이다. 0~14 LOW, 15~29 MODERATE, 30~49 HIGH, 50 이상 VERY_HIGH다. 합과 충을 favorability delta로 바꾸지 않는다.
+
+각 interaction ID는 `DAEUN-{2자리 index}:{domain}:{natal position 또는 group}:{relation type}` 형식의 stable ID다. 같은 ID는 한 번만 점수화한다. 대운 지지가 추가되어 구성원 2개가 되면 ACTIVATED_PARTIAL, 3개가 되면 ACTIVATED_COMPLETE다. 대운 지지가 이미 원국에 있고 해당 group context도 이미 존재하면 REPEATED_EXISTING_CONTEXT로 구분한다. pair 관계는 ACTIVATED_PAIR다. 천간합은 `transformationCandidate=true` context만 기록하고 natal transformation이나 adjustedStrength를 재실행하지 않는다.
+
+도화·역마·화개·귀인·공망 target과 대운 간지가 일치하면 score 없는 activation tag를 기록한다. 백호·괴강 등의 사건을 예측하지 않고 신살로 점수를 가감하지 않는다. 삼재는 세운 연지에서만 활성화하므로 14A에서는 activation을 만들지 않는다. 결과는 `fortune.status=partial`, `fortune.daeun.status=implemented`이며 seun·wolun·synthesis는 not_implemented다.
+
+통합 synthetic fixture의 대운 원본은 역행, 이전 절입 기준, 시작 9세 0개월이며 丙寅·乙丑·甲子·癸亥·壬戌·辛酉·庚申·己未·戊午·丁巳 순이다. 각 `(favorability/role, activation/level)`은 丙寅 `(59.02680785123968/CONDITIONAL, 21/MODERATE)`, 乙丑 `(51.86370879120879/CONDITIONAL, 44/HIGH)`, 甲子 `(18.324587912087914/UNFAVORABLE, 44/HIGH)`, 癸亥 `(16.99426510989011/UNFAVORABLE, 22/MODERATE)`, 壬戌 `(56.938101851851854/CONDITIONAL, 50/VERY_HIGH)`, 辛酉 `(100/PRIMARY_FAVORABLE, 23/MODERATE)`, 庚申 `(89.61875/PRIMARY_FAVORABLE, 22/MODERATE)`, 己未 `(88.03467592592594/PRIMARY_FAVORABLE, 20/MODERATE)`, 戊午 `(97.79131944444445/PRIMARY_FAVORABLE, 20/MODERATE)`, 丁巳 `(96.00814393939396/PRIMARY_FAVORABLE, 29/MODERATE)`로 고정한다.

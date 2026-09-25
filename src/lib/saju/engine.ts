@@ -35,6 +35,8 @@ import { evaluateStructureUsefulGod } from "./interpretation/structure-useful-go
 import { evaluateStemPreferences } from "./interpretation/stem-preferences";
 import { evaluateBranchPreferences } from "./interpretation/branch-preferences";
 import { evaluateNobleSpecialStars } from "./interpretation/noble-special-stars";
+import { generateDaeun } from "./fortune/daeun-generation";
+import { evaluateDaeunActivation } from "./fortune/daeun-activation";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -140,6 +142,19 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       evidence: [previous.source],
     };
   })() : notImplemented("양력과 출생시간이 확인된 입력에서 계산합니다.");
+  const daeun = supportedInput && normalized.absoluteBirthInstant && pillars.year.stem && pillars.month.stem && pillars.month.branch
+    ? (() => { const previous=solarTermProvider.getPreviousJeol(normalized.absoluteBirthInstant!);
+      const next=solarTermProvider.getNextJeol(normalized.absoluteBirthInstant!);
+      return generateDaeun(pillars.year.stem!,pillars.month,input.gender,normalized.absoluteBirthInstant!,
+        new Date(previous.instantIso),new Date(next.instantIso)); })()
+    : {status:"not_implemented" as const,direction:null,directionLabel:null,referenceSolarTerm:null,
+      exactStartAge:null,startAgeYears:null,startAgeMonths:null,startDatetime:null,periods:[],evidence:[],
+      todo:"완성된 원국과 절입 시각이 필요"};
+  const fortune = daeun.status === "implemented" && stemPreferences.status === "implemented" && "stems" in stemPreferences &&
+    branchPreferences.status === "implemented" && "branches" in branchPreferences &&
+    nobleAndSpecialStars.status === "implemented" && "nobleStars" in nobleAndSpecialStars
+    ? evaluateDaeunActivation(daeun,pillars,relations,stemPreferences,branchPreferences,nobleAndSpecialStars)
+    : notImplemented("대운 원본과 천간·지지 선호도 및 신살 결과가 필요합니다.");
 
   return {
     schemaVersion: "saju-analysis-v1",
@@ -180,12 +195,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       status:"implemented",value:nobleAndSpecialStars.samjae,
       evidence:["samjae-v1: 생년지 삼합 그룹별 들·눌·날삼재 기준"]
     } : notImplemented("생년지 간지를 계산할 수 없어 삼재 기준을 계산하지 않았습니다."),
-    daeun: {
-      status: "not_implemented", direction: null, directionLabel: null, referenceSolarTerm: null,
-      exactStartAge: null, startAgeYears: null, startAgeMonths: null, startDatetime: null, periods: [], evidence: [],
-      todo: "대운 방향 및 시작 시각 계산은 후속 마일스톤에서 구현"
-    },
-    fortune: notImplemented("대운 45·세운 35·월운 20 규칙 기반 운 작용 엔진 구현 필요"),
+    daeun,
+    fortune,
     warnings: [
       ...(!input.birthTimeKnown ? ["출생시간 미상 입력은 원국 계산을 지원하지 않습니다."] : []),
       ...(input.calendarType === "lunar" ? ["음력/윤달의 양력 변환은 아직 구현되지 않아 원국을 계산하지 않았습니다."] : []),
