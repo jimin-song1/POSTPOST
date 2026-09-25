@@ -37,6 +37,8 @@ import { evaluateBranchPreferences } from "./interpretation/branch-preferences";
 import { evaluateNobleSpecialStars } from "./interpretation/noble-special-stars";
 import { generateDaeun } from "./fortune/daeun-generation";
 import { evaluateDaeunActivation } from "./fortune/daeun-activation";
+import { generateSeun } from "./fortune/seun-generation";
+import { evaluateSeunActivation } from "./fortune/seun-activation";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -156,6 +158,12 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     nobleAndSpecialStars.status === "implemented" && "nobleStars" in nobleAndSpecialStars
     ? evaluateDaeunActivation(daeun,pillars,relations,stemPreferences,branchPreferences,nobleAndSpecialStars)
     : notImplemented("대운 원본과 천간·지지 선호도 및 신살 결과가 필요합니다.");
+  if(fortune.status==="partial"&&"daeun" in fortune&&fortune.daeun.status==="implemented"&&daeun.status==="implemented"&&
+    stemPreferences.status==="implemented"&&"stems" in stemPreferences&&branchPreferences.status==="implemented"&&
+    "branches" in branchPreferences&&nobleAndSpecialStars.status==="implemented"&&"nobleStars" in nobleAndSpecialStars){
+    const seunSource=generateSeun(daeun.periods,solarTermProvider);
+    fortune.seun=evaluateSeunActivation(seunSource,daeun.periods,pillars,stemPreferences,branchPreferences,nobleAndSpecialStars,fortune.daeun);
+  }
 
   return {
     schemaVersion: "saju-analysis-v1",

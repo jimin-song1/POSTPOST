@@ -18,7 +18,8 @@ describe("SYNTHETIC_CORE_001 회귀 테스트", () => {
   it("대운 원본과 14A 분석을 구현하고 후속 운 레이어는 보류한다", () => {
     expect(result.daeun.status).toBe("implemented");
     expect(result.fortune).toMatchObject({ status: "partial", daeun: { status: "implemented" },
-      seun: { status: "not_implemented" }, wolun: { status: "not_implemented" }, synthesis: { status: "not_implemented" } });
+      seun: { status: "implemented" }, wolun: { status: "not_implemented" },
+      transformation: { status: "not_implemented" }, synthesis: { status: "not_implemented" } });
     expect(result.structure.status).toBe("implemented");
     expect(result.strength.status).toBe("implemented");
   });

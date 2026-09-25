@@ -621,3 +621,33 @@ prospective relation context는 candidate branch와 원국 네 지지가 만들 
 도화·역마·화개·귀인·공망 target과 대운 간지가 일치하면 score 없는 activation tag를 기록한다. 백호·괴강 등의 사건을 예측하지 않고 신살로 점수를 가감하지 않는다. 삼재는 세운 연지에서만 활성화하므로 14A에서는 activation을 만들지 않는다. 결과는 `fortune.status=partial`, `fortune.daeun.status=implemented`이며 seun·wolun·synthesis는 not_implemented다.
 
 통합 synthetic fixture의 대운 원본은 역행, 이전 절입 기준, 시작 9세 0개월이며 丙寅·乙丑·甲子·癸亥·壬戌·辛酉·庚申·己未·戊午·丁巳 순이다. 각 `(favorability/role, activation/level)`은 丙寅 `(59.02680785123968/CONDITIONAL, 21/MODERATE)`, 乙丑 `(51.86370879120879/CONDITIONAL, 44/HIGH)`, 甲子 `(18.324587912087914/UNFAVORABLE, 44/HIGH)`, 癸亥 `(16.99426510989011/UNFAVORABLE, 22/MODERATE)`, 壬戌 `(56.938101851851854/CONDITIONAL, 50/VERY_HIGH)`, 辛酉 `(100/PRIMARY_FAVORABLE, 23/MODERATE)`, 庚申 `(89.61875/PRIMARY_FAVORABLE, 22/MODERATE)`, 己未 `(88.03467592592594/PRIMARY_FAVORABLE, 20/MODERATE)`, 戊午 `(97.79131944444445/PRIMARY_FAVORABLE, 20/MODERATE)`, 丁巳 `(96.00814393939396/PRIMARY_FAVORABLE, 29/MODERATE)`로 고정한다.
+
+## FORTUNE MILESTONE 14B — Seun Activation Engine v1
+
+버전은 `seun-generation-v1`, `seun-activation-v1`, `fortune-layer-interaction-v1`, `seun-pillar-preference-v1`이다. 관계 activation point, cap과 level은 14A의 `fortune-interaction-v1` 및 `fortune-activation-score-v1` config를 직접 재사용한다.
+
+### 입춘 시간축과 생성 범위
+
+세운 year Y는 Solar Term Provider가 제공하는 `Y년 입춘 absolute instant` 이상, `Y+1년 입춘 absolute instant` 미만 구간이다. Gregorian 1월 1일이나 사주 보정 local datetime을 경계로 쓰지 않는다. 세운 간지는 각 시작 instant에 기존 `calculateYearPillar`를 호출해 얻으며 연도별 간지를 하드코딩하지 않는다.
+
+생성 범위는 정확한 `daeun.periods[].startInstant/endInstant` 전체 구간과 Solar Term Provider 지원 범위의 교집합이다. 각 입춘 구간과 실제로 겹치는 대운만 interval intersection으로 연결하므로 모든 세운×모든 대운 cross product를 만들지 않는다. Solar Term Provider의 마지막 지원 연도에는 다음 입춘이 없으므로 완전한 경계를 만들 수 있는 `supportedEnd-1` 세운까지만 생성한다.
+
+한 세운 도중 대운 경계가 있으면 `daeunSegments[]`에 각 `daeunIndex`, `daeunPillar`, 교차 `startInstant/endInstant`를 모두 저장한다. segment가 정확히 하나일 때만 편의 필드 `activeDaeunIndex/activeDaeunPillar`를 채운다. 둘 이상이면 두 편의 필드는 null이며 `daeunSegments`가 authoritative source다. 인접 segment 경계는 같은 absolute instant를 공유한다.
+
+### 선호도와 십성
+
+세운 천간·지지 선호도는 12A/12B 결과를 lookup하며 다시 계산하지 않는다. `baseFavorabilityScore=stemPreference×0.45+branchPreference×0.55`이고 역할은 14A와 동일하다. 대운 favorability는 섞지 않는다. 세운 천간의 일간 대비 십성과 지지 지장간별 십성·기존 hidden-stem weight를 기록한다.
+
+### 세 레이어 interaction
+
+모든 세운 참여 interaction에는 `layerPair`를 기록한다. 원국↔세운은 `NATAL_SEUN`, 활성 대운↔세운 pair는 `DAEUN_SEUN`, 원국+대운+세운 group은 `CROSS_LAYER`다. stable ID는 각각 `SEUN-{year}:NATAL:{domain}:{position}:{relation}`, `SEUN-{year}:DAEUN-{index}:{domain}:{relation}`, `SEUN-{year}:CROSS_LAYER:{group type}:{members}:DAEUN-{index}` 형태다. 동일 ID는 한 번만 점수화한다.
+
+원국↔세운 및 대운↔세운에서 천간합·천간충, 육합·충·상형·자형·해·파·원진을 찾는다. 삼합·방합·삼형은 원국+세운 또는 원국+활성 대운+세운의 서로 다른 지지 구성을 평가한다. 세운이 새로 세 지지를 완성하면 `ACTIVATED_COMPLETE`, 특히 대운이 필요한 다층 완성이면 `CROSS_LAYER_COMPLETE`, 두 지지만 만들면 `ACTIVATED_PARTIAL`, 세운 지지가 기존 context를 반복하면 `REPEATED_EXISTING_CONTEXT`다. participants에는 NATAL position, DAEUN index, SEUN year와 각 지지를 기록한다. 14A에서 계산한 원국↔대운 관계는 context로만 사용하고 14B 점수에 다시 넣지 않는다.
+
+`natalRawScore=Σ(NATAL_SEUN unique points)`, `crossLayerRawScore=Σ(DAEUN_SEUN 및 CROSS_LAYER unique points)`, `rawActivationScore=natalRawScore+crossLayerRawScore`, `activationScore=clamp(raw,0,100)`이다. favorability와 activation은 합치지 않는다. 천간합은 `transformationCandidate=true`만 기록하고 natal adjustedStrength나 fortune-layer strength를 만들지 않는다.
+
+### 신살·삼재
+
+일간 귀인표, 생년지·일지의 도화/역마/화개, 양인과 일주 공망 target에 세운 간지가 일치하면 score 없는 activation tag를 만든다. Milestone 13의 `samjae.stages`를 source-of-truth로 사용해 세운 지지가 들삼재·눌삼재·날삼재와 일치하면 `SAMJAE_ACTIVATED`와 stage를 기록한다. 신살·삼재·공망은 favorability 및 activation score를 변경하지 않는다.
+
+synthetic 회귀는 다음을 고정한다. 입춘 1ms 전과 Gregorian 1월 1일은 직전 간지를 유지하고 입춘 1ms 후 간지가 변경된다. 2027 입춘~2028 입춘 세운 안의 2027-07-01T12:00Z 대운 경계는 두 segment로 분리된다. 원국 申 + 대운 辰 + 세운 子는 申子辰 `CROSS_LAYER_COMPLETE`, 원국 子 + 세운 午는 `NATAL_SEUN` 충, 대운 子 + 세운 午는 `DAEUN_SEUN` 충이다. 생년지 亥 기준 세운 巳·午·未는 각각 들삼재·눌삼재·날삼재 tag를 만들고, 甲辰 일주 기준 세운 寅은 `VOID_ACTIVATED`지만 어느 tag도 점수를 변경하지 않는다.
