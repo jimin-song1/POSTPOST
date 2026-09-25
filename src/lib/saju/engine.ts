@@ -43,6 +43,7 @@ import { generateWolun } from "./fortune/wolun-generation";
 import { evaluateWolunActivation } from "./fortune/wolun-activation";
 import { evaluateFortuneTransformation } from "./fortune/fortune-transformation";
 import { synthesizeFortune } from "./fortune/fortune-synthesis";
+import { evaluateCategoryFortune } from "./fortune/category-fortune";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -172,8 +173,11 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       fortune.wolun=evaluateWolunActivation(wolunSource,fortune.seun.periods,pillars,stemPreferences,branchPreferences,nobleAndSpecialStars);
       if(fortune.wolun.status==="implemented"&&strength?.nativeStrength){
         fortune.transformation=evaluateFortuneTransformation(fortune,pillars,strength.nativeStrength);
-        if(fortune.transformation.status==="implemented"&&usefulGods.synthesis.status==="implemented"&&pillars.day.stem)
+        if(fortune.transformation.status==="implemented"&&usefulGods.synthesis.status==="implemented"&&pillars.day.stem){
           fortune.synthesis=synthesizeFortune(fortune,usefulGods.synthesis,pillars.day.stem);
+          fortune.categories=evaluateCategoryFortune(fortune.synthesis,input.gender,{structureType:structure.primary?.type??null,
+            usefulGodHighestElement:usefulGods.synthesis.highestElement??null});
+        }
       }
     }
   }
