@@ -49,6 +49,8 @@ describe("SYNTHETIC_CATEGORY_FORTUNE_V1",()=>{
   });
 
   it("Y-AD: computes change independently and preserves exact level boundaries/high-activity low-support",()=>{
+    expect(RULE.thresholds).toEqual({support:{verySupportive:80,supportive:70,moderatelySupportive:60,mixed:45,lowSupport:35},
+      activity:{veryHigh:50,high:30,moderate:15},pressure:{veryHigh:75,high:50,moderate:25}});
     expect([34.999,35,44.999,45,59.999,60,69.999,70,79.999,80].map(categorySupportLevel)).toEqual(["PRESSURED","LOW_SUPPORT","LOW_SUPPORT","MIXED","MIXED","MODERATELY_SUPPORTIVE","MODERATELY_SUPPORTIVE","SUPPORTIVE","SUPPORTIVE","VERY_SUPPORTIVE"]);
     expect([0,14.999,15,29.999,30,49.999,50].map(categoryActivityLevel)).toEqual(["LOW","LOW","MODERATE","MODERATE","HIGH","HIGH","VERY_HIGH"]);
     expect([0,24.999,25,49.999,50,74.999,75].map(categoryPressureLevel)).toEqual(["LOW","LOW","MODERATE","MODERATE","HIGH","HIGH","VERY_HIGH"]);
