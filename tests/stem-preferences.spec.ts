@@ -21,8 +21,8 @@ import { synthesisRole, synthesizeUsefulGods } from "@/lib/saju/interpretation/u
 import { evaluateStemPreferences, STEM_PREFERENCE_SHARED_CONFIG } from "@/lib/saju/interpretation/stem-preferences";
 import type { Branch, PillarPosition, Stem } from "@/types/saju-analysis";
 
-function pureRegression(){
- const ps:PillarPosition[]=["year","month","day","hour"], ss:Stem[]=["乙","乙","甲","戊"], bs:Branch[]=["亥","酉","子","辰"];
+function pureRegression(ss: Stem[] = ["乙","乙","甲","戊"], bs: Branch[] = ["亥","酉","子","辰"]){
+ const ps:PillarPosition[]=["year","month","day","hour"];
  const pillars=Object.fromEntries(ps.map((p,i)=>[p,{position:p,stem:ss[i],branch:bs[i],hanja:null,korean:null}])) as any;
  const hidden=Object.fromEntries(ps.map(p=>[p,getHiddenStems(pillars[p].branch,pillars.day.stem)])) as any;
  const native=calculateNativeStrength(pillars,hidden), relations=detectRelations(pillars);
@@ -71,6 +71,19 @@ describe("SYNTHETIC_STEM_PREFERENCES_V1", () => {
     expect(bing.engineSignals.find(row => row.engine === "johu")).toMatchObject({ rawScore: 20, normalizedScore: 70 });
     expect(xin.engineSignals.some(row => row.engine === "johu")).toBe(false);
     expect(xin.engineSignals.some(row => row.rawScore === 10 && row.engine === "johu")).toBe(false);
+  });
+
+  it("reads johu stemPreferences after the condition priority override", () => {
+    const value = pureRegression(["乙","戊","甲","壬"], ["亥","酉","卯","未"]);
+    expect(value.useful.johu.activeConditions).toEqual([
+      { id: "JIA_YOU_WOOD_GROUP_VISIBLE_COMPANION", effect: "PRIORITY_OVERRIDE" }
+    ]);
+    expect(value.useful.johu.stemPreferences.map(row => row.stem)).toEqual(["庚", "丁"]);
+    expect(stem(value.out, "庚").engineSignals.find(row => row.engine === "johu"))
+      .toMatchObject({ rawScore: 30, normalizedScore: 80 });
+    expect(stem(value.out, "丁").engineSignals.find(row => row.engine === "johu"))
+      .toMatchObject({ rawScore: 20, normalizedScore: 70 });
+    expect(stem(value.out, "丙").engineSignals.some(row => row.engine === "johu")).toBe(false);
   });
 
   it("K-P, AI: fixes all pure-pillar stem regression values without forcing direction", () => {
