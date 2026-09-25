@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -18,6 +18,15 @@ describe("FileInterpretationCache", () => {
       expect(await cache.get("stable-key")).toEqual(result);
       expect(JSON.parse(await readFile(path.join(directory, "stable-key.json"), "utf8"))).toEqual(result);
       expect(events).toEqual(["miss", "set", "hit"]);
+    } finally { await rm(directory, { recursive: true, force: true }); }
+  });
+
+  it("treats a corrupt entry as a miss without failing analysis", async () => {
+    const directory = await mkdtemp(path.join(tmpdir(), "postpost-ai-cache-corrupt-"));
+    try {
+      await writeFile(path.join(directory, "corrupt-key.json"), "{not-json", "utf8");
+      const cache = new FileInterpretationCache(directory);
+      await expect(cache.get("corrupt-key")).resolves.toBeUndefined();
     } finally { await rm(directory, { recursive: true, force: true }); }
   });
 });

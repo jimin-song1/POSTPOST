@@ -16,4 +16,5 @@ export interface CustomerResultPayload {
 export type InterpretationUiState =
   | { status: "not_requested" }
   | { status: "pending" }
+  | { status: "failed"; ruleVersion: "ai-interpretation-v1"; error: { code: "NETWORK_ERROR"; message: string } }
   | InterpretationResult;
