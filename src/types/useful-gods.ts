@@ -230,6 +230,7 @@ export type SynthesisEngine = "eokbu" | "structure" | "johu" | "byeongyak" | "to
 export type SynthesisRole = "PRIMARY" | "SECONDARY" | "FAVORABLE" | "CONDITIONAL" | "NEUTRAL" | "UNFAVORABLE";
 export interface SynthesisSignal {
   engine: SynthesisEngine; rawScore: number; normalizedScore: number;
+  // Absolute adjusted weight before normalization within this element.
   baseWeight: number; effectiveWeight: number;
 }
 export interface SynthesisElement {
@@ -243,6 +244,7 @@ export interface SynthesisResult {
   status: "implemented"; ruleVersion: "useful-god-synthesis-v1";
   normalizationVersion: "useful-god-normalization-v1"; weightVersion: "useful-god-weight-v1";
   baseEngineWeights: Record<SynthesisEngine, number>;
+  // Pre-normalized adjusted weights; their sum need not be 1.
   effectiveEngineWeights: Record<SynthesisEngine, number>;
   elements: SynthesisElement[];
   primaryElements: Element[]; secondaryElements: Element[]; favorableElements: Element[];

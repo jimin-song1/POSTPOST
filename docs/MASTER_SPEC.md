@@ -540,6 +540,8 @@ ESTABLISHED는 HIGH, UNEXPOSED는 MEDIUM confidence다. MIXED는 primary를 유�
 
 유효 가중치는 `baseWeight × confidenceFactor × engineSpecificFactor`다. confidence HIGH 1.00, MEDIUM 0.85, LOW 0.65; 조후 urgency CRITICAL 1.30, HIGH 1.15, MEDIUM 1.00, LOW 0.85; 억부 특수격 QUALIFIED_CANDIDATE 0.60, 그렇지 않고 CONDITIONAL 0.80, 그 외 1.00이다. 조후·특수격 계수는 raw 점수를 수정하지 않는다. confidence가 없는 조후·병약은 1.00을 쓴다. 조후 urgency null은 MEDIUM으로 처리한다. NOT_APPLICABLE 엔진은 유효 가중치 0으로 기록하고 모든 element denominator에서 제외한다. 미구현 엔진도 제외한다. NO_SIGNAL은 적용 가능한 엔진에 그 오행 후보/평가 행이 없다는 뜻이며 0점이나 중립 50점 신호로 채우지 않는다. NEUTRAL 신호는 실제 평가된 정규화 점수 50이다.
 
+결과 필드 `effectiveEngineWeights`와 `engineSignals[].effectiveWeight`는 **재정규화 전 조정 가중치**이며 합계가 1일 필요가 없다. 적용 가능한 엔진의 confidence·urgency·특수격 계수를 반영한 절대 가중치이고, NOT_APPLICABLE 엔진은 0이다. 오행별 최종 기여 비율은 신호가 있는 엔진마다 `engineSignals[].effectiveWeight / weightSum`으로 산출한다. 신호가 하나 이상 있으면 이 기여 비율의 합은 1이다. 따라서 전역 `effectiveEngineWeights`를 최종 기여 비율로 해석해서는 안 된다.
+
 공통 선호 점수 범위는 0~100, 중립점은 50이다. 억부 `((clamp(raw,-40,40)+40)/80)×100`. 조후 `raw<0 ? 50+clamp(raw,-15,0)/15×50 : 50+clamp(raw,0,50)`; 오행 집계 점수를 사용하고 천간 우선순위는 별도 보존한다. 통관 후보 `50+clamp(raw,0,35)/35×50`. 병약 medicine 후보 `50+clamp(raw,0,60)/60×50`. 격국 후보 `50+clamp(raw,0,50)`.
 
 오행별 `weightSum=Σ(signal effectiveWeight)`, `baseSynthesisScore=Σ(normalizedScore×effectiveWeight)/weightSum`이다. 각 오행은 서로 다른 denominator를 가질 수 있다. 신호가 하나도 없을 때는 계산상 중립 50으로 두되 engineCount=0, coverage=0, confidence LOW이며 중립 신호를 만들어 넣지 않는다. coverage의 `effectiveWeight`는 해당 오행 신호의 유효 가중치 합을 **원래 전체 base weight 합 1.00**으로 나눈 값이다. coverage 0.60 이상 HIGH, 0.35 이상 MEDIUM, 미만 LOW.
