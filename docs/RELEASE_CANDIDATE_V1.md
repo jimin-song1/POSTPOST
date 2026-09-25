@@ -9,7 +9,7 @@ Base: PR #29 merge `9ee2ec9dd33eec9bd7153c1e56ea225f823d450a`
 
 ## Verified
 
-- Final regression: **728 tests passed**; typecheck, production build and `git diff --check` passed.
+- Final regression: **730 tests passed**; typecheck, production build and `git diff --check` passed.
 - The deterministic engine was not changed. Canonical pillars remain `乙亥 / 乙酉 / 甲子 / 戊辰`, day master `甲`, raw elements `木3 火0 土2 金1 水2`.
 - Korea natural-time 09:29/09:30, natural-midnight rollover, ipchun and all 12 solar-term month boundaries, first daeun start, calendar +10-year daeun boundaries, seun crossing a daeun boundary, and wolun crossing a daeun boundary are covered by start-inclusive/end-exclusive tests.
 - Supported-range edges and overseas rejection remain explicit; unsupported countries are not silently treated as KST.
@@ -36,6 +36,15 @@ Base: PR #29 merge `9ee2ec9dd33eec9bd7153c1e56ea225f823d450a`
 - Seun selection now updates the selected year's wolun, fortune axes and category cards together; 2033 → 2034 interaction was verified in-browser.
 - Raw evidence IDs remain available only in development. Customer-facing evidence uses deterministic explanatory copy.
 - Improved long-name wrapping, mobile category density, month-date readability, current-year indication and horizontal timeline guidance.
+
+## Korean-first story refinement
+
+- Reordered the page into: story hero → at-a-glance personality → five elements → strength/structure → helpful flow → daeun → selected year → solar-term months → life categories → AI chapters → professional analysis.
+- Removed large pillars and score cards from the first screen. The hero contains no stem/branch hanja and leads with deterministic or validated-AI narrative.
+- Added deterministic UI terminology for strength, structure, ten gods, elements, alignment and special-star supporting copy. Engine values and ordering remain unchanged.
+- Numbers, raw evidence IDs, pillars, hidden stems, twelve stages, structure details and useful-god engines now sit behind progressive disclosure.
+- Browser QA at 390×844 and 1440×1000 found no horizontal overflow, no unnamed buttons and exactly 12 selected-year wolun nodes. Seun 2033 → 2034 synchronization remained intact.
+- Final screenshots: `story-mobile-first.png`, `story-mobile-full.png`, `story-mobile-elements.png`, `story-mobile-daeun.png`, `story-mobile-categories.png`, `story-mobile-ai.png`, and `story-desktop-full.png`.
 
 ## Live OpenAI smoke
 

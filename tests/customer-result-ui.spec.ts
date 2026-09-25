@@ -64,4 +64,22 @@ describe("CUSTOMER_RESULT_UI_V1", () => {
     expect(source).toContain("다시 입력하기");
     expect(source).toContain('process.env.NODE_ENV !== "production" && <code>{id}</code>');
   });
+
+  it("uses Korean-first story sections and keeps specialist data behind disclosure", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain("사주 이야기");
+    expect(source).toContain("한눈에 보는 나");
+    expect(source).toContain("나를 이루는 다섯 기운");
+    expect(source).toContain("숫자보다 결론을 먼저 읽고");
+    expect(source).toContain('id="professional"');
+    expect(source).toContain("원국과 명리 용어를 자세히 보고 싶다면");
+  });
+
+  it("translates alignment and element terminology without changing source scores", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain('LOW_ALIGNMENT: "어울림이 낮은 편"');
+    expect(source).toContain('wood: { name: "나무"');
+    expect(source).toContain('fire: { name: "불"');
+    expect(source).toContain("axes.transformationAlignment.adjustedScore");
+  });
 });
