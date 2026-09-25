@@ -103,10 +103,10 @@ describe("SYNTHETIC_EOKBU_USEFUL_GOD_V1", () => {
   });
   it("V: exposes only eokbu as implemented and preserves pending modules", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
-    expect(result.usefulGods).toMatchObject({ status: "partial", eokbu: { status: "implemented" },
+    expect(result.usefulGods).toMatchObject({ status: "implemented", eokbu: { status: "implemented" },
       johu: { status: "implemented" }, tonggwan: { status: "implemented" },
       byeongyak: { status: "implemented" }, structure: { status: "implemented" },
-      synthesis: { status: "not_implemented" } });
+      synthesis: { status: "implemented" } });
     expect(calculateSaju({ ...SYNTHETIC_INPUT, birthTimeKnown: false }).usefulGods.status).toBe("not_implemented");
   });
 });

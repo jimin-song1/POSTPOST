@@ -12,6 +12,7 @@ import { evaluateEokbuUsefulGod } from "@/lib/saju/interpretation/eokbu-useful-g
 import { evaluateJohuUsefulGod } from "@/lib/saju/interpretation/johu-useful-god";
 import { evaluateTonggwanUsefulGod } from "@/lib/saju/interpretation/tonggwan-useful-god";
 import { evaluateByeongyakUsefulGod } from "@/lib/saju/interpretation/byeongyak-useful-god";
+import { synthesizeUsefulGods } from "@/lib/saju/interpretation/useful-god-synthesis";
 import { evaluateStructureUsefulGod } from "@/lib/saju/interpretation/structure-useful-god";
 import { evaluateTransformation } from "@/lib/saju/interpretation/transformation";
 import type { Branch, Element, PillarPosition, Stem, TransformationState } from "@/types/saju-analysis";
@@ -219,7 +220,7 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
   it("S: integrates special structures and leaves useful gods unimplemented", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.structure.specialStructure.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("partial");
+    expect(result.usefulGods.status).toBe("implemented");
     expect(calculateSaju({ ...SYNTHETIC_INPUT, birthTimeKnown: false }).structure.specialStructure.status).toBe("not_implemented");
   });
   it("preserves the pure 乙亥/乙酉/甲子/戊辰 regression end to end", () => {
@@ -278,5 +279,38 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
         { element: "earth", score: 17, role: "SUPPORTING_STRUCTURE" },
         { element: "water", score: 15, role: "SUPPORTING_STRUCTURE" },
       ], damageContext: [], rescueContext: [] });
+    const independent = {
+      ...evaluateEokbuUsefulGod(value.strength, value.adjusted, result.specialStructure),
+      johu: evaluateJohuUsefulGod(value.pillars, value.hidden, value.adjusted, value.relations),
+      tonggwan,
+      byeongyak: evaluateByeongyakUsefulGod("甲", value.adjusted, value.strength, result, value.relations, tonggwan),
+      structure: evaluateStructureUsefulGod("甲", value.adjusted, result)
+    };
+    const before = structuredClone(independent);
+    const synthesis = synthesizeUsefulGods(independent);
+    expect(independent).toEqual(before);
+    expect(synthesis.effectiveEngineWeights).toEqual({ eokbu: 0.255, structure: 0.2125,
+      johu: 0.2, byeongyak: 0, tonggwan: 0.085 });
+    expect(synthesis.elements.map(({ element, score, role }) => [element, score, role])).toEqual([
+      ["water", 69.91758241758242, "FAVORABLE"],
+      ["fire", 65.48076923076924, "FAVORABLE"],
+      ["wood", 65, "FAVORABLE"],
+      ["earth", 52.95454545454545, "CONDITIONAL"],
+      ["metal", 52.22471910112359, "CONDITIONAL"]
+    ]);
+    expect(synthesis.primaryElements).toEqual([]);
+    expect(synthesis.secondaryElements).toEqual([]);
+    expect(synthesis.favorableElements).toEqual(["water", "fire", "wood"]);
+    expect(synthesis.conditionalElements).toEqual(["earth", "metal"]);
+    expect(synthesis.neutralElements).toEqual([]);
+    expect(synthesis.unfavorableElements).toEqual([]);
+    expect(synthesis.highestElement).toBe("water");
+    const metal = synthesis.elements.find(row => row.element === "metal")!;
+    expect(metal.conflictingSignals).toBe(true);
+    expect(synthesis.conflicts.find(row => row.element === "metal")).toMatchObject({
+      positive: [{ engine: "structure", rawScore: 25, normalizedScore: 75 }],
+      negative: [{ engine: "eokbu", rawScore: -12, normalizedScore: 35 }]
+    });
+
   });
 });

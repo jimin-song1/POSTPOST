@@ -123,9 +123,9 @@ describe("SYNTHETIC_STRUCTURE_USEFUL_GOD_V1", () => {
 
   it("AB: integrates the fifth independent engine and leaves synthesis pending", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
-    expect(result.usefulGods).toMatchObject({ status: "partial", eokbu: { status: "implemented" },
+    expect(result.usefulGods).toMatchObject({ status: "implemented", eokbu: { status: "implemented" },
       johu: { status: "implemented" }, tonggwan: { status: "implemented" },
       byeongyak: { status: "implemented" }, structure: { status: "implemented" },
-      synthesis: { status: "not_implemented" } });
+      synthesis: { status: "implemented" } });
   });
 });

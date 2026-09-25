@@ -533,3 +533,19 @@ medicine availability는 disease와 strategy가 먼저 정해진 뒤에만 적�
 ESTABLISHED는 HIGH, UNEXPOSED는 MEDIUM confidence다. MIXED는 primary를 유지하고 secondary/mixed pattern을 context only로 기록하며 LOW confidence다. `QUALIFIED_CANDIDATE` 특수격이 있으면 점수는 유지하고 `CAUTION_SPECIAL_STRUCTURE`/LOW로 표시한다. 건록격·양인격은 검증되지 않은 표를 만들지 않고 `LIMITED`, 빈 preferences를 반환한다.
 
 순수 `乙亥 / 乙酉 / 甲子 / 戊辰`은 甲 일간 정관격/UNEXPOSED이므로 CORE 金 25, SUPPORT 土 15와 水 15이며 damage가 없어 RESCUE는 없다. adjusted 土가 10~20% 구간이라 +2가 적용되어 최종 preference는 金 25, 土 17, 水 15다. 이는 억부의 金 −12, 조후의 火 40/金 10, 통관의 水 25, 병약 NOT_APPLICABLE과 독립적으로 함께 보존된다. 지원되는 입력은 eokbu, johu, tonggwan, byeongyak, structure가 모두 implemented이고 synthesis만 not_implemented다.
+
+## CORE MILESTONE 11 — POSTPOST Useful-God Synthesis v1
+
+`useful-god-synthesis-v1`, `useful-god-normalization-v1`, `useful-god-weight-v1`은 독립 10A~10E raw 결과를 변경하지 않는 결정론적 소비자다. 모든 계수와 경계는 `src/rules/useful-god-synthesis.v1.ts`의 versioned config를 사용한다. base weight 총합은 1.00: 억부 0.30, 격국 0.25, 조후 0.20, 병약 0.15, 통관 0.10.
+
+유효 가중치는 `baseWeight × confidenceFactor × engineSpecificFactor`다. confidence HIGH 1.00, MEDIUM 0.85, LOW 0.65; 조후 urgency CRITICAL 1.30, HIGH 1.15, MEDIUM 1.00, LOW 0.85; 억부 특수격 QUALIFIED_CANDIDATE 0.60, 그렇지 않고 CONDITIONAL 0.80, 그 외 1.00이다. 조후·특수격 계수는 raw 점수를 수정하지 않는다. confidence가 없는 조후·병약은 1.00을 쓴다. 조후 urgency null은 MEDIUM으로 처리한다. NOT_APPLICABLE 엔진은 유효 가중치 0으로 기록하고 모든 element denominator에서 제외한다. 미구현 엔진도 제외한다. NO_SIGNAL은 적용 가능한 엔진에 그 오행 후보/평가 행이 없다는 뜻이며 0점이나 중립 50점 신호로 채우지 않는다. NEUTRAL 신호는 실제 평가된 정규화 점수 50이다.
+
+결과 필드 `effectiveEngineWeights`와 `engineSignals[].effectiveWeight`는 **재정규화 전 조정 가중치**이며 합계가 1일 필요가 없다. 적용 가능한 엔진의 confidence·urgency·특수격 계수를 반영한 절대 가중치이고, NOT_APPLICABLE 엔진은 0이다. 오행별 최종 기여 비율은 신호가 있는 엔진마다 `engineSignals[].effectiveWeight / weightSum`으로 산출한다. 신호가 하나 이상 있으면 이 기여 비율의 합은 1이다. 따라서 전역 `effectiveEngineWeights`를 최종 기여 비율로 해석해서는 안 된다.
+
+공통 선호 점수 범위는 0~100, 중립점은 50이다. 억부 `((clamp(raw,-40,40)+40)/80)×100`. 조후 `raw<0 ? 50+clamp(raw,-15,0)/15×50 : 50+clamp(raw,0,50)`; 오행 집계 점수를 사용하고 천간 우선순위는 별도 보존한다. 통관 후보 `50+clamp(raw,0,35)/35×50`. 병약 medicine 후보 `50+clamp(raw,0,60)/60×50`. 격국 후보 `50+clamp(raw,0,50)`.
+
+오행별 `weightSum=Σ(signal effectiveWeight)`, `baseSynthesisScore=Σ(normalizedScore×effectiveWeight)/weightSum`이다. 각 오행은 서로 다른 denominator를 가질 수 있다. 신호가 하나도 없을 때는 계산상 중립 50으로 두되 engineCount=0, coverage=0, confidence LOW이며 중립 신호를 만들어 넣지 않는다. coverage의 `effectiveWeight`는 해당 오행 신호의 유효 가중치 합을 **원래 전체 base weight 합 1.00**으로 나눈 값이다. coverage 0.60 이상 HIGH, 0.35 이상 MEDIUM, 미만 LOW.
+
+정규화 점수 70 이상인 독립 엔진 신호 2개는 +3, 3개 이상은 +5 consensus bonus다. 70 이상 신호와 35 이하 신호가 모두 있으면 `CONFLICTING_SIGNAL`, −3 penalty를 적용하고 양방향 원본 엔진·raw·정규화·가중치를 conflicts와 element engineSignals에 보존한다. `finalScore=clamp(baseSynthesisScore+consensusBonus+conflictPenalty,0,100)`; base와 두 delta로 재구성할 수 있다. 역할은 80 이상 PRIMARY, 70 이상 SECONDARY, 60 이상 FAVORABLE, 45 이상 CONDITIONAL, 35 이상 NEUTRAL, 그 미만 UNFAVORABLE. 용신은 PRIMARY+SECONDARY, 희신은 FAVORABLE, 조건부·중립·기신은 각각 CONDITIONAL·NEUTRAL·UNFAVORABLE이다. PRIMARY는 0개 또는 복수 가능하며 highestElement는 별도로 기록한다. 점수 내림차순, 동점 木火土金水 순서다.
+
+순수 기둥 `乙亥 / 乙酉 / 甲子 / 戊辰`의 실제 독립 엔진 결과에서 병약은 NOT_APPLICABLE이다. 유효 가중치 억부 0.255, 격국 0.2125, 조후 0.20, 병약 0, 통관 0.085. 최종 점수는 水 69.91758241758242, 火 65.48076923076924, 木 65, 土 52.95454545454545, 金 52.22471910112359. PRIMARY·SECONDARY·NEUTRAL·UNFAVORABLE은 없고, FAVORABLE은 水火木, CONDITIONAL은 土金이다. highestElement 水는 PRIMARY가 아니다. 金은 억부 raw −12→35(비선호)와 격국 raw +25→75(강한 선호), 조후 raw +10→60을 모두 보존한다. 억부와 격국의 충돌로 −3을 적용한다. 외부 서비스의 단일 용신 결과에 맞춘 계수 조정은 하지 않는다.

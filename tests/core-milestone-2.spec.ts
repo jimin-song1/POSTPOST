@@ -98,7 +98,7 @@ describe("합성 입력의 엔진 통합", () => {
       );
     }
     expect(result.strength.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("partial");
+    expect(result.usefulGods.status).toBe("implemented");
     expect(result.engineMetadata.aiCalculationUsed).toBe(false);
   });
   it("출생시간 미상에서는 세 모듈을 추정하지 않는다", () => {

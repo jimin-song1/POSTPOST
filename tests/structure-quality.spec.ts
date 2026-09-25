@@ -133,6 +133,6 @@ describe("SYNTHETIC_STRUCTURE_QUALITY_V1 — explicit interactions", () => {
     const result = calculateSaju(SYNTHETIC_INPUT);
     expect(result.structure.qualityEvaluation.status).toBe("implemented");
     expect(result.structure.specialStructure.status).toBe("implemented");
-    expect(result.usefulGods.status).toBe("partial");
+    expect(result.usefulGods.status).toBe("implemented");
   });
 });
