@@ -61,6 +61,21 @@ describe("AI_INTERPRETATION_V1",()=>{
     const unknown=structuredClone(valid);unknown.sections[0].evidenceIds=["UNKNOWN:EVIDENCE"];
     expect(()=>validateGrounding(unknown,input)).toThrow(GroundingValidationError);
     expect(structuredInterpretationSchema.safeParse({status:"completed"}).success).toBe(false);
+    const emptyIds=structuredClone(valid);emptyIds.sections[0].evidenceIds=[];
+    expect(structuredInterpretationSchema.safeParse(emptyIds).success).toBe(false);
+  });
+
+  it("locks numbers and labels to each section's cited evidence and each timeline period",()=>{
+    const input:InterpretationInput={version:"interpretation-input-v1",reportType:"COMPREHENSIVE",minimalContext:{},
+      evidence:[{id:"NATAL:A",kind:"NATAL",value:{score:58.26,strength:"중화신약"}},
+        {id:"NATAL:B",kind:"NATAL",value:{score:85,strength:"신강"}}],
+      timeline:[{id:"PERIOD:A",period:{startInstant:"2035-01-01",endInstant:"2036-01-01"},evidenceIds:["NATAL:A"]},
+        {id:"PERIOD:B",period:{startInstant:"2036-01-01",endInstant:"2037-01-01"},evidenceIds:["NATAL:B"]}]};
+    const output=validOutput(input);output.sections[0].body="85점 신강 흐름입니다.";
+    expect(()=>validateGrounding(output,input)).toThrow(GroundingValidationError);
+    output.sections[0].body="약 58점 중화신약 흐름입니다.";
+    output.timeline[0].evidenceIds=["NATAL:B"];
+    expect(()=>validateGrounding(output,input)).toThrow(GroundingValidationError);
   });
 
   it("J-K: repairs once and fails after exactly one unsuccessful repair",async()=>{
