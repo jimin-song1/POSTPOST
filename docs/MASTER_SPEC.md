@@ -651,3 +651,33 @@ prospective relation context는 candidate branch와 원국 네 지지가 만들 
 일간 귀인표, 생년지·일지의 도화/역마/화개, 양인과 일주 공망 target에 세운 간지가 일치하면 score 없는 activation tag를 만든다. Milestone 13의 `samjae.stages`를 source-of-truth로 사용해 세운 지지가 들삼재·눌삼재·날삼재와 일치하면 `SAMJAE_ACTIVATED`와 stage를 기록한다. 신살·삼재·공망은 favorability 및 activation score를 변경하지 않는다.
 
 synthetic 회귀는 다음을 고정한다. 입춘 1ms 전과 Gregorian 1월 1일은 직전 간지를 유지하고 입춘 1ms 후 간지가 변경된다. 2027 입춘~2028 입춘 세운 안의 2027-07-01T12:00Z 대운 경계는 두 segment로 분리된다. 원국 申 + 대운 辰 + 세운 子는 申子辰 `CROSS_LAYER_COMPLETE`, 원국 子 + 세운 午는 `NATAL_SEUN` 충, 대운 子 + 세운 午는 `DAEUN_SEUN` 충이다. 생년지 亥 기준 세운 巳·午·未는 각각 들삼재·눌삼재·날삼재 tag를 만들고, 甲辰 일주 기준 세운 寅은 `VOID_ACTIVATED`지만 어느 tag도 점수를 변경하지 않는다.
+
+## FORTUNE MILESTONE 14C — Wolun Activation Engine v1
+
+버전은 `wolun-generation-v1`, `wolun-activation-v1`, `wolun-pillar-preference-v1`, `fortune-four-layer-interaction-v1`이다. 14A/14B의 `fortune-interaction-v1`, `fortune-activation-score-v1`, `fortune-layer-interaction-v1` 규칙과 점수표를 재사용한다.
+
+### 12절 월운 생성
+
+월운 경계는 기존 month-pillar 모듈의 `MONTH_INDEX_BY_JEOL`과 그 canonical 순서인 입춘·경칩·청명·입하·망종·소서·입추·백로·한로·입동·대설·소한을 source-of-truth로 사용한다. 각 기간은 `[currentJeolInstant,nextJeolInstant)`이며 Solar Term Provider의 absolute instant를 사용한다. Gregorian 월초와 음력 월번호는 사용하지 않는다.
+
+각 세운의 입춘부터 다음 입춘까지 기존 `calculateMonthPillar(startInstant,seunYearStem,provider)`를 호출한다. 따라서 월지는 입춘 寅부터 소한 丑까지 기존 mapping을, 월간은 해당 세운 천간 기준 기존 五虎遁 계산을 그대로 쓴다. 별도 월간표·월지표를 14C에 복제하지 않는다. 입춘 instant는 세운과 寅월의 공통 경계다. 입춘 1ms 전은 이전 세운+丑월, 입춘부터 새 세운+寅월이며 경칩 instant부터 卯월이다.
+
+생성 범위는 14B의 완전한 seun periods다. 각 세운에 정확히 12개 월운을 생성하고 다음 경계가 Provider 범위에 없는 불완전 월은 만들지 않는다. 통합 synthetic fixture는 2033~2099년 67세운×12개월로 804 월운이다.
+
+각 월운은 `activeSeunYear/activeSeunPillar` 단일값을 갖는다. 대운은 월운 도중 바뀔 수 있으므로 세운의 정확한 `daeunSegments`와 월운 interval을 다시 교차해 `daeunIndex`, `daeunPillar`, `startInstant/endInstant`를 보존한다. segment가 하나일 때만 `activeDaeunIndex/activeDaeunPillar` 편의 필드를 채우고 복수 또는 없음이면 null이다.
+
+### 선호도·십성·네 레이어 관계
+
+월운 선호도는 12A/12B lookup 결과로 `baseFavorabilityScore=stemPreference×0.45+branchPreference×0.55`를 계산한다. 월운 천간의 일간 대비 십성과 월지 지장간별 십성·기존 weight를 기록한다. 대운·세운 favorability와 합치지 않는다.
+
+월운 참여 pair는 `NATAL_WOLUN`, `DAEUN_WOLUN`, `SEUN_WOLUN`으로 분리한다. 천간합·천간충 및 육합·충·상형·자형·해·파·원진은 기존 표에서 탐지한다. 삼합·방합·삼형은 NATAL·실제 겹치는 DAEUN·현재 SEUN에 WOLUN을 추가해 평가한다. 새 14C cross-layer interaction에는 WOLUN participant가 반드시 존재하며, DAEUN/SEUN 중 실제로 기존 NATAL+WOLUN만으로는 제공되지 않는 지지가 있어야 한다. 월운 없이 이미 존재한 14A·14B 관계는 기록하거나 재점수화하지 않는다.
+
+월운이 세 번째 지지를 공급해 완성하면 `WOLUN_TRIGGERED_COMPLETE`, 두 지지만 형성하면 `ACTIVATED_PARTIAL`, 월운 이전에 이미 완성된 context면 `REPEATED_EXISTING_CONTEXT`다. participants에는 natal position, daeun index, seun year, wolun year와 각 stem/branch를 보존한다. stable ID는 `WOLUN-{seunYear}-{monthBranch}` prefix 아래 layer·domain·position/group·relation을 포함하며 모든 점수 행이 이 prefix로 시작한다.
+
+`natalRawScore=Σ(NATAL_WOLUN)`, `fortuneLayerRawScore=Σ(DAEUN_WOLUN+SEUN_WOLUN)`, `crossLayerRawScore=Σ(WOLUN 참여 multi-layer groups)`다. `rawScore`는 세 영역 합, `score=clamp(raw,0,100)`이며 level은 14A의 LOW/MODERATE/HIGH/VERY_HIGH 경계를 재사용한다. favorability와 activation은 합치지 않는다. 천간합은 transformation candidate만 남기고 실제 합화나 natal adjustedStrength 변경은 하지 않는다.
+
+### 신살·공망·삼재
+
+월운 지지가 natal 귀인·도화·역마·화개·양인·공망 target과 일치하면 score 없는 activation tag를 만든다. 세운과 월운의 공망 tag는 각 layer 결과에 따로 존재한다. 삼재는 세운 branch 기준 연 단위 결과이므로 월운 지지로 재판정하지 않고 해당 세운의 `samjaeActivation`을 `samjaeContext`로 연결만 한다. 모든 tag/context는 favorability와 activation을 바꾸지 않는다.
+
+synthetic 회귀는 입춘·경칩 1ms 경계, 寅卯辰巳午未申酉戌亥子丑 순서와 기존 五虎遁 월간을 고정한다. 원국 子↔월운 午, 대운 子↔월운 午, 세운 子↔월운 午 충을 각 layer로 분리한다. 원국 申+대운 辰+월운 子는 삼합, 원국 子+세운 亥+월운 丑은 방합, 원국 寅+대운 巳+월운 申은 삼형 `WOLUN_TRIGGERED_COMPLETE`다. 월운 寅이 甲辰 일주의 공망이어도 점수는 변하지 않으며 세운의 삼재 context는 월지와 무관하게 그대로 연결된다.

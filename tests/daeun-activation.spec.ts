@@ -110,7 +110,7 @@ describe("SYNTHETIC_DAEUN_GENERATION_AND_ACTIVATION_V1",()=>{
     const first=calculateSaju(SYNTHETIC_INPUT),second=calculateSaju(SYNTHETIC_INPUT);
     expect(second.daeun).toEqual(first.daeun);expect(second.fortune).toEqual(first.fortune);
     expect(first.fortune).toMatchObject({status:"partial",daeun:{status:"implemented"},seun:{status:"implemented"},
-      wolun:{status:"not_implemented"},transformation:{status:"not_implemented"},synthesis:{status:"not_implemented"}});
+      wolun:{status:"implemented"},transformation:{status:"not_implemented"},synthesis:{status:"not_implemented"}});
     const before={adjusted:structuredClone(first.fiveElements.adjustedStrength),useful:structuredClone(first.usefulGods),
       stems:structuredClone(first.stemPreferences),branches:structuredClone(first.branchPreferences),stars:structuredClone(first.nobleAndSpecialStars)};
     expect(first.fiveElements.adjustedStrength).toEqual(before.adjusted);expect(first.usefulGods).toEqual(before.useful);
