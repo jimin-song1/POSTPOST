@@ -10,6 +10,7 @@ import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
 import type { StemPreferencesResult } from "./stem-preferences";
 import type { BranchPreferencesResult } from "./branch-preferences";
 import type { NobleSpecialStarsResult } from "./noble-special-stars";
+import type { FortuneResult } from "./fortune";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -410,6 +411,12 @@ export interface LuckPeriod {
   pillar: string;
   startAgeYears: number;
   endAgeYears: number;
+  startAgeMonths?: number;
+  endAgeMonths?: number;
+  startInstant?: string;
+  endInstant?: string;
+  startDatetime?: string;
+  endDatetime?: string;
 }
 
 export interface SajuAnalysis {
@@ -447,6 +454,9 @@ export interface SajuAnalysis {
     directionLabel: "순행" | "역행" | null;
     referenceSolarTerm: "next" | "previous" | null;
     exactStartAge: number | null;
+    exactTermDifferenceMilliseconds: number | null;
+    exactTermDifferenceDays: number | null;
+    exactConvertedDuration: { years: number; milliseconds: number } | null;
     startAgeYears: number | null;
     startAgeMonths: number | null;
     startDatetime: string | null;
@@ -454,7 +464,7 @@ export interface SajuAnalysis {
     evidence: string[];
     todo?: string;
   };
-  fortune: EvidenceResult;
+  fortune: EvidenceResult | FortuneResult;
   warnings: string[];
   engineMetadata: {
     engineVersion: "1.0.0";
