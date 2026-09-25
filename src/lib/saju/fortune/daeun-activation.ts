@@ -80,7 +80,8 @@ function starActivations(stem:Stem,branch:Branch,pillars:Record<PillarPosition,P
 export function evaluateDaeunActivation(source:DaeunSource,pillars:Record<PillarPosition,Pillar>,relations:RelationsResult,
   stemPreferences:StemPreferencesResult,branchPreferences:BranchPreferencesResult,stars:NobleSpecialStarsResult):FortuneResult{
   if(source.status!=="implemented")return{status:"not_implemented",daeun:{status:"not_implemented",ruleVersion:RULE.ruleVersion,periods:[],
-    evidence:["implemented daeun source required"]},seun:{status:"not_implemented"},wolun:{status:"not_implemented"},synthesis:{status:"not_implemented"}};
+    evidence:["implemented daeun source required"]},seun:{status:"not_implemented"},wolun:{status:"not_implemented"},
+    transformation:{status:"not_implemented"},synthesis:{status:"not_implemented"}};
   const dayMaster=pillars.day.stem!;
   const periods:DaeunActivationPeriod[]=source.periods.map((sourcePeriod,index)=>{
     const fortuneStem=sourcePeriod.pillar[0] as Stem,fortuneBranch=sourcePeriod.pillar[1] as Branch;
@@ -100,7 +101,8 @@ export function evaluateDaeunActivation(source:DaeunSource,pillars:Record<Pillar
       evidence:[`favorability=${stemPreference.score}×0.45+${branchPreference.score}×0.55=${baseFavorabilityScore}`,
         `activation=${detected.map(row=>row.activationPoints).join("+")||"0"}=${rawScore}; cap=${score}`]};});
   return{status:"partial",daeun:{status:"implemented",ruleVersion:RULE.ruleVersion,periods,
-    evidence:["기존 daeun periods를 순서·기간 변경 없이 분석"]},seun:{status:"not_implemented"},wolun:{status:"not_implemented"},synthesis:{status:"not_implemented"}};
+    evidence:["기존 daeun periods를 순서·기간 변경 없이 분석"]},seun:{status:"not_implemented"},wolun:{status:"not_implemented"},
+    transformation:{status:"not_implemented"},synthesis:{status:"not_implemented"}};
 }
 
 export const daeunFavorabilityRole=role;
