@@ -752,7 +752,7 @@ Overall support는 `favorability×0.55+adjustedAlignment×0.45`, overall activit
 
 각 matrix는 companion/resource/output/wealth/officer에 -1~+1 coefficient를 갖는다. `signedFlow=Σ(tenGodFlowPercentage×coefficient)`, `flowQuality=clamp(50+signedFlow/2,0,100)`, `flowActivity=Σ(tenGodFlowPercentage×abs(coefficient))`다. Business는 `(-.15,.30,.85,.85,.35)`, career는 `(0,.65,.15,.10,1)`, study는 `(.10,1,.55,-.10,.35)` 순서다. MASTER_SPEC의 각 수치는 runtime fallback이 아니라 versioned config의 완전한 source다.
 
-Support level은 80 이상 VERY_SUPPORTIVE, 70 이상 SUPPORTIVE, 60 이상 MODERATELY_SUPPORTIVE, 45 이상 MIXED, 35 이상 LOW_SUPPORT, 미만 PRESSURED다. Activity level은 0~14 LOW, 15~29 MODERATE, 30~49 HIGH, 50 이상 VERY_HIGH다. Expense pressure는 0~24 LOW, 25~49 MODERATE, 50~74 HIGH, 75 이상 VERY_HIGH다.
+Support level은 80 이상 VERY_SUPPORTIVE, 70 이상 SUPPORTIVE, 60 이상 MODERATELY_SUPPORTIVE, 45 이상 MIXED, 35 이상 LOW_SUPPORT, 미만 PRESSURED다. Activity level은 0~14 LOW, 15~29 MODERATE, 30~49 HIGH, 50 이상 VERY_HIGH다. Expense pressure는 0~24 LOW, 25~49 MODERATE, 50~74 HIGH, 75 이상 VERY_HIGH다. 이 경계값과 0~100 score range, flow quality의 base/divisor는 모두 `category-fortune.v1.ts`의 versioned config에서 읽으며 evaluator에 magic number로 중복 정의하지 않는다.
 
 ### Wealth
 
