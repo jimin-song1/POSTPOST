@@ -776,6 +776,8 @@ Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`
 
 버전은 `ai-interpretation-v1`, `interpretation-input-v1`, `interpretation-schema-v1`, `interpretation-prompt-v1`, `interpretation-grounding-v1`이다. 이 계층은 완성된 deterministic `SajuAnalysis`를 설명할 뿐 pillars, 십성, 오행, 강약, 격국, 용신, 신살, 운 및 category score를 재계산하거나 수정하지 않는다. 계산 엔진과 provider는 `InterpretationProvider.generate()` 경계로 분리하며 OpenAI Responses API 호출은 `OpenAIInterpretationProvider` adapter 안에서만 수행한다. CI는 live API key 없이 mock provider를 사용한다.
 
+모든 section과 timeline entry는 하나 이상의 evidence ID를 가져야 한다. 숫자·연도·간지·강약·격국·용신 label lock은 전체 입력에 존재하는지만 보지 않고 각 section이 실제로 인용한 evidence 값 범위에서 검증한다. timeline entry는 자신의 deterministic period에 배정된 evidence만 인용할 수 있다. 따라서 다른 기간이나 다른 category의 숫자·label을 가져오는 cross-evidence substitution도 grounding failure다.
+
 ### 최소 입력과 report filtering
 
 지원 report는 `COMPREHENSIVE`, `WEALTH`, `BUSINESS`, `CAREER`, `RELATIONSHIP`, `STUDY`, `YEARLY`다. Input builder는 이름, 원문 생년월일, 출생도시와 원본 birth metadata를 provider 입력에서 제외한다. 성별은 relationship report에만 최소 context로 전달한다. 일반 report의 현재 대운·세운·월운은 서버가 명시적인 `referenceInstant`로 선택하고, YEARLY는 요청 year의 세운 segment와 그 year의 월운 segment만 선택한다. LLM이 기간을 검색하거나 결정하지 않는다.
