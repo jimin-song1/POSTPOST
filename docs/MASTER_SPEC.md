@@ -741,3 +741,33 @@ Delta 방향은 5 이상 `MORE_ALIGNED`, 1 이상 5 미만 `SLIGHTLY_MORE_ALIGNE
 Segment가 하나면 그 synthesis 값을 그대로 summary로 사용한다. 둘 이상이면 `segmentWeight=segmentDurationMilliseconds/periodDurationMilliseconds`로 favorability, activation, base/adjusted alignment와 delta를 duration-weighted 한다. 단순 평균이나 첫·마지막 대운 선택은 금지한다. 편의 summary에는 `peakActivationScore/peakSegmentId`, `maxPositiveDelta`, `maxNegativeDelta`를 추가하고 authoritative detail은 segment synthesis로 유지한다. 분석 가능한 Daeun segment가 없는 provider 범위 가장자리 period는 summary를 생성하지 않는다.
 
 Synthetic 회귀는 Daeun 80/20, Seun 60/60일 때 favorability 71.25와 activation 37.5가 독립적으로 계산되는지 고정한다. 월운 70/60/90 favorability는 70.5다. 70%/30% multi-Daeun period는 duration weight를 그대로 적용하고 짧은 segment의 peak activation과 양·음 transformation delta 극값을 별도로 보존한다.
+
+## FORTUNE MILESTONE 16 — Category Fortune Scores v1
+
+버전은 `category-fortune-v1`, `category-score-v1`, `category-flow-matrix-v1`, `wealth-category-v1`, `relationship-category-v1`이다. 모든 coefficient, matrix, threshold는 `category-fortune.v1.ts` config에 둔다. Milestone 15의 favorability, activation, adjusted transformation alignment, tenGodFlow만 점수 입력으로 사용한다. Structure, usefulGod, transformation delta, 신살·삼재·공망은 context/evidence이며 재가산하지 않는다. 출력 점수는 사건 확률이 아니라 해당 분야의 구조적 support, activity 또는 pressure다.
+
+### 공통 score와 flow matrix
+
+Overall support는 `favorability×0.55+adjustedAlignment×0.45`, overall activity는 기존 activation 그대로다. 일반 분야 support는 `favorability×0.45+adjustedAlignment×0.35+flowQuality×0.20`, activity는 `activation×0.70+flowActivity×0.30`이다. Activation을 support에 넣지 않고 transformation delta도 adjusted alignment에 다시 더하지 않는다.
+
+각 matrix는 companion/resource/output/wealth/officer에 -1~+1 coefficient를 갖는다. `signedFlow=Σ(tenGodFlowPercentage×coefficient)`, `flowQuality=clamp(50+signedFlow/2,0,100)`, `flowActivity=Σ(tenGodFlowPercentage×abs(coefficient))`다. Business는 `(-.15,.30,.85,.85,.35)`, career는 `(0,.65,.15,.10,1)`, study는 `(.10,1,.55,-.10,.35)` 순서다. MASTER_SPEC의 각 수치는 runtime fallback이 아니라 versioned config의 완전한 source다.
+
+Support level은 80 이상 VERY_SUPPORTIVE, 70 이상 SUPPORTIVE, 60 이상 MODERATELY_SUPPORTIVE, 45 이상 MIXED, 35 이상 LOW_SUPPORT, 미만 PRESSURED다. Activity level은 0~14 LOW, 15~29 MODERATE, 30~49 HIGH, 50 이상 VERY_HIGH다. Expense pressure는 0~24 LOW, 25~49 MODERATE, 50~74 HIGH, 75 이상 VERY_HIGH다.
+
+### Wealth
+
+Income opportunity matrix는 `(-.35,0,.55,1,.15)`, business revenue는 `(-.20,.15,.80,1,.25)`, stable cashflow는 `(-.50,.35,0,.75,.55)`, asset accumulation은 `(-.70,.40,-.25,.80,.60)`이다. 각 세부 support는 공통 support 공식으로 계산한다. Wealth support는 income 0.30, business revenue 0.25, stable cashflow 0.25, asset accumulation 0.20 가중 평균이다. Wealth flow activity는 같은 네 지표의 flow activity를 동일 가중 평균한 뒤 공통 activity 공식에 넣는다.
+
+Expense pressure matrix는 `(.80,-.20,.60,.30,.10)`이며 `activation×0.35+flowPressure×0.30+(100-favorability)×0.20+(100-adjustedAlignment)×0.15`다. 의미는 PRESSURE이며 support에 합치지 않는다. Expansion/investment matrix magnitude는 `(.30,.20,1,1,.20)`이고 `activation×0.60+expansionFlowActivity×0.40`인 ACTIVITY 지표다.
+
+### Relationship와 Change
+
+남성 opportunity/stability/formalization matrix는 각각 `(-.20,.20,.35,1,.40)`, `(-.25,.45,0,.75,.65)`, `(-.20,.50,0,.65,.80)`이다. 여성은 `(-.20,.20,.35,.15,1)`, `(-.25,.45,0,.25,.90)`, `(-.20,.50,0,.20,1)`이다. Generic fallback은 `(-.10,.20,.35,.50,.50)`, `(-.15,.45,0,.55,.55)`, `(-.10,.50,0,.50,.70)`이다. Relationship support는 opportunity 0.40, stability 0.35, formalization 0.25 가중 평균이다. Relationship flow activity도 같은 가중치로 합성해 공통 activity 공식에 넣는다. `traditionalPartnerCategory`는 male=wealth, female=officer, 정보 없음=GENERIC metadata이며 현대적 관계 성향이나 성적 지향을 추론하지 않는다.
+
+Change support는 `favorability×0.50+adjustedAlignment×0.50`, activity는 activation 그대로다. 역마를 비롯한 tag는 context only다. 모든 support/activity/pressure 결과에는 factor value, weight, contribution evidence를 저장하여 합계를 재구성할 수 있다.
+
+### Segment와 period summary
+
+Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`로 1:1 연결한다. Seun/Wolun의 multi-Daeun period는 authoritative segment category 결과를 유지하며 Milestone 15의 exact duration weight를 그대로 사용한다. Summary는 각 분야 support/activity 및 wealth pressure/expansion을 duration-weighted하고, 전체 분야 중 peak activity score/category/segment와 peak expense pressure segment를 별도로 보존한다. 첫·마지막 대운 선택이나 단순 평균은 사용하지 않는다.
+
+신살·삼재·공망·도화·역마·귀인·양인·괴강·백호는 tags/context로만 전달한다. Structure type과 usefulGod highest element도 설명용 context다. 어느 항목도 category score를 변경하지 않으며 돈, 매출, 승진, 합격, 연애, 결혼, 이직, 사고 같은 deterministic event field를 생성하지 않는다.
