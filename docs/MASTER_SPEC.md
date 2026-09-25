@@ -604,9 +604,9 @@ prospective relation context는 candidate branch와 원국 네 지지가 만들 
 
 ### 대운 원본 생성
 
-`daeun-generation-v1`은 대운 작용 분석과 분리된 source 단계다. 방향은 `daeun-direction-v1`에서 연간의 음양과 성별을 사용한다. 양간 남성·음간 여성은 순행, 음간 남성·양간 여성은 역행이다. 순행은 다음 절입, 역행은 이전 절입을 기준으로 하며 `daeun-start-age-v1`에서 출생 절대시각과 기준 절입의 실제 시간 차이를 일수로 바꾼 뒤 `3일=대운 1년`으로 환산한다. `exactStartAge=abs(referenceJeol-birthInstant)/3일`, 표기용 연·월은 정수 연과 반올림한 월로 분리한다. 시작 datetime은 exactStartAge에 평균 태양년 365.2425일을 적용한 deterministic operational timestamp다.
+`daeun-generation-v1`은 대운 작용 분석과 분리된 source 단계다. 방향은 `daeun-direction-v1`에서 연간의 음양과 성별을 사용한다. 양간 남성·음간 여성은 순행, 음간 남성·양간 여성은 역행이다. 순행은 다음 절입, 역행은 이전 절입을 기준으로 하며 `daeun-start-age-v1`에서 출생 절대시각과 기준 절입의 실제 시간 차이를 일수로 바꾼 뒤 `3일=대운 1년`으로 환산한다. `exactStartAge=abs(referenceJeol-birthInstant)/3일`, 표기용 연·월은 정수 연과 반올림한 월로 분리한다. 시작 instant는 출생 instant에 정수 calendar years를 먼저 더하고, 소수 연령은 해당 생일부터 다음 생일까지의 실제 calendar interval에 비례시켜 계산한다. 따라서 윤년에도 정확히 1세는 같은 월·일·시각의 다음 calendar year이며 평균 태양년 고정 밀리초를 사용하지 않는다.
 
-`daeun-sequence-v1`은 월주를 source-of-truth로 삼아 순행이면 다음 간지, 역행이면 이전 간지부터 10개를 생성한다. 각 기간은 10년이며 원본 `daeun.periods`에 간지, 연령 범위와 datetime 범위를 저장한다. 14A activation consumer는 방향·시작 나이·기간·간지를 재계산하거나 수정하지 않는다.
+`daeun-sequence-v1`은 월주를 source-of-truth로 삼아 순행이면 다음 간지, 역행이면 이전 간지부터 10개를 생성한다. 최초 대운의 정확한 시작 instant를 구한 뒤 각 경계는 그 instant에 10 calendar years씩 가산한다. 고정 일수나 `365.2425×10` 밀리초를 기간 경계로 사용하지 않는다. 월·일·시각을 보존하고 윤년으로 동일 날짜가 없을 때만 해당 월의 마지막 날로 clamp한다. 원본 `daeun.periods`에는 간지와 표시용 연령 범위 외에 실제 `startInstant`/`endInstant`를 저장하며, 다음 기간의 `startInstant`는 직전 기간의 `endInstant`와 정확히 같다. 기존 호환 필드 `startDatetime`/`endDatetime`도 같은 값을 가리킨다. 14A activation consumer는 방향·시작 나이·기간·간지를 재계산하거나 수정하지 않는다.
 
 ### 작용 분석과 버전
 

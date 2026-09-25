@@ -413,6 +413,8 @@ export interface LuckPeriod {
   endAgeYears: number;
   startAgeMonths?: number;
   endAgeMonths?: number;
+  startInstant?: string;
+  endInstant?: string;
   startDatetime?: string;
   endDatetime?: string;
 }
