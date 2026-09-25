@@ -9,3 +9,6 @@ npm-debug.log*
 
 # Local private regression inputs must never be committed.
 tests/private/
+calibration/private/**
+fixtures/private/**
+benchmarks/private/**

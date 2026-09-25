@@ -772,6 +772,16 @@ Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`
 
 신살·삼재·공망·도화·역마·귀인·양인·괴강·백호는 tags/context로만 전달한다. Structure type과 usefulGod highest element도 설명용 context다. 어느 항목도 category score를 변경하지 않으며 돈, 매출, 승진, 합격, 연애, 결혼, 이직, 사고 같은 deterministic event field를 생성하지 않는다.
 
+## MILESTONE 20A — Traditional Wellness / Health Fortune v1
+
+버전은 `wellness-v1`, `wellness-element-balance-v1`, `wellness-theme-v1`, `wellness-habit-v1`, `wellness-period-v1`이다. 이 모듈은 adjusted five-element percentage, 기존 조후, 대운 activation 및 fortune transformation을 read-only로 소비한다. 의료 진단·질병 확률·장기 질환·수술·치료·수명 예측을 생성하지 않는다.
+
+오행의 기준점은 POSTPOST custom reference 20%다. `pct<20`이면 deficiency는 `(20-pct)/20×100`, 아니면 0이다. `pct>20`이면 excess는 `(pct-20)/20×100`, 아니면 0이다. Attention은 `clamp(max(deficiency, excess×0.8),0,100)`이다. 전체 균형은 `clamp(100-Σ|pct-20|/160×100,0,100)`이다. Attention level은 0 이상 BALANCED, 20 이상 WATCH, 40 이상 NEED_SUPPORT, 60 이상 HIGH_ATTENTION, 80 이상 VERY_HIGH_ATTENTION이다.
+
+고객 theme은 나무=유연성·긴장 회복, 불=활력·체온·순환, 흙=소화 리듬·생활 균형, 쇠=호흡·피부·건조함, 물=휴식·회복·냉감이다. 장부 대응은 `전통 명리에서 연결해 보는 영역` metadata일 뿐 질병 판정이 아니다. 조후 signal과 urgency는 context/evidence에만 보존하고 attention score에 재가산하지 않는다.
+
+대운별 관리 필요도는 `운 adjusted element profile과 natal attention의 가중 평균×0.60 + 기존 activation score×0.25 + 실제 fortune transfer amount/22×100×0.15`다. Stem 10 + branch 12의 기존 fortune contribution 22를 분모로 사용한다. 합·충 자체를 질병 점수로 만들지 않으며, 기존 activation은 변화 신호로만 사용한다. 모든 factor value, weight, contribution을 evidence에 남긴다.
+
 ## MILESTONE 17 — AI Interpretation Layer v1
 
 버전은 `ai-interpretation-v1`, `interpretation-input-v1`, `interpretation-schema-v1`, `interpretation-prompt-v1`, `interpretation-grounding-v1`이다. 이 계층은 완성된 deterministic `SajuAnalysis`를 설명할 뿐 pillars, 십성, 오행, 강약, 격국, 용신, 신살, 운 및 category score를 재계산하거나 수정하지 않는다. 계산 엔진과 provider는 `InterpretationProvider.generate()` 경계로 분리하며 OpenAI Responses API 호출은 `OpenAIInterpretationProvider` adapter 안에서만 수행한다. CI는 live API key 없이 mock provider를 사용한다.
