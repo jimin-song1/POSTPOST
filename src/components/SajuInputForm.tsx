@@ -2,12 +2,13 @@
 
 import { FormEvent, useState } from "react";
 import type { SajuInput } from "@/types/saju-input";
+import type { CustomerResultPayload } from "@/types/customer-result";
 
 export const TEST_INPUT: SajuInput = { name: "", gender: "female", calendarType: "solar", birthDate: "", birthTime: "", birthTimeKnown: true, birthCountry: "KR", birthCityKnown: true, birthCity: "" };
 
 const COUNTRIES = [["KR", "대한민국"], ["US", "미국"], ["JP", "일본"], ["CN", "중국"], ["CA", "캐나다"], ["AU", "호주"], ["GB", "영국"], ["DE", "독일"], ["FR", "프랑스"]];
 
-export function SajuInputForm({ onResult }: { onResult: (value: unknown) => void }) {
+export function SajuInputForm({ onResult }: { onResult: (value: CustomerResultPayload) => void }) {
   const [form, setForm] = useState(TEST_INPUT);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,7 +19,7 @@ export function SajuInputForm({ onResult }: { onResult: (value: unknown) => void
   async function submit(event: FormEvent) {
     event.preventDefault(); setLoading(true); setError("");
     try {
-      const response = await fetch("/api/saju/calculate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+      const response = await fetch("/api/saju/result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error ?? "요청에 실패했습니다.");
       onResult(body);
