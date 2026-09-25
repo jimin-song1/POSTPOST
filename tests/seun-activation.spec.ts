@@ -140,6 +140,6 @@ describe("SYNTHETIC_SEUN_ACTIVATION_V1",()=>{
     expect(integrated[0]).toMatchObject({year:2033,pillar:{stem:"癸",branch:"丑"}});
     expect(integrated.at(-1)).toMatchObject({year:2099,pillar:{stem:"己",branch:"未"}});
     expect(first.fortune).toMatchObject({status:"partial",daeun:{status:"implemented"},seun:{status:"implemented"},
-      wolun:{status:"implemented"},transformation:{status:"not_implemented"},synthesis:{status:"not_implemented"}});
+      wolun:{status:"implemented"},transformation:{status:"implemented"},synthesis:{status:"not_implemented"}});
   });
 });

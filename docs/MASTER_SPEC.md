@@ -681,3 +681,31 @@ synthetic 회귀는 다음을 고정한다. 입춘 1ms 전과 Gregorian 1월 1�
 월운 지지가 natal 귀인·도화·역마·화개·양인·공망 target과 일치하면 score 없는 activation tag를 만든다. 세운과 월운의 공망 tag는 각 layer 결과에 따로 존재한다. 삼재는 세운 branch 기준 연 단위 결과이므로 월운 지지로 재판정하지 않고 해당 세운의 `samjaeActivation`을 `samjaeContext`로 연결만 한다. 모든 tag/context는 favorability와 activation을 바꾸지 않는다.
 
 synthetic 회귀는 입춘·경칩 1ms 경계, 寅卯辰巳午未申酉戌亥子丑 순서와 기존 五虎遁 월간을 고정한다. 원국 子↔월운 午, 대운 子↔월운 午, 세운 子↔월운 午 충을 각 layer로 분리한다. 원국 申+대운 辰+월운 子는 삼합, 원국 子+세운 亥+월운 丑은 방합, 원국 寅+대운 巳+월운 申은 삼형 `WOLUN_TRIGGERED_COMPLETE`다. 월운 寅이 甲辰 일주의 공망이어도 점수는 변하지 않으며 세운의 삼재 context는 월지와 무관하게 그대로 연결된다.
+
+## FORTUNE MILESTONE 14D — Fortune Transformation Engine v1
+
+버전은 `fortune-transformation-v1`, `fortune-transformation-evaluation-v1`, `fortune-contribution-v1`, `fortune-transformation-transfer-v1`이다. 엔진은 14A/B/C가 만든 transformable interaction을 소비하며 관계표를 새로 정의하지 않는다. 원국의 `nativeStrength`, `adjustedStrength`, natal transformation과 모든 대운·세운·월운 activation/favorability 결과는 read-only다. 결과는 `fortune.transformation`에만 저장하고 `fortune.synthesis`는 `not_implemented`로 유지한다.
+
+### Fortune contribution과 독립 snapshot
+
+각 운 간지는 천간 10 units와 지지 12 units, 합계 22 units의 raw contribution을 가진다. 지지 12 units는 기존 `hidden-stems-v1` 및 `element-weight-v1` 배분을 재사용한다. 지장간 1개는 본기 12, 2개는 본기 9·여기 3, 3개는 본기 8.4·중기 2.4·여기 1.2다. 월운을 포함해 운의 지지에는 natal 월지 24 weight를 적용하지 않는다. contribution ID는 `{layer-key}:STEM:{stem}` 또는 `{layer-key}:BRANCH:{branch}:{MAIN|MIDDLE|RESIDUAL}:{stem}` 형식으로 고정한다.
+
+대운 snapshot은 NATAL+DAEUN, 세운 snapshot은 NATAL+해당 DAEUN segment+SEUN, 월운 snapshot은 NATAL+해당 DAEUN segment+SEUN+WOLUN context다. 모든 snapshot은 언제나 raw 22-unit contribution에서 새로 계산한다. 직전 세운·월운의 adjusted profile을 다음 기간의 source로 사용하지 않는다. 세운이나 월운 도중 대운이 바뀌면 14B/14C의 exact `daeunSegments`마다 별도 snapshot을 만든다. stable snapshot ID는 `DAEUN-{index}`, `SEUN-{year}:DAEUN-{index}`, `WOLUN-{year}-{monthBranch}:DAEUN-{index}`다.
+
+원국은 합화의 성립 조건, 뿌리, 노출, blocker를 판정하는 context일 뿐 transfer source가 아니다. 원국+세운 합이면 세운 contribution만 이동한다. 대운+세운처럼 양쪽이 fortune layer이면 두 layer의 해당 contribution이 모두 이동한다. branch group에서는 참여한 fortune branch의 기존 지장간 contribution만 source가 되며 natal branch contribution은 이동하지 않는다.
+
+### 평가 factor와 계절 context
+
+변환 후보 종류는 기존 `relation-interaction-v1`의 stem combination, six combination, three harmony, directional combination을 재사용한다. `transformation-v1`과 동일하게 score 5 이상은 `TRANSFORMED`, 3~4는 `PARTIAL`, 0~2는 `COMBINATION_ONLY`, 0 미만은 `WEAK`이다. partial 삼합·방합은 score와 무관하게 최대 `PARTIAL`이다.
+
+평가 factor는 기존 설정의 계절 목표오행 상태, 목표오행 뿌리, 목표오행 천간 노출, 생성오행 support, 경쟁 후보, 동일 participant의 blocking clash, 천간 원래 오행의 강한 본기 뿌리를 사용한다. 단순 상극 오행 존재만으로 blocker를 만들지 않는다. natal positional adjacency는 fortune layer에 임의 적용하지 않고 `NOT_APPLICABLE`, delta 0으로 evidence에 남긴다. factor별 delta·적용 상태·관련 relation ID와 근거를 보존한다.
+
+대운과 세운은 원국 월지를 쓰는 `NATAL_MONTH_BASELINE`, 월운은 실제 절기 월지인 `ACTIVE_WOLUN_BRANCH`를 season context로 사용한다. target root는 원국 지지와 현재 snapshot의 active fortune branches, target exposed는 원국 천간과 active fortune stems에서 찾지만 natal rooting/strength 자체는 수정하지 않는다.
+
+### Transfer ledger, 경쟁 배분과 보존
+
+`transformation-transfer-v1` 비율을 재사용한다. `TRANSFORMED`는 60%, `PARTIAL`은 30%, `COMBINATION_ONLY`·`WEAK`·`NOT_APPLICABLE`은 0%이며 partial group도 최대 30%다. 한 contribution에 복수 요청이 걸리면 `scale=min(1, availableContribution/totalRequested)`로 모든 요청을 비례 축소한다. 실제 이동량은 `requestedAmount×scale`이며 source는 음수가 되지 않는다. 동일 오행으로의 transfer는 ledger에는 기록하되 net element delta는 0이다.
+
+transfer ID는 `{snapshotId}:{relationId}:{sourceContributionId}`다. ledger에는 layer, source contribution, from/to element, 상태, ratio, requested/actual amount, scale, remaining amount를 저장하여 adjusted profile을 재구성할 수 있게 한다. 각 layer별로 `sum(base)=sum(adjusted)=22`를 허용 오차 안에서 보존한다. 세운 snapshot combined total은 44, 월운 snapshot combined total은 66이며 combined base/adjusted 총량도 같다. combined profile은 diagnostic일 뿐 activation, favorability 또는 최종 운세 점수와 합산하지 않는다. 신살·공망·삼재도 평가와 transfer에 사용하지 않는다.
+
+synthetic 회귀는 원국 甲+세운 己에서 세운 측만 이동, 대운 甲+세운 己에서 두 fortune layer 이동, 월운이 완성하는 다층 branch combination, partial group 30% cap, 동일 contribution 복수 후보의 비례 축소와 layer/combined conservation을 고정한다. 통합 fixture는 대운 snapshot 10개, exact segment 기준 세운 snapshot 73개, 월운 snapshot 808개를 만들며 결과가 동일 입력에 deterministic함을 검증한다.

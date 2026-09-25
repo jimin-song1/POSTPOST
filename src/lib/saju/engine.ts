@@ -41,6 +41,7 @@ import { generateSeun } from "./fortune/seun-generation";
 import { evaluateSeunActivation } from "./fortune/seun-activation";
 import { generateWolun } from "./fortune/wolun-generation";
 import { evaluateWolunActivation } from "./fortune/wolun-activation";
+import { evaluateFortuneTransformation } from "./fortune/fortune-transformation";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -168,6 +169,8 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     if(fortune.seun.status==="implemented"&&fortune.seun.periods){
       const wolunSource=generateWolun(fortune.seun.periods,solarTermProvider);
       fortune.wolun=evaluateWolunActivation(wolunSource,fortune.seun.periods,pillars,stemPreferences,branchPreferences,nobleAndSpecialStars);
+      if(fortune.wolun.status==="implemented"&&strength?.nativeStrength)
+        fortune.transformation=evaluateFortuneTransformation(fortune,pillars,strength.nativeStrength);
     }
   }
 
