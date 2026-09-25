@@ -9,7 +9,7 @@ Base: PR #29 merge `9ee2ec9dd33eec9bd7153c1e56ea225f823d450a`
 
 ## Verified
 
-- Final regression: **726 tests passed**; typecheck, production build and `git diff --check` passed.
+- Final regression: **728 tests passed**; typecheck, production build and `git diff --check` passed.
 - The deterministic engine was not changed. Canonical pillars remain `乙亥 / 乙酉 / 甲子 / 戊辰`, day master `甲`, raw elements `木3 火0 土2 金1 水2`.
 - Korea natural-time 09:29/09:30, natural-midnight rollover, ipchun and all 12 solar-term month boundaries, first daeun start, calendar +10-year daeun boundaries, seun crossing a daeun boundary, and wolun crossing a daeun boundary are covered by start-inclusive/end-exclusive tests.
 - Supported-range edges and overseas rejection remain explicit; unsupported countries are not silently treated as KST.
@@ -26,6 +26,16 @@ Base: PR #29 merge `9ee2ec9dd33eec9bd7153c1e56ea225f823d450a`
 - `qa-screenshots/result-430x932.png`
 - `qa-screenshots/result-1280x900.png`
 - `qa-screenshots/result-1440x1000.png`
+- `qa-screenshots/mobile-full.png`
+- `qa-screenshots/desktop-full.png`
+
+## Customer UI confirmation
+
+- Added a sticky, keyboard-focusable quick-navigation bar for the long result page.
+- Added a clear `다시 입력하기` action without exposing additional birth data.
+- Seun selection now updates the selected year's wolun, fortune axes and category cards together; 2033 → 2034 interaction was verified in-browser.
+- Raw evidence IDs remain available only in development. Customer-facing evidence uses deterministic explanatory copy.
+- Improved long-name wrapping, mobile category density, month-date readability, current-year indication and horizontal timeline guidance.
 
 ## Live OpenAI smoke
 

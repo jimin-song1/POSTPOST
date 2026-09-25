@@ -50,4 +50,18 @@ describe("CUSTOMER_RESULT_UI_V1", () => {
     expect(page).not.toContain("OPENAI_API_KEY");
     expect(component).toContain('process.env.NODE_ENV !== "production"');
   });
+
+  it("keeps selected seun, wolun and category presentation synchronized", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain("selectedYear={selectedYear}");
+    expect(source).toContain("item.context.seunYear === selectedYear");
+    expect(source).toContain("onYearChange(period.year)");
+  });
+
+  it("offers customer navigation without exposing raw evidence IDs in production", async () => {
+    const source = await readFile("src/components/CustomerResult.tsx", "utf8");
+    expect(source).toContain('aria-label="결과 빠른 이동"');
+    expect(source).toContain("다시 입력하기");
+    expect(source).toContain('process.env.NODE_ENV !== "production" && <code>{id}</code>');
+  });
 });
