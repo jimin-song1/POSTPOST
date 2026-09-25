@@ -34,6 +34,7 @@ import { synthesizeUsefulGods } from "./interpretation/useful-god-synthesis";
 import { evaluateStructureUsefulGod } from "./interpretation/structure-useful-god";
 import { evaluateStemPreferences } from "./interpretation/stem-preferences";
 import { evaluateBranchPreferences } from "./interpretation/branch-preferences";
+import { evaluateNobleSpecialStars } from "./interpretation/noble-special-stars";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -98,6 +99,9 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
   const branchPreferences = stemPreferences.status === "implemented" && "stems" in stemPreferences
     ? evaluateBranchPreferences(pillars, stemPreferences)
     : notImplemented("천간 선호도를 계산할 수 없어 지지 선호도를 계산하지 않았습니다.");
+  const nobleAndSpecialStars = supportedInput
+    ? evaluateNobleSpecialStars(pillars, relations)
+    : notImplemented("완성된 원국 간지가 없어 귀인·신살을 계산하지 않았습니다.");
   const tenGods: SajuAnalysis["tenGods"] = dayStem && hiddenBranches ? {
     status: "implemented",
     value: {
@@ -171,8 +175,11 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     usefulGods,
     stemPreferences,
     branchPreferences,
-    nobleAndSpecialStars: notImplemented("noblemen-v1 및 sinsal-v1 테이블 구현 필요"),
-    samjae: notImplemented("생년지 그룹 기반 삼재 range 계산기 구현 필요"),
+    nobleAndSpecialStars,
+    samjae: nobleAndSpecialStars.status === "implemented" && "samjae" in nobleAndSpecialStars ? {
+      status:"implemented",value:nobleAndSpecialStars.samjae,
+      evidence:["samjae-v1: 생년지 삼합 그룹별 들·눌·날삼재 기준"]
+    } : notImplemented("생년지 간지를 계산할 수 없어 삼재 기준을 계산하지 않았습니다."),
     daeun: {
       status: "not_implemented", direction: null, directionLabel: null, referenceSolarTerm: null,
       exactStartAge: null, startAgeYears: null, startAgeMonths: null, startDatetime: null, periods: [], evidence: [],
