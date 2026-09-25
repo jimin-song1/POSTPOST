@@ -2,15 +2,15 @@ import { USEFUL_GOD_SYNTHESIS_V1 as RULE } from "@/rules/useful-god-synthesis.v1
 import type { Element } from "@/types/saju-analysis";
 import type { SynthesisElement, SynthesisEngine, SynthesisResult, SynthesisRole, SynthesisSignal, UsefulGodsResult } from "@/types/useful-gods";
 
-const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
+export const clampPreference = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 export function normalizeSignal(engine: SynthesisEngine, raw: number): number {
   const n = RULE.normalization;
   switch (engine) {
-    case "eokbu": return (clamp(raw, n.eokbu.min, n.eokbu.max) + 40) / 80 * 100;
-    case "johu": return raw < 0 ? 50 + clamp(raw, n.johu.min, 0) / 15 * 50 : 50 + clamp(raw, 0, n.johu.max);
-    case "tonggwan": return 50 + clamp(raw, 0, n.tonggwan.max) / n.tonggwan.max * 50;
-    case "byeongyak": return 50 + clamp(raw, 0, n.byeongyak.max) / n.byeongyak.max * 50;
-    case "structure": return 50 + clamp(raw, 0, n.structure.max);
+    case "eokbu": return (clampPreference(raw, n.eokbu.min, n.eokbu.max) + 40) / 80 * 100;
+    case "johu": return raw < 0 ? 50 + clampPreference(raw, n.johu.min, 0) / 15 * 50 : 50 + clampPreference(raw, 0, n.johu.max);
+    case "tonggwan": return 50 + clampPreference(raw, 0, n.tonggwan.max) / n.tonggwan.max * 50;
+    case "byeongyak": return 50 + clampPreference(raw, 0, n.byeongyak.max) / n.byeongyak.max * 50;
+    case "structure": return 50 + clampPreference(raw, 0, n.structure.max);
   }
 }
 export function synthesisRole(score: number): SynthesisRole {
@@ -18,6 +18,22 @@ export function synthesisRole(score: number): SynthesisRole {
   return score >= t.PRIMARY ? "PRIMARY" : score >= t.SECONDARY ? "SECONDARY" :
     score >= t.FAVORABLE ? "FAVORABLE" : score >= t.CONDITIONAL ? "CONDITIONAL" :
     score >= t.NEUTRAL ? "NEUTRAL" : "UNFAVORABLE";
+}
+export function synthesizeWeightedSignals(signals: SynthesisSignal[]) {
+  const weightSum = signals.reduce((sum, row) => sum + row.effectiveWeight, 0);
+  const baseScore = weightSum ? signals.reduce((sum, row) =>
+    sum + row.normalizedScore * row.effectiveWeight, 0) / weightSum : 50;
+  const positives = signals.filter(row => row.normalizedScore >= RULE.strongPositive);
+  const negatives = signals.filter(row => row.normalizedScore <= RULE.strongNegative);
+  const consensusBonus = positives.length >= 3 ? RULE.consensus.threeOrMore :
+    positives.length === 2 ? RULE.consensus.two : 0;
+  const conflictingSignals = positives.length > 0 && negatives.length > 0;
+  const conflictPenalty = conflictingSignals ? RULE.conflictPenalty : 0;
+  const score = clampPreference(baseScore + consensusBonus + conflictPenalty, 0, 100);
+  const confidence = weightSum >= RULE.coverageThresholds.high ? "HIGH" as const :
+    weightSum >= RULE.coverageThresholds.medium ? "MEDIUM" as const : "LOW" as const;
+  return { weightSum, baseScore, positives, negatives, consensusBonus, conflictingSignals,
+    conflictPenalty, score, confidence, role: synthesisRole(score) };
 }
 export function synthesizeUsefulGods(input: UsefulGodsResult): SynthesisResult {
   const base = RULE.baseWeights;
@@ -56,23 +72,17 @@ export function synthesizeUsefulGods(input: UsefulGodsResult): SynthesisResult {
       return match ? [{ engine, rawScore: match.score, normalizedScore: normalizeSignal(engine, match.score),
         baseWeight: base[engine], effectiveWeight: effective[engine] }] : [];
     });
-    const weight = signals.reduce((sum, row) => sum + row.effectiveWeight, 0);
-    const baseScore = weight ? signals.reduce((sum, row) => sum + row.normalizedScore * row.effectiveWeight, 0) / weight : 50;
-    const positives = signals.filter(row => row.normalizedScore >= RULE.strongPositive);
-    const negatives = signals.filter(row => row.normalizedScore <= RULE.strongNegative);
-    const bonus = positives.length >= 3 ? RULE.consensus.threeOrMore : positives.length === 2 ? RULE.consensus.two : 0;
-    const conflict = positives.length > 0 && negatives.length > 0;
-    if (conflict) conflicts.push({ element, positive: positives, negative: negatives });
-    const penalty = conflict ? RULE.conflictPenalty : 0;
-    const score = clamp(baseScore + bonus + penalty, 0, 100);
-    const coverage = weight; // denominator is the original total base weight, 1.00
-    return { element, score, baseSynthesisScore: baseScore, role: synthesisRole(score),
-      confidence: coverage >= RULE.coverageThresholds.high ? "HIGH" : coverage >= RULE.coverageThresholds.medium ? "MEDIUM" : "LOW",
+    const calculated = synthesizeWeightedSignals(signals);
+    if (calculated.conflictingSignals) conflicts.push({ element,
+      positive: calculated.positives, negative: calculated.negatives });
+    const coverage = calculated.weightSum; // denominator is the original total base weight, 1.00
+    return { element, score: calculated.score, baseSynthesisScore: calculated.baseScore,
+      role: calculated.role, confidence: calculated.confidence,
       coverage: { engineCount: signals.length, effectiveWeight: coverage, engines: signals.map(row => row.engine) },
-      engineSignals: signals, consensusBonus: bonus, conflictPenalty: penalty,
-      conflictingSignals: conflict,
+      engineSignals: signals, consensusBonus: calculated.consensusBonus,
+      conflictPenalty: calculated.conflictPenalty, conflictingSignals: calculated.conflictingSignals,
       evidence: signals.map(row => `${row.engine}: raw=${row.rawScore}, normalized=${row.normalizedScore}, effectiveWeight=${row.effectiveWeight}`)
-        .concat(`base=${baseScore}; consensus=${bonus}; conflict=${penalty}; final=${score}`) };
+        .concat(`base=${calculated.baseScore}; consensus=${calculated.consensusBonus}; conflict=${calculated.conflictPenalty}; final=${calculated.score}`) };
   }).sort((a, b) => b.score - a.score || RULE.order.indexOf(a.element) - RULE.order.indexOf(b.element));
   const group = (role: SynthesisRole) => elements.filter(row => row.role === role).map(row => row.element);
   return { status: "implemented", ruleVersion: RULE.ruleVersion, normalizationVersion: RULE.normalizationVersion,

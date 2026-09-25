@@ -7,6 +7,7 @@ import type { TwelveStage } from "@/lib/saju/interpretation/twelve-stages";
 import type { SeasonalState } from "@/rules/seasonal-element-state.v1";
 import type { QiRole } from "@/lib/saju/interpretation/hidden-stems";
 import type { ElementRelation, StrengthLevel } from "@/rules/strength.v1";
+import type { StemPreferencesResult } from "./stem-preferences";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -434,7 +435,7 @@ export interface SajuAnalysis {
   strength: StrengthResult;
   structure: StructureResult;
   usefulGods: UsefulGodsResult;
-  stemPreferences: EvidenceResult;
+  stemPreferences: EvidenceResult | StemPreferencesResult;
   branchPreferences: EvidenceResult;
   nobleAndSpecialStars: EvidenceResult;
   samjae: EvidenceResult;
