@@ -22,7 +22,8 @@ export function HybridDateField({ value, onChange, error, onError }: { value: st
       <input id={`${id}-input`} data-testid="birth-date-input" inputMode="numeric" autoComplete="bday" value={value} onChange={(event) => type(event.target.value)} onBlur={commit} placeholder="19950930 또는 1995-09-30" aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} />
       <button ref={trigger} type="button" className="pickerTrigger" aria-label="생년월일 선택 열기" aria-haspopup="dialog" aria-expanded={open} aria-controls={`${id}-picker`} onMouseDown={(event) => event.preventDefault()} onClick={() => open ? setOpen(false) : show()}><span aria-hidden="true">▾</span></button>
     </div>
-    {open && <div id={`${id}-picker`} className="pickerMenu" role="group" aria-labelledby={`${id}-label`}>
+    {open && <div id={`${id}-picker`} className="pickerMenu" role="group" aria-labelledby={`${id}-picker-title`}>
+      <p id={`${id}-picker-title`} className="pickerContext">생년월일 선택</p>
       <div className="datePickerGrid">
         <label>연<select aria-label="출생 연" value={parts.year} onChange={(event) => choose("year", event.target.value)}>{years.map((year) => <option key={year}>{year}</option>)}</select></label>
         <label>월<select aria-label="출생 월" value={parts.month} onChange={(event) => choose("month", event.target.value)}>{months.map((month) => <option key={month}>{month}</option>)}</select></label>

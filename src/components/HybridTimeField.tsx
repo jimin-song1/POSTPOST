@@ -21,7 +21,8 @@ export function HybridTimeField({ value, onChange, error, onError }: { value: st
       <input id={`${id}-input`} data-testid="birth-time-input" inputMode="numeric" autoComplete="bday-time" value={value} onChange={(event) => type(event.target.value)} onBlur={commit} placeholder="0829 또는 08:29" aria-invalid={Boolean(error)} aria-describedby={error ? `${id}-error` : undefined} />
       <button ref={trigger} type="button" className="pickerTrigger" aria-label="태어난 시각 선택 열기" aria-haspopup="dialog" aria-expanded={open} aria-controls={`${id}-picker`} onMouseDown={(event) => event.preventDefault()} onClick={() => open ? setOpen(false) : show()}><span aria-hidden="true">▾</span></button>
     </div>
-    {open && <div id={`${id}-picker`} className="pickerMenu" role="group" aria-labelledby={`${id}-label`}>
+    {open && <div id={`${id}-picker`} className="pickerMenu" role="group" aria-labelledby={`${id}-picker-title`}>
+      <p id={`${id}-picker-title`} className="pickerContext">태어난 시각 선택</p>
       <div className="timePickerGrid">
         <label>시<select aria-label="출생 시" value={parts.hour} onChange={(event) => choose("hour", event.target.value)}>{hours.map((hour) => <option key={hour}>{hour}</option>)}</select></label>
         <label>분<select aria-label="출생 분" value={parts.minute} onChange={(event) => choose("minute", event.target.value)}>{minutes.map((minute) => <option key={minute}>{minute}</option>)}</select></label>
