@@ -31,9 +31,22 @@
 
 Screenshots are stored in [`docs/qa-screenshots/m22`](./qa-screenshots/m22).
 
+## M22.1 report polish
+
+- Replaced repeated preview boilerplate with chapter-specific Korean editorial copy.
+- Expanded personality, work, money, relationship, children, and wellness chapters to 4–8 meaningful paragraphs.
+- Changed Daeun labels to Korean-first names with secondary Hanja and a selected-period indicator.
+- Clarified that wellness percentages are element composition, not health ability scores.
+- Placed child-bond and symbolic gender explanations directly beside their metrics.
+- Replaced the cover placeholder circle with a text-free line ornament and reduced repeated chapter-card styling.
+- Labeled professional pillar values as `천간 십성` to prevent misreading.
+- Re-captured all screenshots from a production server; no Next.js development indicator is present.
+
+Polished production screenshots are stored in [`docs/qa-screenshots/m22-1`](./qa-screenshots/m22-1).
+
 ## Verification
 
-- Tests: 38 files, 784 tests passed.
+- Tests: 38 files, 788 tests passed.
 - TypeScript: passed.
 - Production build: passed.
 - Diff check: passed.

@@ -241,3 +241,37 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
 .professionalRoom summary em { font-size:0; }
 .professionalRoom summary em::before { content:"펼쳐 보기"; font-size:12px; }
 .professionalRoom details[open]>summary em::before { content:"접기"; }
+
+/* M22.1 editorial polish */
+.coverOrnament { display:flex; align-items:flex-end; gap:10px; width:132px; height:72px; margin:11vh 0 30px; }
+.coverOrnament i { display:block; width:1px; background:linear-gradient(transparent,#d6ad69); transform:rotate(32deg); transform-origin:bottom; }
+.coverOrnament i:nth-child(1) { height:48px; }
+.coverOrnament i:nth-child(2) { height:72px; }
+.coverOrnament i:nth-child(3) { height:34px; }
+.lifetimeChapter { margin:0; padding:clamp(48px,8vw,86px) clamp(18px,6vw,64px); background:transparent; border:0; border-bottom:1px solid #d8ccbb; border-radius:0; box-shadow:none; }
+.lifetimeChapter:nth-of-type(4n+1):not(.wine) { background:rgba(255,253,248,.5); }
+.lifetimeChapter.wine { margin-block:34px; border-radius:24px; }
+.metricMeaning,.metricIntro { color:#6e655c; font-size:12px; line-height:1.65; }
+.childrenOverview>div { min-width:0; }
+.childrenOverview>div>.metricMeaning { margin:8px 4px 0; }
+.genderEnergy>.metricMeaning { margin:0 0 14px; padding-bottom:12px; border-bottom:1px solid #dfd5c9; }
+.wellnessElements article>span { display:flex; justify-content:space-between; gap:8px; align-items:baseline; }
+.wellnessElements article>span strong { color:var(--book-ink); font:700 20px Georgia,serif; }
+.wellnessElements article>b { min-height:0; color:#665f57; font-weight:500; }
+.periodIndicator { display:flex; align-items:center; gap:5px; margin:22px 0 6px; color:#766b60; }
+.periodIndicator b { color:var(--wine); font:700 22px Georgia,serif; }
+.periodIndicator>i { display:block; width:110px; height:3px; margin-left:8px; overflow:hidden; background:#ded4c7; border-radius:10px; }
+.periodIndicator>i>span { display:block; height:100%; background:var(--wine); }
+.daeunRail button>b { color:var(--wine); font-size:18px; }
+.daeunRail button[aria-pressed=true]>b { color:#fff; }
+.hanjaSecondary { display:block; margin-top:4px; color:#766e65; font-size:11px; }
+.reportNotice { max-width:760px; margin:52px auto 0; padding:24px 0; color:#70675e; border-top:1px solid #cfc3b3; font-size:12px; line-height:1.75; }
+@media (max-width:700px) {
+  .coverOrnament { margin-top:10vh; }
+  .lifetimeChapter { margin:0; padding:52px 20px; border-radius:0; }
+  .lifetimeChapter.wine { margin-block:18px; border-radius:20px; }
+  .childrenOverview>div>.lifetimeMetric { margin-bottom:0; }
+  .wellnessElements article { display:block; }
+  .wellnessElements article>span { display:flex; }
+  .wellnessElements article>b { margin-top:6px; }
+}

@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 
 const chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const preview = "http://127.0.0.1:3210/dev/lifetime-report?fixture=balanced";
-const outputDir = new URL("../docs/qa-screenshots/m22/", import.meta.url);
+const outputDir = new URL("../docs/qa-screenshots/m22-1/", import.meta.url);
 const shots = [
   ["mobile-input", 390, 844, "http://127.0.0.1:3210/"], ["mobile-cover", 390, 844, preview],
   ["mobile-personality", 390, 844, `${preview}&chapter=02`], ["mobile-elements", 390, 844, `${preview}&chapter=03`],
