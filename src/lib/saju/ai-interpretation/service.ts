@@ -2,7 +2,7 @@ import type { SajuAnalysis } from "@/types/saju-analysis";
 import type { InterpretationBuildOptions,InterpretationErrorCode,InterpretationProvider,InterpretationResult,StructuredInterpretation } from "@/types/ai-interpretation";
 import { AI_INTERPRETATION_V1 as RULE } from "@/rules/ai-interpretation.v1";
 import { INTERPRETATION_JSON_SCHEMA,structuredInterpretationSchema } from "./schema";
-import { INTERPRETATION_SYSTEM_PROMPT } from "./prompt";
+import { INTERPRETATION_SYSTEM_PROMPT,LIFETIME_REPORT_SYSTEM_ADDENDUM } from "./prompt";
 import { AnalysisNotCompletedError,buildInterpretationInput,InterpretationInputError } from "./input-builder";
 import { GroundingValidationError,validateGrounding } from "./grounding";
 import { interpretationHashes,type InterpretationCache } from "./cache";
@@ -22,11 +22,12 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
     if(error instanceof InterpretationInputError)return failure(error.code,error.message);throw error;}
   const {analysisHash,cacheKey}=interpretationHashes(input,options.reportType,options.modelConfigVersion);
   const cached=await options.cache?.get(cacheKey);if(cached)return cached;
-  let response;try{response=await provider.generate({systemPrompt:INTERPRETATION_SYSTEM_PROMPT,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>});}
+  const systemPrompt=options.reportType==="LIFETIME_GENERAL"?`${INTERPRETATION_SYSTEM_PROMPT}\n${LIFETIME_REPORT_SYSTEM_ADDENDUM}`:INTERPRETATION_SYSTEM_PROMPT;
+  let response;try{response=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>});}
   catch(error){return providerFailure(error);}
   let checked=validate(response.output,input),repaired=false;
   if(!checked.ok){
-    try{const repair=await provider.generate({systemPrompt:INTERPRETATION_SYSTEM_PROMPT,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>,
+    try{const repair=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>,
       repair:{validationError:checked.code,previousOutput:response.output}});response=repair;checked=validate(repair.output,input);repaired=true;}
     catch(error){return providerFailure(error);}
   }

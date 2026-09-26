@@ -3,23 +3,23 @@ import { NextResponse } from "next/server";
 import { FileInterpretationCache } from "@/lib/saju/ai-interpretation/file-cache";
 import { OpenAIInterpretationProvider } from "@/lib/saju/ai-interpretation/openai-provider";
 import { interpretSajuAnalysis } from "@/lib/saju/ai-interpretation/service";
-import type { InterpretationReportType } from "@/types/ai-interpretation";
+import type { InterpretationReportType, RelationshipStatus } from "@/types/ai-interpretation";
 import type { SajuAnalysis } from "@/types/saju-analysis";
 
-const reportTypes = new Set<InterpretationReportType>(["COMPREHENSIVE", "WEALTH", "BUSINESS", "CAREER", "RELATIONSHIP", "STUDY", "YEARLY"]);
+const reportTypes = new Set<InterpretationReportType>(["COMPREHENSIVE", "LIFETIME_GENERAL", "WEALTH", "BUSINESS", "CAREER", "RELATIONSHIP", "STUDY", "YEARLY"]);
 const cache = new FileInterpretationCache(undefined, (event) => console.info("ai_interpretation_cache", event));
 
 export async function POST(request: Request) {
   const requestId = randomUUID(), started = Date.now();
   try {
-    const body = await request.json() as { analysis?: SajuAnalysis; reportType?: InterpretationReportType; year?: number };
+    const body = await request.json() as { analysis?: SajuAnalysis; reportType?: InterpretationReportType; year?: number; referenceInstant?:string; relationshipStatus?: RelationshipStatus };
     const reportType = body.reportType ?? "COMPREHENSIVE";
     if (!body.analysis || !reportTypes.has(reportType)) return NextResponse.json({ code: "INTERPRETATION_ERROR", error: "해석 요청 형식이 올바르지 않습니다." }, { status: 400 });
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) return NextResponse.json({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "PROVIDER_ERROR", message: "AI 해석 환경이 아직 연결되지 않았습니다." } }, { status: 503 });
     const model = process.env.OPENAI_MODEL ?? "gpt-5-mini";
     const provider = new OpenAIInterpretationProvider({ apiKey, model, logger: (event) => console.info("ai_interpretation", event) });
-    const result = await interpretSajuAnalysis(body.analysis, provider, { reportType, year: body.year, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
+    const result = await interpretSajuAnalysis(body.analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
     console.info("ai_interpretation_result", { requestId, reportType, provider: "openai", model, latencyMs: Date.now() - started,
       validationStatus: result.status, repaired: result.status === "completed" ? result.metadata.repaired : false,
       errorCode: result.status === "failed" ? result.error.code : undefined });

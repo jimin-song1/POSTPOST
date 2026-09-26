@@ -18,10 +18,10 @@ import { SYNTHETIC_INPUT } from "./synthetic-input";
 const analysis=calculateSaju(SYNTHETIC_INPUT),fortune=analysis.fortune as FortuneResult,synthesis=fortune.synthesis as FortuneSynthesisResult;
 const referenceInstant=synthesis.wolun[0].period.startInstant,year=Array.from(new Set(synthesis.wolun.map(row=>row.context.seunYear!)))
   .find(candidate=>synthesis.wolun.filter(row=>row.context.seunYear===candidate).length>=12)!;
-const options=(reportType:InterpretationReportType)=>reportType==="YEARLY"?{reportType,year}:{reportType,referenceInstant};
-function validOutput(input:InterpretationInput):StructuredInterpretation {const first=input.evidence[0].id,timeline=input.timeline[0];return{
+const options=(reportType:InterpretationReportType)=>reportType==="YEARLY"?{reportType,year}:reportType==="LIFETIME_GENERAL"?{reportType,relationshipStatus:"SINGLE" as const}:{reportType,referenceInstant};
+function validOutput(input:InterpretationInput):StructuredInterpretation {const first=input.evidence[0].id,timeline=input.timeline[0],sections=input.reportType==="LIFETIME_GENERAL"?input.reportPlan!.map(row=>({id:row.id,chapterNumber:row.chapterNumber,title:row.title,headline:"삶의 구조를 읽는 문장",lead:"확정된 근거를 쉬운 말로 연결합니다.",body:"확정된 엔진 근거를 설명합니다.",paragraphs:["입력된 범위 안에서 흐름을 살펴봅니다.","같은 말을 반복하지 않고 핵심을 연결합니다."],keyPoints:["계산 결과를 바꾸지 않습니다."],evidenceIds:[row.evidenceIds[0]],...(row.id==="professional"?{professionalDetails:{summary:"같은 계산 결과의 전문 근거입니다.",evidenceIds:[row.evidenceIds[0]]}}:{})})): [{id:"summary",title:"핵심 흐름",body:"확정된 엔진 근거를 설명합니다.",evidenceIds:[first]}];return{
   status:"completed",reportType:input.reportType,headline:"근거 중심 해석",summary:"지원 흐름과 활동성을 분리해 살펴봅니다.",
-  sections:[{id:"summary",title:"핵심 흐름",body:"확정된 엔진 근거를 설명합니다.",evidenceIds:[first]}],highlights:["지원되는 흐름을 확인합니다."],
+  sections,highlights:["지원되는 흐름을 확인합니다."],
   cautions:["활성도는 결과 확률이 아닙니다."],timeline:timeline?[{periodId:timeline.id,title:"선택 기간",body:"선택된 기간의 흐름입니다.",evidenceIds:[timeline.evidenceIds[0]]}]:[],
   disclaimer:"이 해석은 확정적 사건 예측이 아닙니다."};}
 class MockProvider implements InterpretationProvider {calls:InterpretationProviderRequest[]=[];constructor(private readonly scripted:Array<unknown|Error>=[]){}
