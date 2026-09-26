@@ -3,8 +3,19 @@ import { calculateSaju } from "@/lib/saju/engine";
 import { selectCurrentPeriods } from "@/lib/saju/presentation/current-period";
 import { LIFETIME_REPORT_V2 } from "@/rules/lifetime-report.v2";
 import type { InterpretationUiState } from "@/types/customer-result";
+import type { FortuneResult } from "@/types/fortune";
+import type { SajuAnalysis } from "@/types/saju-analysis";
 
-const analysis = calculateSaju({ name:"가상인물", gender:"female", calendarType:"solar", birthDate:"1995-09-30", birthTime:"08:29", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"서울특별시" });
+const fullAnalysis = calculateSaju({ name:"가상인물", gender:"female", calendarType:"solar", birthDate:"1995-09-30", birthTime:"08:29", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"서울특별시" });
+const fullFortune = fullAnalysis.fortune as FortuneResult;
+// The preview renders Daeun and the first category summary only. Excluding unused
+// Seun/Wolun arrays keeps this public synthetic route below platform ISR limits.
+const analysis: SajuAnalysis = { ...fullAnalysis, fortune: { ...fullFortune,
+  seun: fullFortune.seun.status === "implemented" ? { ...fullFortune.seun, periods: [], evidence: [] } : fullFortune.seun,
+  wolun: fullFortune.wolun.status === "implemented" ? { ...fullFortune.wolun, periods: [], evidence: [] } : fullFortune.wolun,
+  transformation: { status:"not_implemented" }, synthesis: { status:"not_implemented" },
+  categories: fullFortune.categories.status === "implemented" ? { ...fullFortune.categories, seun:[], wolun:[], seunPeriodSummaries:[], wolunPeriodSummaries:[], evidence:[] } : fullFortune.categories,
+} };
 const longParagraphs = [
   "이 장은 공개 합성 입력에서 계산된 근거만 사용합니다. 타고난 성향은 한 가지 단어로 단정하기보다 반복해서 드러나는 선택과 리듬을 중심으로 읽는 편이 좋습니다.",
   "도움이 되는 흐름과 변화가 커지는 흐름은 서로 다른 의미입니다. 주변 환경을 활용할 때와 스스로 방향을 정할 때의 차이를 살피면 긴 시간의 변화도 더 편안하게 이해할 수 있습니다.",
