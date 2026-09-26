@@ -1,0 +1,5 @@
+import type {Element} from "@/types/saju-analysis";
+export const CUSTOMER_TERMINOLOGY_V1={version:"customer-terminology-v1",terms:{일간:"나를 대표하는 기운",신강:"내가 힘을 쓰는 방식",신약:"내가 힘을 쓰는 방식",격국:"타고난 삶의 구조",용신:"나에게 가장 필요한 기운",희신:"나를 도와주는 기운",기신:"과하면 부담이 되는 기운",십성:"내 안의 10가지 성향",지장간:"겉으로 드러나지 않는 속기운",대운:"10년마다 바뀌는 큰 흐름",세운:"해마다 달라지는 흐름",월운:"달마다 달라지는 흐름",합:"서로 끌어당기고 이어지는 힘",충:"강하게 부딪혀 변화를 만드는 힘",형:"반복해서 긴장과 압박을 만드는 힘",파:"익숙한 흐름을 흔드는 힘",해:"겉보다 안에서 신경 쓰이게 하는 힘",원진:"가까울수록 예민하게 꼬이기 쉬운 관계",삼합:"여러 기운이 모여 한 방향으로 커지는 흐름",방합:"여러 기운이 모여 한 방향으로 커지는 흐름",공망:"힘이 바로 드러나지 않는 자리",신살:"특별하게 나타나는 성향 표시"},
+  elements:{wood:{customer:"나무",professional:"목(木)"},fire:{customer:"불",professional:"화(火)"},earth:{customer:"흙",professional:"토(土)"},metal:{customer:"쇠",professional:"금(金)"},water:{customer:"물",professional:"수(水)"}} satisfies Record<Element,{customer:string;professional:string}>} as const;
+export function customerTerm(term:keyof typeof CUSTOMER_TERMINOLOGY_V1.terms){return CUSTOMER_TERMINOLOGY_V1.terms[term];}
+export function customerElement(element:Element,professional=false){const row=CUSTOMER_TERMINOLOGY_V1.elements[element];return professional?row.professional:row.customer;}

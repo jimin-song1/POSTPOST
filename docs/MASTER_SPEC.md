@@ -792,6 +792,22 @@ Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`
 
 Parenting style은 기존 시주 ten-god profile을 expression/guidance/expectation/conflict 네 축으로 분류한다. 고객에게는 평가가 아닌 쉬운 행동 문구로 제공한다. 대운 child/family activation은 기존 activation 0.35, Milestone 15 output flow 0.30, 시주 대상 interaction point 0.20, 14D 대운 profile의 식상 오행 share 0.15다. 모든 점수는 stable `CHILD-*` evidence ID와 factor/value/weight/contribution ledger로 재구성한다. 임신·난임·유산·출산 성공·태아 성별·정확한 자녀 수나 발생 연도를 예측하지 않는다.
 
+## MILESTONE 21 — Lifetime General Fortune Report v2
+
+평생총운 v2의 버전은 `lifetime-report-v2`, `lifetime-interpretation-input-v2`, `lifetime-report-schema-v2`, `lifetime-report-prompt-v2`다. 기존 `COMPREHENSIVE`와 분야별 report contract는 유지하고 별도 `LIFETIME_GENERAL` report type으로 제공한다. 이 계층은 deterministic `SajuAnalysis`를 read-only로 선택·배열·설명하며 기존 계산, coefficient, score 또는 명리 fact를 새로 만들거나 변경하지 않는다.
+
+고객용 section 순서는 01 당신의 사주를 한눈에, 02 나는 어떤 사람인가, 03 내 안의 다섯 기운, 04 내가 힘을 쓰는 방식, 05 타고난 강점과 약점, 06 재능과 일하는 방식, 07 돈을 대하는 방식, 08 사랑과 인간관계, 09 아이와 맺는 인연, 10 내 몸이 힘을 쓰는 방식, 11 나에게 도움이 되는 기운, 12 특별하게 타고난 특징, 13 내 안의 여러 모습, 14 인생의 큰 흐름, 15 10년마다 바뀌는 나, 16 인생 초반·중반·후반, 17 평생 기억하면 좋은 것, 18 전문 분석실로 고정한다. 각 section은 editorial headline, lead, 반복되지 않는 복수 문단, key point, engine-backed metric, evidence ID와 선택적 mascot comment/professional detail을 담을 수 있다.
+
+고객 terminology는 중앙 versioned mapping을 사용한다. 일간은 `나를 대표하는 기운`, 강약은 `내가 힘을 쓰는 방식`, 격국은 `타고난 삶의 구조`, 용신은 `나에게 가장 필요한 기운`, 십성은 `내 안의 10가지 성향`, 지장간은 `겉으로 드러나지 않는 속기운`, 대운·세운·월운은 각각 `10년마다 바뀌는 큰 흐름`, `해마다 달라지는 흐름`, `달마다 달라지는 흐름`으로 표현한다. 기본 오행 label은 나무·불·흙·쇠·물이고 전문 section에서만 목(木)·화(火)·토(土)·금(金)·수(水)를 함께 보여준다. 고객 headline에 전문 한자 label을 남발하지 않는다.
+
+`relationshipStatus`는 `SINGLE`, `DATING`, `MARRIED` 세 값만 허용하며 interpretation context에만 전달한다. 관계 상태 변경은 pillars, 오행, 강약, 격국, 용신, 운, category, wellness, children fortune을 포함한 deterministic analysis를 변경하지 않는다. 자녀 유무·수·성별·나이·임신 상태는 입력하거나 추정하지 않는다.
+
+Wellness section은 기존 balance, 오행 비율, 강점·관리 영역·습관과 선택된 상위 대운 context만 인용하며 의료 진단·질병·수술·치료·수명 확정을 금지한다. Children section은 기존 bond, count tendency, symbolic gender energy, parenting axes, 강점·주의점과 선택된 상위 대운 context만 인용한다. 정확한 자녀 수, 임신·출산 시기/확률, 난임·유산, 실제 태아 성별 주장을 금지한다. 성별 energy percentage는 전통 명리 상징 비교이지 생물학적 확률이 아니다.
+
+평생총운에는 10개 대운의 실제 age/date range, 기존 favorability/support, activation과 큰 흐름만 제공한다. Support는 도움 방향, activation은 변화 크기로 끝까지 분리하며 단일 운 점수로 합치지 않는다. 각 대운의 모든 분야 score나 세운·월운 상세는 별도 상품 범위로 남긴다. 전문 분석실은 동일 evidence의 원국·지장간·십성·십이운성·조정 오행·강약·격국·용신·관계·신살·version을 보여줄 뿐 새 계산을 하지 않는다.
+
+Provider input은 이름, 원문 생년월일·시간·도시를 제외한다. 모든 metric은 server가 제공한 exact value와 evidence reference를 사용하며 AI가 새 수치를 만들거나 값을 고치면 grounding validation이 실패한다. `WELLNESS:*`, `CHILD:*` evidence scope, 정확한 18-section order, section별 evidence allowlist, number/label/ganzhi locks와 one-repair 정책을 적용한다. AI 실패는 deterministic analysis와 wellness/children 결과에서 격리하며 UI는 별도 fallback을 사용할 수 있다. CI는 mock provider만 사용한다.
+
 ## MILESTONE 17 — AI Interpretation Layer v1
 
 버전은 `ai-interpretation-v1`, `interpretation-input-v1`, `interpretation-schema-v1`, `interpretation-prompt-v1`, `interpretation-grounding-v1`이다. 이 계층은 완성된 deterministic `SajuAnalysis`를 설명할 뿐 pillars, 십성, 오행, 강약, 격국, 용신, 신살, 운 및 category score를 재계산하거나 수정하지 않는다. 계산 엔진과 provider는 `InterpretationProvider.generate()` 경계로 분리하며 OpenAI Responses API 호출은 `OpenAIInterpretationProvider` adapter 안에서만 수행한다. CI는 live API key 없이 mock provider를 사용한다.
