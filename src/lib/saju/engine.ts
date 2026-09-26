@@ -44,6 +44,7 @@ import { evaluateWolunActivation } from "./fortune/wolun-activation";
 import { evaluateFortuneTransformation } from "./fortune/fortune-transformation";
 import { synthesizeFortune } from "./fortune/fortune-synthesis";
 import { evaluateCategoryFortune } from "./fortune/category-fortune";
+import { evaluateWellness } from "./fortune/wellness";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -181,6 +182,18 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
       }
     }
   }
+  const fiveElementsResult: SajuAnalysis["fiveElements"] = {
+    status: strength ? "implemented" : "not_implemented", ruleVersion: "five-elements-v1",
+    weightRuleVersion: ELEMENT_WEIGHT_V1.rulesetVersion,
+    seasonalStateRuleVersion: SEASONAL_ELEMENT_STATE_V1.rulesetVersion,
+    seasonalStrengthRuleVersion: SEASONAL_STRENGTH_V1.rulesetVersion,
+    rawCount: countRawElements(pillars), nativeStrength: strength?.nativeStrength ?? null,
+    adjustedStrength, evidence: strength?.evidence ?? []
+  };
+  const wellness = adjustedStrength.status === "implemented" && usefulGods.status === "implemented" &&
+    fortune.status === "partial" && "daeun" in fortune
+    ? evaluateWellness(fiveElementsResult, usefulGods, fortune)
+    : notImplemented("완성된 오행·조후·대운 결과가 없어 전통 컨디션 분석을 계산하지 않았습니다.");
 
   return {
     schemaVersion: "saju-analysis-v1",
@@ -199,17 +212,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     tenGods,
     hiddenStems,
     twelveStages,
-    fiveElements: {
-      status: strength ? "implemented" : "not_implemented",
-      ruleVersion: "five-elements-v1",
-      weightRuleVersion: ELEMENT_WEIGHT_V1.rulesetVersion,
-      seasonalStateRuleVersion: SEASONAL_ELEMENT_STATE_V1.rulesetVersion,
-      seasonalStrengthRuleVersion: SEASONAL_STRENGTH_V1.rulesetVersion,
-      rawCount: countRawElements(pillars),
-      nativeStrength: strength?.nativeStrength ?? null,
-      adjustedStrength,
-      evidence: strength?.evidence ?? []
-    },
+    fiveElements: fiveElementsResult,
     relations,
     strength: strengthResult,
     structure,
@@ -223,6 +226,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     } : notImplemented("생년지 간지를 계산할 수 없어 삼재 기준을 계산하지 않았습니다."),
     daeun,
     fortune,
+    wellness,
     warnings: [
       ...(!input.birthTimeKnown ? ["출생시간 미상 입력은 원국 계산을 지원하지 않습니다."] : []),
       ...(input.calendarType === "lunar" ? ["음력/윤달의 양력 변환은 아직 구현되지 않아 원국을 계산하지 않았습니다."] : []),

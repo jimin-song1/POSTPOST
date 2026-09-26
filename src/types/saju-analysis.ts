@@ -11,6 +11,7 @@ import type { StemPreferencesResult } from "./stem-preferences";
 import type { BranchPreferencesResult } from "./branch-preferences";
 import type { NobleSpecialStarsResult } from "./noble-special-stars";
 import type { FortuneResult } from "./fortune";
+import type { WellnessResult } from "./wellness";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -465,6 +466,7 @@ export interface SajuAnalysis {
     todo?: string;
   };
   fortune: EvidenceResult | FortuneResult;
+  wellness: EvidenceResult | WellnessResult;
   warnings: string[];
   engineMetadata: {
     engineVersion: "1.0.0";
