@@ -99,10 +99,12 @@ describe("Birth Place Rules v1", () => {
     const html = renderToStaticMarkup(createElement(SajuResultDebug, { result: calculateSaju(SYNTHETIC_INPUT) }));
     expect(html).not.toContain(SEOUL_FALLBACK_NOTICE);
   });
-  it("renders the canonical SYNTHETIC_CORE_001 form default", () => {
+  it("renders the canonical Korean searchable-location form default", () => {
     const html = renderToStaticMarkup(createElement(SajuInputForm, { onResult: () => {} }));
-    expect(html).toContain('<option value="KR" selected="">대한민국</option>');
-    expect(html).toContain("태어난 지역을 모릅니다");
+    expect(html).toContain("출생 국가");
+    expect(html).toContain("대한민국");
+    expect(html).toContain("출생 도시");
+    expect(html).toContain("선택해 주세요");
     expect(html).toContain('value=""');
   });
 });
