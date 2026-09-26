@@ -45,6 +45,7 @@ import { evaluateFortuneTransformation } from "./fortune/fortune-transformation"
 import { synthesizeFortune } from "./fortune/fortune-synthesis";
 import { evaluateCategoryFortune } from "./fortune/category-fortune";
 import { evaluateWellness } from "./fortune/wellness";
+import { evaluateChildrenFortune } from "./fortune/children-fortune";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -194,6 +195,12 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     fortune.status === "partial" && "daeun" in fortune
     ? evaluateWellness(fiveElementsResult, usefulGods, fortune)
     : notImplemented("완성된 오행·조후·대운 결과가 없어 전통 컨디션 분석을 계산하지 않았습니다.");
+  const childrenFortune = dayStem && tenGods.status === "implemented" && tenGods.value &&
+    twelveStages.status === "implemented" && twelveStages.value && usefulGods.synthesis.status === "implemented" &&
+    fortune.status === "partial" && "daeun" in fortune
+    ? evaluateChildrenFortune({ dayMaster: dayStem, tenGods: tenGods.value, twelveStages: twelveStages.value,
+      fiveElements: fiveElementsResult, relations, useful: usefulGods.synthesis, fortune })
+    : notImplemented("완성된 십성·시주·십이운성·오행·대운 결과가 없어 자녀 인연 경향을 계산하지 않았습니다.");
 
   return {
     schemaVersion: "saju-analysis-v1",
@@ -227,6 +234,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
     daeun,
     fortune,
     wellness,
+    childrenFortune,
     warnings: [
       ...(!input.birthTimeKnown ? ["출생시간 미상 입력은 원국 계산을 지원하지 않습니다."] : []),
       ...(input.calendarType === "lunar" ? ["음력/윤달의 양력 변환은 아직 구현되지 않아 원국을 계산하지 않았습니다."] : []),
