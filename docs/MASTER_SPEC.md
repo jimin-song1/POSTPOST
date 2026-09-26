@@ -782,6 +782,16 @@ Daeun/Seun/Wolun 각 Milestone 15 synthesis snapshot과 `CATEGORY:{synthesisId}`
 
 대운별 관리 필요도는 `운 adjusted element profile과 natal attention의 가중 평균×0.60 + 기존 activation score×0.25 + 실제 fortune transfer amount/22×100×0.15`다. Stem 10 + branch 12의 기존 fortune contribution 22를 분모로 사용한다. 합·충 자체를 질병 점수로 만들지 않으며, 기존 activation은 변화 신호로만 사용한다. 모든 factor value, weight, contribution을 evidence에 남긴다.
 
+## MILESTONE 20B — Children Fortune Engine v1
+
+버전은 `children-fortune-v1`, `children-bond-v1`, `children-count-tendency-v1`, `children-gender-energy-v1`, `parenting-style-v1`, `children-period-activation-v1`이다. 완성된 일간·십성·시주·시지 지장간·십이운성·오행·관계·용신·대운 및 fortune 결과를 read-only로 소비한다. 자녀 유무나 관계 상태 같은 고객 입력은 사용하지 않는다.
+
+식상 native/adjusted percentage는 각각 40%에서 100으로 포화한 뒤 native 0.40, adjusted 0.60으로 합성한다. 기존 element contribution에서 hidden-stem 식상 contribution이 전체 식상 native contribution에서 차지하는 비율을 root availability로 사용한다. Hour profile은 시천간 40%, 시지 지장간 60%로 구성하며 지장간 내부 비중은 본기 1, 중기 .5, 여기 .25를 정규화한다. Bond는 식상 presence 0.25, 식상 root availability 0.10, hour output 0.25, 시주 십이운성 salience 0.15, 식상 오행의 기존 useful-god synthesis 0.15, 시주 관계 salience 0.10이다. 관계 하나당 salience 20으로 100에서 cap하지만 합은 가점, 충·형·파·해·원진은 감점으로 해석하지 않는다. Count tendency는 식상 presence 0.35, root availability 0.15, hour output 0.30, 시주 stage 0.20이며 30/50/70 경계로 선택적 인연/한 명 중심/한두 명/폭이 넓은 경향을 분류한다. 이는 정확한 자녀 수가 아니다.
+
+성별 에너지는 학파 차이를 명시한 `POSTPOST_CUSTOM_CONSERVATIVE_V1`이다. 전통 상징상 식신을 아들 쪽, 상관을 딸 쪽 signal로 두고 adjusted 식상 presence를 양쪽 공통 baseline으로 사용한다. visible output은 10, 시천간이면 10을 추가하며 hidden output은 본기/중기/여기 1/.5/.25, 시지는 1.5 배 positional emphasis를 적용한다. 두 쪽을 합계 100%로 정규화하고 차이가 10%p 미만이면 BALANCED다. 이 수치는 생물학적 태아 성별 확률이 아니다.
+
+Parenting style은 기존 시주 ten-god profile을 expression/guidance/expectation/conflict 네 축으로 분류한다. 고객에게는 평가가 아닌 쉬운 행동 문구로 제공한다. 대운 child/family activation은 기존 activation 0.35, Milestone 15 output flow 0.30, 시주 대상 interaction point 0.20, 14D 대운 profile의 식상 오행 share 0.15다. 모든 점수는 stable `CHILD-*` evidence ID와 factor/value/weight/contribution ledger로 재구성한다. 임신·난임·유산·출산 성공·태아 성별·정확한 자녀 수나 발생 연도를 예측하지 않는다.
+
 ## MILESTONE 17 — AI Interpretation Layer v1
 
 버전은 `ai-interpretation-v1`, `interpretation-input-v1`, `interpretation-schema-v1`, `interpretation-prompt-v1`, `interpretation-grounding-v1`이다. 이 계층은 완성된 deterministic `SajuAnalysis`를 설명할 뿐 pillars, 십성, 오행, 강약, 격국, 용신, 신살, 운 및 category score를 재계산하거나 수정하지 않는다. 계산 엔진과 provider는 `InterpretationProvider.generate()` 경계로 분리하며 OpenAI Responses API 호출은 `OpenAIInterpretationProvider` adapter 안에서만 수행한다. CI는 live API key 없이 mock provider를 사용한다.

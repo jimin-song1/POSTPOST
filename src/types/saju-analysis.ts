@@ -12,6 +12,7 @@ import type { BranchPreferencesResult } from "./branch-preferences";
 import type { NobleSpecialStarsResult } from "./noble-special-stars";
 import type { FortuneResult } from "./fortune";
 import type { WellnessResult } from "./wellness";
+import type { ChildrenFortuneResult } from "./children-fortune";
 
 export type ModuleStatus = "implemented" | "partial" | "not_implemented";
 export type Element = "wood" | "fire" | "earth" | "metal" | "water";
@@ -467,6 +468,7 @@ export interface SajuAnalysis {
   };
   fortune: EvidenceResult | FortuneResult;
   wellness: EvidenceResult | WellnessResult;
+  childrenFortune: EvidenceResult | ChildrenFortuneResult;
   warnings: string[];
   engineMetadata: {
     engineVersion: "1.0.0";
