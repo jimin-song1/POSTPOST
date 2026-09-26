@@ -28,3 +28,30 @@ export function normalizeTimeInput(value: string) {
   const digits = value.replace(/\D/g, ""), normalized = digits.length === 4 ? `${digits.slice(0, 2)}:${digits.slice(2)}` : value;
   return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(normalized) ? normalized : null;
 }
+
+export interface DatePickerParts { year: string; month: string; day: string }
+export interface TimePickerParts { hour: string; minute: string }
+
+export function datePickerParts(value: string): DatePickerParts {
+  const normalized = normalizeDateInput(value) ?? "1995-09-30";
+  const [year, month, day] = normalized.split("-");
+  return { year, month, day };
+}
+
+export function updateDatePickerPart(value: string, part: keyof DatePickerParts, next: string) {
+  const current = { ...datePickerParts(value), [part]: next };
+  const lastDay = new Date(Date.UTC(Number(current.year), Number(current.month), 0)).getUTCDate();
+  current.day = String(Math.min(Number(current.day), lastDay)).padStart(2, "0");
+  return `${current.year}-${current.month}-${current.day}`;
+}
+
+export function timePickerParts(value: string): TimePickerParts {
+  const normalized = normalizeTimeInput(value) ?? "00:00";
+  const [hour, minute] = normalized.split(":");
+  return { hour, minute };
+}
+
+export function updateTimePickerPart(value: string, part: keyof TimePickerParts, next: string) {
+  const current = { ...timePickerParts(value), [part]: next };
+  return `${current.hour}:${current.minute}`;
+}

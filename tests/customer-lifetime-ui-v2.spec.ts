@@ -1,13 +1,18 @@
 import { readFile } from "node:fs/promises";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { SajuInputForm } from "@/components/SajuInputForm";
 import { calculateSaju } from "@/lib/saju/engine";
-import { COUNTRY_OPTIONS, KR_CITY_OPTIONS, RELATIONSHIP_OPTIONS, normalizeDateInput, normalizeTimeInput } from "@/lib/saju/presentation/customer-input";
+import { COUNTRY_OPTIONS, KR_CITY_OPTIONS, RELATIONSHIP_OPTIONS, datePickerParts, normalizeDateInput, normalizeTimeInput, timePickerParts, updateDatePickerPart, updateTimePickerPart } from "@/lib/saju/presentation/customer-input";
 import { LIFETIME_REPORT_V2 } from "@/rules/lifetime-report.v2";
 import { CUSTOMER_TERMINOLOGY_V1 } from "@/rules/customer-terminology.v1";
 import { SYNTHETIC_INPUT } from "./synthetic-input";
 
 const formSource = () => readFile("src/components/SajuInputForm.tsx", "utf8");
 const selectSource = () => readFile("src/components/SearchSelect.tsx", "utf8");
+const dateSource = () => readFile("src/components/HybridDateField.tsx", "utf8");
+const timeSource = () => readFile("src/components/HybridTimeField.tsx", "utf8");
 const reportSource = () => readFile("src/components/LifetimeReport.tsx", "utf8");
 
 describe("CUSTOMER_LIFETIME_UI_V2 input", () => {
@@ -15,11 +20,17 @@ describe("CUSTOMER_LIFETIME_UI_V2 input", () => {
   it("keeps relationship context out of deterministic input", () => { const stable=(value:ReturnType<typeof calculateSaju>)=>({...value,engineMetadata:{...value.engineMetadata,calculatedAt:"stable"}}),before=stable(calculateSaju(SYNTHETIC_INPUT)); for(const relationshipStatus of RELATIONSHIP_OPTIONS.map(row=>row.value)){ expect(stable(calculateSaju(SYNTHETIC_INPUT))).toEqual(before); expect(JSON.stringify(SYNTHETIC_INPUT)).not.toContain(relationshipStatus); } });
   it("uses a verified static country list and exposes KR", () => { expect(COUNTRY_OPTIONS.find(row=>row.value==="KR")?.label).toBe("대한민국"); expect(COUNTRY_OPTIONS.length).toBeGreaterThan(5); });
   it("supports Korean city search data and unknown city", () => { expect(KR_CITY_OPTIONS.filter(city=>city.includes("시흥"))).toEqual(["경기도 시흥시"]); expect(KR_CITY_OPTIONS).toContain("경기도 화성시"); expect(KR_CITY_OPTIONS).toContain("출생도시를 모름"); });
-  it.each([["19950930","1995-09-30"],["1995-09-30","1995-09-30"],["1995-02-31",null],["1899-12-31",null]])("normalizes date %s",(input,expected)=>expect(normalizeDateInput(input)).toBe(expected));
-  it.each([["0829","08:29"],["08:29","08:29"],["24:00",null],["09:60",null]])("normalizes time %s",(input,expected)=>expect(normalizeTimeInput(input)).toBe(expected));
-  it("provides all 60 minute options and direct time input", async()=>{const source=await formSource();expect(source).toContain("length: 60");expect(source).toContain('placeholder="0829 또는 08:29"');expect(source).toContain('aria-label="출생 분"');});
+  it.each([["19950930","1995-09-30"],["1995-09-30","1995-09-30"],["1995-02-31",null],["1899-12-31",null],["2000-02-29","2000-02-29"],["1900-02-29",null]])("normalizes date %s",(input,expected)=>expect(normalizeDateInput(input)).toBe(expected));
+  it("uses UTC date validation without a timezone date shift",()=>{expect(updateDatePickerPart("2024-02-29","year","2023")).toBe("2023-02-28");expect(updateDatePickerPart("1995-09-30","month","02")).toBe("1995-02-28");expect(datePickerParts("19950930")).toEqual({year:"1995",month:"09",day:"30"});});
+  it.each([["0829","08:29"],["08:29","08:29"],["24:00",null],["09:60",null],["00:00","00:00"],["23:59","23:59"]])("normalizes time %s",(input,expected)=>expect(normalizeTimeInput(input)).toBe(expected));
+  it("synchronizes picker values with canonical date and time",()=>{expect(datePickerParts(updateDatePickerPart("1995-09-30","day","12"))).toEqual({year:"1995",month:"09",day:"12"});expect(timePickerParts("0829")).toEqual({hour:"08",minute:"29"});expect(updateTimePickerPart("08:29","minute","47")).toBe("08:47");});
+  it("renders exactly one editable date field and one editable time field",()=>{const html=renderToStaticMarkup(createElement(SajuInputForm,{onResult:()=>{}}));expect(html.match(/data-testid="birth-date-input"/g)).toHaveLength(1);expect(html.match(/data-testid="birth-time-input"/g)).toHaveLength(1);expect(html).not.toContain('type="date"');expect(html).not.toContain("직접 입력하기");expect(html).not.toContain("입력 모드");});
+  it("provides all 24 hours and 60 minutes inside the one time picker", async()=>{const source=await timeSource();expect(source).toContain("length: 24");expect(source).toContain("length: 60");expect(source).toContain('placeholder="0829 또는 08:29"');expect(source).toContain('aria-label="출생 분"');});
+  it("keeps date and time pickers anchored to their shared input field",async()=>{const date=await dateSource(),time=await timeSource();for(const source of [date,time]){expect(source).toContain('className="hybridInputShell"');expect(source).toContain('className="pickerMenu"');expect(source).toContain("getBoundingClientRect");expect(source).toContain("innerHeight - rect.bottom");expect(source).toContain("aria-expanded");}});
+  it("keeps the requested customer input order",()=>{const html=renderToStaticMarkup(createElement(SajuInputForm,{onResult:()=>{}}));const labels=["이름","성별","현재 관계","생년월일","달력","태어난 시각","출생 국가","출생 도시"];const positions=labels.map(label=>html.indexOf(label));expect(positions.every(position=>position>=0)).toBe(true);expect(positions).toEqual([...positions].sort((a,b)=>a-b));});
+  it("shows leap-month controls only in lunar state source and blocks unsupported lunar submission",async()=>{const source=await formSource();expect(source).toContain('form.calendarType === "lunar"');expect(source).toContain("윤달 여부");expect(source).toContain("평달");expect(source).toContain("윤달");expect(source).toContain("현재 음력 계산은 준비 중입니다.");});
   it("blocks unsupported country and incomplete lunar mode", async()=>{const source=await formSource();expect(source).toContain("현재 해외 출생 계산은 지원되지 않습니다.");expect(source).toContain("음력 계산은 준비 중입니다.");});
-  it("does not invent a time when it is unknown", async()=>{const source=await formSource();expect(source).toContain("임의 시간으로 계산하지 않습니다.");expect(source).toContain("birthTime: event.target.checked ? null");});
+  it("does not invent a time when it is unknown", async()=>{const source=await formSource();expect(source).toContain("임의 시간으로 계산하지 않습니다.");expect(source).toContain('birthTime: event.target.checked ? null : ""');});
   it("contains no child reality input", async()=>{const source=await formSource();for(const text of ["자녀 있음","몇 명","아들/딸","임신 여부","출산 계획"])expect(source).not.toContain(text);});
 });
 
