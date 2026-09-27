@@ -1,0 +1,4 @@
+import { NextResponse } from "next/server";
+import { isLocalCalibrationEnabled } from "@/lib/saju/calibration/local-mode";
+import { listCases, readCase } from "@/lib/saju/calibration/local-store";
+export async function GET(){if(!isLocalCalibrationEnabled())return NextResponse.json({code:"CALIBRATION_DISABLED"},{status:404});const cases=await listCases(),rows=await Promise.all(cases.map(async item=>{const full=await readCase(item.caseId);return {...item,assessments:full?.audit.assessments??[]};}));const counts:Record<string,Record<string,number>>={};for(const row of rows)for(const assessment of row.assessments){counts[assessment.domain]??={MATCH:0,PARTIAL:0,MISMATCH:0,UNKNOWN:0};counts[assessment.domain][assessment.classification]++;}return NextResponse.json({cases:rows,counts,recommendation:null});}
