@@ -177,13 +177,18 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
   const partByNumber=new Map(LIFETIME_BOOK_V1.parts.map(part=>[part.partNumber,part]));
-  const plan=LIFETIME_BOOK_PAGES.map(page=>{
+  const fullPlan=LIFETIME_BOOK_PAGES.map(page=>{
     const part=partByNumber.get(page.partNumber)!;
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(page.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
     return{id:page.id,chapterNumber:String(page.pageNumber).padStart(3,"0"),title:page.title,evidenceIds,pageNumber:page.pageNumber,partNumber:page.partNumber,partTitle:part.title,purpose:bookPurpose(page.evidenceGroup),evidenceGroup:page.evidenceGroup};
   });
-  return{version:LIFETIME_BOOK_V1.inputVersion,reportVersion:LIFETIME_BOOK_V1.reportVersion,reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:unique,timeline,
+  const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
+  if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);
+  const requiredIds=new Set(plan.flatMap(row=>row.evidenceIds));
+  const scopedEvidence=options.lifetimePartNumber?unique.filter(row=>requiredIds.has(row.id)):unique;
+  const scopedTimeline=options.lifetimePartNumber?timeline.filter(row=>row.evidenceIds.some(id=>requiredIds.has(id))):timeline;
+  return{version:LIFETIME_BOOK_V1.inputVersion,reportVersion:LIFETIME_BOOK_V1.reportVersion,reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
     minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
 }
 
