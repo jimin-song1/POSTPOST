@@ -7,6 +7,7 @@ export type LifetimeBookEvidenceGroup=
 export interface LifetimeBookPage {
   id:string;
   pageNumber:number;
+  partNumber:string;
   title:string;
   evidenceGroup:LifetimeBookEvidenceGroup;
 }
