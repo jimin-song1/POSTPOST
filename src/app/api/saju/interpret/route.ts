@@ -6,6 +6,8 @@ import { interpretSajuAnalysis } from "@/lib/saju/ai-interpretation/service";
 import type { InterpretationReportType, RelationshipStatus } from "@/types/ai-interpretation";
 import type { SajuAnalysis } from "@/types/saju-analysis";
 
+export const maxDuration = 300;
+
 const reportTypes = new Set<InterpretationReportType>(["COMPREHENSIVE", "LIFETIME_GENERAL", "WEALTH", "BUSINESS", "CAREER", "RELATIONSHIP", "STUDY", "YEARLY"]);
 const cache = new FileInterpretationCache(undefined, (event) => console.info("ai_interpretation_cache", event));
 
@@ -18,7 +20,7 @@ export async function POST(request: Request) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) return NextResponse.json({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "PROVIDER_ERROR", message: "AI 해석 환경이 아직 연결되지 않았습니다." } }, { status: 503 });
     const model = process.env.OPENAI_MODEL ?? "gpt-5-mini";
-    const provider = new OpenAIInterpretationProvider({ apiKey, model, logger: (event) => console.info("ai_interpretation", event) });
+    const provider = new OpenAIInterpretationProvider({ apiKey, model, timeoutMs: 240_000, logger: (event) => console.info("ai_interpretation", event) });
     const result = await interpretSajuAnalysis(body.analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
     console.info("ai_interpretation_result", { requestId, reportType, provider: "openai", model, latencyMs: Date.now() - started,
       validationStatus: result.status, repaired: result.status === "completed" ? result.metadata.repaired : false,
