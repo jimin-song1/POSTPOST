@@ -29,10 +29,17 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
   });
 
   it("defines customer-language and anti-boilerplate contracts", () => {
-    for (const phrase of ["STORY FIRST, EVIDENCE SECOND", "상담사가 옆에서 설명하듯", "사주에서는", "~로 해석됩니다", "다른 사람에게 그대로 붙여도 되는"])
+    for (const phrase of ["STORY FIRST, EVIDENCE SECOND", "상담사가 옆에서 설명하듯", "사주에서는", "~로 해석됩니다", "다른 사람에게 그대로 붙여도 되는", "도움을 함께 쓰다", "바로 이해되는 생활 한국어"])
       expect(LIFETIME_REPORT_SYSTEM_ADDENDUM).toContain(phrase);
     for (const term of ["용신", "신강", "신약", "격국", "조후", "통관", "병약", "지장간"])
       expect(LIFETIME_REPORT_SYSTEM_ADDENDUM).toContain(term);
+  });
+
+  it("uses ordinary Korean for strength guidance", async () => {
+    const source = await reportSource();
+    expect(source).toContain("주변의 도움을 받으면 일을 조금 더 수월하게 해낼 수 있습니다");
+    expect(source).not.toContain("주변의 도움을 함께 쓸 때 편안합니다");
+    expect(source).not.toContain("도움을 연결하고 리듬을 지킬 때");
   });
 
   it("keeps relationship copy distinct without changing calculations", async () => {
