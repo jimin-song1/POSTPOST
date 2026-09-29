@@ -14,15 +14,15 @@ const cache = new FileInterpretationCache(undefined, (event) => console.info("ai
 export async function POST(request: Request) {
   const requestId = randomUUID(), started = Date.now();
   try {
-    const body = await request.json() as { analysis?: SajuAnalysis; reportType?: InterpretationReportType; year?: number; referenceInstant?:string; relationshipStatus?: RelationshipStatus };
+    const body = await request.json() as { analysis?: SajuAnalysis; reportType?: InterpretationReportType; year?: number; referenceInstant?:string; relationshipStatus?: RelationshipStatus; lifetimePartNumber?: string };
     const reportType = body.reportType ?? "COMPREHENSIVE";
     if (!body.analysis || !reportTypes.has(reportType)) return NextResponse.json({ code: "INTERPRETATION_ERROR", error: "해석 요청 형식이 올바르지 않습니다." }, { status: 400 });
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) return NextResponse.json({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "PROVIDER_ERROR", message: "AI 해석 환경이 아직 연결되지 않았습니다." } }, { status: 503 });
     const model = process.env.OPENAI_MODEL ?? "gpt-5-mini";
     const provider = new OpenAIInterpretationProvider({ apiKey, model, timeoutMs: 240_000, logger: (event) => console.info("ai_interpretation", event) });
-    const result = await interpretSajuAnalysis(body.analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
-    console.info("ai_interpretation_result", { requestId, reportType, provider: "openai", model, latencyMs: Date.now() - started,
+    const result = await interpretSajuAnalysis(body.analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, lifetimePartNumber:body.lifetimePartNumber, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
+    console.info("ai_interpretation_result", { requestId, reportType, lifetimePartNumber: body.lifetimePartNumber, provider: "openai", model, latencyMs: Date.now() - started,
       validationStatus: result.status, repaired: result.status === "completed" ? result.metadata.repaired : false,
       errorCode: result.status === "failed" ? result.error.code : undefined });
     return NextResponse.json(result, { status: result.status === "completed" ? 200 : 422 });
