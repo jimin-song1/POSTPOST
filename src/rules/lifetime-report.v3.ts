@@ -7,7 +7,6 @@ export type LifetimeBookEvidenceGroup=
 export interface LifetimeBookPage {
   id:string;
   pageNumber:number;
-  partNumber:string;
   title:string;
   evidenceGroup:LifetimeBookEvidenceGroup;
 }
@@ -227,4 +226,4 @@ export const LIFETIME_BOOK_V1={
   prohibitedAxisConfusion:["변화 움직임이 높아 좋은 운","활성도가 높아 좋은 운","지원과 활성을 합친 운 점수"]
 } as const;
 
-export const LIFETIME_BOOK_PAGES=LIFETIME_BOOK_V1.parts.flatMap(part=>part.pages);
+export const LIFETIME_BOOK_PAGES=LIFETIME_BOOK_V1.parts.flatMap(part=>part.pages.map(page=>({...page,partNumber:part.partNumber})));
