@@ -4,9 +4,9 @@ export type InterpretationErrorCode="ANALYSIS_NOT_COMPLETED"|"MISSING_REQUIRED_E
   "PROVIDER_TIMEOUT"|"SCHEMA_VALIDATION_FAILED"|"GROUNDING_VALIDATION_FAILED";
 export interface InterpretationEvidence {id:string;kind:"NATAL"|"USEFUL_GOD"|"FORTUNE"|"CATEGORY"|"WELLNESS"|"CHILD"|"CONTEXT";value:unknown;}
 export interface InterpretationTimelineInput {id:string;period:{startInstant:string;endInstant:string};evidenceIds:string[];}
-export interface InterpretationReportPlanSection {id:string;chapterNumber:string;title:string;evidenceIds:string[];}
-export interface InterpretationInput {version:"interpretation-input-v1"|"lifetime-interpretation-input-v2";reportType:InterpretationReportType;
-  reportVersion?:"lifetime-report-v2";reportPlan?:InterpretationReportPlanSection[];evidence:InterpretationEvidence[];timeline:InterpretationTimelineInput[];
+export interface InterpretationReportPlanSection {id:string;chapterNumber:string;title:string;evidenceIds:string[];pageNumber?:number;partNumber?:string;partTitle?:string;purpose?:string;evidenceGroup?:string;}
+export interface InterpretationInput {version:"interpretation-input-v1"|"lifetime-interpretation-input-v2"|"lifetime-interpretation-input-v3";reportType:InterpretationReportType;
+  reportVersion?:"lifetime-report-v2"|"lifetime-report-v3";reportPlan?:InterpretationReportPlanSection[];evidence:InterpretationEvidence[];timeline:InterpretationTimelineInput[];
   minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;relationshipLabel?:string;relationshipFocus?:readonly string[]};}
 export interface InterpretationMetric {id:string;label:string;value:number;unit:"PERCENT"|"SCORE";evidenceId:string;}
 export interface InterpretationSection {id:string;title:string;body:string;evidenceIds:string[];chapterNumber?:string;headline?:string;lead?:string;
