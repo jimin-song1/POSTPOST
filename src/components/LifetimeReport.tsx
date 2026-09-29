@@ -39,12 +39,15 @@ function EvidenceDetails({ children }: { children: React.ReactNode }) { return <
 function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl className="evidenceRows">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>; }
 
 export function LifetimeReport({ analysis, current, relationshipStatus, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
-  const report = interpretation.status === "completed" && interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
+  if (interpretation.status === "pending" || interpretation.status === "not_requested") return <LifetimeGenerationScreen name={analysis.person.name} onRestart={onRestart} />;
+  if (interpretation.status === "failed") return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
+  const report = interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
   const fortune = analysis.fortune as FortuneResult, wellness = analysis.wellness.status === "implemented" ? analysis.wellness as WellnessResult : null, children = analysis.childrenFortune.status === "implemented" ? analysis.childrenFortune as ChildrenFortuneResult : null;
   const categories = fortune.categories.status === "implemented" ? fortune.categories.daeun[0] : null;
   const adjusted = analysis.fiveElements.adjustedStrength.elements, useful = analysis.usefulGods.synthesis.status === "implemented" ? analysis.usefulGods.synthesis : null;
   const topElements = useful ? useful.elements.slice(0, 3) : [];
   if (report?.sections.length === LIFETIME_BOOK_V1.pageCount) return <LifetimeBook154 analysis={analysis} report={report} interpretation={interpretation} onRetry={onRetry} onRestart={onRestart} />;
+  return <LifetimeGenerationFailed message="154페이지 해설 검증이 완료되지 않았습니다. 다시 생성해 주세요." onRetry={onRetry} onRestart={onRestart} />;
   return <div className="lifetimeReport"><Cover analysis={analysis} report={report} onRestart={onRestart} /><nav className="chapterNav" aria-label="평생사주 목차">{LIFETIME_REPORT_V2.sections.map((section) => <a key={section.id} href={`#chapter-${section.chapterNumber}`}>{section.chapterNumber}</a>)}</nav><main>
     <Chapter number="01" id="chapter-01" title="당신의 사주를 한눈에" headline={report?.headline ?? "내 삶의 큰 지도를 천천히 펼쳐봅니다"} lead={report?.summary ?? "타고난 기질과 평생의 큰 흐름을 계산 근거에 따라 한 권의 이야기로 정리했습니다."}><div className="overviewLines"><p><b>나를 대표하는 기운</b><span>{analysis.dayMaster ? STEM_COPY[analysis.dayMaster] : "분석 중"}</span></p><p><b>내가 힘을 쓰는 방식</b><span>{STRENGTH_COPY[analysis.strength.adjusted.level ?? ""] ?? "여러 힘의 균형을 살펴봅니다."}</span></p><p><b>삶에서 자주 만나는 질문</b><span>일과 관계에서 반복되는 선택의 기준을 중심으로 읽습니다.</span></p></div><EvidenceDetails><EvidenceRows rows={[["나를 대표하는 기운",analysis.dayMaster ?? "—"],["내가 힘을 쓰는 방식",`${analysis.strength.adjusted.score?.toFixed(1) ?? "—"} / 100`],["전문 기준",analysis.strength.adjusted.level ?? "—"]]}/></EvidenceDetails></Chapter>
     <Chapter number="02" id="chapter-02" title="나는 어떤 사람인가" headline={chapterSection(report,"personality")?.headline ?? "기준을 세우고, 내 방식으로 결과를 만들어 갑니다"}><AiCopy report={report} id="personality" fallback={[STRENGTH_COPY[analysis.strength.adjusted.level ?? ""] ?? "혼자 해내는 힘과 주변의 도움을 상황에 맞게 나누어 씁니다.", "한 가지 모습으로 단정하기보다 여러 기운과 삶의 구조를 함께 읽어야 나다운 선택이 선명해집니다."]}/><CrowNote>익숙한 장점은 당연하게 느껴져 놓치기 쉬워요. 반복해서 잘해 온 방식을 먼저 살펴보세요.</CrowNote><EvidenceDetails><p>첫인상과 속마음, 결정 방식은 대표 기운·힘의 균형·타고난 삶의 구조를 함께 읽었습니다.</p></EvidenceDetails></Chapter>
@@ -122,4 +125,38 @@ function LifetimeBook154({ analysis, report, interpretation, onRetry, onRestart 
       <footer className="reportNotice">이 결과는 전통 명리의 계산 근거를 생활 언어로 풀어낸 참고 콘텐츠입니다. 특정 사건을 확정하거나 중요한 현실 판단을 대신하지 않습니다.</footer>
     </main>
   </div>;
+}
+
+
+function LifetimeGenerationScreen({ name, onRestart }: { name:string; onRestart:()=>void }) {
+  return <main className="lifetimeGeneration" role="status" aria-live="polite">
+    <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
+    <section className="generationPanel">
+      <div className="generationSeal" aria-hidden="true"><i/><i/><i/></div>
+      <p className="generationKicker">평생사주 · 154 PAGE</p>
+      <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
+      <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
+      <div className="generationProgress" aria-hidden="true"><span/></div>
+      <div className="generationSteps">
+        <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
+        <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
+        <p><b>3</b><span>10년 흐름과 앞으로 5년의 변화를 따로 읽고 있어요</span></p>
+        <p><b>4</b><span>154페이지가 모두 검증되면 한 번에 보여드릴게요</span></p>
+      </div>
+      <p className="generationNotice">페이지를 이동하지 않아도 됩니다. 해설이 완성되면 자동으로 결과가 열립니다.</p>
+    </section>
+  </main>;
+}
+
+function LifetimeGenerationFailed({ message, onRetry, onRestart }: { message:string; onRetry:()=>void; onRestart:()=>void }) {
+  return <main className="lifetimeGeneration">
+    <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
+    <section className="generationPanel generationFailed">
+      <p className="generationKicker">평생사주 · 154 PAGE</p>
+      <h1>해설을 끝까지 만들지 못했어요</h1>
+      <p className="generationLead">계산 결과는 그대로 남아 있습니다. 해설 생성만 다시 시도하면 됩니다.</p>
+      <p className="generationError">{message}</p>
+      <button className="generationRetry" onClick={onRetry}>154페이지 해설 다시 만들기</button>
+    </section>
+  </main>;
 }
