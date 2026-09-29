@@ -10,7 +10,7 @@ export default function Home() {
   const [interpretation, setInterpretation] = useState<InterpretationUiState>({ status: "not_requested" });
   const requestInterpretation = useCallback(async (payload: CustomerResultPayload, relationship: RelationshipStatus) => {
     setInterpretation({ status: "pending" });
-    try { const response = await fetch("/api/saju/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ analysis: payload.analysis, reportType: "LIFETIME_GENERAL", relationshipStatus: relationship }) }); setInterpretation(await response.json() as InterpretationUiState); }
+    try { const response = await fetch("/api/saju/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ analysis: payload.analysis, reportType: "LIFETIME_GENERAL", relationshipStatus: relationship, year: new Date().getFullYear() }) }); setInterpretation(await response.json() as InterpretationUiState); }
     catch { setInterpretation({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "NETWORK_ERROR", message: "네트워크 연결을 확인해 주세요." } }); }
   }, []);
   function accept(value: LifetimeFormResult) { setResult(value.payload); setRelationshipStatus(value.relationshipStatus); void requestInterpretation(value.payload, value.relationshipStatus); }
