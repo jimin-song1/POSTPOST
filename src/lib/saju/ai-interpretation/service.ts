@@ -78,6 +78,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
     :INTERPRETATION_SYSTEM_PROMPT;
   let response;try{response=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>});}
   catch(error){return providerFailure(error);}
+  const initialNarrativeUsage=response.tokenUsage;
   let checked=validate(response.output,input),repaired=false,repairUsage:{input:number;output:number}|undefined;
   if(!checked.ok){
     try{const repair=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>,
@@ -85,7 +86,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
     catch(error){return providerFailure(error);}
   }
   if(!checked.ok)return failure(checked.code,checked.message);
-  const tokenUsage=sumUsage(planUsage,response.tokenUsage,repairUsage);
+  const tokenUsage=sumUsage(planUsage,initialNarrativeUsage,repairUsage);
   const result={status:"completed" as const,ruleVersion:RULE.ruleVersion,promptVersion:RULE.promptVersion,groundingVersion:RULE.groundingVersion,
     analysisHash,cacheKey,report:checked.report,metadata:{provider:response.provider,model:response.model,repaired,...(tokenUsage?{tokenUsage}: {})}};
   await options.cache?.set(cacheKey,result);return result;
