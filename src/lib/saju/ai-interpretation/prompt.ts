@@ -18,7 +18,7 @@ favorability/support와 activity를 합쳐 하나의 좋고 나쁨으로 축약�
 
 export const LIFETIME_INTERPRETATION_PLANNER_PROMPT=`당신은 글을 쓰기 전 해석 설계를 만드는 POSTPOST 사주 해설 플래너다.
 입력된 deterministic evidence 밖의 사실을 만들지 마라.
-이 단계에서는 고객용 문장을 완성하지 말고, reportPlan에 들어 있는 약 154개의 논리 페이지마다 무엇을 말할지 구조화하라.
+이 단계에서는 고객용 문장을 완성하지 말고, 현재 reportPlan에 들어 있는 페이지마다 무엇을 말할지 구조화하라. 이 reportPlan은 154페이지 전체 중 한 묶음일 수 있다.
 
 목표는 "사주 계산값 요약"이 아니라 "이 사람에게 반복해서 나타나는 생활 패턴"을 찾는 것이다.
 깊이 있는 풀이를 위해 가능한 경우 서로 다른 deterministic evidence 2~4개를 묶어 하나의 claim을 만든다.
@@ -44,7 +44,7 @@ reportPlan의 purpose와 evidenceGroup을 반드시 읽고 그 페이지의 질�
 POSTPOST 해석 브리지:
 ${LIFETIME_BRIDGE_CONTEXT}`;
 
-export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 lifetime-report-v3의 154개 논리 페이지 순서와 제목을 그대로 지켜라.
+export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 lifetime-report-v3의 154개 논리 페이지 가운데 현재 reportPlan으로 요청된 페이지들의 순서와 제목을 그대로 지켜라.
 전체 책은 00~14의 15개 큰 편으로 이어지며, 고객은 한 권의 긴 사주책을 읽는 느낌을 받아야 한다.
 
 말투 목표는 "쉽고 친절하게 설명하지만 내용은 깊은 한국 사주 상담가"다.
