@@ -3,11 +3,11 @@ import type { InterpretationReportType } from "@/types/ai-interpretation";
 
 const evidenceIds=z.array(z.string().min(1)).min(1);
 const metric=z.object({id:z.string().min(1),label:z.string().min(1),value:z.number(),unit:z.enum(["PERCENT","SCORE"]),evidenceId:z.string().min(1)}).strict();
-const section=z.object({id:z.string().min(1),title:z.string().min(1),body:z.string().min(1),evidenceIds,chapterNumber:z.string().optional(),headline:z.string().optional(),lead:z.string().optional(),paragraphs:z.array(z.string().min(1)).optional(),keyPoints:z.array(z.string().min(1)).optional(),metrics:z.array(metric).optional(),mascotComment:z.string().optional(),professionalDetails:z.object({summary:z.string().min(1),evidenceIds}).strict().optional()}).strict();
+export const interpretationSectionSchema=z.object({id:z.string().min(1),title:z.string().min(1),body:z.string().min(1),evidenceIds,chapterNumber:z.string().optional(),headline:z.string().optional(),lead:z.string().optional(),paragraphs:z.array(z.string().min(1)).optional(),keyPoints:z.array(z.string().min(1)).optional(),metrics:z.array(metric).optional(),mascotComment:z.string().optional(),professionalDetails:z.object({summary:z.string().min(1),evidenceIds}).strict().optional()}).strict();
 const timeline=z.object({periodId:z.string().min(1),title:z.string().min(1),body:z.string().min(1),evidenceIds}).strict();
 export const structuredInterpretationSchema=z.object({status:z.literal("completed"),reportType:z.enum([
   "COMPREHENSIVE","LIFETIME_GENERAL","WEALTH","BUSINESS","CAREER","RELATIONSHIP","STUDY","YEARLY"]),headline:z.string().min(1),summary:z.string().min(1),
-  sections:z.array(section).min(1),highlights:z.array(z.string()),cautions:z.array(z.string()),timeline:z.array(timeline),disclaimer:z.string().min(1)}).strict();
+  sections:z.array(interpretationSectionSchema).min(1),highlights:z.array(z.string()),cautions:z.array(z.string()),timeline:z.array(timeline),disclaimer:z.string().min(1)}).strict();
 
 export const interpretationPlanClaimSchema=z.object({
   claimId:z.string().min(1),
@@ -39,9 +39,19 @@ export const lifetimeInterpretationPlanSchema=z.object({
 }).strict();
 export type LifetimeInterpretationPlan=z.infer<typeof lifetimeInterpretationPlanSchema>;
 
+export const lifetimeBookBatchSchema=z.object({
+  batchId:z.string().min(1),
+  sections:z.array(interpretationSectionSchema).min(1),
+}).strict();
+
 const stringArray={type:"array",items:{type:"string"}} as const;
 const nonEmptyStringArray={...stringArray,minItems:1} as const;
 const evidenceIdArray={...stringArray,minItems:1} as const;
+const INTERPRETATION_SECTION_JSON_SCHEMA={type:"object",additionalProperties:false,required:["id","title","body","evidenceIds"],
+  properties:{id:{type:"string"},title:{type:"string"},body:{type:"string"},evidenceIds:evidenceIdArray,chapterNumber:{type:"string"},headline:{type:"string"},lead:{type:"string"},paragraphs:stringArray,keyPoints:stringArray,metrics:{type:"array",items:{type:"object",additionalProperties:false,required:["id","label","value","unit","evidenceId"],properties:{id:{type:"string"},label:{type:"string"},value:{type:"number"},unit:{type:"string",enum:["PERCENT","SCORE"]},evidenceId:{type:"string"}}}},mascotComment:{type:"string"},professionalDetails:{type:"object",additionalProperties:false,required:["summary","evidenceIds"],properties:{summary:{type:"string"},evidenceIds:evidenceIdArray}}}} as const;
+export const LIFETIME_BOOK_BATCH_JSON_SCHEMA={type:"object",additionalProperties:false,required:["batchId","sections"],
+  properties:{batchId:{type:"string"},sections:{type:"array",minItems:1,items:INTERPRETATION_SECTION_JSON_SCHEMA}}} as const;
+
 const PLAN_CLAIM_JSON_SCHEMA={type:"object",additionalProperties:false,
   required:["claimId","plainMeaning","evidenceIds","sourceFields","confidence","allowedChapters","avoidRepeatingIn"],
   properties:{
