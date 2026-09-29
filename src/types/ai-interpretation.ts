@@ -23,4 +23,4 @@ export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-inter
   metadata:{provider:string;model:string;repaired:boolean;tokenUsage?:{input:number;output:number}};}
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
 export type InterpretationResult=InterpretationSuccess|InterpretationFailure;
-export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;}
+export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;lifetimePartNumber?:string;}
