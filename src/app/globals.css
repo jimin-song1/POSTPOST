@@ -288,3 +288,29 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
   .wellnessElements article>b { margin-top:6px; }
   .evidenceRows>div { grid-template-columns:1fr; gap:4px; }
 }
+
+
+/* Lifetime book v3 · 154 logical pages */
+.lifetimeBook154 { background:var(--book); }
+.book154Cover { min-height:90vh; }
+.book154Toc { position:sticky; z-index:20; top:0; display:flex; gap:8px; padding:10px max(10px,calc((100vw - 1040px)/2)); overflow-x:auto; background:rgba(246,240,229,.96); border-bottom:1px solid #d9cebe; backdrop-filter:blur(12px); scrollbar-width:none; }
+.book154Toc a { display:grid; flex:0 0 168px; grid-template-columns:28px 1fr auto; gap:7px; align-items:center; min-height:48px; padding:8px 10px; color:#574c43; background:#fffaf2; border:1px solid #ded2c3; border-radius:12px; text-decoration:none; }
+.book154Toc b { color:var(--wine); font:700 11px Georgia,serif; }.book154Toc span { font-size:12px; font-weight:800; white-space:nowrap; }.book154Toc small { color:#8c8176; font-size:9px; }
+.lifetimeReport .book154Main { width:min(100% - 28px,920px); padding:0 0 90px; }
+.book154Part { scroll-margin-top:74px; }
+.book154PartHeader { padding:92px 8px 46px; border-bottom:1px solid #cfc2b0; }
+.book154PartHeader span { color:var(--wine); font:700 12px Georgia,serif; letter-spacing:.15em; }.book154PartHeader h2 { margin:12px 0 8px; font:700 clamp(38px,6vw,64px)/1.2 Georgia,"Noto Serif KR",serif; letter-spacing:-.04em; }.book154PartHeader p { margin:0; color:#796f65; font-size:14px; }
+.book154Page { min-height:74vh; padding:72px 8px 78px; border-bottom:1px solid #d9cdbd; }
+.book154Page:nth-of-type(odd) { background:linear-gradient(90deg,transparent,rgba(255,253,248,.38),transparent); }
+.book154PageNumber { display:flex; align-items:center; gap:14px; margin-bottom:24px; }.book154PageNumber span { color:var(--wine); font:700 12px Georgia,serif; letter-spacing:.12em; }.book154PageNumber i { display:block; width:76px; height:1px; background:#b9a587; }
+.book154Eyebrow { margin:0 0 10px; color:#8a7764; font-size:12px; font-weight:850; letter-spacing:.05em; }.book154Page h3 { max-width:760px; margin:0 0 20px; font:700 clamp(29px,4.8vw,44px)/1.32 Georgia,"Noto Serif KR",serif; letter-spacing:-.035em; word-break:keep-all; }
+.book154Lead { max-width:700px; margin:0 0 24px; color:#675f56; font-size:18px; line-height:1.78; word-break:keep-all; }
+.book154Page .longCopy { max-width:720px; margin-top:0; }.book154Page .longCopy p { font-size:17px; line-height:1.94; }
+.book154Key { max-width:700px; margin:30px 0 0; padding:22px 24px; color:#4c4038; background:#efe5d8; border-left:4px solid var(--wine); }.book154Key p { margin:0 0 8px; line-height:1.72; }.book154Key p:last-child { margin-bottom:0; }
+.book154Metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; max-width:720px; margin-top:26px; }
+.book154EvidenceIds { overflow-wrap:anywhere; color:#81776c; font:500 10px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace; }
+@media (max-width:700px) {
+  .book154Toc a { flex-basis:145px; grid-template-columns:24px 1fr; }.book154Toc small { display:none; }
+  .lifetimeReport .book154Main { width:min(100% - 18px,920px); }.book154PartHeader { padding:68px 4px 34px; }.book154PartHeader h2 { font-size:39px; }
+  .book154Page { min-height:0; padding:58px 4px 62px; }.book154Page h3 { font-size:31px; }.book154Lead,.book154Page .longCopy p { font-size:16px; }.book154Metrics { grid-template-columns:1fr; }
+}
