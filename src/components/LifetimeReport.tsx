@@ -40,7 +40,7 @@ function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl c
 
 export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
   if (interpretation.status === "pending" || interpretation.status === "not_requested") {
-    return <LifetimeGenerationScreen name={analysis.person.name} onRestart={onRestart} />;
+    return <LifetimeGenerationScreen name={analysis.person.name} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:LIFETIME_BOOK_V1.parts.length} onRestart={onRestart} />;
   }
   if (interpretation.status === "failed") {
     return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
@@ -107,7 +107,7 @@ function LifetimeBook154({ analysis, report, interpretation, onRetry, onRestart 
 }
 
 
-function LifetimeGenerationScreen({ name, onRestart }: { name:string; onRestart:()=>void }) {
+function LifetimeGenerationScreen({ name, completedParts=0, totalParts=LIFETIME_BOOK_V1.parts.length, onRestart }: { name:string; completedParts?:number; totalParts?:number; onRestart:()=>void }) {
   return <main className="lifetimeGeneration" role="status" aria-live="polite">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel">
@@ -115,7 +115,7 @@ function LifetimeGenerationScreen({ name, onRestart }: { name:string; onRestart:
       <p className="generationKicker">평생사주 · 154 PAGE</p>
       <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
       <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
-      <div className="generationProgress" aria-hidden="true"><span/></div>
+      <div className="generationProgress" aria-hidden="true"><span style={{width:`${Math.max(6,Math.min(100,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
       <div className="generationSteps">
         <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
         <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
