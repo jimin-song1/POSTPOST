@@ -6,7 +6,7 @@ const chrome = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const preview = "http://127.0.0.1:3210/dev/lifetime-report";
 const outputDir = new URL("../docs/qa-screenshots/editorial-v3/", import.meta.url);
 const mobile = [
-  ["cover", null], ["personality", "02"], ["five-elements", "03"], ["strength", "04"], ["work", "06"],
+  ["cover", null], ["personality", "02"], ["five-elements", "03"], ["strength", "04"], ["strengths", "05"], ["work", "06"],
   ["money", "07"], ["relationship", "08"], ["children", "09"], ["wellness", "10"], ["helpful-flow", "11"],
   ["daeun", "15"], ["lifetime-advice", "17"], ["professional", "18"],
 ];
@@ -20,7 +20,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function capture([name, width, height, chapter], index) {
   const port = 9500 + index;
-  const profile = join(globalThis.process.cwd(), ".capture", name);
+  const profile = join(globalThis.process.cwd(), ".capture", `${name}-${Date.now()}`);
   const browser = spawn(chrome, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, "about:blank"], { stdio: "ignore" });
   try {
     let pages;

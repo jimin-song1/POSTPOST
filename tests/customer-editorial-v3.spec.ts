@@ -42,6 +42,14 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
     expect(source).not.toContain("도움을 연결하고 리듬을 지킬 때");
   });
 
+  it("keeps the synthetic customer copy understandable on first read", async () => {
+    const preview = await previewSource();
+    for (const phrase of ["상대적 위치", "회복과 우선순위", "자원을 정확히 연결", "기준을 세우고 꾸준히 결과를 쌓는 힘", "균형을 보완하는 상대적 방향"])
+      expect(preview).not.toContain(phrase);
+    for (const phrase of ["작은 일부터 먼저 해보는", "누구와 무엇을 나눌지", "잠자는 시간", "가장 중요한 일부터"])
+      expect(preview).toContain(phrase);
+  });
+
   it("keeps relationship copy distinct without changing calculations", async () => {
     const source = await reportSource();
     for (const status of ["SINGLE", "DATING", "MARRIED"]) expect(source).toContain(`${status}:`);
@@ -52,8 +60,8 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
     const source = await reportSource();
     expect(source).not.toContain("현재 아이와");
     expect(source).not.toContain("첫째");
-    expect(source).toContain("실제 태아 성별 확률이 아닌");
-    expect(source).toContain("의학적 진단이 아닙니다");
+    expect(source).toContain("실제 아이의 성별을 맞히는 숫자가 아닙니다");
+    expect(source).toContain("병을 알아보는 검사가 아닙니다");
   });
 
   it("uses only engine-backed values and no invented personality percentages", async () => {
@@ -68,8 +76,8 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
     const preview = await previewSource();
     expect(preview.length).toBeGreaterThan(8_500);
     expect(preview).toContain("겉으로는");
-    expect(preview).toContain("돈을 버는 방식");
-    expect(preview).toContain("부모 역할");
-    expect(preview).toContain("생활 리듬");
+    expect(preview).toContain("한 번에 큰돈");
+    expect(preview).toContain("부모가 된다면");
+    expect(preview).toContain("생활 습관");
   });
 });
