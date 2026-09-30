@@ -10,7 +10,7 @@ const BATCH_SIZE=3;
 
 async function requestLifetimePart(payload:CustomerResultPayload,relationship:RelationshipStatus,year:number,partNumber:string):Promise<InterpretationSuccess>{
   const response=await fetch("/api/saju/interpret",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({analysis:payload.analysis,reportType:"LIFETIME_GENERAL",relationshipStatus:relationship,year,lifetimePartNumber:partNumber})});
+    body:JSON.stringify({input:payload.analysis.birthInput,reportType:"LIFETIME_GENERAL",relationshipStatus:relationship,year,lifetimePartNumber:partNumber})});
   const raw=await response.text();
   let parsed:unknown;try{parsed=raw?JSON.parse(raw):null;}catch{parsed=null;}
   if(!response.ok){

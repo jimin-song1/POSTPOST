@@ -1,3 +1,5 @@
+import type { SajuInput } from "./saju-input";
+
 export type InterpretationReportType="COMPREHENSIVE"|"LIFETIME_GENERAL"|"WEALTH"|"BUSINESS"|"CAREER"|"RELATIONSHIP"|"STUDY"|"YEARLY";
 export type RelationshipStatus="SINGLE"|"DATING"|"MARRIED";
 export type InterpretationErrorCode="ANALYSIS_NOT_COMPLETED"|"MISSING_REQUIRED_EVIDENCE"|"PROVIDER_ERROR"|
@@ -24,3 +26,4 @@ export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-inter
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
 export type InterpretationResult=InterpretationSuccess|InterpretationFailure;
 export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;lifetimePartNumber?:string;}
+export interface InterpretationApiRequest extends InterpretationBuildOptions {input:SajuInput;}
