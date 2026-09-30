@@ -1,12 +1,12 @@
 import { LifetimePreviewClient } from "@/components/LifetimePreviewClient";
 import { calculateSaju } from "@/lib/saju/engine";
 import { selectCurrentPeriods } from "@/lib/saju/presentation/current-period";
-import { LIFETIME_REPORT_V2 } from "@/rules/lifetime-report.v2";
+import { LIFETIME_BOOK_PAGES, type LifetimeBookEvidenceGroup } from "@/rules/lifetime-report.v3";
 import type { InterpretationUiState } from "@/types/customer-result";
 import type { FortuneResult } from "@/types/fortune";
 import type { SajuAnalysis } from "@/types/saju-analysis";
 
-const fullAnalysis = calculateSaju({ name:"가상인물", gender:"female", calendarType:"solar", birthDate:"1995-09-30", birthTime:"08:29", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"서울특별시" });
+const fullAnalysis = calculateSaju({ name:"ㅇㅇ", gender:"female", calendarType:"solar", birthDate:"1995-09-30", birthTime:"08:29", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"경기도 시흥시" });
 const fullFortune = fullAnalysis.fortune as FortuneResult;
 // The preview renders Daeun and the first category summary only. Excluding unused
 // Seun/Wolun arrays keeps this public synthetic route below platform ISR limits.
@@ -36,6 +36,21 @@ const previewCopy: Record<string, { headline:string; paragraphs:string[] }> = {
   takeaways:{headline:"생각이 다 끝날 때까지 기다리지 말고, 작은 일부터 시작하세요",paragraphs:["빨리 움직이는 것보다 정한 일을 오래 이어가는 데 강합니다.","필요할 때 도움을 요청하고 일을 나누는 것도 잘 해내는 방법입니다.","완벽하게 준비될 때까지 기다리지 말고, 작은 일부터 먼저 해보세요.","바쁜 변화가 생기면 무조건 서두르지 마세요. 먼저 잠과 식사 시간을 지키고, 가장 중요한 일부터 정하세요."]},
   professional:{headline:"쉬운 해석 뒤에는 같은 계산 근거가 놓여 있습니다",paragraphs:["이곳에서는 앞 장에서 사용한 원국, 오행 분포, 강약, 구조와 도움 기운을 전문 명칭과 함께 확인할 수 있습니다.","전문용어는 새로운 판단을 추가하는 것이 아니라 이미 본 고객용 설명의 계산 출처를 보여 줍니다."]},
 };
-const interpretation: InterpretationUiState = { status:"completed", ruleVersion:"ai-interpretation-v1", promptVersion:"interpretation-prompt-v2", groundingVersion:"interpretation-grounding-v1", analysisHash:"synthetic-preview", cacheKey:"synthetic-preview", metadata:{provider:"synthetic",model:"layout-preview",repaired:false}, report:{ status:"completed",reportType:"LIFETIME_GENERAL",headline:"천천히 살펴보고, 정한 일은 끝까지 해내는 사람",summary:"서두르지 않고 충분히 알아본 뒤 움직입니다. 한번 마음을 정하면 쉽게 포기하지 않습니다.",sections:LIFETIME_REPORT_V2.sections.map(section=>{const copy=previewCopy[section.id];return {id:section.id,chapterNumber:section.chapterNumber,title:section.title,headline:copy.headline,lead:"계산 결과를 일상에서 쓰는 쉬운 말로 설명합니다.",body:copy.paragraphs.join("\n\n"),paragraphs:copy.paragraphs,keyPoints:[copy.paragraphs[0]],evidenceIds:["SYNTHETIC:EVIDENCE"],mascotComment:"내가 편하게 할 수 있는 방법을 기억하세요."};}),highlights:["할 일의 순서를 정하고, 시작한 일은 끝까지 이어갑니다."],cautions:["혼자 너무 오래 책임지지 마세요. 지치기 전에 쉬고 다른 사람과 일을 나누세요."],timeline:[],disclaimer:"전통 사주를 바탕으로 쓴 참고 내용입니다. 실제 사건을 미리 정해 주지는 않습니다." } };
+
+const groupCopy: Record<LifetimeBookEvidenceGroup, keyof typeof previewCopy> = {
+  COVER:"overview",INTRO:"overview",CORE:"personality",PILLARS:"personality",HIDDEN_STEMS:"personality",TEN_GODS:"inner-roles",
+  ELEMENTS:"five-elements",STRENGTH:"strength",STRUCTURE_USEFUL:"helpful-elements",FORTUNE_EXPLAIN:"lifetime-flow",IDENTITY:"personality",
+  WORK:"talent-and-work",WEALTH:"money-style",RELATIONSHIP:"relationship",CHILDREN:"children",WELLNESS:"wellness",NOBLE:"special-features",
+  STARS_RELATIONS:"special-features",TWELVE_STAGES:"life-phases",YEARLY_OVERVIEW:"lifetime-flow",YEAR_1:"lifetime-flow",YEAR_2:"lifetime-flow",
+  YEAR_3:"lifetime-flow",YEAR_4:"lifetime-flow",YEAR_5:"lifetime-flow",MONTHLY:"lifetime-flow",CHANGE:"strengths-and-cautions",
+  DAEUN_OVERVIEW:"daeun",DAEUN_1:"daeun",DAEUN_2:"daeun",DAEUN_3:"daeun",DAEUN_4:"daeun",DAEUN_5:"daeun",
+  DAEUN_6:"daeun",DAEUN_7:"daeun",DAEUN_8:"daeun",DAEUN_9:"daeun",DAEUN_10:"daeun",SYNTHESIS:"takeaways",PROFESSIONAL:"professional"
+};
+
+const interpretation: InterpretationUiState = { status:"completed", ruleVersion:"ai-interpretation-v1", promptVersion:"interpretation-prompt-v2", groundingVersion:"interpretation-grounding-v1", analysisHash:"editorial-preview-v3", cacheKey:"editorial-preview-v3", metadata:{provider:"editorial-sample",model:"fixed-editorial-preview",repaired:false}, report:{ status:"completed",reportType:"LIFETIME_GENERAL",headline:"제공한 사주 계산값으로 먼저 다듬는 154페이지 해설",summary:"API 호출 없이, 제공한 사주를 deterministic 엔진으로 계산해 해설의 깊이와 말투를 검토합니다.",sections:LIFETIME_BOOK_PAGES.map(page=>{
+  const copy=previewCopy[groupCopy[page.evidenceGroup]];
+  const paragraphs=[`${page.title}은 이 가상 사주에서 따로 떼어 단정하는 항목이 아닙니다. 앞뒤 계산 근거를 함께 보면서 생활에서 반복되는 모습으로 풀어봅니다.`,...copy.paragraphs];
+  return {id:page.id,chapterNumber:String(page.pageNumber).padStart(3,"0"),title:page.title,headline:page.pageNumber===1?"ㅇㅇ님의 해설 품질을 확인하는 책입니다":copy.headline,lead:"API 키 없이 검토하는 고정 편집 샘플입니다.",body:paragraphs.join("\n\n"),paragraphs,keyPoints:[copy.paragraphs[0]],evidenceIds:[`EDITORIAL_SAMPLE:${page.evidenceGroup}`],mascotComment:"이 페이지에서는 한 가지 특징을 좋고 나쁨으로 단정하지 않고, 실제 생활에서 어떻게 쓰이는지 살펴봅니다.",...(page.pageNumber===154?{professionalDetails:{summary:"제공한 입력을 deterministic 엔진으로 계산한 뒤 만든 편집용 샘플입니다.",evidenceIds:["EDITORIAL_SAMPLE:PROFESSIONAL"]}}:{})};
+}),highlights:["할 일의 순서를 정하고, 시작한 일은 끝까지 이어갑니다."],cautions:["혼자 너무 오래 책임지지 마세요. 지치기 전에 쉬고 다른 사람과 일을 나누세요."],timeline:[],disclaimer:"제공한 사주 입력으로 만든 편집용 샘플입니다. 실제 사건을 확정적으로 예측하지 않습니다." } };
 
 export default function LifetimePreview() { return <LifetimePreviewClient analysis={analysis} current={selectCurrentPeriods(analysis)} interpretation={interpretation} />; }

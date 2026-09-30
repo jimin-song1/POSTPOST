@@ -68,5 +68,5 @@ export default function Home() {
   function accept(value:LifetimeFormResult){setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}
   if(result)return <LifetimeReport analysis={result.analysis} current={result.current} relationshipStatus={relationshipStatus} interpretation={interpretation}
     onRetry={()=>void requestInterpretation(result,relationshipStatus)} onRestart={()=>{setResult(null);setInterpretation({status:"not_requested"});}}/>;
-  return <main className="lifetimeInputPage"><SajuInputForm onResult={accept}/><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
+  return <main className="lifetimeInputPage"><SajuInputForm onResult={accept}/><a className="sampleReportLink" href="/dev/lifetime-report">API 키 없이 ㅇㅇ님의 154페이지 편집 샘플 보기</a><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
 }

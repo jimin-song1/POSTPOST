@@ -329,3 +329,5 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
 @keyframes generationPulse { 0%,100%{transform:scale(.92);opacity:.82} 50%{transform:scale(1.08);opacity:1} }
 @media (prefers-reduced-motion:reduce){ .generationSeal::before{animation:none}.generationProgress span{transition:none} }
 @media (max-width:700px){ .lifetimeGeneration{padding:18px 12px 40px}.generationPanel{margin-top:5vh;padding:34px 20px;border-radius:22px}.generationPanel h1{font-size:43px}.generationLead{font-size:16px}.generationSteps span{font-size:13px} }
+.sampleReportLink{display:block;width:min(720px,calc(100% - 32px));margin:18px auto 0;padding:16px 20px;border:1px solid rgba(80,25,25,.22);border-radius:16px;color:#511b1b;background:#fffaf3;text-align:center;font-weight:800;text-decoration:none}
+.sampleReportLink:hover{background:#f8eee2}
