@@ -1,3 +1,4 @@
+import {NARRATIVE_EDITORIAL_QA_V1 as EDITORIAL_RULE} from "@/rules/narrative-editorial-qa.v1";
 import type {StructuredInterpretation} from "@/types/ai-interpretation";
 
 const replacements:ReadonlyArray<readonly [RegExp,string]>=[
@@ -15,7 +16,7 @@ export function validateKoreanEditorial(value:string){
   if(/([가-힣]{2,})(?:\s+\1){1,}/.test(value))throw new Error("중복 단어가 남아 있습니다.");
   if(/[。]/.test(value))throw new Error("한글 본문에 어색한 문장부호가 남아 있습니다.");
   for(const sentence of value.split(/[.!?]\s*/))if(sentence.trim().length>180)throw new Error("고객 문장이 너무 깁니다.");
-  if(/(?:종합적으로 보면|이를 통해|따라서|해석됩니다|판단됩니다)/.test(value))throw new Error("AI식 연결어나 보고서 문체가 남아 있습니다.");
+  for(const phrase of EDITORIAL_RULE.aiTonePatterns)if(value.includes(phrase))throw new Error(`AI식 연결어나 보고서 문체가 남아 있습니다: ${phrase}`);
   return true;
 }
 export function copyEditInterpretation(report:StructuredInterpretation):StructuredInterpretation{
