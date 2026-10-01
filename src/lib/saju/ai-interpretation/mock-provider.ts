@@ -412,11 +412,11 @@ const EDITORIAL_ANGLE_BANKS:Record<string,EditorialAngleBank>={
   DAEUN:{
     scenes:[
       "10년 흐름이 바뀌는 초입에는 맡는 역할이나 주변 환경이 예전과 달라지는지 먼저 확인합니다.",
-      "오래 익숙했던 방식이 잘 맞지 않기 시작하면 능력이 부족해서라기보다 환경이 달라졌는지 살펴봅니다.",
-      "새로운 사람과 연결이 늘어나는 시기에는 관계의 수보다 어떤 역할로 만나는지를 보는 편이 중요합니다.",
-      "책임이 커지는 구간에는 직접 하는 일과 관리해야 하는 일을 분리해야 부담을 줄일 수 있습니다.",
-      "배운 것을 결과로 바꿔야 하는 시기에는 준비만 이어가기보다 실제 결과물을 남기는 쪽이 중요합니다.",
-      "다음 흐름으로 넘어가기 전에는 지금까지 잘된 방식 중 무엇을 가져갈지 먼저 정리합니다."
+      "익숙했던 방식이 잘 맞지 않는 상황에서는 능력을 탓하기 전에 환경이 어떻게 달라졌는지 확인합니다.",
+      "새로운 사람과 연결이 늘어나는 시기에는 만남의 수보다 어떤 역할로 만날지 먼저 선택합니다.",
+      "책임이 커지는 자리에서는 직접 하는 일과 관리할 일을 나누어 부담이 한곳에 몰리지 않게 합니다.",
+      "배운 것을 결과로 바꿔야 하는 시기에는 준비 내용을 정리한 뒤 작은 결과물부터 남깁니다.",
+      "다음 10년으로 넘어가기 전에는 지금까지 잘된 방식 가운데 무엇을 가져갈지 먼저 정리합니다."
     ],
     consequences:[
       "한 시기의 강점이 다음 시기에는 같은 모습으로 통하지 않을 수 있어 쓰는 방식을 바꾸는 유연함이 필요합니다.",
@@ -437,11 +437,11 @@ const EDITORIAL_ANGLE_BANKS:Record<string,EditorialAngleBank>={
   },
   SYNTHESIS:{
     scenes:[
-      "큰 선택이 겹치면 충분히 확인한 뒤 기준이 선 순간부터는 직접 움직이는 모습이 반복됩니다.",
+      "큰 선택이 겹치는 상황에서는 충분히 확인한 뒤 기준이 선 순간부터 직접 움직입니다.",
       "일이 많아질수록 혼자 다시 확인하려는 습관이 강해져 책임을 나누는 선택이 중요해집니다.",
       "돈과 일에서는 기준을 세우는 힘이, 관계에서는 그 기준을 말로 설명하는 힘이 중요하게 작동합니다.",
-      "익숙한 상황에서는 판단이 빠르지만 새로운 환경에서는 먼저 살피는 시간이 필요합니다.",
-      "잘하고 싶은 마음이 커질수록 완벽한 준비보다 끝낼 범위를 정하는 일이 더 중요해집니다."
+      "익숙한 상황에서는 빠르게 결정하지만 새로운 자리에서는 먼저 조건을 확인합니다.",
+      "잘하고 싶은 마음이 커지는 상황에서는 완벽한 준비보다 끝낼 일을 먼저 선택합니다."
     ],
     consequences:[
       "신중함과 실행력은 반대 성향이 아니라 선택 전과 선택 후에 번갈아 나타나는 같은 흐름으로 볼 수 있습니다.",
@@ -531,10 +531,11 @@ const EDITORIAL_ANGLE_BANKS:Record<string,EditorialAngleBank>={
 
 function editorialAngle(row:Row,index:number){
   const bank=EDITORIAL_ANGLE_BANKS[domainOf(row.evidenceGroup??"")]??EDITORIAL_ANGLE_BANKS.GENERAL;
+  const seed=Array.from(row.id).reduce((total,character,offset)=>total+character.charCodeAt(0)*(offset+1),index+1);
   return{
-    scene:bank.scenes[index%bank.scenes.length],
-    consequence:bank.consequences[(index*2+1)%bank.consequences.length],
-    action:bank.actions[(index*3+2)%bank.actions.length]
+    scene:bank.scenes[seed%bank.scenes.length],
+    consequence:bank.consequences[Math.floor(seed/bank.scenes.length)%bank.consequences.length],
+    action:bank.actions[Math.floor(seed/(bank.scenes.length*bank.consequences.length))%bank.actions.length]
   };
 }
 
@@ -553,15 +554,31 @@ function sectionExtras(row:Row,value:DomainProfile){
     domain==="RELATIONSHIP"?/좋아할 때 표현/.test(topic):false;
   return keep?value.extra:[];
 }
-
 function buildParagraphs(row:Row,index:number){
-  const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index);
+  const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index),domain=domainOf(row.evidenceGroup??"");
   const paragraphs=[
     `${particle(topic,"을","를")} 실제 생활에서 보면, ${angle.scene}`,
     `${particle(topic,"이","가")} 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
     `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
+    `${particle(topic,"이","가")} 실제 결과로 이어질 때는 ${angle.consequence}`,
     `${particle(topic,"을","를")} 생활에서 다룰 때는 ${angle.action}`
   ];
+  if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain))
+    paragraphs.push(`${particle(topic,"을","를")} 더 구체적으로 좁혀 보면 ${value.consequence}`);
+  const group=row.evidenceGroup??"";
+  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`);
+  if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group))paragraphs.push(
+    `${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`,
+    `${particle(topic,"을","를")} 실천하는 별도 기준으로는 ${value.action}`,
+    `${particle(topic,"을","를")} 다른 선택과 비교할 때는 ${value.lead}`,
+    `${topic}에서는 첫인상만으로 결론을 내리지 않고 반복되는 실제 행동을 확인합니다.`,
+    ...(value.extra??[]).map(extra=>`${particle(topic,"을","를")} 넓혀 보는 추가 관점에서는 ${extra}`)
+  );
+  if(["WORK","WEALTH","RELATIONSHIP"].includes(group))paragraphs.push(
+    `${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`,
+    `${particle(topic,"을","를")} 실천하는 별도 기준으로는 ${value.action}`,
+    `${particle(topic,"을","를")} 다른 선택과 비교할 때는 ${value.lead}`
+  );
   if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
   const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
   return paragraphs;
