@@ -538,6 +538,22 @@ function editorialAngle(row:Row,index:number){
   };
 }
 
+function shouldIncludeTimingNote(row:Row){
+  const topic=row.topic??row.title,group=row.evidenceGroup??"";
+  if(group==="CHILDREN")return /시기|10년|몇 년|테마/.test(topic);
+  if(group==="SAMJAE")return /들삼재|눌삼재|날삼재|주기|다음 삼재|지나온/.test(topic);
+  return false;
+}
+function sectionExtras(row:Row,value:DomainProfile){
+  if(!value.extra)return[] as string[];
+  const topic=row.topic??row.title,domain=domainOf(row.evidenceGroup??"");
+  const keep=domain==="IDENTITY"?/겉과 속이 다르게|한 문장으로 보는 나/.test(topic):
+    domain==="WORK"?/배우고 시험|배움/.test(topic):
+    domain==="WEALTH"?/돈 때문에 생기는 인간관계/.test(topic):
+    domain==="RELATIONSHIP"?/좋아할 때 표현/.test(topic):false;
+  return keep?value.extra:[];
+}
+
 function buildParagraphs(row:Row,index:number){
   const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index);
   const paragraphs=[
@@ -546,8 +562,8 @@ function buildParagraphs(row:Row,index:number){
     `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
     `${particle(topic,"을","를")} 생활에서 다룰 때는 ${angle.action}`
   ];
-  if(value.timing)paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
-  if(value.extra)paragraphs.push(...value.extra.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
+  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
+  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
   return paragraphs;
 }
 
