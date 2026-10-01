@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const model = process.env.OPENAI_MODEL ?? "gpt-5-mini";
     const provider = mockEnabled?new MockInterpretationProvider():new OpenAIInterpretationProvider({ apiKey:apiKey!, model, timeoutMs: 240_000, logger: (event) => console.info("ai_interpretation", event) });
     const result = await interpretSajuAnalysis(analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, lifetimePartNumber:body.lifetimePartNumber, characterCore:body.characterCore,cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
-    console.info("ai_interpretation_result", { requestId, reportType, lifetimePartNumber: body.lifetimePartNumber, provider: mockEnabled?"mock":"openai", model:mockEnabled?"deterministic-fixture-v3":model, latencyMs: Date.now() - started,
+    console.info("ai_interpretation_result", { requestId, reportType, lifetimePartNumber: body.lifetimePartNumber, provider: mockEnabled?"mock":"openai", model:mockEnabled?"deterministic-fixture-v4":model, latencyMs: Date.now() - started,
       validationStatus: result.status, mockEnabled, repaired: result.status === "completed" ? result.metadata.repaired : false,
       errorCode: result.status === "failed" ? result.error.code : undefined });
     return NextResponse.json(result, { status: result.status === "completed" ? 200 : 422 });
