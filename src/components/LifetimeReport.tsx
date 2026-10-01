@@ -72,17 +72,18 @@ function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; repo
 
 function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
   const parts=Array.from(new Map(report.sections.map(section=>[section.partNumber??"00",{partNumber:section.partNumber??"00",title:section.partTitle??"평생사주"}])).values());
+  const contentSectionCount=report.sections.filter(section=>section.contentKind==="CONTENT").length;
   return <div className="lifetimeReport lifetimeBook154">
     <header className="lifetimeCover book154Cover">
       <div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
       <div className="coverOrnament" aria-hidden="true"><i/><i/><i/></div>
-      <p>평생사주 · {report.sections.length}개 이야기</p>
+      <p>평생사주 · {contentSectionCount}개의 풀이</p>
       <h1>{analysis.person.name}님의<br/>한 권의 사주책</h1>
       <h2>{report.headline}</h2>
       <span>깊은 풀이를 쉬운 한국어로, 계산 근거는 그대로</span>
     </header>
     <nav className="book154Toc" aria-label="평생사주 목차">
-      {parts.map(part=>{const count=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count} sections</small></a>;})}
+      {parts.map(part=>{const count=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count}개 주제</small></a>;})}
     </nav>
     <main className="book154Main">
       {parts.map(part=>{const sections=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
