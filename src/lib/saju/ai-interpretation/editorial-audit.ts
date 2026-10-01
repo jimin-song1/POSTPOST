@@ -10,8 +10,10 @@ export interface EditorialWarning{code:EditorialWarningCode;sectionId:string;det
 export interface CoreNineEditorialResult{
   id:string;label:string;naturalKorean:boolean;concrete:boolean;novel:boolean;grounded:boolean;nonRepetitive:boolean;timing:boolean;pass:boolean;
 }
+export interface TemplateRepeatPair{firstSectionId:string;secondSectionId:string;domain:string;similarity:number;}
 export interface LifetimeEditorialAudit{
   warnings:EditorialWarning[];
+  templateRepeatPairs:TemplateRepeatPair[];
   metrics:{
     aiToneHits:number;reportToneHits:number;technicalLeakageHits:number;longSentenceWarnings:number;
     duplicateClaimWarnings:number;duplicateSceneWarnings:number;sectionsWithoutConcreteScene:number;
@@ -43,6 +45,30 @@ function repeatedEnding(value:string){
   const counts=new Map<string,number>();for(const ending of values)counts.set(ending,(counts.get(ending)??0)+1);
   return Math.max(...Array.from(counts.values()))/values.length>=0.72;
 }
+const templateDomain=(group:string)=>group.startsWith("YEAR_")||group==="YEARLY_OVERVIEW"||group==="MONTHLY"?"YEARLY":
+  group.startsWith("DAEUN")?"DAEUN":
+  ["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL","IDENTITY","ELEMENTS","STRENGTH"].includes(group)?"IDENTITY":
+  ["NOBLE","STARS_RELATIONS"].includes(group)?"NOBLE":
+  ["TEN_GODS","TWELVE_STAGES"].includes(group)?"ROLES":group;
+function templateTokens(row:InterpretationSection){
+  let value=(row.paragraphs??[row.body]).join(" ");
+  for(const removable of [row.title,row.headline??"",row.lead??""])if(removable)value=value.split(removable).join(" ");
+  value=value.replace(/(?:19|20|21)\d{2}년/g,"연도").replace(/\d+번째/g,"순번").replace(/\s+/g," ").trim();
+  return new Set(value.replace(/[^a-zA-Z0-9가-힣\s]/g," ").split(/\s+/).filter(token=>token.length>1));
+}
+function templateSimilarity(a:Set<string>,b:Set<string>){
+  const left=Array.from(a),intersection=left.filter(token=>b.has(token)).length,union=new Set([...left,...Array.from(b)]).size;
+  return union?intersection/union:0;
+}
+function findTemplateRepeats(content:InterpretationSection[]){
+  const rows=content.map(row=>({row,domain:templateDomain(row.evidenceGroup??""),tokens:templateTokens(row)})),pairs:TemplateRepeatPair[]=[];
+  for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
+    const left=rows[i],right=rows[j];if(left.domain!==right.domain||left.tokens.size<20||right.tokens.size<20)continue;
+    const similarity=templateSimilarity(left.tokens,right.tokens);if(similarity>=0.72)pairs.push({firstSectionId:left.row.id,secondSectionId:right.row.id,domain:left.domain,similarity:Number(similarity.toFixed(3))});
+  }
+  return pairs.slice(0,200);
+}
+
 const contradictoryPatterns=[
   [/생각 없이|아무 고민 없이|무조건 바로 결정/,"신중한 결정 core와 충돌"],
   [/누구에게나 바로 마음을 열|처음 본 사람에게도 속마음을/,"관계 core와 충돌"],
@@ -75,6 +101,7 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
     for(const [pattern,detail] of contradictoryPatterns)if(pattern.test(value))warnings.push({code:"CHARACTER_CONSISTENCY",sectionId:row.id,detail});
   }
 
+  const templateRepeatPairs=findTemplateRepeats(content);
   const count=(code:EditorialWarningCode)=>warnings.filter(row=>row.code===code).length;
   const coreNine=RULE.coreNine.map(domain=>{
     const rows=content.filter(row=>domain.groups.some(group=>group===(row.evidenceGroup??"")));
@@ -89,7 +116,7 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
       pass:rows.length>0&&naturalKorean&&concrete&&novel&&grounded&&nonRepetitive&&timing};
   });
 
-  return{warnings,metrics:{
+  return{warnings,templateRepeatPairs,metrics:{
     aiToneHits:count("AI_TONE"),reportToneHits:count("REPORT_TONE"),technicalLeakageHits:count("TECHNICAL_LEAKAGE"),longSentenceWarnings:count("LONG_SENTENCE"),
     duplicateClaimWarnings:count("DUPLICATE_CLAIM"),duplicateSceneWarnings:count("DUPLICATE_SCENE"),sectionsWithoutConcreteScene:count("MISSING_SCENE"),
     sectionsWithoutUpsideShadowPair:count("MISSING_UPSIDE_SHADOW"),repeatedEndingWarnings:count("REPEATED_ENDING"),characterConsistencyWarnings:count("CHARACTER_CONSISTENCY")
