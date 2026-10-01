@@ -33,10 +33,10 @@ const CUSTOMER_TECHNICAL_CONTEXT_PATTERNS=[
   {label:"병약",pattern:/병약(?:용신|법|론|기운|작용)/}
 ] as const;
 
-const TECHNICAL_SUFFIX="(?:입니다|이에요|예요|이다|이라는|이라고|으로|에서|부터|까지|마다|별|이|가|은|는|을|를|의|에|로|와|과|도|만)?";
+const TECHNICAL_SUFFIX="(?:입니다|이에요|예요|이다|이라는|이라고|이란|란|이라면|이라|처럼|으로|에서|부터|까지|마다|별|상|이|가|은|는|을|를|의|에|로|와|과|도|만)?";
 function escapeRegExp(value:string){return value.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
 function hasStandaloneTechnicalTerm(value:string,term:string){
-  return new RegExp("(^|[^가-힣A-Za-z0-9])"+escapeRegExp(term)+TECHNICAL_SUFFIX+"(?=$|[^가-힣A-Za-z0-9])").test(value);
+  return new RegExp("(^|[^가-힣A-Za-z0-9])"+escapeRegExp(term)+TECHNICAL_SUFFIX+"(?=$|[^가-힣A-Za-z0-9])","i").test(value);
 }
 
 export function customerTechnicalTermHits(value:string){
