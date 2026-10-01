@@ -13,7 +13,7 @@ export const NARRATIVE_EDITORIAL_QA_V1={
     "종합적으로 보면","전체적으로 보면","따라서","이러한 특성은","이를 통해","로 판단됩니다","명리학적으로","사주적으로"
   ],
   reportTonePatterns:["종합 분석","특성 분석","분석 결과","해당 항목","본 항목","관계적 특성"],
-  technicalTerms:["일간","신강","신약","격국","용신","희신","기신","지장간","FORTUNE:","NATAL:","CHILD:","USEFUL_GOD:"],
+  technicalTerms:["일간","신강","신약","격국","용신","희신","기신","지장간","십성","식신","상관","시주","십이운성","자녀궁","원국","대운","세운","월운","FORTUNE:","NATAL:","CHILD:","USEFUL_GOD:"],
   coreNine:[
     {id:"IDENTITY",label:"기본설계/성격",groups:["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL","IDENTITY","ELEMENTS","STRENGTH"],timingRequired:false},
     {id:"WORK",label:"직업·사업·학업",groups:["WORK"],timingRequired:false},
