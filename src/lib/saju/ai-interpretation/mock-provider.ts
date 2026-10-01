@@ -544,7 +544,7 @@ function buildParagraphs(row:Row,index:number){
     `${particle(topic,"을","를")} 실제 생활에서 보면, ${angle.scene}`,
     `${particle(topic,"이","가")} 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
     `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
-    `${value.consequence} ${angle.consequence}`,
+    angle.consequence,
     `${particle(topic,"을","를")} 생활에서 다룰 때는 ${angle.action}`
   ];
   if(value.timing)paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
