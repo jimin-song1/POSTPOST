@@ -1,5 +1,6 @@
 import type {InterpretationSection,StructuredInterpretation} from "@/types/ai-interpretation";
 import {NARRATIVE_EDITORIAL_QA_V1 as RULE} from "@/rules/narrative-editorial-qa.v1";
+import {customerTechnicalTermHits} from "@/rules/customer-terminology.v1";
 
 export type EditorialWarningCode=
   "AI_TONE"|"REPORT_TONE"|"TECHNICAL_LEAKAGE"|"LONG_SENTENCE"|"DUPLICATE_CLAIM"|"DUPLICATE_SCENE"|
@@ -57,7 +58,7 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
     const value=sectionText(row);
     for(const pattern of RULE.aiTonePatterns)if(value.includes(pattern))warnings.push({code:"AI_TONE",sectionId:row.id,detail:pattern});
     for(const pattern of RULE.reportTonePatterns)if(value.includes(pattern))warnings.push({code:"REPORT_TONE",sectionId:row.id,detail:pattern});
-    for(const term of RULE.technicalTerms)if(value.includes(term))warnings.push({code:"TECHNICAL_LEAKAGE",sectionId:row.id,detail:term});
+    for(const term of customerTechnicalTermHits(value))warnings.push({code:"TECHNICAL_LEAKAGE",sectionId:row.id,detail:term});
     for(const sentence of sentenceList(value))if(sentence.length>RULE.maxSentenceLength)
       warnings.push({code:"LONG_SENTENCE",sectionId:row.id,detail:`${sentence.length}자 문장`});
     for(const claim of row.claimsUsed??[]){
