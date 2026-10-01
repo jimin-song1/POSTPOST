@@ -43,6 +43,7 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
     expect(customerTechnicalTermHits("식신과 상관의 기운을 봅니다.")).toEqual(expect.arrayContaining(["식신","상관"]));
     expect(customerTechnicalTermHits("대운과 세운의 흐름을 함께 봅니다.")).toEqual(expect.arrayContaining(["대운","세운"]));
     expect(customerTechnicalTermHits("support와 activation을 합치지 않습니다.")).toEqual(expect.arrayContaining(["support","activation"]));
+    expect(customerTechnicalTermHits("용신이란 표현과 Support를 고객 문장에 쓰지 않습니다.")).toEqual(expect.arrayContaining(["용신","support"]));
   });
 
   it("uses ordinary Korean for strength guidance", async () => {
