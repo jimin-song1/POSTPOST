@@ -544,7 +544,6 @@ function buildParagraphs(row:Row,index:number){
     `${particle(topic,"을","를")} 실제 생활에서 보면, ${angle.scene}`,
     `${particle(topic,"이","가")} 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
     `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
-    angle.consequence,
     `${particle(topic,"을","를")} 생활에서 다룰 때는 ${angle.action}`
   ];
   if(value.timing)paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
@@ -555,10 +554,10 @@ function buildParagraphs(row:Row,index:number){
 function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[];
   const sections=rows.map((row,index)=>{
-    const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index);
+    const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index);
     const paragraphs=row.contentKind==="FRONT_MATTER"
-      ?[fullParagraphs[0],fullParagraphs[1],fullParagraphs[4]]
+      ?[fullParagraphs[0],fullParagraphs[1],fullParagraphs[3]]
       :row.contentKind==="PROFESSIONAL"
         ?[value.scene,value.consequence,value.action]
         :fullParagraphs;
@@ -571,7 +570,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
       lead:`${particle(row.topic??row.title,"을","를")} 중심으로 ${value.lead}`,
       body:paragraphs.join("\n\n"),
       paragraphs,
-      keyPoints:[`${row.topic??row.title}에서도 같은 성향의 장점과 부담을 함께 봅니다.`],
+      keyPoints:[angle.consequence],
       evidenceIds:ids,
       partNumber:row.partNumber,
       partTitle:row.partTitle,
