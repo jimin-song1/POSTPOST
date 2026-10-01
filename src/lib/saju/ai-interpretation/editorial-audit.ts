@@ -40,7 +40,7 @@ function hasUpsideShadow(value:string){
 function repeatedEnding(value:string){
   const values=endings(value);if(values.length<5)return false;
   const counts=new Map<string,number>();for(const ending of values)counts.set(ending,(counts.get(ending)??0)+1);
-  return Math.max(...counts.values())/values.length>=0.72;
+  return Math.max(...Array.from(counts.values()))/values.length>=0.72;
 }
 const contradictoryPatterns=[
   [/생각 없이|아무 고민 없이|무조건 바로 결정/,"신중한 결정 core와 충돌"],
