@@ -8,6 +8,9 @@ import { lifetimeInterpretationPlanSchema,structuredInterpretationSchema } from 
 import { interpretationHashes,MemoryInterpretationCache } from "@/lib/saju/ai-interpretation/cache";
 import { interpretSajuAnalysis } from "@/lib/saju/ai-interpretation/service";
 import { OpenAIInterpretationProvider } from "@/lib/saju/ai-interpretation/openai-provider";
+import { MockInterpretationProvider as DeterministicMockInterpretationProvider } from "@/lib/saju/ai-interpretation/mock-provider";
+import { auditLifetimeEditorialQuality } from "@/lib/saju/ai-interpretation/editorial-audit";
+import { validateLifetimeContentContract } from "@/lib/saju/ai-interpretation/lifetime-content-contract";
 import { InterpretationProviderError,InterpretationProviderTimeoutError } from "@/lib/saju/ai-interpretation/provider";
 import type { InterpretationInput,InterpretationProvider,InterpretationProviderRequest,InterpretationProviderResponse,
   InterpretationReportType,StructuredInterpretation } from "@/types/ai-interpretation";
@@ -143,6 +146,22 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(interpretationHashes(input,"BUSINESS",RULE.modelConfigVersion,"interpretation-prompt-v1").cacheKey).not.toBe(same.cacheKey);
     const changed=structuredClone(input);changed.version="interpretation-input-v1";changed.evidence=[...changed.evidence].reverse();
     expect(interpretationHashes(changed,"BUSINESS").analysisHash).not.toBe(same.analysisHash);
+  });
+
+  it("audits the full deterministic lifetime mock narrative and all Core 9 domains",async()=>{
+    const result=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
+    expect(result.status).toBe("completed");
+    if(result.status!=="completed")return;
+    const stats=validateLifetimeContentContract(result.report),audit=auditLifetimeEditorialQuality(result.report);
+    expect(stats.contentSections).toBeGreaterThanOrEqual(130);
+    expect(stats.totalCharacters).toBeGreaterThanOrEqual(90_000);
+    expect(audit.metrics).toEqual({
+      aiToneHits:0,reportToneHits:0,technicalLeakageHits:0,longSentenceWarnings:0,
+      duplicateClaimWarnings:0,duplicateSceneWarnings:0,sectionsWithoutConcreteScene:0,
+      sectionsWithoutUpsideShadowPair:0,repeatedEndingWarnings:0,characterConsistencyWarnings:0
+    });
+    expect(audit.coreNine).toHaveLength(9);
+    expect(audit.coreNine.every(row=>row.pass)).toBe(true);
   });
 
   it.each(RULE.supportedReports)("Z-AF: mock %s report completes with grounded structured JSON",async reportType=>{
