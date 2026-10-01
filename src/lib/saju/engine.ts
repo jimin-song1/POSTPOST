@@ -46,6 +46,7 @@ import { synthesizeFortune } from "./fortune/fortune-synthesis";
 import { evaluateCategoryFortune } from "./fortune/category-fortune";
 import { evaluateWellness } from "./fortune/wellness";
 import { evaluateChildrenFortune } from "./fortune/children-fortune";
+import {evaluateSamjaeFortune} from "./fortune/samjae-fortune";
 
 const positions: PillarPosition[] = ["year", "month", "day", "hour"];
 const byPosition = <T>(get: (position: PillarPosition) => T) =>
@@ -179,6 +180,7 @@ export function calculateSaju(request: SajuInput | LegacySajuInput): SajuAnalysi
           fortune.synthesis=synthesizeFortune(fortune,usefulGods.synthesis,pillars.day.stem);
           fortune.categories=evaluateCategoryFortune(fortune.synthesis,input.gender,{structureType:structure.primary?.type??null,
             usefulGodHighestElement:usefulGods.synthesis.highestElement??null});
+          if(pillars.year.branch)fortune.samjae=evaluateSamjaeFortune(pillars.year.branch,nobleAndSpecialStars,fortune);
         }
       }
     }

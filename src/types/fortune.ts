@@ -3,6 +3,7 @@ import type { SynthesisRole } from "./useful-gods";
 import type { FortuneTransformationResult } from "./fortune-transformation";
 import type { FortuneSynthesisResult } from "./fortune-synthesis";
 import type { CategoryFortuneResult } from "./category-fortune";
+import type {SamjaeFortuneResult} from "./samjae";
 
 export type FavorabilityRole="PRIMARY_FAVORABLE"|"STRONG_FAVORABLE"|"FAVORABLE"|"CONDITIONAL"|"NEUTRAL"|"UNFAVORABLE";
 export interface FortuneInteraction {id:string;domain:"stem"|"branch";natalPosition?:PillarPosition;
@@ -22,7 +23,8 @@ export interface FortuneResult {status:"partial"|"not_implemented";daeun:{status
   wolun:{status:"implemented"|"not_implemented";ruleVersion?:"wolun-activation-v1";periods?:WolunActivationPeriod[];evidence?:string[]};
   transformation:{status:"not_implemented"}|FortuneTransformationResult;
   synthesis:{status:"not_implemented"}|FortuneSynthesisResult;
-  categories:{status:"not_implemented"}|CategoryFortuneResult;}
+  categories:{status:"not_implemented"}|CategoryFortuneResult;
+  samjae:{status:"not_implemented"}|SamjaeFortuneResult;}
 
 export interface DaeunSegment {daeunIndex:number;daeunPillar:string;startInstant:string;endInstant:string;}
 export interface LayerParticipant {layer:"NATAL"|"DAEUN"|"SEUN"|"WOLUN";stem?:Stem;branch?:Branch;
