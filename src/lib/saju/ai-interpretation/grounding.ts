@@ -11,7 +11,7 @@ function texts(report:StructuredInterpretation){return[report.headline,report.su
   ...report.sections.flatMap(row=>[row.title,row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??"",row.professionalDetails?.summary??""]),...report.timeline.flatMap(row=>[row.title,row.body])];}
 const close=(a:number,b:number)=>Math.abs(a-b)<1e-9;
 
-const CUSTOMER_TECHNICAL_TERMS=["일간","신강","신약","격국","용신","희신","기신","조후","통관","병약","지장간","득령","득지","득세","투간"] as const;
+const CUSTOMER_TECHNICAL_TERMS=["일간","신강","신약","격국","용신","희신","기신","조후","통관","병약","지장간","십성","식신","상관","시주","십이운성","자녀궁","원국","대운","세운","월운","득령","득지","득세","투간"] as const;
 const AI_REPORT_PHRASES=["해석됩니다","경향성을 보입니다","경향이 나타납니다","영향을 받습니다","라고 볼 수 있습니다","일 가능성이 있습니다","종합적으로 보면","이러한 특성은","이를 통해","판단됩니다"] as const;
 const GENERIC_FORTUNE_COOKIE_PHRASES=["긍정적으로 생각하세요","긍정적인 마음으로","균형 잡힌 생활이 중요","주변 사람과 소통하세요","노력하면 좋은 결과"] as const;
 function countOccurrences(text:string,phrase:string){let count=0,index=0;while((index=text.indexOf(phrase,index))!==-1){count+=1;index+=phrase.length;}return count;}
