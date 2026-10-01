@@ -4,6 +4,7 @@ import {calculateSaju} from "@/lib/saju/engine";
 import {buildInterpretationInput} from "@/lib/saju/ai-interpretation/input-builder";
 import {generateGlobalCharacterCore} from "@/lib/saju/ai-interpretation/global-character-core";
 import {validateLifetimeContentContract,semanticDuplicateSimilarity} from "@/lib/saju/ai-interpretation/lifetime-content-contract";
+import {auditLifetimeEditorialQuality} from "@/lib/saju/ai-interpretation/editorial-audit";
 import {MockInterpretationProvider} from "@/lib/saju/ai-interpretation/mock-provider";
 import {interpretSajuAnalysis} from "@/lib/saju/ai-interpretation/service";
 import {buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1} from "@/rules/lifetime-report.v4";
@@ -65,10 +66,19 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "십성/십이운성":aggregate(report,["TEN_GODS","TWELVE_STAGES"]),"5년 연운":aggregate(report,["YEARLY_OVERVIEW","YEAR_1","YEAR_2","YEAR_3","YEAR_4","YEAR_5","MONTHLY"]),
       "삼재":aggregate(report,["SAMJAE"]),"대운":aggregate(report,["DAEUN_OVERVIEW","DAEUN_1","DAEUN_2","DAEUN_3","DAEUN_4","DAEUN_5","DAEUN_6","DAEUN_7","DAEUN_8","DAEUN_9","DAEUN_10"]),"최종 종합":aggregate(report,["SYNTHESIS"])
     };
+    const editorial=auditLifetimeEditorialQuality(report);
+    expect(editorial.metrics).toEqual({
+      aiToneHits:0,reportToneHits:0,technicalLeakageHits:0,longSentenceWarnings:0,
+      duplicateClaimWarnings:0,duplicateSceneWarnings:0,sectionsWithoutConcreteScene:0,
+      sectionsWithoutUpsideShadowPair:0,repeatedEndingWarnings:0,characterConsistencyWarnings:0
+    });
+    expect(editorial.coreNine).toHaveLength(9);
+    expect(editorial.coreNine.every(row=>row.pass)).toBe(true);
+
     const artifact={input:{...FULL_SAMPLE_INPUT,name:"synthetic-test-user"},contentSections:stats.contentSections,totalCharacters:stats.totalCharacters,totalParagraphs:content.reduce((sum,row)=>sum+(row.paragraphs?.length??1),0),
       totalParts:book.parts.length,totalChapters:new Set(content.map(row=>row.evidenceGroup)).size,sectionHash:createHash("sha256").update(ids.join("\n")).digest("hex"),density,
       duplicateSectionIds:ids.length-new Set(ids).size,duplicateSequences:sequences.length-new Set(sequences).size,missingChapters:[],contentContractFailures:0,noveltyFailures:0,semanticDuplicateWarnings:0,
-      globalCharacterCoreShared:true,samjaeEvidenceConnected:true,childrenEvidenceConnected:true};
+      globalCharacterCoreShared:true,samjaeEvidenceConnected:true,childrenEvidenceConnected:true,editorialMetrics:editorial.metrics,coreNine:editorial.coreNine};
     console.info("M34_1_QA_ARTIFACT",JSON.stringify(artifact));
   },30_000);
 
