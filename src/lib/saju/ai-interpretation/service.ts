@@ -31,7 +31,7 @@ function validatePlan(output:unknown,input:ReturnType<typeof buildInterpretation
   const evidenceIds=new Set(input.evidence.map(row=>row.id)),sectionIds=new Set(input.reportPlan.map(row=>row.id));
   const expectedSections=input.reportPlan.map(row=>row.id),actualSections=parsed.data.chapterClaims.map(row=>row.sectionId);
   if(JSON.stringify(actualSections)!==JSON.stringify(expectedSections))
-    return{ok:false as const,code:"GROUNDING_VALIDATION_FAILED" as const,message:"interpretation plan의 01~18 section 순서가 다릅니다."};
+    return{ok:false as const,code:"GROUNDING_VALIDATION_FAILED" as const,message:"interpretation plan의 동적 section 순서가 다릅니다."};
   for(const claim of planClaims(parsed.data)){
     for(const id of claim.evidenceIds)if(!evidenceIds.has(id))
       return{ok:false as const,code:"GROUNDING_VALIDATION_FAILED" as const,message:`interpretation plan의 알 수 없는 evidence ID: ${id}`};
@@ -65,14 +65,15 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
 
   let plan:LifetimeInterpretationPlan|undefined,planUsage:{input:number;output:number}|undefined;
   if(options.reportType==="LIFETIME_GENERAL"){
+    const planningInput=options.lifetimePartNumber?{...buildInterpretationInput(analysis,{...options,lifetimePartNumber:undefined}),reportPlan:input.reportPlan}:input;
     let planResponse;
     try{planResponse=await provider.generate({
-      systemPrompt:`${INTERPRETATION_SYSTEM_PROMPT}\n\n${LIFETIME_INTERPRETATION_PLANNER_PROMPT}`,
-      input,analysisHash,schema:LIFETIME_INTERPRETATION_PLAN_JSON_SCHEMA as unknown as Record<string,unknown>,
+      systemPrompt:`${INTERPRETATION_SYSTEM_PROMPT}\n\n${LIFETIME_INTERPRETATION_PLANNER_PROMPT}${options.characterCore?`\n\n이미 확정한 Global Character Core를 바꾸지 마라:\n${JSON.stringify(options.characterCore)}`:""}`,
+      input:planningInput,analysisHash,schema:LIFETIME_INTERPRETATION_PLAN_JSON_SCHEMA as unknown as Record<string,unknown>,
     });}catch(error){return providerFailure(error);}
-    const checkedPlan=validatePlan(planResponse.output,input);
+    const checkedPlan=validatePlan(planResponse.output,planningInput);
     if(!checkedPlan.ok)return failure(checkedPlan.code,checkedPlan.message);
-    plan=checkedPlan.plan;planUsage=planResponse.tokenUsage;
+    plan={...checkedPlan.plan,characterCore:options.characterCore??checkedPlan.plan.characterCore};planUsage=planResponse.tokenUsage;
   }
 
   const systemPrompt=options.reportType==="LIFETIME_GENERAL"

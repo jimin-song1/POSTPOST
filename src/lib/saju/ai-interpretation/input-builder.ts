@@ -3,7 +3,8 @@ import type { CategoryFortunePeriod,CategoryFortuneResult } from "@/types/catego
 import type { FortuneSynthesisPeriod,FortuneSynthesisResult } from "@/types/fortune-synthesis";
 import type { FortuneResult } from "@/types/fortune";
 import type { InterpretationBuildOptions,InterpretationEvidence,InterpretationInput,InterpretationReportType } from "@/types/ai-interpretation";
-import {LIFETIME_BOOK_V1,LIFETIME_BOOK_PAGES,type LifetimeBookEvidenceGroup} from "@/rules/lifetime-report.v3";
+import {LIFETIME_BOOK_V1,type LifetimeBookEvidenceGroup} from "@/rules/lifetime-report.v3";
+import {buildDynamicLifetimeBook,type LifetimeEvidenceGroup} from "@/rules/lifetime-report.v4";
 import {customerElement} from "@/rules/customer-terminology.v1";
 import type {WellnessResult} from "@/types/wellness";
 import type {ChildrenFortuneResult} from "@/types/children-fortune";
@@ -73,8 +74,8 @@ function pairRows(synthesisRows:FortuneSynthesisPeriod[],categoryRows:CategoryFo
 
 function idsByPrefix(evidence:InterpretationEvidence[],...prefixes:string[]){return evidence.filter(row=>prefixes.some(prefix=>row.id.startsWith(prefix))).map(row=>row.id);}
 function idsByContains(evidence:InterpretationEvidence[],...tokens:string[]){return evidence.filter(row=>tokens.some(token=>row.id.includes(token))).map(row=>row.id);}
-function bookPurpose(group:LifetimeBookEvidenceGroup){
-  const purposes:Record<LifetimeBookEvidenceGroup,string>={
+function bookPurpose(group:LifetimeEvidenceGroup){
+  const purposes:Record<LifetimeEvidenceGroup,string>={
     COVER:"책의 표지와 읽는 방향만 안내한다.",INTRO:"사주를 읽는 방법과 계산/해석의 경계를 쉬운 말로 설명한다.",
     CORE:"원국의 핵심 특징을 여러 근거로 묶어 한 사람의 중심 이야기로 설명한다.",PILLARS:"년·월·일·시 각 자리의 역할과 차이를 설명한다.",
     HIDDEN_STEMS:"겉으로 바로 보이지 않는 속기운과 겉/속 차이를 설명한다.",TEN_GODS:"경쟁·표현·돈·책임·배움의 역할이 어디에 드러나는지 설명한다.",
@@ -91,10 +92,10 @@ function bookPurpose(group:LifetimeBookEvidenceGroup){
     CHANGE:"합·충·형·파·해·변환과 fortune activation이 만드는 움직임을 유불과 분리해 설명한다.",DAEUN_OVERVIEW:"10개 대운의 전체 순서와 현재 큰 흐름을 설명한다.",
     DAEUN_1:"첫 번째 대운을 설명한다.",DAEUN_2:"두 번째 대운을 설명한다.",DAEUN_3:"세 번째 대운을 설명한다.",DAEUN_4:"네 번째 대운을 설명한다.",DAEUN_5:"다섯 번째 대운을 설명한다.",
     DAEUN_6:"여섯 번째 대운을 설명한다.",DAEUN_7:"일곱 번째 대운을 설명한다.",DAEUN_8:"여덟 번째 대운을 설명한다.",DAEUN_9:"아홉 번째 대운을 설명한다.",DAEUN_10:"열 번째 대운을 설명한다.",
-    SYNTHESIS:"앞의 여러 장에서 반복해서 확인된 근거만 다시 묶어 평생 패턴을 설명한다.",PROFESSIONAL:"같은 계산 결과를 전문용어와 evidence로 확인한다."
+    SAMJAE:"삼재 여부, 관계 활성, 변화량과 유불을 분리해 생애 주기를 설명한다.",SYNTHESIS:"앞의 여러 장에서 반복해서 확인된 근거만 다시 묶어 평생 패턴을 설명한다.",PROFESSIONAL:"같은 계산 결과를 전문용어와 evidence로 확인한다."
   };return purposes[group];
 }
-function evidenceForBookGroup(group:LifetimeBookEvidenceGroup,evidence:InterpretationEvidence[],currentYear:number){
+function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:InterpretationEvidence[],currentYear:number){
   const allNatal=()=>idsByPrefix(evidence,"NATAL:");
   switch(group){
     case"COVER":case"INTRO":return idsByPrefix(evidence,"NATAL:PILLARS","NATAL:VERSIONS");
@@ -125,7 +126,8 @@ function evidenceForBookGroup(group:LifetimeBookEvidenceGroup,evidence:Interpret
     case"DAEUN_1":case"DAEUN_2":case"DAEUN_3":case"DAEUN_4":case"DAEUN_5":case"DAEUN_6":case"DAEUN_7":case"DAEUN_8":case"DAEUN_9":case"DAEUN_10":{
       const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${index}`);
     }
-    case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-")]));
+    case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE");
+    case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-","FORTUNE:SAMJAE")]));
     case"PROFESSIONAL":return evidence.map(row=>row.id);
   }
 }
@@ -160,6 +162,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
     fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}),
     fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
+  if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
   for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
@@ -178,19 +181,19 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const partByNumber=new Map(LIFETIME_BOOK_V1.parts.map(part=>[part.partNumber,part]));
-  const fullPlan=LIFETIME_BOOK_PAGES.map(page=>{
-    const part=partByNumber.get(page.partNumber)!;
-    const evidenceIds=Array.from(new Set(evidenceForBookGroup(page.evidenceGroup,unique,currentYear)));
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear});
+  const fullPlan=book.sections.map(section=>{
+    const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
-    return{id:page.id,chapterNumber:String(page.pageNumber).padStart(3,"0"),title:page.title,evidenceIds,pageNumber:page.pageNumber,partNumber:page.partNumber,partTitle:part.title,purpose:bookPurpose(page.evidenceGroup),evidenceGroup:page.evidenceGroup};
+    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
+      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
   });
   const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
   if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);
   const requiredIds=new Set(plan.flatMap(row=>row.evidenceIds));
   const scopedEvidence=options.lifetimePartNumber?unique.filter(row=>requiredIds.has(row.id)):unique;
   const scopedTimeline=options.lifetimePartNumber?timeline.filter(row=>row.evidenceIds.some(id=>requiredIds.has(id))):timeline;
-  return{version:LIFETIME_BOOK_V1.inputVersion,reportVersion:LIFETIME_BOOK_V1.reportVersion,reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
+  return{version:"lifetime-interpretation-input-v4",reportVersion:"dynamic-lifetime-book-v4",reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
     minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
 }
 

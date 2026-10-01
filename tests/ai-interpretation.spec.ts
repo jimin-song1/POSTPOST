@@ -19,14 +19,14 @@ const analysis=calculateSaju(SYNTHETIC_INPUT),fortune=analysis.fortune as Fortun
 const referenceInstant=synthesis.wolun[0].period.startInstant,year=Array.from(new Set(synthesis.wolun.map(row=>row.context.seunYear!)))
   .find(candidate=>synthesis.wolun.filter(row=>row.context.seunYear===candidate).length>=12)!;
 const options=(reportType:InterpretationReportType)=>reportType==="YEARLY"?{reportType,year}:reportType==="LIFETIME_GENERAL"?{reportType,relationshipStatus:"SINGLE" as const,year}:{reportType,referenceInstant};
-function validOutput(input:InterpretationInput):StructuredInterpretation {const first=input.evidence[0].id,timeline=input.timeline[0],sections=input.reportType==="LIFETIME_GENERAL"?input.reportPlan!.map(row=>({id:row.id,chapterNumber:row.chapterNumber,title:row.title,headline:"삶의 구조를 읽는 문장",lead:"확정된 근거를 쉬운 말로 연결합니다.",body:"확정된 엔진 근거를 설명합니다.",paragraphs:[`${row.title}에서는 입력된 근거 안에서 생활 모습을 풀어봅니다.`,`${row.title}에 필요한 핵심만 골라 같은 말을 되풀이하지 않습니다.`],keyPoints:["계산 결과를 바꾸지 않습니다."],evidenceIds:[row.evidenceIds[0]],...(row.chapterNumber==="154"?{professionalDetails:{summary:"같은 계산 결과의 전문 근거입니다.",evidenceIds:[row.evidenceIds[0]]}}:{})})): [{id:"summary",title:"핵심 흐름",body:"확정된 엔진 근거를 설명합니다.",evidenceIds:[first]}];return{
+function validOutput(input:InterpretationInput):StructuredInterpretation {const first=input.evidence[0].id,timeline=input.timeline[0],sections=input.reportType==="LIFETIME_GENERAL"?input.reportPlan!.map(row=>({id:row.id,chapterNumber:row.chapterNumber,title:row.title,headline:"삶의 구조를 읽는 문장",lead:"확정된 근거를 쉬운 말로 연결합니다.",body:"확정된 엔진 근거를 설명합니다.",paragraphs:[`${row.title}에서는 입력된 근거 안에서 생활 모습을 풀어봅니다.`,`${row.title}에 필요한 핵심만 골라 같은 말을 되풀이하지 않습니다.`],keyPoints:["계산 결과를 바꾸지 않습니다."],evidenceIds:[row.evidenceIds[0]],partNumber:row.partNumber,partTitle:row.partTitle,evidenceGroup:row.evidenceGroup,contentKind:row.contentKind,noveltyElements:["NEW_CLAIM","NEW_SCENE","NEW_ACTION"],...(row.contentKind==="PROFESSIONAL"?{professionalDetails:{summary:"같은 계산 결과의 전문 근거입니다.",evidenceIds:[row.evidenceIds[0]]}}:{})})): [{id:"summary",title:"핵심 흐름",body:"확정된 엔진 근거를 설명합니다.",evidenceIds:[first]}];return{
   status:"completed",reportType:input.reportType,headline:"근거 중심 해석",summary:"지원 흐름과 활동성을 분리해 살펴봅니다.",
   sections,highlights:["지원되는 흐름을 확인합니다."],
   cautions:["활성도는 결과 확률이 아닙니다."],timeline:timeline?[{periodId:timeline.id,title:"선택 기간",body:"선택된 기간의 흐름입니다.",evidenceIds:[timeline.evidenceIds[0]]}]:[],
   disclaimer:"이 해석은 확정적 사건 예측이 아닙니다."};}
 function validPlan(input:InterpretationInput){
   const rows=input.reportPlan!;const first=rows[0],claim=(claimId:string,evidenceId:string,sectionId:string)=>({claimId,plainMeaning:"생활에서 반복되는 모습을 설명하는 근거입니다.",evidenceIds:[evidenceId],sourceFields:["evidence.value"],confidence:"HIGH" as const,allowedChapters:[sectionId],avoidRepeatingIn:[] as string[]});
-  return{planVersion:"interpretation-plan-v1" as const,
+  return{planVersion:"interpretation-plan-v1" as const,characterCore:{corePatterns:["확인 후 움직입니다."],contradictions:[],dominantStrengths:["마무리"],shadowPatterns:[],relationshipPattern:"천천히 가까워집니다.",workPattern:"기준을 세웁니다.",decisionPattern:"확인 뒤 결정합니다."},
     coreIdentity:[claim("CORE-1",first.evidenceIds[0],first.id)],outerVsInner:[claim("OUTER-1",first.evidenceIds[0],first.id)],decisionPattern:[claim("DECISION-1",first.evidenceIds[0],first.id)],
     strengths:[claim("STRENGTH-1",first.evidenceIds[0],first.id)],strengthTradeoffs:[claim("TRADEOFF-1",first.evidenceIds[0],first.id)],workPattern:[claim("WORK-1",first.evidenceIds[0],first.id)],
     moneyPattern:[claim("MONEY-1",first.evidenceIds[0],first.id)],relationshipPattern:[claim("REL-1",first.evidenceIds[0],first.id)],wellnessPattern:[claim("WELLNESS-1",first.evidenceIds[0],first.id)],
@@ -70,7 +70,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year}),plan=validPlan(input);
     expect(lifetimeInterpretationPlanSchema.parse(plan)).toEqual(plan);
     const provider=new MockProvider(),result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
-    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan).toHaveLength(154);
+    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan!.length).toBeGreaterThanOrEqual(130);
     expect(provider.calls[0].systemPrompt).toContain(LIFETIME_INTERPRETATION_PLANNER_PROMPT);
     expect((provider.calls[0].schema as {properties?:Record<string,unknown>}).properties?.planVersion).toBeTruthy();
     expect(provider.calls[1].systemPrompt).toContain("확정된 interpretationPlan JSON");

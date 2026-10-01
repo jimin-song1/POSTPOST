@@ -4,11 +4,13 @@ import { POST } from "@/app/api/saju/interpret/route";
 import { SYNTHETIC_INPUT } from "./synthetic-input";
 
 describe("interpretation request payload", () => {
-  it("sends only SajuInput from the browser and keeps the 154-page part batches", async () => {
+  it("sends only SajuInput and generates variable parts after one global plan", async () => {
     const source = await readFile("src/app/page.tsx", "utf8");
     expect(source).toContain("input:payload.analysis.birthInput");
     expect(source).not.toContain("analysis:payload.analysis");
-    expect(source).toContain("const BATCH_SIZE=3");
+    expect(source).not.toContain("BATCH_SIZE");
+    expect(source).toContain("requestGlobalCharacterCore");
+    expect(source).toContain("for(const part of parts)");
     expect(source).toContain("lifetimePartNumber:partNumber");
   });
 

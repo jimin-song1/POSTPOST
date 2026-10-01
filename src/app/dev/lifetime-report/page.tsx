@@ -1,13 +1,14 @@
 import { LifetimePreviewClient } from "@/components/LifetimePreviewClient";
 import { calculateSaju } from "@/lib/saju/engine";
 import { selectCurrentPeriods } from "@/lib/saju/presentation/current-period";
-import { LIFETIME_BOOK_PAGES, type LifetimeBookEvidenceGroup } from "@/rules/lifetime-report.v3";
+import {buildDynamicLifetimeBook,type LifetimeEvidenceGroup} from "@/rules/lifetime-report.v4";
 import type { InterpretationUiState } from "@/types/customer-result";
 import type { FortuneResult } from "@/types/fortune";
 import type { SajuAnalysis } from "@/types/saju-analysis";
 
 const fullAnalysis = calculateSaju({ name:"ㅇㅇ", gender:"female", calendarType:"solar", birthDate:"1995-09-30", birthTime:"08:29", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"경기도 시흥시" });
 const fullFortune = fullAnalysis.fortune as FortuneResult;
+const previewBook=buildDynamicLifetimeBook({includeSamjae:fullFortune.samjae.status==="implemented",year:2026});
 // The preview renders Daeun and the first category summary only. Excluding unused
 // Seun/Wolun arrays keeps this public synthetic route below platform ISR limits.
 const analysis: SajuAnalysis = { ...fullAnalysis, fortune: { ...fullFortune,
@@ -37,20 +38,20 @@ const previewCopy: Record<string, { headline:string; paragraphs:string[] }> = {
   professional:{headline:"쉬운 해석 뒤에는 같은 계산 근거가 놓여 있습니다",paragraphs:["이곳에서는 앞 장에서 사용한 원국, 오행 분포, 강약, 구조와 도움 기운을 전문 명칭과 함께 확인할 수 있습니다.","전문용어는 새로운 판단을 추가하는 것이 아니라 이미 본 고객용 설명의 계산 출처를 보여 줍니다."]},
 };
 
-const groupCopy: Record<LifetimeBookEvidenceGroup, keyof typeof previewCopy> = {
+const groupCopy: Record<LifetimeEvidenceGroup, keyof typeof previewCopy> = {
   COVER:"overview",INTRO:"overview",CORE:"personality",PILLARS:"personality",HIDDEN_STEMS:"personality",TEN_GODS:"inner-roles",
   ELEMENTS:"five-elements",STRENGTH:"strength",STRUCTURE_USEFUL:"helpful-elements",FORTUNE_EXPLAIN:"lifetime-flow",IDENTITY:"personality",
   WORK:"talent-and-work",WEALTH:"money-style",RELATIONSHIP:"relationship",CHILDREN:"children",WELLNESS:"wellness",NOBLE:"special-features",
   STARS_RELATIONS:"special-features",TWELVE_STAGES:"life-phases",YEARLY_OVERVIEW:"lifetime-flow",YEAR_1:"lifetime-flow",YEAR_2:"lifetime-flow",
   YEAR_3:"lifetime-flow",YEAR_4:"lifetime-flow",YEAR_5:"lifetime-flow",MONTHLY:"lifetime-flow",CHANGE:"strengths-and-cautions",
   DAEUN_OVERVIEW:"daeun",DAEUN_1:"daeun",DAEUN_2:"daeun",DAEUN_3:"daeun",DAEUN_4:"daeun",DAEUN_5:"daeun",
-  DAEUN_6:"daeun",DAEUN_7:"daeun",DAEUN_8:"daeun",DAEUN_9:"daeun",DAEUN_10:"daeun",SYNTHESIS:"takeaways",PROFESSIONAL:"professional"
+  DAEUN_6:"daeun",DAEUN_7:"daeun",DAEUN_8:"daeun",DAEUN_9:"daeun",DAEUN_10:"daeun",SAMJAE:"lifetime-flow",SYNTHESIS:"takeaways",PROFESSIONAL:"professional"
 };
 
-const interpretation: InterpretationUiState = { status:"completed", ruleVersion:"ai-interpretation-v1", promptVersion:"interpretation-prompt-v3", groundingVersion:"interpretation-grounding-v3", analysisHash:"editorial-preview-v3", cacheKey:"editorial-preview-v3", metadata:{provider:"editorial-sample",model:"fixed-editorial-preview",repaired:false}, report:{ status:"completed",reportType:"LIFETIME_GENERAL",headline:"제공한 사주 계산값으로 먼저 다듬는 154페이지 해설",summary:"API 호출 없이, 제공한 사주를 deterministic 엔진으로 계산해 해설의 깊이와 말투를 검토합니다.",sections:LIFETIME_BOOK_PAGES.map(page=>{
-  const copy=previewCopy[groupCopy[page.evidenceGroup]];
-  const paragraphs=[`${page.title}은 이 가상 사주에서 따로 떼어 단정하는 항목이 아닙니다. 앞뒤 계산 근거를 함께 보면서 생활에서 반복되는 모습으로 풀어봅니다.`,...copy.paragraphs];
-  return {id:page.id,chapterNumber:String(page.pageNumber).padStart(3,"0"),title:page.title,headline:page.pageNumber===1?"ㅇㅇ님의 해설 품질을 확인하는 책입니다":copy.headline,lead:"API 키 없이 검토하는 고정 편집 샘플입니다.",body:paragraphs.join("\n\n"),paragraphs,keyPoints:[copy.paragraphs[0]],evidenceIds:[`EDITORIAL_SAMPLE:${page.evidenceGroup}`],mascotComment:"이 페이지에서는 한 가지 특징을 좋고 나쁨으로 단정하지 않고, 실제 생활에서 어떻게 쓰이는지 살펴봅니다.",...(page.pageNumber===154?{professionalDetails:{summary:"제공한 입력을 deterministic 엔진으로 계산한 뒤 만든 편집용 샘플입니다.",evidenceIds:["EDITORIAL_SAMPLE:PROFESSIONAL"]}}:{})};
+const interpretation: InterpretationUiState = { status:"completed", ruleVersion:"ai-interpretation-v1", promptVersion:"interpretation-prompt-v3", groundingVersion:"interpretation-grounding-v3", analysisHash:"editorial-preview-v4", cacheKey:"editorial-preview-v4", metadata:{provider:"editorial-sample",model:"fixed-editorial-preview",repaired:false}, report:{ status:"completed",reportType:"LIFETIME_GENERAL",headline:"제공한 사주 계산값으로 먼저 다듬는 동적 평생사주",summary:"API 호출 없이, 제공한 사주를 deterministic 엔진으로 계산해 해설의 깊이와 말투를 검토합니다.",sections:previewBook.sections.map(section=>{
+  const copy=previewCopy[groupCopy[section.evidenceGroup]];
+  const paragraphs=[`${section.title}은 이 가상 사주에서 따로 떼어 단정하는 항목이 아닙니다. 앞뒤 계산 근거를 함께 보면서 생활에서 반복되는 모습으로 풀어봅니다.`,...copy.paragraphs];
+  return {id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,headline:section.sequence===1?"ㅇㅇ님의 해설 품질을 확인하는 책입니다":copy.headline,lead:"API 키 없이 검토하는 동적 편집 샘플입니다.",body:paragraphs.join("\n\n"),paragraphs,keyPoints:[copy.paragraphs[0]],evidenceIds:[`EDITORIAL_SAMPLE:${section.evidenceGroup}`],partNumber:section.partNumber,partTitle:section.partTitle,evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,noveltyElements:["NEW_CLAIM","NEW_SCENE","NEW_ACTION"],mascotComment:"이 section에서는 한 가지 특징을 좋고 나쁨으로 단정하지 않고, 실제 생활에서 어떻게 쓰이는지 살펴봅니다.",...(section.contentKind==="PROFESSIONAL"?{professionalDetails:{summary:"제공한 입력을 deterministic 엔진으로 계산한 뒤 만든 편집용 샘플입니다.",evidenceIds:["EDITORIAL_SAMPLE:PROFESSIONAL"]}}:{})};
 }),highlights:["할 일의 순서를 정하고, 시작한 일은 끝까지 이어갑니다."],cautions:["혼자 너무 오래 책임지지 마세요. 지치기 전에 쉬고 다른 사람과 일을 나누세요."],timeline:[],disclaimer:"제공한 사주 입력으로 만든 편집용 샘플입니다. 실제 사건을 확정적으로 예측하지 않습니다." } };
 
 export default function LifetimePreview() { return <LifetimePreviewClient analysis={analysis} current={selectCurrentPeriods(analysis)} interpretation={interpretation} />; }

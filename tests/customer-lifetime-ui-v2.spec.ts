@@ -43,7 +43,7 @@ describe("CUSTOMER_LIFETIME_UI_V2 dropdown",()=>{
 });
 
 describe("CUSTOMER_LIFETIME_UI_V2 report",()=>{
-  it("shows a dedicated generation screen until all 154 pages are ready",async()=>{const source=await reportSource();expect(source).toContain("사주책을 만들고 있어요");expect(source).toContain("154페이지가 모두 검증되면 한 번에 보여드릴게요");expect(source).toContain("해설이 완성되면 자동으로 결과가 열립니다.");});
+  it("shows a dedicated generation screen until every dynamic section is ready",async()=>{const source=await reportSource();expect(source).toContain("사주책을 만들고 있어요");expect(source).toContain("필요한 모든 section이 검증되면 한 번에 보여드릴게요");expect(source).toContain("해설이 완성되면 자동으로 결과가 열립니다.");});
   it("keeps the canonical 01~18 order",()=>expect(LIFETIME_REPORT_V2.sections.map(row=>row.chapterNumber)).toEqual(Array.from({length:18},(_,index)=>String(index+1).padStart(2,"0"))));
   it("uses centralized customer terminology",async()=>{const source=await reportSource();expect(source).toContain("customerElement");expect(source).toContain("customerTerm");expect(CUSTOMER_TERMINOLOGY_V1.terms.용신).toBe("나에게 가장 필요한 기운");});
   it("renders five representative element percentages",async()=>{const source=await reportSource();expect(source).toContain("adjusted?.[element].percentage");expect(source).toContain("ELEMENTS.map");});

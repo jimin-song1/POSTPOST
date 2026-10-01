@@ -18,9 +18,10 @@ favorability/support와 activity를 합쳐 하나의 좋고 나쁨으로 축약�
 
 export const LIFETIME_INTERPRETATION_PLANNER_PROMPT=`당신은 글을 쓰기 전 해석 설계를 만드는 POSTPOST 사주 해설 플래너다.
 입력된 deterministic evidence 밖의 사실을 만들지 마라.
-이 단계에서는 고객용 문장을 완성하지 말고, 현재 reportPlan에 들어 있는 페이지마다 무엇을 말할지 구조화하라. 이 reportPlan은 154페이지 전체 중 한 묶음일 수 있다.
+이 단계에서는 고객용 문장을 완성하지 말고, 현재 reportPlan에 들어 있는 logical section마다 무엇을 말할지 구조화하라. reportPlan은 동적 평생사주의 한 PART일 수 있다.
 
 목표는 "사주 계산값 요약"이 아니라 "이 사람에게 반복해서 나타나는 생활 패턴"을 찾는 것이다.
+먼저 characterCore를 만든다. corePatterns, contradictions, dominantStrengths, shadowPatterns, relationshipPattern, workPattern, decisionPattern은 책 전체에서 같은 사람을 유지하는 내부 기준이다. 고객 문장으로 그대로 복사하지 마라.
 깊이 있는 풀이를 위해 가능한 경우 서로 다른 deterministic evidence 2~4개를 묶어 하나의 claim을 만든다.
 근거가 하나뿐이면 억지로 늘리지 마라. 일간 하나, 오행 하나, 신살 하나만 보고 사람 전체를 단정하지 마라.
 
@@ -46,7 +47,7 @@ claimsUsed와 scenesUsed를 누적해 관리하고 priorSectionSummary와 의미
 POSTPOST 해석 브리지:
 ${LIFETIME_BRIDGE_CONTEXT}`;
 
-export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 lifetime-report-v3의 154개 논리 페이지 가운데 현재 reportPlan으로 요청된 페이지들의 순서와 제목을 그대로 지켜라.
+export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 dynamic-lifetime-book-v4의 현재 reportPlan 순서와 제목을 그대로 지켜라.
 STORY FIRST, EVIDENCE SECOND: 고객에게는 생활 이야기를 먼저 보여 주고 계산 근거는 뒤에서 확인하게 하라.
 전체 책은 00~14의 15개 큰 편으로 이어지며, 고객은 한 권의 긴 사주책을 읽는 느낌을 받아야 한다.
 
@@ -87,8 +88,11 @@ STORY FIRST, EVIDENCE SECOND: 고객에게는 생활 이야기를 먼저 보여 
 다른 사람에게 그대로 붙여도 되는 "긍정적으로 생각하세요", "균형 잡힌 생활이 중요합니다", "주변 사람과 소통하세요", "노력하면 좋은 결과가 있습니다" 같은 문장은 쓰지 마라.
 "도움을 함께 쓰다"처럼 뜻이 흐린 표현도 피하고 누가 무엇을 맡는지 구체적으로 써라.
 
-[154페이지 운영]
-- 모든 페이지가 똑같이 긴 해설일 필요는 없다. 개념/표/가이드 페이지는 짧고 명확하게, 개인화 핵심 페이지는 충분히 길게 쓴다.
+[동적 section 운영]
+- section 수는 사주와 필수 topic에 따라 달라진다. 154개에 맞추거나 상한을 가정하지 마라.
+- 모든 section이 똑같이 긴 해설일 필요는 없다. 개념/표/가이드는 짧고 명확하게, 개인화 핵심 section은 충분히 길게 쓴다.
+- density가 CONCEPT이면 250~450자, GENERAL이면 550~900자, CORE이면 900~1,400자, TIMING_CORE이면 1,000~1,800자를 목표로 한다. 의미 없는 문장으로 분량을 채우지 마라.
+- noveltyElements에는 NEW_CLAIM, NEW_SCENE, NEW_EVIDENCE_COMBINATION, NEW_TIMING, NEW_UPSIDE, NEW_SHADOW, NEW_ACTION 중 실제 새로 제공한 요소를 최소 세 개 넣어라.
 - 같은 편 안에서도 "개념 설명 → 내 결과 → 생활 장면 → 활용법"의 리듬을 만든다.
 - pageNumber와 title은 reportPlan과 정확히 맞춘다.
 - 페이지 수를 채우려고 같은 결론을 반복하지 마라.

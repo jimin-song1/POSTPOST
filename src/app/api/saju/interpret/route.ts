@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     if (!mockEnabled&&!apiKey) return NextResponse.json({ status: "failed", ruleVersion: "ai-interpretation-v1", error: { code: "PROVIDER_ERROR", message: "AI 해석 환경이 아직 연결되지 않았습니다." } }, { status: 503 });
     const model = process.env.OPENAI_MODEL ?? "gpt-5-mini";
     const provider = mockEnabled?new MockInterpretationProvider():new OpenAIInterpretationProvider({ apiKey:apiKey!, model, timeoutMs: 240_000, logger: (event) => console.info("ai_interpretation", event) });
-    const result = await interpretSajuAnalysis(analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, lifetimePartNumber:body.lifetimePartNumber, cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
+    const result = await interpretSajuAnalysis(analysis, provider, { reportType, year: body.year, referenceInstant:body.referenceInstant, relationshipStatus:body.relationshipStatus, lifetimePartNumber:body.lifetimePartNumber, characterCore:body.characterCore,cache, modelConfigVersion: process.env.OPENAI_MODEL_CONFIG_VERSION });
     console.info("ai_interpretation_result", { requestId, reportType, lifetimePartNumber: body.lifetimePartNumber, provider: "openai", model, latencyMs: Date.now() - started,
       validationStatus: result.status, mockEnabled, repaired: result.status === "completed" ? result.metadata.repaired : false,
       errorCode: result.status === "failed" ? result.error.code : undefined });

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { customerElement, customerTerm } from "@/rules/customer-terminology.v1";
 import { LIFETIME_REPORT_V2 } from "@/rules/lifetime-report.v2";
-import { LIFETIME_BOOK_V1 } from "@/rules/lifetime-report.v3";
 import type { RelationshipStatus, StructuredInterpretation } from "@/types/ai-interpretation";
 
 /* Editorial order compatibility markers: story precedes evidence visuals.
@@ -46,16 +45,16 @@ function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl c
 
 export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
   if (interpretation.status === "pending" || interpretation.status === "not_requested") {
-    return <LifetimeGenerationScreen name={analysis.person.name} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:LIFETIME_BOOK_V1.parts.length} onRestart={onRestart} />;
+    return <LifetimeGenerationScreen name={analysis.person.name} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:1} onRestart={onRestart} />;
   }
   if (interpretation.status === "failed") {
     return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
   }
   const report = interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
-  if (!report || report.sections.length !== LIFETIME_BOOK_V1.pageCount) {
-    return <LifetimeGenerationFailed message="154페이지 해설 검증이 완료되지 않았습니다. 다시 생성해 주세요." onRetry={onRetry} onRestart={onRestart} />;
+  if (!report || !report.sections.length) {
+    return <LifetimeGenerationFailed message="평생사주 본문 검증이 완료되지 않았습니다. 다시 생성해 주세요." onRetry={onRetry} onRestart={onRestart} />;
   }
-  return <LifetimeBook154 analysis={analysis} report={report} interpretation={interpretation} onRetry={onRetry} onRestart={onRestart} />;
+  return <DynamicLifetimeBook analysis={analysis} report={report} interpretation={interpretation} onRetry={onRetry} onRestart={onRestart} />;
 }
 
 function Cover({ analysis, report, onRestart }: { analysis: SajuAnalysis; report: StructuredInterpretation | null; onRestart: () => void }) { return <header className="lifetimeCover"><div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div><div className="coverOrnament" aria-hidden="true"><i/><i/><i/></div><p>평생사주</p><h1>{analysis.person.name}님의<br/>한 권의 사주책</h1><h2>{report?.headline ?? "타고난 나와 인생의 큰 흐름을 읽는 시간"}</h2><span>계산 근거를 쉬운 한국어로 풀어낸 평생 이야기</span></header>; }
@@ -71,54 +70,53 @@ function DaeunChapter({ report, fortune }: { report: StructuredInterpretation | 
 function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; report:StructuredInterpretation|null }) { const native=analysis.fiveElements.nativeStrength, adjusted=analysis.fiveElements.adjustedStrength.elements; return <section id="chapter-18" className="professionalRoom"><details><summary><span><small>18 · 전문 분석실</small><b>계산 근거와 전문 용어를 확인합니다</b></span><em>펼쳐 보기</em></summary><div className="professionalInner"><AiCopy report={report} id="professional" fallback={["기본 결과와 같은 원국, 규칙 버전, evidence를 사용합니다."]}/><h3>사주 원국</h3><div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=><article key={position}><span>{PILLAR_LABEL[position]}</span><b>{analysis.pillars[position].stem}{analysis.pillars[position].branch}</b><small>천간 십성: {analysis.tenGods.value?.heavenlyStems[position].korean}</small></article>)}</div><h3>오행 기본값과 관계 반영값</h3><div className="professionalElements">{ELEMENTS.map(element=><p key={element}><b>{customerElement(element,true)}</b><span>기본 {pct(native?.[element].percentage)}</span><span>관계 반영 {pct(adjusted?.[element].percentage)}</span></p>)}</div><h3>전문 분류</h3><p>{customerTerm("격국")}: {analysis.structure.primary?.type} · {customerTerm("용신")}: {analysis.usefulGods.synthesis.status==="implemented"?analysis.usefulGods.synthesis.elements.slice(0,3).map(row=>customerElement(row.element,true)).join(" · "):"판단 유보"}</p><details><summary>버전과 evidence IDs</summary><pre>{JSON.stringify({rulesetVersion:analysis.rulesetVersion,engineVersion:analysis.engineMetadata.engineVersion,evidence:analysis.daeun.evidence},null,2)}</pre></details></div></details></section>; }
 
 
-function LifetimeBook154({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
-  const sectionById=new Map(report.sections.map(section=>[section.id,section]));
+function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
+  const parts=Array.from(new Map(report.sections.map(section=>[section.partNumber??"00",{partNumber:section.partNumber??"00",title:section.partTitle??"평생사주"}])).values());
   return <div className="lifetimeReport lifetimeBook154">
     <header className="lifetimeCover book154Cover">
       <div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
       <div className="coverOrnament" aria-hidden="true"><i/><i/><i/></div>
-      <p>평생사주 · 154 PAGE</p>
+      <p>평생사주 · {report.sections.length}개 이야기</p>
       <h1>{analysis.person.name}님의<br/>한 권의 사주책</h1>
       <h2>{report.headline}</h2>
       <span>깊은 풀이를 쉬운 한국어로, 계산 근거는 그대로</span>
     </header>
-    <nav className="book154Toc" aria-label="평생사주 154페이지 목차">
-      {LIFETIME_BOOK_V1.parts.map(part=><a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{part.pages[0]?.pageNumber}–{part.pages.at(-1)?.pageNumber}</small></a>)}
+    <nav className="book154Toc" aria-label="평생사주 목차">
+      {parts.map(part=>{const count=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count} sections</small></a>;})}
     </nav>
     <main className="book154Main">
-      {LIFETIME_BOOK_V1.parts.map(part=><section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
-        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2><p>{part.pages.length}개의 이야기로 천천히 이어집니다.</p></header>
-        {part.pages.map(page=>{
-          const section=sectionById.get(page.id);
-          const paragraphs=section?.paragraphs?.length?section.paragraphs:section?.body?[section.body]:["계산 근거를 바탕으로 이 페이지의 이야기를 정리하고 있습니다."];
-          return <article key={page.id} id={page.id} className="book154Page">
-            <div className="book154PageNumber"><span>{String(page.pageNumber).padStart(3,"0")}</span><i/></div>
+      {parts.map(part=>{const sections=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
+        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2><p>{sections.length}개의 주제로 천천히 이어집니다.</p></header>
+        {sections.map((section,index)=>{
+          const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
+          return <article key={section.id} id={section.id} className="book154Page">
+            <div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div>
             <p className="book154Eyebrow">{part.title}</p>
-            <h3>{section?.headline||page.title}</h3>
-            {section?.lead&&<p className="book154Lead">{section.lead}</p>}
-            <div className="longCopy">{paragraphs.map((paragraph,index)=><p key={`${page.id}-${index}`}>{paragraph}</p>)}</div>
-            {section?.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,index)=><p key={index}>{point}</p>)}</blockquote>:null}
-            {section?.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
-            {section?.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
-            {section&&<EvidenceDetails>
+            <h3>{section.headline||section.title}</h3>
+            {section.lead&&<p className="book154Lead">{section.lead}</p>}
+            <div className="longCopy">{paragraphs.map((paragraph,paragraphIndex)=><p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>)}</div>
+            {section.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,pointIndex)=><p key={pointIndex}>{point}</p>)}</blockquote>:null}
+            {section.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
+            {section.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
+            <EvidenceDetails>
               {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>서로 관련된 계산 근거를 함께 확인했습니다. 원본 근거 ID는 마지막 전문 분석실에서만 보여드립니다.</p>}
-            </EvidenceDetails>}
+            </EvidenceDetails>
           </article>;
         })}
-      </section>)}
-      {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산된 평생사주 결과는 정상적으로 표시됩니다.</p><button onClick={onRetry}>154페이지 해석 다시 시도</button></div>}
+      </section>})}
+      {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산된 평생사주 결과는 정상적으로 표시됩니다.</p><button onClick={onRetry}>평생사주 해석 다시 시도</button></div>}
       <footer className="reportNotice">이 결과는 전통 명리의 계산 근거를 생활 언어로 풀어낸 참고 콘텐츠입니다. 특정 사건을 확정하거나 중요한 현실 판단을 대신하지 않습니다.</footer>
     </main>
   </div>;
 }
 
 
-function LifetimeGenerationScreen({ name, completedParts=0, totalParts=LIFETIME_BOOK_V1.parts.length, onRestart }: { name:string; completedParts?:number; totalParts?:number; onRestart:()=>void }) {
+function LifetimeGenerationScreen({ name, completedParts=0, totalParts=1, onRestart }: { name:string; completedParts?:number; totalParts?:number; onRestart:()=>void }) {
   return <main className="lifetimeGeneration" role="status" aria-live="polite">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel">
       <div className="generationSeal" aria-hidden="true"><i/><i/><i/></div>
-      <p className="generationKicker">평생사주 · 154 PAGE</p>
+      <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
       <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
       <div className="generationProgress" aria-hidden="true"><span style={{width:`${Math.max(6,Math.min(100,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
@@ -126,7 +124,7 @@ function LifetimeGenerationScreen({ name, completedParts=0, totalParts=LIFETIME_
         <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
         <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
         <p><b>3</b><span>10년 흐름과 앞으로 5년의 변화를 따로 읽고 있어요</span></p>
-        <p><b>4</b><span>154페이지가 모두 검증되면 한 번에 보여드릴게요</span></p>
+        <p><b>4</b><span>필요한 모든 section이 검증되면 한 번에 보여드릴게요</span></p>
       </div>
       <p className="generationNotice">페이지를 이동하지 않아도 됩니다. 해설이 완성되면 자동으로 결과가 열립니다.</p>
     </section>
@@ -137,11 +135,11 @@ function LifetimeGenerationFailed({ message, onRetry, onRestart }: { message:str
   return <main className="lifetimeGeneration">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel generationFailed">
-      <p className="generationKicker">평생사주 · 154 PAGE</p>
+      <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>해설을 끝까지 만들지 못했어요</h1>
       <p className="generationLead">계산 결과는 그대로 남아 있습니다. 해설 생성만 다시 시도하면 됩니다.</p>
       <p className="generationError">{message}</p>
-      <button className="generationRetry" onClick={onRetry}>154페이지 해설 다시 만들기</button>
+      <button className="generationRetry" onClick={onRetry}>평생사주 해설 다시 만들기</button>
     </section>
   </main>;
 }

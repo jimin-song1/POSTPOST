@@ -1,6 +1,7 @@
 import { AI_INTERPRETATION_V1 as RULE } from "@/rules/ai-interpretation.v1";
 import type { InterpretationInput,StructuredInterpretation } from "@/types/ai-interpretation";
 import {LIFETIME_BOOK_V1} from "@/rules/lifetime-report.v3";
+import {validateKoreanEditorial} from "./copy-edit";
 
 export class GroundingValidationError extends Error {readonly code="GROUNDING_VALIDATION_FAILED" as const;
   constructor(message:string){super(message);this.name="GroundingValidationError";}}
@@ -15,7 +16,7 @@ const AI_REPORT_PHRASES=["해석됩니다","경향성을 보입니다","경향�
 const GENERIC_FORTUNE_COOKIE_PHRASES=["긍정적으로 생각하세요","긍정적인 마음으로","균형 잡힌 생활이 중요","주변 사람과 소통하세요","노력하면 좋은 결과"] as const;
 function countOccurrences(text:string,phrase:string){let count=0,index=0;while((index=text.indexOf(phrase,index))!==-1){count+=1;index+=phrase.length;}return count;}
 function validateLifetimeVoice(report:StructuredInterpretation){
-  const customerSections=report.sections.filter(row=>row.chapterNumber!=="154");
+  const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
   const prose=customerSections.flatMap(row=>[row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??""]).join("\n");
   for(const term of CUSTOMER_TECHNICAL_TERMS)if(prose.includes(term))throw new GroundingValidationError(`고객 본문 전문용어 노출: ${term}`);
   const aiToneCount=AI_REPORT_PHRASES.reduce((total,phrase)=>total+countOccurrences(prose,phrase),0);
@@ -69,12 +70,16 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   if(input.reportType==="LIFETIME_GENERAL"){
     if(!input.reportPlan)throw new GroundingValidationError("평생총운 report plan이 없습니다.");
     const expected=input.reportPlan.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`),actual=report.sections.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`);
-    if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운 01~18 section 순서 또는 제목이 다릅니다.");
-    for(const row of report.sections){if(!row.headline||!row.lead||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 v2 서술 구조가 불완전합니다.`);
+    if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운의 동적 section 순서 또는 제목이 다릅니다.");
+    for(const row of report.sections){if(!row.headline||!row.lead||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 서술 구조가 불완전합니다.`);
       const plan=input.reportPlan.find(item=>item.id===row.id)!;for(const id of row.evidenceIds)if(!plan.evidenceIds.includes(id))throw new GroundingValidationError(`${row.id} 범위를 벗어난 evidence ID: ${id}`);
       for(const metric of row.metrics??[]){if(!row.evidenceIds.includes(metric.evidenceId))throw new GroundingValidationError(`metric evidence가 section에 인용되지 않았습니다: ${metric.evidenceId}`);
         const inventory=factInventory([evidenceById.get(metric.evidenceId)!.value]);if(!inventory.allowedNumbers.has(metric.value))throw new GroundingValidationError(`근거에 없는 metric 값: ${metric.value}`);}
-      if(row.chapterNumber==="154"){if(!row.professionalDetails)throw new GroundingValidationError("마지막 전문 근거 페이지의 technical details가 없습니다.");for(const id of row.professionalDetails.evidenceIds)if(!row.evidenceIds.includes(id))throw new GroundingValidationError(`전문 분석 근거가 section 범위를 벗어났습니다: ${id}`);}}
+      if(plan.contentKind==="PROFESSIONAL"){if(!row.professionalDetails)throw new GroundingValidationError("마지막 전문 근거 section의 technical details가 없습니다.");for(const id of row.professionalDetails.evidenceIds)if(!row.evidenceIds.includes(id))throw new GroundingValidationError(`전문 분석 근거가 section 범위를 벗어났습니다: ${id}`);}
+      if(input.reportVersion==="dynamic-lifetime-book-v4"&&(row.partNumber!==plan.partNumber||row.partTitle!==plan.partTitle||row.evidenceGroup!==plan.evidenceGroup||row.contentKind!==plan.contentKind))
+        throw new GroundingValidationError(`${row.id}의 동적 책 메타데이터가 plan과 다릅니다.`);}
+    for(const row of report.sections.filter(section=>section.contentKind==="CONTENT"))if((new Set(row.noveltyElements)).size<3)
+      throw new GroundingValidationError(`${row.id} section의 새 정보 요소가 3개보다 적습니다.`);
   }
 
   for(const row of report.sections)validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
@@ -86,6 +91,7 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL"){for(const phrase of [...LIFETIME_BOOK_V1.prohibitedChildrenClaims,...LIFETIME_BOOK_V1.prohibitedWellnessClaims,...LIFETIME_BOOK_V1.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);validateLifetimeVoice(report);}
+  if(input.reportType==="LIFETIME_GENERAL")try{validateKoreanEditorial(report.sections.filter(row=>row.contentKind!=="PROFESSIONAL").flatMap(row=>row.paragraphs??[row.body]).join("\n"));}catch(error){throw new GroundingValidationError(error instanceof Error?error.message:"한국어 편집 검증 실패");}
   validateLockedText(combined,[...input.evidence.map(row=>row.value),...(input.reportPlan??[])],input.minimalContext.requestedYear);
   return true;
 }
