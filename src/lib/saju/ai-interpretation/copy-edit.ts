@@ -3,7 +3,7 @@ import type {StructuredInterpretation} from "@/types/ai-interpretation";
 
 const replacements:ReadonlyArray<readonly [RegExp,string]>=[
   [/\s+([,.!?])/g,"$1"],[/[ \t]{2,}/g," "],[/\n{3,}/g,"\n\n"],
-  [/종합적으로 보면[,.]?\s*/g,""],[/이를 통해\s*/g,"그래서 "],[/따라서[,.]?\s*/g,"그래서 "],
+  [/(?:종합적으로 보면|전체적으로 보면)[,.]?\s*/g,""],[/이를 통해\s*/g,"그래서 "],[/따라서[,.]?\s*/g,"그래서 "],
   [/([가-힣]+)(?:\s+\1){1,}/g,"$1"]
 ];
 export function copyEditKoreanText(value:string){
