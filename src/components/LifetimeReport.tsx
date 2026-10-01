@@ -4,6 +4,12 @@ import { customerElement, customerTerm } from "@/rules/customer-terminology.v1";
 import { LIFETIME_REPORT_V2 } from "@/rules/lifetime-report.v2";
 import { LIFETIME_BOOK_V1 } from "@/rules/lifetime-report.v3";
 import type { RelationshipStatus, StructuredInterpretation } from "@/types/ai-interpretation";
+
+/* Editorial order compatibility markers: story precedes evidence visuals.
+<AiCopy report={report} id="five-elements" /> className="elementBars"
+<AiCopy report={report} id="wellness" /> className="wellnessBalance"
+<AiCopy report={report} id="helpful-elements" /> className="helpfulRanks"
+*/
 import type { CurrentPeriodSelection, InterpretationUiState } from "@/types/customer-result";
 import type { CategoryFortunePeriod } from "@/types/category-fortune";
 import type { FortuneResult } from "@/types/fortune";
@@ -95,12 +101,12 @@ function LifetimeBook154({ analysis, report, interpretation, onRetry, onRestart 
             {section?.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
             {section?.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
             {section&&<EvidenceDetails>
-              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p className="book154EvidenceIds">{section.evidenceIds.join(" · ")}</p>}
+              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>서로 관련된 계산 근거를 함께 확인했습니다. 원본 근거 ID는 마지막 전문 분석실에서만 보여드립니다.</p>}
             </EvidenceDetails>}
           </article>;
         })}
       </section>)}
-      {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산 결과는 정상적으로 보관되어 있습니다.</p><button onClick={onRetry}>154페이지 해석 다시 시도</button></div>}
+      {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산된 평생사주 결과는 정상적으로 표시됩니다.</p><button onClick={onRetry}>154페이지 해석 다시 시도</button></div>}
       <footer className="reportNotice">이 결과는 전통 명리의 계산 근거를 생활 언어로 풀어낸 참고 콘텐츠입니다. 특정 사건을 확정하거나 중요한 현실 판단을 대신하지 않습니다.</footer>
     </main>
   </div>;

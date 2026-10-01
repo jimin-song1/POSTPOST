@@ -12,7 +12,8 @@ export interface InterpretationInput {version:"interpretation-input-v1"|"lifetim
   minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;relationshipLabel?:string;relationshipFocus?:readonly string[]};}
 export interface InterpretationMetric {id:string;label:string;value:number;unit:"PERCENT"|"SCORE";evidenceId:string;}
 export interface InterpretationSection {id:string;title:string;body:string;evidenceIds:string[];chapterNumber?:string;headline?:string;lead?:string;
-  paragraphs?:string[];keyPoints?:string[];metrics?:InterpretationMetric[];mascotComment?:string;professionalDetails?:{summary:string;evidenceIds:string[]};}
+  paragraphs?:string[];keyPoints?:string[];metrics?:InterpretationMetric[];mascotComment?:string;professionalDetails?:{summary:string;evidenceIds:string[]};
+  claimsUsed?:string[];scenesUsed?:string[];priorSectionSummary?:string;domainConsequence?:string;}
 export interface InterpretationTimelineEntry {periodId:string;title:string;body:string;evidenceIds:string[];}
 export interface StructuredInterpretation {status:"completed";reportType:InterpretationReportType;headline:string;summary:string;
   sections:InterpretationSection[];highlights:string[];cautions:string[];timeline:InterpretationTimelineEntry[];disclaimer:string;}
@@ -20,8 +21,8 @@ export interface InterpretationProviderRequest {systemPrompt:string;input:Interp
   repair?:{validationError:InterpretationErrorCode;previousOutput:unknown};}
 export interface InterpretationProviderResponse {output:unknown;provider:string;model:string;tokenUsage?:{input:number;output:number};}
 export interface InterpretationProvider {generate(request:InterpretationProviderRequest):Promise<InterpretationProviderResponse>;}
-export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v2";
-  groundingVersion:"interpretation-grounding-v1";analysisHash:string;cacheKey:string;report:StructuredInterpretation;
+export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v3";
+  groundingVersion:"interpretation-grounding-v3";analysisHash:string;cacheKey:string;report:StructuredInterpretation;
   metadata:{provider:string;model:string;repaired:boolean;tokenUsage?:{input:number;output:number}};}
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
 export type InterpretationResult=InterpretationSuccess|InterpretationFailure;

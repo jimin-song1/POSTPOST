@@ -63,7 +63,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     const a=buildInterpretationInput(analysis,{reportType:"WEALTH",referenceInstant}),b=buildInterpretationInput(analysis,{reportType:"WEALTH",referenceInstant});
     expect(a).toEqual(b);expect(a.evidence.map(row=>row.id)).toEqual(b.evidence.map(row=>row.id));
     expect(a.evidence.some(row=>row.id.startsWith("CATEGORY:"))).toBe(true);
-    expect(RULE.promptVersion).toBe("interpretation-prompt-v2");
+    expect(RULE.promptVersion).toBe("interpretation-prompt-v3");
   });
 
   it("plans LIFETIME_GENERAL claims before writing the customer narrative",async()=>{

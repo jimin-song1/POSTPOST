@@ -62,7 +62,8 @@ export default function Home() {
       if(merged.report.sections.length!==LIFETIME_BOOK_V1.pageCount)throw new Error(`154페이지 중 ${merged.report.sections.length}페이지만 생성됐습니다.`);
       setInterpretation(merged);
     }catch(error){
-      setInterpretation({status:"failed",ruleVersion:"ai-interpretation-v1",error:{code:"PART_GENERATION_FAILED",message:error instanceof Error?error.message:"해설 생성 중 오류가 발생했습니다."}});
+      const code: "NETWORK_ERROR" | "PART_GENERATION_FAILED" = error instanceof TypeError ? "NETWORK_ERROR" : "PART_GENERATION_FAILED";
+      setInterpretation({status:"failed",ruleVersion:"ai-interpretation-v1",error:{code: code, message:error instanceof Error?error.message:"해설 생성 중 오류가 발생했습니다."}});
     }
   },[]);
   function accept(value:LifetimeFormResult){setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}

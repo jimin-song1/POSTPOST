@@ -7,12 +7,14 @@ import { AnalysisNotCompletedError,buildInterpretationInput,InterpretationInputE
 import { GroundingValidationError,validateGrounding } from "./grounding";
 import { interpretationHashes,type InterpretationCache } from "./cache";
 import { InterpretationProviderError,InterpretationProviderTimeoutError } from "./provider";
+import {copyEditInterpretation} from "./copy-edit";
 
 export interface InterpretationServiceOptions extends InterpretationBuildOptions {modelConfigVersion?:string;cache?:InterpretationCache;}
 const failure=(code:InterpretationErrorCode,message:string):InterpretationResult=>({status:"failed",ruleVersion:RULE.ruleVersion,error:{code,message}});
 function validate(output:unknown,input:ReturnType<typeof buildInterpretationInput>){const parsed=structuredInterpretationSchema.safeParse(output);
   if(!parsed.success)return{ok:false as const,code:"SCHEMA_VALIDATION_FAILED" as const,message:parsed.error.message};
-  try{validateGrounding(parsed.data,input);return{ok:true as const,report:parsed.data as StructuredInterpretation};}
+  const edited=copyEditInterpretation(parsed.data as StructuredInterpretation);
+  try{validateGrounding(edited,input);return{ok:true as const,report:edited};}
   catch(error){return{ok:false as const,code:"GROUNDING_VALIDATION_FAILED" as const,message:error instanceof Error?error.message:"grounding failed"};}}
 
 function planClaims(plan:LifetimeInterpretationPlan){

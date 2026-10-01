@@ -11,7 +11,7 @@ function texts(report:StructuredInterpretation){return[report.headline,report.su
 const close=(a:number,b:number)=>Math.abs(a-b)<1e-9;
 
 const CUSTOMER_TECHNICAL_TERMS=["일간","신강","신약","격국","용신","희신","기신","조후","통관","병약","지장간","득령","득지","득세","투간"] as const;
-const AI_REPORT_PHRASES=["로 해석됩니다","경향성을 보입니다","경향이 나타납니다","영향을 받습니다","라고 볼 수 있습니다","일 가능성이 있습니다","종합적으로 보면","이러한 특성은","이를 통해","로 판단됩니다"] as const;
+const AI_REPORT_PHRASES=["해석됩니다","경향성을 보입니다","경향이 나타납니다","영향을 받습니다","라고 볼 수 있습니다","일 가능성이 있습니다","종합적으로 보면","이러한 특성은","이를 통해","판단됩니다"] as const;
 const GENERIC_FORTUNE_COOKIE_PHRASES=["긍정적으로 생각하세요","긍정적인 마음으로","균형 잡힌 생활이 중요","주변 사람과 소통하세요","노력하면 좋은 결과"] as const;
 function countOccurrences(text:string,phrase:string){let count=0,index=0;while((index=text.indexOf(phrase,index))!==-1){count+=1;index+=phrase.length;}return count;}
 function validateLifetimeVoice(report:StructuredInterpretation){
@@ -19,11 +19,17 @@ function validateLifetimeVoice(report:StructuredInterpretation){
   const prose=customerSections.flatMap(row=>[row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??""]).join("\n");
   for(const term of CUSTOMER_TECHNICAL_TERMS)if(prose.includes(term))throw new GroundingValidationError(`고객 본문 전문용어 노출: ${term}`);
   const aiToneCount=AI_REPORT_PHRASES.reduce((total,phrase)=>total+countOccurrences(prose,phrase),0);
-  if(aiToneCount>8)throw new GroundingValidationError(`AI 보고서 문체가 반복됩니다: ${aiToneCount}회`);
+  if(aiToneCount>0)throw new GroundingValidationError(`AI 보고서 문체가 포함되어 있습니다: ${aiToneCount}회`);
   for(const phrase of GENERIC_FORTUNE_COOKIE_PHRASES)if(prose.includes(phrase))throw new GroundingValidationError(`근거 없는 범용 조언 표현: ${phrase}`);
   const seen=new Set<string>();for(const paragraph of customerSections.flatMap(row=>row.paragraphs??[])){
     const normalized=paragraph.replace(/\s+/g," ").trim();if(normalized.length<24)continue;
     if(seen.has(normalized))throw new GroundingValidationError("동일한 고객 본문 문단이 여러 장에 반복됩니다.");seen.add(normalized);
+  }
+  const sceneOwner=new Map<string,string>();
+  for(const section of customerSections)for(const scene of section.scenesUsed??[]){
+    const previous=sceneOwner.get(scene);if(previous&&!section.domainConsequence)
+      throw new GroundingValidationError(`생활 장면 ${scene}을 다시 쓰려면 새 분야 결과가 필요합니다.`);
+    sceneOwner.set(scene,section.id);
   }
 }
 
@@ -72,7 +78,7 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   }
 
   for(const row of report.sections)validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
-    row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
+    [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
   for(const row of report.timeline)validateLockedText(`${row.title}\n${row.body}`,
     row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
 

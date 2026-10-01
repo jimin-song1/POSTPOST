@@ -131,8 +131,7 @@ function evidenceForBookGroup(group:LifetimeBookEvidenceGroup,evidence:Interpret
 }
 function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOptions,fortune:FortuneResult,synthesis:FortuneSynthesisResult,categories:CategoryFortuneResult):InterpretationInput{
   if(!options.relationshipStatus)throw new InterpretationInputError("LIFETIME_GENERAL report에는 relationshipStatus가 필요합니다.");
-  if(!Number.isInteger(options.year))throw new InterpretationInputError("LIFETIME_GENERAL report에는 기준 year가 필요합니다.");
-  const currentYear=options.year as number;
+  const currentYear=Number.isInteger(options.year)?options.year as number:new Date().getUTCFullYear();
   if(analysis.wellness.status!=="implemented"||!("elements" in analysis.wellness))throw new InterpretationInputError("평생총운에는 wellness-v1 결과가 필요합니다.");
   if(analysis.childrenFortune.status!=="implemented"||!("bond" in analysis.childrenFortune))throw new InterpretationInputError("평생총운에는 children-fortune-v1 결과가 필요합니다.");
   const wellness=analysis.wellness as WellnessResult,children=analysis.childrenFortune as ChildrenFortuneResult,evidence:InterpretationEvidence[]=[],timeline:InterpretationInput["timeline"]=[];
@@ -152,6 +151,9 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   evidence.push(fact("WELLNESS:LIFETIME_CONTEXT","WELLNESS",wellnessPeriods.map(row=>({daeunIndex:row.daeunIndex,ageRange:row.ageRange,pillar:row.pillar,attention:row.wellnessPeriodAttention,level:row.attentionLevel}))));
   evidence.push(fact("CHILD:BOND","CHILD",children.bond),fact("CHILD:COUNT_TENDENCY","CHILD",children.countTendency),fact("CHILD:GENDER_ENERGY","CHILD",children.genderEnergy),
     fact("CHILD:PARENTING_STYLE","CHILD",children.parentingStyle),fact("CHILD:STRENGTHS","CHILD",children.strengths),fact("CHILD:ATTENTION_AREAS","CHILD",children.attentionAreas));
+  evidence.push(fact("CHILD:TEN_GOD_SIGNALS","CHILD",{visibleStems:analysis.tenGods.value?.heavenlyStems,hiddenStems:analysis.tenGods.value?.hiddenStems}),
+    fact("CHILD:HOUR_PILLAR","CHILD",analysis.pillars.hour),fact("CHILD:HOUR_STAGE","CHILD",analysis.twelveStages.value?.stages.hour),
+    fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
   const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,3);
   evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
   const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus];

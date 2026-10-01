@@ -47,3 +47,9 @@ POST
 ## SAJU CORE MILESTONE 10E
 
 `usefulGods.structure`는 표준 8격의 CORE를 `structure-core-v1`로 결정하고, 기존 `structure-interactions-v1`과 `structure-rescue-v1`을 단일 원천으로 재사용해 SUPPORT와 실제 손상의 RESCUE를 계산합니다. 후보가 구조적으로 선정된 뒤에만 adjusted 오행 비율을 필요량 보정으로 사용하며, 다중 역할은 diminishing weight로 집계합니다. UNEXPOSED/MIXED 및 특수격 후보는 confidence/context로 보존하고 건록·양인은 v1에서 LIMITED입니다. 다섯 독립 엔진은 모두 구현되었으며 최종 synthesis만 계속 미구현입니다.
+
+## Narrative Engine v3 개발 모드
+
+개발 환경에서 `DEV_MOCK_INTERPRETATION=true`를 설정하면 deterministic 사주 계산은 그대로 실행하고 OpenAI 해설 호출만 고정 fixture 공급자로 바꿉니다. 이 모드로 154페이지 전체 렌더링을 비용 없이 점검할 수 있습니다. `NODE_ENV=production`에서는 같은 환경 변수가 설정돼도 mock이 활성화되지 않으며 `OPENAI_API_KEY`가 필요합니다.
+
+브라우저는 `/api/saju/interpret`에 전체 분석 객체를 보내지 않습니다. 최소 출생 입력과 보고서 옵션만 보내며, 서버가 계산을 다시 수행한 뒤 페이지에 허용된 해석 evidence만 모델에 전달합니다.
