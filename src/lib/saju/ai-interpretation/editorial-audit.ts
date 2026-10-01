@@ -41,9 +41,9 @@ function repeatedEnding(value:string){
   return Math.max(...counts.values())/values.length>=0.72;
 }
 const contradictoryPatterns=[
-  [/생각 없이|아무 고민 없이|무조건 바로 결정/g,"신중한 결정 core와 충돌"],
-  [/누구에게나 바로 마음을 열|처음 본 사람에게도 속마음을/g,"관계 core와 충돌"],
-  [/마무리에는 관심이 없|끝맺음을 피하/g,"마무리 core와 충돌"]
+  [/생각 없이|아무 고민 없이|무조건 바로 결정/,"신중한 결정 core와 충돌"],
+  [/누구에게나 바로 마음을 열|처음 본 사람에게도 속마음을/,"관계 core와 충돌"],
+  [/마무리에는 관심이 없|끝맺음을 피하/,"마무리 core와 충돌"]
 ] as const;
 
 export function auditLifetimeEditorialQuality(report:StructuredInterpretation):LifetimeEditorialAudit{
@@ -74,7 +74,7 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
 
   const count=(code:EditorialWarningCode)=>warnings.filter(row=>row.code===code).length;
   const coreNine=RULE.coreNine.map(domain=>{
-    const rows=content.filter(row=>domain.groups.includes((row.evidenceGroup??"") as never));
+    const rows=content.filter(row=>domain.groups.some(group=>group===(row.evidenceGroup??"")));
     const ids=new Set(rows.map(row=>row.id)),domainWarnings=warnings.filter(row=>ids.has(row.sectionId));
     const naturalKorean=!domainWarnings.some(row=>["AI_TONE","REPORT_TONE","TECHNICAL_LEAKAGE","LONG_SENTENCE","REPEATED_ENDING"].includes(row.code));
     const concrete=!domainWarnings.some(row=>row.code==="MISSING_SCENE");
