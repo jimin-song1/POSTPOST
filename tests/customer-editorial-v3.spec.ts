@@ -37,7 +37,7 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
   });
 
   it("distinguishes ordinary Korean from technical saju terminology", () => {
-    for (const phrase of ["관계가 바로 이어지지 않을 수 있습니다.", "부담으로 느껴지지 않도록 여지를 남깁니다.", "결과와 상관없이 기준을 지킵니다.", "기준을 세운 뒤 움직입니다."])
+    for (const phrase of ["관계가 바로 이어지지 않을 수 있습니다.", "부담으로 느껴지지 않도록 여지를 남깁니다.", "결과와 상관없이 기준을 지킵니다.", "기준을 세운 뒤 움직입니다.", "자기신뢰를 지키는 편입니다.", "사용신청을 먼저 확인합니다.", "정신강화를 위한 습관은 별개입니다.", "일주일 동안 기록해 봅니다."])
       expect(customerTechnicalTermHits(phrase)).toEqual([]);
     expect(customerTechnicalTermHits("천간과 지지의 관계를 봅니다.")).toEqual(expect.arrayContaining(["천간","지지"]));
     expect(customerTechnicalTermHits("식신과 상관의 기운을 봅니다.")).toEqual(expect.arrayContaining(["식신","상관"]));
