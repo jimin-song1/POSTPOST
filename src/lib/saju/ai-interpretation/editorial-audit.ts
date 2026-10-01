@@ -19,7 +19,7 @@ export interface LifetimeEditorialAudit{
   coreNine:CoreNineEditorialResult[];
 }
 
-const sectionText=(row:InterpretationSection)=>[row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[])].filter(Boolean).join("\n");
+const sectionText=(row:InterpretationSection)=>[row.title,row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[]),row.mascotComment].filter(Boolean).join("\n");
 const sentenceList=(value:string)=>value.split(/(?<=[.!?])\s+/).map(row=>row.trim()).filter(Boolean);
 const endings=(value:string)=>sentenceList(value).map(sentence=>{
   const normalized=sentence.replace(/[.!?]+$/,"").trim();
@@ -28,9 +28,11 @@ const endings=(value:string)=>sentenceList(value).map(sentence=>{
 }).filter(Boolean);
 
 function hasConcreteScene(value:string){
-  const contextHits=RULE.scene.contextWords.filter(word=>value.includes(word)).length;
-  const actionHits=RULE.scene.actionWords.filter(word=>value.includes(word)).length;
-  return Number(contextHits>0)+Number(actionHits>0)>=RULE.scene.minimumSignals;
+  return sentenceList(value).some(sentence=>{
+    const hasContext=RULE.scene.contextWords.some(word=>sentence.includes(word));
+    const hasAction=RULE.scene.actionWords.some(word=>sentence.includes(word));
+    return Number(hasContext)+Number(hasAction)>=RULE.scene.minimumSignals;
+  });
 }
 function hasUpsideShadow(value:string){
   return RULE.upsideWords.some(word=>value.includes(word))&&RULE.shadowWords.some(word=>value.includes(word));
