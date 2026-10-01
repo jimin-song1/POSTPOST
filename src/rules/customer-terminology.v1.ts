@@ -33,14 +33,9 @@ const CUSTOMER_TECHNICAL_CONTEXT_PATTERNS=[
 ] as const;
 
 const TECHNICAL_SUFFIX="(?:입니다|이에요|예요|이다|이라는|이라고|으로|에서|부터|까지|마다|별|이|가|은|는|을|를|의|에|로|와|과|도|만)?";
+function escapeRegExp(value:string){return value.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
 function hasStandaloneTechnicalTerm(value:string,term:string){
-  const escaped=term.replace(/[.*+?^$()|[\]\\]/g,"\\export function customerTechnicalTermHits(value:string){
-  const hits:string[]=[];
-  for(const term of CUSTOMER_TECHNICAL_LITERAL_TERMS)if(value.includes(term))hits.push(term);
-  for(const row of CUSTOMER_TECHNICAL_CONTEXT_PATTERNS)if(row.pattern.test(value))hits.push(row.label);
-  return Array.from(new Set(hits));
-}");
-  return new RegExp("(^|[^가-힣A-Za-z0-9])"+escaped+TECHNICAL_SUFFIX+"(?=$|[^가-힣A-Za-z0-9])").test(value);
+  return new RegExp("(^|[^가-힣A-Za-z0-9])"+escapeRegExp(term)+TECHNICAL_SUFFIX+"(?=$|[^가-힣A-Za-z0-9])").test(value);
 }
 
 export function customerTechnicalTermHits(value:string){
