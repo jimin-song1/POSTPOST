@@ -214,14 +214,20 @@ function profile(row:Row,index:number):DomainProfile{
   return base[domain];
 }
 
+function particle(value:string,withBatchim:string,withoutBatchim:string){
+  const trimmed=value.trim(),last=trimmed.charCodeAt(trimmed.length-1);
+  const hasBatchim=last>=0xac00&&last<=0xd7a3?(last-0xac00)%28!==0:false;
+  return `${value}${hasBatchim?withBatchim:withoutBatchim}`;
+}
+
 function buildParagraphs(row:Row,index:number){
   const value=profile(row,index),topic=row.topic??row.title;
   const paragraphs=[
-    `${topic}을 실제 생활에서 보면, ${value.scene}`,
-    `${topic}이 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
-    `${topic}이 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
+    `${particle(topic,"을","를")} 실제 생활에서 보면, ${value.scene}`,
+    `${particle(topic,"이","가")} 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
+    `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
     value.consequence,
-    `${topic}을 생활에서 다룰 때는 ${value.action}`
+    `${particle(topic,"을","를")} 생활에서 다룰 때는 ${value.action}`
   ];
   if(value.timing)paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
   if(value.extra)paragraphs.push(...value.extra.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
@@ -244,7 +250,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
       chapterNumber:row.chapterNumber,
       title:row.title,
       headline:value.headline,
-      lead:`${row.topic??row.title}을 중심으로 ${value.lead}`,
+      lead:`${particle(row.topic??row.title,"을","를")} 중심으로 ${value.lead}`,
       body:paragraphs.join("\n\n"),
       paragraphs,
       keyPoints:[`${row.topic??row.title}에서도 같은 성향의 장점과 부담을 함께 봅니다.`],
