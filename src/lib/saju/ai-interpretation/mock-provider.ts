@@ -215,10 +215,16 @@ function profile(row:Row,index:number):DomainProfile{
 }
 
 function buildParagraphs(row:Row,index:number){
-  const value=profile(row,index);
-  const paragraphs=[value.scene,value.strength,value.shadow,value.consequence,value.action];
-  if(value.timing)paragraphs.push(value.timing);
-  if(value.extra)paragraphs.push(...value.extra);
+  const value=profile(row,index),topic=row.topic??row.title;
+  const paragraphs=[
+    `${topic}을 실제 생활에서 보면, ${value.scene}`,
+    `${topic}이 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
+    `${topic}이 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
+    value.consequence,
+    `${topic}을 생활에서 다룰 때는 ${value.action}`
+  ];
+  if(value.timing)paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
+  if(value.extra)paragraphs.push(...value.extra.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
   return paragraphs;
 }
 
@@ -226,21 +232,22 @@ function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[];
   const sections=rows.map((row,index)=>{
     const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index);
+    const fullParagraphs=buildParagraphs(row,index);
     const paragraphs=row.contentKind==="FRONT_MATTER"
-      ?[value.scene,value.strength,value.action]
+      ?[fullParagraphs[0],fullParagraphs[1],fullParagraphs[4]]
       :row.contentKind==="PROFESSIONAL"
         ?[value.scene,value.consequence,value.action]
-        :buildParagraphs(row,index);
+        :fullParagraphs;
     const pageNo=row.pageNumber??index+1;
     return {
       id:row.id,
       chapterNumber:row.chapterNumber,
       title:row.title,
       headline:value.headline,
-      lead:value.lead,
+      lead:`${row.topic??row.title}을 중심으로 ${value.lead}`,
       body:paragraphs.join("\n\n"),
       paragraphs,
-      keyPoints:["장점과 부담은 같은 성향이 상황에 따라 다르게 쓰이는 모습입니다."],
+      keyPoints:[`${row.topic??row.title}에서도 같은 성향의 장점과 부담을 함께 봅니다.`],
       evidenceIds:ids,
       partNumber:row.partNumber,
       partTitle:row.partTitle,
