@@ -17,5 +17,5 @@ export async function POST(request:Request){const requestId=randomUUID();try{
   if(!mockEnabled&&!apiKey)return NextResponse.json({error:"AI 해석 환경이 아직 연결되지 않았습니다."},{status:503});
   const provider=mockEnabled?new MockInterpretationProvider():new OpenAIInterpretationProvider({apiKey:apiKey!,model:process.env.OPENAI_MODEL??"gpt-5-mini",timeoutMs:240_000});
   const core=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:body.relationshipStatus,year:body.year});
-  return NextResponse.json({status:"completed",characterCore:core,metadata:{provider:mockEnabled?"mock":"openai",model:mockEnabled?"deterministic-fixture-v3":process.env.OPENAI_MODEL??"gpt-5-mini"}});
+  return NextResponse.json({status:"completed",characterCore:core,metadata:{provider:mockEnabled?"mock":"openai",model:mockEnabled?"deterministic-fixture-v4":process.env.OPENAI_MODEL??"gpt-5-mini"}});
 }catch(error){if(error instanceof z.ZodError)return NextResponse.json({error:firstValidationMessage(error)},{status:400});console.error("global_character_core_error",{requestId,error});return NextResponse.json({error:error instanceof Error?error.message:"Global plan 생성 실패"},{status:500});}}
