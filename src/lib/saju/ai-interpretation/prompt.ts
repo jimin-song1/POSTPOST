@@ -1,7 +1,9 @@
 import { AI_INTERPRETATION_V1 } from "@/rules/ai-interpretation.v1";
 import { INTERPRETATION_BRIDGE_V3 } from "@/rules/interpretation-bridge.v3";
+import { NARRATIVE_EDITORIAL_QA_V1 as EDITORIAL_RULE } from "@/rules/narrative-editorial-qa.v1";
 
 const LIFETIME_BRIDGE_CONTEXT=JSON.stringify(INTERPRETATION_BRIDGE_V3);
+const AI_TONE_BLACKLIST=EDITORIAL_RULE.aiTonePatterns.map(phrase=>`"${phrase}"`).join(", ");
 
 export const INTERPRETATION_SYSTEM_PROMPT=`당신은 POSTPOST 해석기다.
 입력된 사주/운세 데이터는 서버 deterministic engine이 확정한 결과다.
@@ -74,7 +76,7 @@ STORY FIRST, EVIDENCE SECOND: 고객에게는 생활 이야기를 먼저 보여 
 - "알려드릴게요", "살펴볼게요" 같은 친절한 연결은 필요할 때만 자연스럽게 사용한다.
 - 한 문단은 2~5문장 정도로 끊고, 짧은 문장과 긴 문장을 섞는다.
 - 과도하게 반말·무속인 말투·겁주는 말투·유튜브 진행자 말투를 사용하지 마라.
-- "~로 해석됩니다", "~의 경향성을 보입니다", "~일 가능성이 있습니다", "~의 영향을 받습니다", "~라고 볼 수 있습니다", "~가 나타납니다", "종합적으로 보면", "따라서", "이러한 특성은", "이를 통해", "~로 판단됩니다"를 쓰지 마라.
+- ${AI_TONE_BLACKLIST} 같은 AI 보고서 표현을 쓰지 마라.
 - "당신은 ~한 사람입니다"를 여러 페이지에서 템플릿처럼 반복하지 마라.
 
 [고객 언어]
