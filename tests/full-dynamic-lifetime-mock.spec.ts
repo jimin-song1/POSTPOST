@@ -78,7 +78,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const artifact={input:{...FULL_SAMPLE_INPUT,name:"synthetic-test-user"},contentSections:stats.contentSections,totalCharacters:stats.totalCharacters,totalParagraphs:content.reduce((sum,row)=>sum+(row.paragraphs?.length??1),0),
       totalParts:book.parts.length,totalChapters:new Set(content.map(row=>row.evidenceGroup)).size,sectionHash:createHash("sha256").update(ids.join("\n")).digest("hex"),density,
       duplicateSectionIds:ids.length-new Set(ids).size,duplicateSequences:sequences.length-new Set(sequences).size,missingChapters:[],contentContractFailures:0,noveltyFailures:0,semanticDuplicateWarnings:0,
-      globalCharacterCoreShared:true,samjaeEvidenceConnected:true,childrenEvidenceConnected:true,editorialMetrics:editorial.metrics,coreNine:editorial.coreNine};
+      globalCharacterCoreShared:true,samjaeEvidenceConnected:true,childrenEvidenceConnected:true,editorialMetrics:editorial.metrics,coreNine:editorial.coreNine,
+      templateRepeatPairs:editorial.templateRepeatPairs.length,templateRepeatSamples:editorial.templateRepeatPairs.slice(0,20)};
     console.info("M34_1_QA_ARTIFACT",JSON.stringify(artifact));
   },30_000);
 
