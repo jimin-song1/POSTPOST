@@ -39,7 +39,7 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
   childTopics.forEach((title,index)=>additions.push(extra(`children-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"09","아이와 가족 역할","CHILDREN","TIMING_CORE")));
   if(options.includeSamjae)samjaeTopics.forEach((title,index)=>additions.push(extra(`samjae-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"12S","삼재와 인생의 큰 변화","SAMJAE","TIMING_CORE")));
-  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}` ,`${options.year+offset}년 · ${title}`,"11","앞으로 5년",(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",title)));
+  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>{const yearlyTitle=`${options.year+offset}년 · ${title}`;additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}`,yearlyTitle,"11","앞으로 5년",(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",yearlyTitle));});
   for(let daeun=1;daeun<=10;daeun++)daeunTopics.forEach((title,index)=>additions.push(extra(`daeun-${daeun}-${String(index+1).padStart(2,"0")}`,`${daeun}번째 10년 · ${title}`,"13","10년마다 바뀌는 큰 흐름",(`DAEUN_${daeun}` as LifetimeEvidenceGroup),"TIMING_CORE",title)));
   const all=[...base,...additions].sort((a,b)=>{
     const original=LIFETIME_BOOK_V1.parts.map(row=>row.partNumber),insertAt=original.indexOf("13"),order=[...original.slice(0,insertAt),"12S",...original.slice(insertAt)];
