@@ -9,8 +9,16 @@ const chapter=(group:string)=>["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL
   ["TEN_GODS","TWELVE_STAGES"].includes(group)?"TEN_GODS_STAGES":group.startsWith("YEAR_")||["YEARLY_OVERVIEW","MONTHLY"].includes(group)?"YEARLY":
   group==="SAMJAE"?"SAMJAE":group.startsWith("DAEUN")?"DAEUN":group==="SYNTHESIS"?"SYNTHESIS":"OTHER";
 const prose=(row:InterpretationSection)=>[row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[])].filter(Boolean).join("\n");
-const tokens=(value:string)=>new Set(value.toLowerCase().replace(/[^a-z0-9가-힣\s]/g," ").split(/\s+/).filter(token=>token.length>1));
-function similarity(a:string,b:string){const left=tokens(a),right=tokens(b),leftValues=Array.from(left),rightValues=Array.from(right),intersection=leftValues.filter(token=>right.has(token)).length,union=new Set([...leftValues,...rightValues]).size;return union?intersection/union:0;}
+const SEMANTIC_CONCEPTS:ReadonlyArray<readonly [RegExp,string]>=[
+  [/(?:책임감이?\s*강|맡은\s*일을?\s*끝까지\s*책임|자기\s*몫을?\s*쉽게\s*내려놓지)/g," 책임완수 "],
+  [/(?:혼자\s*(?:다시\s*)?확인|남에게\s*넘기지|본인이?\s*재확인)/g," 단독확인 "],
+  [/(?:기준이?\s*분명|선이?\s*분명|판단\s*기준)/g," 명확한기준 "]
+];
+const semanticText=(value:string)=>SEMANTIC_CONCEPTS.reduce((text,[pattern,replacement])=>text.replace(pattern,replacement),value.toLowerCase());
+const tokens=(value:string)=>new Set(semanticText(value).replace(/[^a-z0-9가-힣\s]/g," ").split(/\s+/).filter(token=>token.length>1));
+export function semanticDuplicateSimilarity(a:string,b:string){const left=tokens(a),right=tokens(b),leftValues=Array.from(left),rightValues=Array.from(right),sharedConcept=leftValues.some(token=>["책임완수","단독확인","명확한기준"].includes(token)&&right.has(token));
+  if(sharedConcept&&left.size<=3&&right.size<=3)return 1;
+  const intersection=leftValues.filter(token=>right.has(token)).length,union=new Set([...leftValues,...rightValues]).size;return union?intersection/union:0;}
 
 export function lifetimeContentStats(report:StructuredInterpretation):LifetimeContentStats{
   const content=report.sections.filter(row=>row.contentKind==="CONTENT"),chapterCharacters:Record<string,number>={};
@@ -30,7 +38,7 @@ export function validateLifetimeContentContract(report:StructuredInterpretation)
     const novelty=new Set(row.noveltyElements as NoveltyElement[]|undefined);if(novelty.size<RULE.novelty.minimumNewElements)throw new LifetimeContentContractError(`${row.id}의 새 정보 요소가 부족합니다.`);
     for(const scene of row.scenesUsed??[]){if(scenes.has(scene))throw new LifetimeContentContractError(`생활 장면이 반복됩니다: ${scene}`);scenes.add(scene);}
     for(const claim of row.claimsUsed??[])claimCounts.set(claim,(claimCounts.get(claim)??0)+1);
-    const text=row.domainConsequence??"";for(const previous of fingerprints)if(text&&similarity(text,previous.text)>=RULE.novelty.semanticDuplicateThreshold)
+    const text=row.domainConsequence??"";for(const previous of fingerprints)if(text&&semanticDuplicateSimilarity(text,previous.text)>=RULE.novelty.semanticDuplicateThreshold)
       throw new LifetimeContentContractError(`${row.id}와 ${previous.id}의 의미가 중복됩니다.`);fingerprints.push({id:row.id,text});
   }
   for(const [claim,count] of Array.from(claimCounts.entries()))if(count>RULE.novelty.maxReusedCoreClaim+1)throw new LifetimeContentContractError(`핵심 claim 재사용 초과: ${claim}`);

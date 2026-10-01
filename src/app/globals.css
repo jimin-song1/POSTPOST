@@ -290,7 +290,7 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
 }
 
 
-/* Lifetime book v3 · 154 logical pages */
+/* Dynamic lifetime book v4; legacy class names preserve the existing visual layout. */
 .lifetimeBook154 { background:var(--book); }
 .book154Cover { min-height:90vh; }
 .book154Toc { position:sticky; z-index:20; top:0; display:flex; gap:8px; padding:10px max(10px,calc((100vw - 1040px)/2)); overflow-x:auto; background:rgba(246,240,229,.96); border-bottom:1px solid #d9cebe; backdrop-filter:blur(12px); scrollbar-width:none; }

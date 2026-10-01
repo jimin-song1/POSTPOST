@@ -50,6 +50,6 @@ POST
 
 ## Dynamic Lifetime Book v4 개발 모드
 
-개발 환경에서 `DEV_MOCK_INTERPRETATION=true`를 설정하면 deterministic 사주 계산은 그대로 실행하고 OpenAI 해설 호출만 고정 fixture 공급자로 바꿉니다. 이 모드로 최소 130개 이상의 동적 logical section, 삼재·자녀·5년 연운·대운 확장, 전체 분량 및 중복 방지 계약을 비용 없이 점검할 수 있습니다. `NODE_ENV=production`에서는 같은 환경 변수가 설정돼도 mock이 활성화되지 않으며 `OPENAI_API_KEY`가 필요합니다.
+`DEV_MOCK_INTERPRETATION=true`를 설정하면 deterministic 사주 계산은 그대로 실행하고 OpenAI 해설 호출만 고정 fixture 공급자로 바꿉니다. local development/test와 Vercel Preview에서 최소 130개 이상의 동적 logical section, 삼재·자녀·5년 연운·대운 확장, 전체 분량 및 중복 방지 계약을 비용 없이 점검할 수 있습니다. `VERCEL_ENV=production`에서는 같은 환경 변수가 실수로 설정돼도 mock이 활성화되지 않으며 `OPENAI_API_KEY`가 필요합니다.
 
 브라우저는 `/api/saju/interpret`에 전체 분석 객체를 보내지 않습니다. 최소 출생 입력과 보고서 옵션만 보내며, 서버가 계산을 다시 수행한 뒤 section에 허용된 해석 evidence만 모델에 전달합니다. 전역 인물상은 한 번 생성해 모든 PART에 공유하고, PART는 필요한 topic 수에 따라 순차 생성합니다.

@@ -1,8 +1,9 @@
 import type {InterpretationInput,InterpretationProvider,InterpretationProviderRequest,InterpretationProviderResponse,StructuredInterpretation} from "@/types/ai-interpretation";
 
-function evidenceFor(row:{evidenceIds:string[]}){return row.evidenceIds.slice(0,Math.min(4,Math.max(2,row.evidenceIds.length)));}
+function evidenceFor(row:{evidenceIds:string[]},index=0){const count=Math.min(4,row.evidenceIds.length);if(count===row.evidenceIds.length)return row.evidenceIds;
+  const start=index%row.evidenceIds.length;return Array.from({length:count},(_,offset)=>row.evidenceIds[(start+offset)%row.evidenceIds.length]);}
 function claim(id:string,row:{id:string;evidenceIds:string[]},index:number){
-  const ids=evidenceFor(row);
+  const ids=evidenceFor(row,index);
   return {claimId:id,plainMeaning:"여러 계산 근거를 함께 읽어 생활에서 반복되는 방식을 설명합니다.",evidenceIds:ids,sourceFields:ids.map(item=>`${item}.value`),confidence:"HIGH",
     allowedChapters:[row.id],avoidRepeatingIn:[],pageQuestion:"이 페이지에서 실제로 확인할 생활 모습은 무엇인가요?",personPattern:"확인한 뒤 움직이고, 정한 일은 끝까지 챙기는 방식입니다.",
     lifeScene:`${index+1}번째 장면에서는 선택하기 전과 선택한 뒤의 속도가 달라집니다.`,upside:"기준이 분명해 실수를 줄입니다.",shadow:"혼자 오래 붙들면 부담이 커집니다.",
@@ -19,7 +20,7 @@ function plan(input:InterpretationInput){
 }
 function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[];
-  const sections=rows.map((row,index)=>{const ids=evidenceFor(row),target=["IDENTITY","ELEMENTS","STRENGTH"].includes(row.evidenceGroup??"")?1250:row.density==="TIMING_CORE"?1020:row.density==="CORE"?920:row.density==="GENERAL"?570:270;
+  const sections=rows.map((row,index)=>{const ids=evidenceFor(row,row.pageNumber??index),target=["IDENTITY","ELEMENTS","STRENGTH"].includes(row.evidenceGroup??"")?1250:row.density==="TIMING_CORE"?1020:row.density==="CORE"?920:row.density==="GENERAL"?570:270;
     const seeds=[
       `이번 ${row.chapterNumber??index+1}번째 이야기는 선택을 앞두고 확인하는 순간과 마음을 정한 뒤 움직이는 순간을 나눠 봅니다.`,
       `${row.chapterNumber??index+1}번째 기준이 잘 쓰이면 주변 사람도 다음 행동을 예상하기 쉬워집니다. 다만 모든 몫을 혼자 들고 가면 같은 힘이 부담으로 바뀝니다.`,

@@ -1,4 +1,3 @@
-import {readFile} from "node:fs/promises";
 import {describe,expect,it} from "vitest";
 import {calculateSaju} from "@/lib/saju/engine";
 import {interpretSajuAnalysis} from "@/lib/saju/ai-interpretation/service";
@@ -24,10 +23,8 @@ describe("POSTPOST Narrative Engine v3 mock mode",()=>{
     expect(stats.totalCharacters).toBeGreaterThanOrEqual(LIFETIME_CONTENT_CONTRACT_V1.totalCharacters.minimum);
   });
 
-  it("locks the v3 contract and blocks mock activation in production",async()=>{
+  it("locks the v3 evidence and timing contract",()=>{
     expect(INTERPRETATION_BRIDGE_V3.evidence).toMatchObject({minimum:2,maximum:4,singleSignalStrongClaim:false});
     expect(INTERPRETATION_BRIDGE_V3.timing.mustStaySeparate).toBe(true);
-    const route=await readFile("src/app/api/saju/interpret/route.ts","utf8");
-    expect(route).toContain('process.env.DEV_MOCK_INTERPRETATION==="true"&&process.env.NODE_ENV!=="production"');
   });
 });

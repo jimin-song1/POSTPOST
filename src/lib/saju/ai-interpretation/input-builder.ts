@@ -126,7 +126,7 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"DAEUN_1":case"DAEUN_2":case"DAEUN_3":case"DAEUN_4":case"DAEUN_5":case"DAEUN_6":case"DAEUN_7":case"DAEUN_8":case"DAEUN_9":case"DAEUN_10":{
       const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${index}`);
     }
-    case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE");
+    case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE","NATAL:SAMJAE","NATAL:RELATIONS");
     case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-","FORTUNE:SAMJAE")]));
     case"PROFESSIONAL":return evidence.map(row=>row.id);
   }
@@ -170,6 +170,8 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const seunCategoryById=new Map(categories.seun.map(row=>[row.synthesisId,row]));
   for(const row of selectedSeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=seunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
+  evidence.push(fact("CHILD:NEAR_TERM_CONTEXT","CHILD",selectedSeun.map(row=>({year:row.context.seunYear,favorability:row.favorability.score,activation:row.activation.score,
+    daeunIndex:row.context.daeunIndex,tags:row.tags}))));
 
   const selectedWolun=synthesis.wolun.filter(row=>row.context.seunYear===currentYear);
   const wolunCategoryById=new Map(categories.wolun.map(row=>[row.synthesisId,row]));
