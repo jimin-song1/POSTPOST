@@ -29,6 +29,13 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(fortune.samjae.status).toBe("implemented");
     const characterCore=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:"SINGLE",year:YEAR});
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
+    const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
+    expect(customerParts.map(part=>part.title)).toEqual([
+      "사주원국","일주와 오행","직업·학업","재물","애정·자녀","건강","귀인",
+      "십이신살","십이운성","십성","연운","삼재","대운","마치며"
+    ]);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
     for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
       expect(result.status,part.partNumber).toBe("completed");if(result.status==="completed")completed.push(result);}
     const report:StructuredInterpretation={...completed[0].report,sections:completed.flatMap(row=>row.report.sections),timeline:completed.flatMap(row=>row.report.timeline),
