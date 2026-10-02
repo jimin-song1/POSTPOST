@@ -40,7 +40,7 @@ function Chapter({ number, id, title, headline, lead, children, tone = "paper" }
 function AiCopy({ report, id, fallback }: { report: StructuredInterpretation | null; id: string; fallback: string[] }) { const section = chapterSection(report, id); const paragraphs = section?.paragraphs?.length ? section.paragraphs : section?.body ? [section.body] : fallback; return <div className="longCopy">{paragraphs.map((paragraph, index) => <p key={`${id}-${index}`}>{paragraph}</p>)}</div>; }
 function Metric({ label, value, note, tone = "support" }: { label: string; value: string; note?: string; tone?: "support" | "activity" | "neutral" }) { return <div className={`lifetimeMetric ${tone}`}><span>{label}</span><strong>{value}</strong>{note && <small>{note}</small>}</div>; }
 function CrowNote({ children }: { children: React.ReactNode }) { return <aside className="crowNote"><span aria-hidden="true">●</span><p><b>삼족오 한마디</b>{children}</p></aside>; }
-function EvidenceDetails({ children }: { children: React.ReactNode }) { return <details className="chapterEvidence"><summary>왜 이렇게 보나요?</summary><div>{children}</div></details>; }
+function EvidenceDetails({ children, label="계산 근거 보기" }: { children: React.ReactNode; label?:string }) { return <details className="chapterEvidence"><summary>{label}</summary><div>{children}</div></details>; }
 function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl className="evidenceRows">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>; }
 
 export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
@@ -70,9 +70,42 @@ function DaeunChapter({ report, fortune }: { report: StructuredInterpretation | 
 function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; report:StructuredInterpretation|null }) { const native=analysis.fiveElements.nativeStrength, adjusted=analysis.fiveElements.adjustedStrength.elements; return <section id="chapter-18" className="professionalRoom"><details><summary><span><small>18 · 전문 분석실</small><b>계산 근거와 전문 용어를 확인합니다</b></span><em>펼쳐 보기</em></summary><div className="professionalInner"><AiCopy report={report} id="professional" fallback={["기본 결과와 같은 원국, 규칙 버전, evidence를 사용합니다."]}/><h3>사주 원국</h3><div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=><article key={position}><span>{PILLAR_LABEL[position]}</span><b>{analysis.pillars[position].stem}{analysis.pillars[position].branch}</b><small>천간 십성: {analysis.tenGods.value?.heavenlyStems[position].korean}</small></article>)}</div><h3>오행 기본값과 관계 반영값</h3><div className="professionalElements">{ELEMENTS.map(element=><p key={element}><b>{customerElement(element,true)}</b><span>기본 {pct(native?.[element].percentage)}</span><span>관계 반영 {pct(adjusted?.[element].percentage)}</span></p>)}</div><h3>전문 분류</h3><p>{customerTerm("격국")}: {analysis.structure.primary?.type} · {customerTerm("용신")}: {analysis.usefulGods.synthesis.status==="implemented"?analysis.usefulGods.synthesis.elements.slice(0,3).map(row=>customerElement(row.element,true)).join(" · "):"판단 유보"}</p><details><summary>버전과 evidence IDs</summary><pre>{JSON.stringify({rulesetVersion:analysis.rulesetVersion,engineVersion:analysis.engineMetadata.engineVersion,evidence:analysis.daeun.evidence},null,2)}</pre></details></div></details></section>; }
 
 
+const BOOK_PART_TITLES:Record<string,string>={
+  "00":"먼저 읽어볼 이야기",
+  "01":"타고난 나의 중심",
+  "02":"내 안의 다섯 기운"
+};
+const BOOK_SECTION_TITLES:Record<string,string>={
+  "legacy-book-007":"나는 어떤 방식으로 움직이는 사람일까",
+  "legacy-book-009":"태어난 순간의 네 자리",
+  "legacy-book-015":"상황마다 달라지는 내 모습",
+  "legacy-book-020":"내 안의 다섯 기운, 어디에 힘이 몰렸을까",
+  "legacy-book-021":"나를 가장 닮은 기운",
+  "legacy-book-024":"다섯 기운의 균형"
+};
+const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
+const customerSectionTitle=(id:string,fallback:string)=>BOOK_SECTION_TITLES[id]??fallback;
+
+function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
+  const adjusted=analysis.fiveElements.adjustedStrength.elements;
+  const native=analysis.fiveElements.nativeStrength;
+  const rows=ELEMENTS.map(element=>({element,percentage:adjusted?.[element].percentage??native?.[element].percentage??0})).sort((a,b)=>b.percentage-a.percentage);
+  const strongest=rows[0],weakest=rows[rows.length-1];
+  const dayElement=analysis.strength.dayMaster?.element;
+  return <figure className="fiveElementSpread" aria-label="오행 분포표">
+    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"입니다.":"다섯 기운의 분포를 한눈에 봅니다."}</strong><small>관계 작용을 반영한 현재 계산값</small></figcaption>
+    <div className="fiveElementRows">
+      {ELEMENTS.map(element=>{const value=adjusted?.[element].percentage??native?.[element].percentage??0;return <div className="fiveElementRow" data-element={element} key={element}>
+        <b>{customerElement(element)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
+      </div>;})}
+    </div>
+    {strongest&&weakest?<p className="fiveElementSummary"><b>{customerElement(strongest.element)}</b> 기운이 가장 또렷하고, <b>{customerElement(weakest.element)}</b> 기운은 상대적으로 조용합니다. 많고 적음만으로 좋고 나쁨을 정하지 않고, 뒤에서 생활 방식과 함께 풀어봅니다.</p>:null}
+  </figure>;
+}
+
 function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
   const visibleSections=report.sections.filter(section=>section.evidenceGroup!=="COVER");
-  const parts=Array.from(new Map(visibleSections.map(section=>[section.partNumber??"00",{partNumber:section.partNumber??"00",title:section.partTitle??"평생사주"}])).values());
+  const parts=Array.from(new Map(visibleSections.map(section=>{const partNumber=section.partNumber??"00",rawTitle=section.partTitle??"평생사주";return[partNumber,{partNumber,title:customerPartTitle(partNumber,rawTitle)}];})).values());
   const contentSectionCount=visibleSections.filter(section=>section.contentKind==="CONTENT").length;
   return <div className="lifetimeReport lifetimeBook154">
     <header className="lifetimeCover book154Cover">
@@ -91,18 +124,22 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
         <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2><p>{sections.length}개의 주제로 천천히 이어집니다.</p></header>
         {sections.map((section,index)=>{
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
+          const title=customerSectionTitle(section.id,section.title);
+          const showFiveElements=section.id==="legacy-book-020";
+          const showEvidence=Boolean(section.professionalDetails||section.metrics?.length)||["ELEMENTS","STRENGTH","STRUCTURE_USEFUL"].includes(section.evidenceGroup??"");
           return <article key={section.id} id={section.id} className="book154Page">
             <div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div>
             <p className="book154Eyebrow">{part.title}</p>
-            <h3>{section.headline||section.title}</h3>
+            <h3>{title}</h3>
             {section.lead&&<p className="book154Lead">{section.lead}</p>}
+            {showFiveElements?<FiveElementSpread analysis={analysis}/>:null}
             <div className="longCopy">{paragraphs.map((paragraph,paragraphIndex)=><p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>)}</div>
             {section.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,pointIndex)=><p key={pointIndex}>{point}</p>)}</blockquote>:null}
             {section.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
             {section.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
-            <EvidenceDetails>
-              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>서로 관련된 계산 근거를 함께 확인했습니다. 원본 근거 ID는 마지막 전문 분석실에서만 보여드립니다.</p>}
-            </EvidenceDetails>
+            {showEvidence?<EvidenceDetails>
+              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>이 장은 원국의 오행 분포와 강약, 필요한 기운 등 이미 계산된 값을 바탕으로 풀었습니다. 세부 근거 ID는 마지막 전문 분석실에서 확인할 수 있습니다.</p>}
+            </EvidenceDetails>:null}
           </article>;
         })}
       </section>})}
