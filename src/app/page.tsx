@@ -7,9 +7,14 @@ import {validateLifetimeContentContract} from "@/lib/saju/ai-interpretation/life
 import type { CustomerResultPayload, InterpretationUiState } from "@/types/customer-result";
 import type {CharacterCore, InterpretationSuccess, RelationshipStatus } from "@/types/ai-interpretation";
 
+type LifetimeGenerationErrorCode="GLOBAL_PLAN_FAILED"|"PART_GENERATION_FAILED";
+class LifetimeGenerationError extends Error{constructor(readonly code:LifetimeGenerationErrorCode,message:string){super(message);this.name="LifetimeGenerationError";}}
+
 async function requestGlobalCharacterCore(payload:CustomerResultPayload,relationship:RelationshipStatus,year:number):Promise<CharacterCore>{
   const response=await fetch("/api/saju/interpret/global-plan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({input:payload.analysis.birthInput,relationshipStatus:relationship,year})});
-  const parsed=await response.json() as {characterCore?:CharacterCore;error?:string};if(!response.ok||!parsed.characterCore)throw new Error(parsed.error??"전체 인물상 설계에 실패했습니다.");return parsed.characterCore;
+  const raw=await response.text();let parsed:{characterCore?:CharacterCore;error?:string}|null=null;
+  try{parsed=raw?JSON.parse(raw) as {characterCore?:CharacterCore;error?:string}:null;}catch{}
+  if(!response.ok||!parsed?.characterCore)throw new LifetimeGenerationError("GLOBAL_PLAN_FAILED",parsed?.error||raw.slice(0,180)||"전체 인물상 설계에 실패했습니다.");return parsed.characterCore;
 }
 async function requestLifetimePart(payload:CustomerResultPayload,relationship:RelationshipStatus,year:number,partNumber:string,characterCore:CharacterCore):Promise<InterpretationSuccess>{
   const response=await fetch("/api/saju/interpret",{method:"POST",headers:{"Content-Type":"application/json"},
@@ -21,12 +26,12 @@ async function requestLifetimePart(payload:CustomerResultPayload,relationship:Re
       ?typeof (parsed as {error?:unknown}).error==="string"?(parsed as {error:string}).error
         :(parsed as {error?:{message?:string}}).error?.message
       :null;
-    throw new Error(message||raw.slice(0,180)||`해설 파트 ${partNumber} 생성 요청이 실패했습니다. (${response.status})`);
+    throw new LifetimeGenerationError("PART_GENERATION_FAILED",message||raw.slice(0,180)||`해설 파트 ${partNumber} 생성 요청이 실패했습니다. (${response.status})`);
   }
-  if(!parsed||typeof parsed!=="object"||!("status" in parsed))throw new Error(`해설 파트 ${partNumber} 응답 형식이 올바르지 않습니다.`);
+  if(!parsed||typeof parsed!=="object"||!("status" in parsed))throw new LifetimeGenerationError("PART_GENERATION_FAILED",`해설 파트 ${partNumber} 응답 형식이 올바르지 않습니다.`);
   if((parsed as {status?:string}).status!=="completed"){
     const failed=parsed as {error?:{message?:string}};
-    throw new Error(failed.error?.message||`해설 파트 ${partNumber} 생성에 실패했습니다.`);
+    throw new LifetimeGenerationError("PART_GENERATION_FAILED",failed.error?.message||`해설 파트 ${partNumber} 생성에 실패했습니다.`);
   }
   return parsed as InterpretationSuccess;
 }
@@ -53,18 +58,20 @@ export default function Home() {
   const requestInterpretation=useCallback(async(payload:CustomerResultPayload,relationship:RelationshipStatus)=>{
     const year=new Date().getFullYear(),fortune=payload.analysis.fortune,includeSamjae=fortune.status==="partial"&&"samjae" in fortune&&fortune.samjae.status==="implemented";
     const parts=buildDynamicLifetimeBook({includeSamjae,year}).parts;
-    setInterpretation({status:"pending",completedParts:0,totalParts:parts.length});
+    setInterpretation({status:"pending",stage:"CHARACTER_CORE",completedParts:0,totalParts:parts.length});
     try{
       const completed:InterpretationSuccess[]=[],characterCore=await requestGlobalCharacterCore(payload,relationship,year);
+      setInterpretation({status:"pending",stage:"PARTS",completedParts:0,totalParts:parts.length});
       for(const part of parts){
         completed.push(await requestLifetimePart(payload,relationship,year,part.partNumber,characterCore));
-        setInterpretation({status:"pending",completedParts:completed.length,totalParts:parts.length});
+        setInterpretation({status:"pending",stage:"PARTS",completedParts:completed.length,totalParts:parts.length});
       }
+      setInterpretation({status:"pending",stage:"MERGE",completedParts:completed.length,totalParts:parts.length});
       const merged=mergeLifetimeParts(completed);
       validateLifetimeContentContract(merged.report);
       setInterpretation(merged);
     }catch(error){
-      const code: "NETWORK_ERROR" | "PART_GENERATION_FAILED" = error instanceof TypeError ? "NETWORK_ERROR" : "PART_GENERATION_FAILED";
+      const code=error instanceof TypeError?"NETWORK_ERROR":error instanceof LifetimeGenerationError?error.code:"PART_GENERATION_FAILED";
       setInterpretation({status:"failed",ruleVersion:"ai-interpretation-v1",error:{code: code, message:error instanceof Error?error.message:"해설 생성 중 오류가 발생했습니다."}});
     }
   },[]);

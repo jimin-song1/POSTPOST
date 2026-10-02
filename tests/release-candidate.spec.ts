@@ -61,7 +61,9 @@ describe("RELEASE_CANDIDATE_V1", () => {
   it("distinguishes network and interpretation failures without hiding analysis", async () => {
     const page = await readFile("src/app/page.tsx", "utf8");
     const component = await readFile("src/components/CustomerResult.tsx", "utf8");
-    expect(page).toContain('code: "NETWORK_ERROR"');
+    expect(page).toContain('"NETWORK_ERROR"');
+    expect(page).toContain('"GLOBAL_PLAN_FAILED"');
+    expect(page).toContain('"PART_GENERATION_FAILED"');
     expect(component).toContain('state.error.code === "NETWORK_ERROR"');
     expect(component).toContain("사주 계산 결과는 정상");
     expect(component).not.toContain("사주 계산 실패");

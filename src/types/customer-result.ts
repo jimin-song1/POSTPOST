@@ -15,6 +15,6 @@ export interface CustomerResultPayload {
 
 export type InterpretationUiState =
   | { status: "not_requested" }
-  | { status: "pending"; completedParts?: number; totalParts?: number }
-  | { status: "failed"; ruleVersion: "ai-interpretation-v1"; error: { code: "NETWORK_ERROR" | "PART_GENERATION_FAILED"; message: string } }
+  | { status: "pending"; stage?: "CHARACTER_CORE" | "PARTS" | "MERGE"; completedParts?: number; totalParts?: number }
+  | { status: "failed"; ruleVersion: "ai-interpretation-v1"; error: { code: "NETWORK_ERROR" | "GLOBAL_PLAN_FAILED" | "PART_GENERATION_FAILED"; message: string } }
   | InterpretationResult;

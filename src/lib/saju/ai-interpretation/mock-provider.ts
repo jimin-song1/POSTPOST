@@ -530,6 +530,17 @@ const EDITORIAL_ANGLE_BANKS:Record<string,EditorialAngleBank>={
 };
 
 function editorialAngle(row:Row,index:number){
+  const topic=row.topic??row.title;
+  if(domainOf(row.evidenceGroup??"")==="ROLES"&&topic==="네 기둥 위에 놓인 역할들")return{
+    scene:"일을 맡는 자리에서는 마감과 책임을 앞세우고, 배우는 자리에서는 충분히 들은 뒤 자기 방식으로 정리합니다. 상황이 바뀔 때마다 어느 역할을 먼저 쓸지 고르는 편입니다.",
+    consequence:"서로 다른 역할을 필요에 맞게 바꾸어 쓰면 선택 폭이 넓어지지만, 여러 몫을 동시에 맡으면 정작 본인의 우선순위가 흐려질 수 있습니다.",
+    action:"이번 주에 맡은 역할을 일, 배움, 관계로 나누고 각 자리에서 꼭 할 일 하나씩만 남겨 보세요."
+  };
+  if(domainOf(row.evidenceGroup??"")==="ROLES"&&topic==="겉으로 바로 보이는 역할")return{
+    scene:"회의나 첫 만남처럼 평가가 빠른 자리에서는 맡은 일을 분명히 하고 결과를 챙기는 모습이 먼저 드러납니다. 속으로 고민하는 시간보다 겉으로 확인되는 행동이 인상을 만듭니다.",
+    consequence:"처음부터 책임감 있는 사람으로 보이기 쉽지만, 늘 해결하는 사람으로 굳어지면 주변이 도움을 당연하게 여기거나 본래 의도를 놓칠 수 있습니다.",
+    action:"새로운 자리에서는 잘할 수 있는 일뿐 아니라 지금 맡지 않을 일도 초반에 함께 말해 보세요."
+  };
   const bank=EDITORIAL_ANGLE_BANKS[domainOf(row.evidenceGroup??"")]??EDITORIAL_ANGLE_BANKS.GENERAL;
   const seed=Array.from(row.id).reduce((total,character,offset)=>total+character.charCodeAt(0)*(offset+1),index+1);
   return{

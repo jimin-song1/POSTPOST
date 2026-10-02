@@ -45,7 +45,7 @@ function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl c
 
 export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
   if (interpretation.status === "pending" || interpretation.status === "not_requested") {
-    return <LifetimeGenerationScreen name={analysis.person.name} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:1} onRestart={onRestart} />;
+    return <LifetimeGenerationScreen name={analysis.person.name} stage={interpretation.status==="pending"?interpretation.stage:undefined} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:1} onRestart={onRestart} />;
   }
   if (interpretation.status === "failed") {
     return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
@@ -112,7 +112,8 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
 }
 
 
-function LifetimeGenerationScreen({ name, completedParts=0, totalParts=1, onRestart }: { name:string; completedParts?:number; totalParts?:number; onRestart:()=>void }) {
+function LifetimeGenerationScreen({ name, stage="CHARACTER_CORE", completedParts=0, totalParts=1, onRestart }: { name:string; stage?:"CHARACTER_CORE"|"PARTS"|"MERGE"; completedParts?:number; totalParts?:number; onRestart:()=>void }) {
+  const stageCopy=stage==="CHARACTER_CORE"?"책 전체에 이어질 중심 성향을 정리하고 있어요":stage==="MERGE"?"완성된 묶음을 한 권의 책으로 정리하고 있어요":`${totalParts}개 묶음 중 ${Math.min(completedParts+1,totalParts)}번째 이야기를 만들고 있어요`;
   return <main className="lifetimeGeneration" role="status" aria-live="polite">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel">
@@ -120,12 +121,12 @@ function LifetimeGenerationScreen({ name, completedParts=0, totalParts=1, onRest
       <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
       <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
-      <div className="generationProgress" aria-hidden="true"><span style={{width:`${Math.max(6,Math.min(100,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
+      <p className="generationStage">{stageCopy}</p><div className="generationProgress" aria-hidden="true"><span style={{width:`${stage==="MERGE"?100:Math.max(6,Math.min(96,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
       <div className="generationSteps">
         <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
         <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
         <p><b>3</b><span>10년 흐름과 앞으로 5년의 변화를 따로 읽고 있어요</span></p>
-        <p><b>4</b><span>필요한 모든 section이 검증되면 한 번에 보여드릴게요</span></p>
+        <p><b>4</b><span>필요한 모든 풀이가 검증되면 한 번에 보여드릴게요</span></p>
       </div>
       <p className="generationNotice">페이지를 이동하지 않아도 됩니다. 해설이 완성되면 자동으로 결과가 열립니다.</p>
     </section>

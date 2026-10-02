@@ -74,6 +74,10 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     });
     expect(editorial.coreNine).toHaveLength(9);
     expect(editorial.coreNine.every(row=>row.pass)).toBe(true);
+    const roleOverview=report.sections.find(row=>row.id==="legacy-book-015"),visibleRole=report.sections.find(row=>row.id==="legacy-book-105");
+    expect(roleOverview?.paragraphs?.[0]).not.toBe(visibleRole?.paragraphs?.[0]);
+    expect(roleOverview?.paragraphs?.[3]).not.toBe(visibleRole?.paragraphs?.[3]);
+    expect(roleOverview?.paragraphs?.[4]).not.toBe(visibleRole?.paragraphs?.[4]);
 
     const artifact={input:{...FULL_SAMPLE_INPUT,name:"synthetic-test-user"},contentSections:stats.contentSections,totalCharacters:stats.totalCharacters,totalParagraphs:content.reduce((sum,row)=>sum+(row.paragraphs?.length??1),0),
       totalParts:book.parts.length,totalChapters:new Set(content.map(row=>row.evidenceGroup)).size,sectionHash:createHash("sha256").update(ids.join("\n")).digest("hex"),density,

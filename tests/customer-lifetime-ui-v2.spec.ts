@@ -43,7 +43,8 @@ describe("CUSTOMER_LIFETIME_UI_V2 dropdown",()=>{
 });
 
 describe("CUSTOMER_LIFETIME_UI_V2 report",()=>{
-  it("shows a dedicated generation screen until every dynamic section is ready",async()=>{const source=await reportSource();expect(source).toContain("사주책을 만들고 있어요");expect(source).toContain("필요한 모든 section이 검증되면 한 번에 보여드릴게요");expect(source).toContain("해설이 완성되면 자동으로 결과가 열립니다.");});
+  it("shows each generation stage until every dynamic interpretation is ready",async()=>{const source=await reportSource(),page=await readFile("src/app/page.tsx","utf8");expect(source).toContain("사주책을 만들고 있어요");expect(source).toContain("중심 성향을 정리하고 있어요");expect(source).toContain("묶음을 한 권의 책으로 정리하고 있어요");expect(source).toContain("필요한 모든 풀이가 검증되면 한 번에 보여드릴게요");expect(source).toContain("해설이 완성되면 자동으로 결과가 열립니다.");expect(page).toContain('stage:"CHARACTER_CORE"');expect(page).toContain('stage:"PARTS"');expect(page).toContain('stage:"MERGE"');});
+  it("keeps customer-facing generation copy free of internal English jargon",async()=>{const source=await reportSource(),preview=await readFile("src/app/dev/lifetime-report/page.tsx","utf8");expect(source).not.toContain("모든 section");expect(preview).not.toContain("이 section에서는");});
   it("keeps the canonical 01~18 order",()=>expect(LIFETIME_REPORT_V2.sections.map(row=>row.chapterNumber)).toEqual(Array.from({length:18},(_,index)=>String(index+1).padStart(2,"0"))));
   it("uses centralized customer terminology",async()=>{const source=await reportSource();expect(source).toContain("customerElement");expect(source).toContain("customerTerm");expect(CUSTOMER_TERMINOLOGY_V1.terms.용신).toBe("나에게 가장 필요한 기운");});
   it("renders five representative element percentages",async()=>{const source=await reportSource();expect(source).toContain("adjusted?.[element].percentage");expect(source).toContain("ELEMENTS.map");});
