@@ -214,10 +214,9 @@ function profile(row:Row,index:number):DomainProfile{
   return base[domain];
 }
 
-function particle(value:string,withBatchim:string,withoutBatchim:string){
-  const trimmed=value.trim(),last=trimmed.charCodeAt(trimmed.length-1);
-  const hasBatchim=last>=0xac00&&last<=0xd7a3?(last-0xac00)%28!==0:false;
-  return `${value}${hasBatchim?withBatchim:withoutBatchim}`;
+function withoutTopicPrefix(text:string,topic:string){
+  if(!text.startsWith(topic))return text;
+  return text.slice(topic.length).replace(/^(?:에서는|은|는|이|가|을|를|과|와)?[,·:\s]*/,"").trim();
 }
 
 type EditorialAngleBank={scenes:readonly string[];consequences:readonly string[];actions:readonly string[]};
@@ -568,14 +567,13 @@ function sectionExtras(row:Row,value:DomainProfile){
 function buildParagraphs(row:Row,index:number){
   const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index),domain=domainOf(row.evidenceGroup??"");
   const paragraphs=[
-    `${particle(topic,"을","를")} 실제 생활에서 보면, ${angle.scene}`,
+    angle.scene,
     `강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
     `반대로 부담이 커지면 ${value.shadow.replace(/^다만\s*/,"")}`,
-    `실제 결과로 이어지는 모습은 ${angle.consequence}`,
-    `생활에서는 ${angle.action}`
+    `실제 결과로 이어지는 모습은 ${angle.consequence}`
   ];
   if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain))
-    paragraphs.push(`조금 더 구체적으로 좁혀 보면 ${value.consequence}`);
+    paragraphs.push(`조금 더 구체적으로 좁혀 보면 ${withoutTopicPrefix(value.consequence,topic)}`);
   const group=row.evidenceGroup??"";
   if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`다른 장면에서는 ${value.scene}`);
   if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group))paragraphs.push(
@@ -610,11 +608,11 @@ function report(input:InterpretationInput):StructuredInterpretation{
       id:row.id,
       chapterNumber:row.chapterNumber,
       title:row.title,
-      headline:value.headline,
+      headline:row.title,
       lead:value.lead,
       body:paragraphs.join("\n\n"),
       paragraphs,
-      keyPoints:[`기억할 점 · ${value.lead}`],
+      keyPoints:[angle.action],
       evidenceIds:ids,
       partNumber:row.partNumber,
       partTitle:row.partTitle,
