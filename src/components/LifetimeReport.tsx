@@ -71,9 +71,20 @@ function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; repo
 
 
 const BOOK_PART_TITLES:Record<string,string>={
-  "00":"먼저 읽어볼 이야기",
-  "01":"타고난 나의 중심",
-  "02":"내 안의 다섯 기운"
+  "01":"사주원국",
+  "02":"일주와 오행",
+  "03":"직업·학업",
+  "04":"재물",
+  "05":"애정·자녀",
+  "06":"건강",
+  "07":"귀인",
+  "08":"십이신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운",
+  "12S":"삼재",
+  "13":"대운",
+  "14":"마치며"
 };
 const BOOK_SECTION_TITLES:Record<string,string>={
   "legacy-book-007":"나는 어떤 방식으로 움직이는 사람일까",
