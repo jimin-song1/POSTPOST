@@ -75,8 +75,10 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
       "중심으로 봅니다","살펴봅니다","실제 생활에서","이 부분은 어려운 말보다","중요합니다","필요합니다",
-      "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준"
+      "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
+      "이 힘이 한쪽으로 쏠리면"
     ]) expect(customerCopy).not.toContain(label);
+    expect(customerCopy).not.toMatch(/[가-힣]+습니다\./);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
