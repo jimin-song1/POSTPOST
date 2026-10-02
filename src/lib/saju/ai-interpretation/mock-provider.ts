@@ -569,29 +569,29 @@ function buildParagraphs(row:Row,index:number){
   const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index),domain=domainOf(row.evidenceGroup??"");
   const paragraphs=[
     `${particle(topic,"을","를")} 실제 생활에서 보면, ${angle.scene}`,
-    `${particle(topic,"이","가")} 강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
-    `${particle(topic,"이","가")} 부담으로 바뀌면 ${value.shadow.replace(/^다만\s*/,"")}`,
-    `${particle(topic,"이","가")} 실제 결과로 이어질 때는 ${angle.consequence}`,
-    `${particle(topic,"을","를")} 생활에서 다룰 때는 ${angle.action}`
+    `강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
+    `반대로 부담이 커지면 ${value.shadow.replace(/^다만\s*/,"")}`,
+    `실제 결과로 이어지는 모습은 ${angle.consequence}`,
+    `생활에서는 ${angle.action}`
   ];
   if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain))
-    paragraphs.push(`${particle(topic,"을","를")} 더 구체적으로 좁혀 보면 ${value.consequence}`);
+    paragraphs.push(`조금 더 구체적으로 좁혀 보면 ${value.consequence}`);
   const group=row.evidenceGroup??"";
-  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`);
+  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`다른 장면에서는 ${value.scene}`);
   if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group))paragraphs.push(
-    `${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`,
-    `${particle(topic,"을","를")} 실천하는 별도 기준으로는 ${value.action}`,
-    `${particle(topic,"을","를")} 다른 선택과 비교할 때는 ${value.lead}`,
-    `${topic}에서는 첫인상만으로 결론을 내리지 않고 반복되는 실제 행동을 확인합니다.`,
-    ...(value.extra??[]).map(extra=>`${particle(topic,"을","를")} 넓혀 보는 추가 관점에서는 ${extra}`)
+    `다른 장면에서는 ${value.scene}`,
+    `실천 기준으로는 ${value.action}`,
+    `다른 선택과 비교할 때는 ${value.lead}`,
+    "첫인상만으로 결론을 내리지 않고 반복되는 실제 행동을 확인합니다.",
+    ...(value.extra??[]).map(extra=>`추가 관점으로는 ${extra}`)
   );
   if(["WORK","WEALTH","RELATIONSHIP"].includes(group))paragraphs.push(
-    `${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`,
-    `${particle(topic,"을","를")} 실천하는 별도 기준으로는 ${value.action}`,
-    `${particle(topic,"을","를")} 다른 선택과 비교할 때는 ${value.lead}`
+    `다른 장면에서는 ${value.scene}`,
+    `실천 기준으로는 ${value.action}`,
+    `다른 선택과 비교할 때는 ${value.lead}`
   );
-  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(`${topic}의 시기를 볼 때는 ${value.timing}`);
-  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras.map(extra=>`${topic}을 조금 더 넓게 보면 ${extra}`));
+  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(`시기를 볼 때는 ${value.timing}`);
+  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras.map(extra=>`조금 더 넓게 보면 ${extra}`));
   return paragraphs;
 }
 
@@ -611,10 +611,10 @@ function report(input:InterpretationInput):StructuredInterpretation{
       chapterNumber:row.chapterNumber,
       title:row.title,
       headline:value.headline,
-      lead:`${particle(row.topic??row.title,"을","를")} 중심으로 ${value.lead}`,
+      lead:value.lead,
       body:paragraphs.join("\n\n"),
       paragraphs,
-      keyPoints:[angle.consequence],
+      keyPoints:[`기억할 점 · ${value.lead}`],
       evidenceIds:ids,
       partNumber:row.partNumber,
       partTitle:row.partTitle,
