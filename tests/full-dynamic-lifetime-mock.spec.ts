@@ -43,6 +43,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
 
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
     const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
+    expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
