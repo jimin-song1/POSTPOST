@@ -78,7 +78,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
       "이 힘이 한쪽으로 쏠리면"
     ]) expect(customerCopy).not.toContain(label);
-    expect(customerCopy).not.toMatch(/[가-힣]+습니다\./);
+    expect(customerCopy).not.toMatch(/[가-힣]+(?:습니다|니다)\./);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
