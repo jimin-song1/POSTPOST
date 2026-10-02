@@ -228,7 +228,7 @@ function trimOpening(text:string){
 }
 function joinUpsideShadow(strength:string,shadow:string){
   const upside=trimOpening(strength),downside=trimOpening(shadow);
-  return `${upside} 다만 이 힘이 한쪽으로 쏠리면 ${downside.charAt(0).toLowerCase()+downside.slice(1)}`;
+  return `${upside} 그런데 이런 모습이 너무 강해지면 ${downside.charAt(0).toLowerCase()+downside.slice(1)}`;
 }
 function naturalizeNarration(text:string){
   return text
