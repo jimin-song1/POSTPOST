@@ -62,6 +62,9 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       ...(section.keyPoints??[])
     ].join("\n").replace(/\s+/g," ").trim());
     expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
+    const customerCopy=customerSections.flatMap(section=>section.paragraphs??[section.body]).join("\n");
+    for(const label of ["강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는","다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면"])
+      expect(customerCopy).not.toContain(label);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
