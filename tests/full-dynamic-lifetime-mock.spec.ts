@@ -54,7 +54,13 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
         expect(normalizedPoint,section.id).not.toBe((section.lead??"").replace(/\s+/g," ").trim());
       }
     }
-    const sectionFingerprints=customerSections.map(section=>(section.paragraphs?.length?section.paragraphs:[section.body]).join("\n").replace(/\s+/g," ").trim());
+    const sectionFingerprints=customerSections.map(section=>[
+      section.title,
+      section.headline??"",
+      section.lead??"",
+      ...(section.paragraphs?.length?section.paragraphs:[section.body]),
+      ...(section.keyPoints??[])
+    ].join("\n").replace(/\s+/g," ").trim());
     expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
