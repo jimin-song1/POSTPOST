@@ -203,7 +203,7 @@ function profile(row:Row,index:number):DomainProfile{
     },
     GENERAL:{
       headline:`${topic}, 실제 생활에서 확인할 한 가지`,
-      lead:"이 부분은 어려운 말보다 실제 생활에서 어떻게 드러나는지를 중심으로 읽어보면 훨씬 쉽습니다.",
+      lead:"평소에는 잘 모르고 지나가도, 선택해야 할 일이 생기면 이런 모습이 꽤 선명하게 드러나는 편입니다.",
       scene:`생활에서 선택할 일이 생기면 먼저 상황을 확인하고 필요한 순서를 정합니다. 사람과 역할이 얽힌 자리에서는 무엇을 직접 할지, 무엇을 나눌지 결정한 뒤 움직이는 편입니다.`,
       strength:"잘 쓰이면 급하게 결론을 내리지 않으면서도 필요한 순간에는 행동으로 이어갈 수 있습니다. 기준을 정리하는 힘이 장점으로 작동합니다.",
       shadow:"다만 확인할 것이 늘어나면 시작이 늦어지고, 책임까지 혼자 가져오면 부담이 커질 수 있습니다. 신중함과 과한 통제를 구분할 필요가 있습니다.",
@@ -217,6 +217,18 @@ function profile(row:Row,index:number):DomainProfile{
 function withoutTopicPrefix(text:string,topic:string){
   if(!text.startsWith(topic))return text;
   return text.slice(topic.length).replace(/^(?:에서는|은|는|이|가|을|를|과|와)?[,·:\s]*/,"").trim();
+}
+function trimOpening(text:string){
+  return text
+    .replace(/^잘 쓰이면\s*/,"")
+    .replace(/^다만\s*/,"")
+    .replace(/^반대로\s*/,"")
+    .replace(/^특히\s*/,"")
+    .trim();
+}
+function joinUpsideShadow(strength:string,shadow:string){
+  const upside=trimOpening(strength),downside=trimOpening(shadow);
+  return `${upside} 다만 이 힘이 한쪽으로 쏠리면 ${downside.charAt(0).toLowerCase()+downside.slice(1)}`;
 }
 
 type EditorialAngleBank={scenes:readonly string[];consequences:readonly string[];actions:readonly string[]};
@@ -845,33 +857,47 @@ function sectionExtras(row:Row,value:DomainProfile){
 }
 function buildParagraphs(row:Row,index:number){
   const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index),domain=domainOf(row.evidenceGroup??"");
+  const group=row.evidenceGroup??"";
   const paragraphs=[
     angle.scene,
-    `강점으로 쓰일 때는 ${value.strength.replace(/^잘 쓰이면\s*/,"")}`,
-    `반대로 부담이 커지면 ${value.shadow.replace(/^다만\s*/,"")}`,
-    `실제 결과로 이어지는 모습은 ${angle.consequence}`
+    joinUpsideShadow(value.strength,value.shadow),
+    withoutTopicPrefix(angle.consequence,topic)
   ];
-  if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain))
-    paragraphs.push(`조금 더 구체적으로 좁혀 보면 ${withoutTopicPrefix(value.consequence,topic)}`);
-  const group=row.evidenceGroup??"";
-  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`다른 장면에서는 ${value.scene}`);
-  if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group))paragraphs.push(
-    `다른 장면에서는 ${value.scene}`,
-    `실천 기준으로는 ${value.action}`,
-    `다른 선택과 비교할 때는 ${value.lead}`,
-    "첫인상만으로 결론을 내리지 않고 반복되는 실제 행동을 확인합니다.",
-    ...(value.extra??[]).map(extra=>`추가 관점으로는 ${extra}`)
-  );
-  if(["WORK","WEALTH","RELATIONSHIP"].includes(group))paragraphs.push(
-    `다른 장면에서는 ${value.scene}`,
-    `실천 기준으로는 ${value.action}`,
-    `다른 선택과 비교할 때는 ${value.lead}`
-  );
-  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(`시기를 볼 때는 ${value.timing}`);
+
+  if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain)){
+    const consequence=withoutTopicPrefix(value.consequence,topic);
+    if(consequence&&consequence!==paragraphs[2])paragraphs.push(consequence);
+  }
+
+  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group)){
+    paragraphs.push(value.scene);
+  }
+
+  if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group)){
+    paragraphs.push(
+      value.scene,
+      value.action,
+      value.extra?.[0]??""
+    );
+  }
+
+  if(["WORK","WEALTH","RELATIONSHIP"].includes(group)){
+    paragraphs.push(
+      value.scene,
+      value.action
+    );
+  }
+
+  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(value.timing);
+
   const coreExpansion=coreChapterExpansion(row);if(coreExpansion.length)paragraphs.push(...coreExpansion);
   const depthExpansion=chapterDepthExpansion(row,index);if(depthExpansion.length)paragraphs.push(...depthExpansion);
-  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras.map(extra=>`조금 더 넓게 보면 ${extra}`));
-  return paragraphs;
+  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras);
+
+  return paragraphs
+    .map(paragraph=>paragraph.trim())
+    .filter(Boolean)
+    .filter((paragraph,paragraphIndex,rows)=>rows.indexOf(paragraph)===paragraphIndex);
 }
 
 function report(input:InterpretationInput):StructuredInterpretation{
