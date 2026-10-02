@@ -5,7 +5,8 @@ export interface MockInterpretationEnvironment {
 }
 
 export function isMockInterpretationEnabled(environment:MockInterpretationEnvironment=process.env){
-  if(environment.DEV_MOCK_INTERPRETATION!=="true")return false;
   if(environment.VERCEL_ENV==="production")return false;
-  return true;
+  if(environment.DEV_MOCK_INTERPRETATION==="false")return false;
+  if(environment.VERCEL_ENV==="preview")return true;
+  return environment.DEV_MOCK_INTERPRETATION==="true";
 }
