@@ -905,8 +905,13 @@ function report(input:InterpretationInput):StructuredInterpretation{
   const sections=rows.map((row,index)=>{
     const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index);
+    const frontMatterParagraphs=[
+      fullParagraphs[0],
+      fullParagraphs[1],
+      fullParagraphs[3]??fullParagraphs[2]
+    ].filter((paragraph):paragraph is string=>typeof paragraph==="string"&&paragraph.length>0);
     const paragraphs=row.contentKind==="FRONT_MATTER"
-      ?[fullParagraphs[0],fullParagraphs[1],fullParagraphs[3]]
+      ?frontMatterParagraphs
       :row.contentKind==="PROFESSIONAL"
         ?[value.scene,value.consequence,value.action]
         :fullParagraphs;
