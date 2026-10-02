@@ -2,12 +2,17 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { FileInterpretationCache } from "@/lib/saju/ai-interpretation/file-cache";
+import { defaultInterpretationCacheDirectory, FileInterpretationCache } from "@/lib/saju/ai-interpretation/file-cache";
 import type { InterpretationSuccess } from "@/types/ai-interpretation";
 
 const result = { status: "completed", analysisHash: "analysis", cacheKey: "cache", report: { headline: "ok" } } as unknown as InterpretationSuccess;
 
 describe("FileInterpretationCache", () => {
+  it("uses the writable temporary directory on Vercel",()=>{
+    expect(defaultInterpretationCacheDirectory({VERCEL:"1"},"/var/task")).toBe(path.join(tmpdir(),"postpost-interpretations"));
+    expect(defaultInterpretationCacheDirectory({AI_INTERPRETATION_CACHE_DIR:"/custom",VERCEL:"1"},"/var/task")).toBe("/custom");
+  });
+
   it("persists a validated result under the unchanged cache key and reports hit/miss", async () => {
     const directory = await mkdtemp(path.join(tmpdir(), "postpost-ai-cache-"));
     const events: string[] = [];
