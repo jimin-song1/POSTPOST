@@ -22,9 +22,19 @@ function validateLifetimeVoice(report:StructuredInterpretation){
   const aiToneCount=EDITORIAL_RULE.aiTonePatterns.reduce((total,phrase)=>total+countOccurrences(prose,phrase),0);
   if(aiToneCount>0)throw new GroundingValidationError(`AI 보고서 문체가 포함되어 있습니다: ${aiToneCount}회`);
   for(const phrase of GENERIC_FORTUNE_COOKIE_PHRASES)if(prose.includes(phrase))throw new GroundingValidationError(`근거 없는 범용 조언 표현: ${phrase}`);
-  const seen=new Set<string>();for(const paragraph of customerSections.flatMap(row=>row.paragraphs??[])){
-    const normalized=paragraph.replace(/\s+/g," ").trim();if(normalized.length<24)continue;
-    if(seen.has(normalized))throw new GroundingValidationError("동일한 고객 본문 문단이 여러 장에 반복됩니다.");seen.add(normalized);
+  const sectionOwner=new Map<string,string>();
+  for(const section of customerSections){
+    const normalized=[
+      section.title,
+      section.headline??"",
+      section.lead??"",
+      ...(section.paragraphs?.length?section.paragraphs:[section.body]),
+      ...(section.keyPoints??[])
+    ].join("\n").replace(/\s+/g," ").trim();
+    if(normalized.length<80)continue;
+    const previous=sectionOwner.get(normalized);
+    if(previous&&previous!==section.id)throw new GroundingValidationError(`동일한 고객 section 전체가 반복됩니다: ${previous} / ${section.id}`);
+    sectionOwner.set(normalized,section.id);
   }
   const sceneOwner=new Map<string,string>();
   for(const section of customerSections)for(const scene of section.scenesUsed??[]){

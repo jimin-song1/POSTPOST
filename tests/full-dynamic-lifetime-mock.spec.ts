@@ -29,6 +29,13 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(fortune.samjae.status).toBe("implemented");
     const characterCore=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:"SINGLE",year:YEAR});
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
+    const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
+    expect(customerParts.map(part=>part.title)).toEqual([
+      "나는 어떤 존재인가","나를 이루는 기운","나에게 맞는 무대","돈과 풍요","사랑과 가족","몸과 마음의 신호","나를 돕는 인연",
+      "내 사주의 특별한 이야기","삶의 에너지 흐름","내 안의 여러 모습","앞으로의 흐름","변화가 커지는 때","큰 운의 흐름","마치며"
+    ]);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
     for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
       expect(result.status,part.partNumber).toBe("completed");if(result.status==="completed")completed.push(result);}
     const report:StructuredInterpretation={...completed[0].report,sections:completed.flatMap(row=>row.report.sections),timeline:completed.flatMap(row=>row.report.timeline),
@@ -40,6 +47,38 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(new Set(report.sections.map(row=>row.partNumber)).size).toBe(book.parts.length);
     expect(content.every(row=>new Set(row.noveltyElements).size>=LIFETIME_CONTENT_CONTRACT_V1.novelty.minimumNewElements)).toBe(true);
     expect(content.every(row=>row.claimsUsed?.length&&row.scenesUsed?.length&&row.domainConsequence&&row.priorSectionSummary!==undefined)).toBe(true);
+
+    const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
+    const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
+    expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
+    for(const section of customerSections){
+      const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
+      const topic=bookSectionById.get(section.id)?.topic;
+      if(topic)expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBe(0);
+      const paragraphSet=new Set(paragraphs.map(paragraph=>paragraph.replace(/\s+/g," ").trim()));
+      for(const point of section.keyPoints??[]){
+        const normalizedPoint=point.replace(/\s+/g," ").trim();
+        expect(paragraphSet.has(normalizedPoint),section.id).toBe(false);
+        expect(normalizedPoint,section.id).not.toBe((section.lead??"").replace(/\s+/g," ").trim());
+      }
+    }
+    const sectionFingerprints=customerSections.map(section=>[
+      section.title,
+      section.headline??"",
+      section.lead??"",
+      ...(section.paragraphs?.length?section.paragraphs:[section.body]),
+      ...(section.keyPoints??[])
+    ].join("\n").replace(/\s+/g," ").trim());
+    expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
+    const customerCopy=customerSections.flatMap(section=>section.paragraphs??[section.body]).join("\n");
+    for(const label of [
+      "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
+      "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
+      "중심으로 봅니다","살펴봅니다","실제 생활에서","이 부분은 어려운 말보다","중요합니다","필요합니다",
+      "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
+      "이 힘이 한쪽으로 쏠리면"
+    ]) expect(customerCopy).not.toContain(label);
+    expect(customerCopy).not.toMatch(/[가-힣]+(?:습니다|니다)\./);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
