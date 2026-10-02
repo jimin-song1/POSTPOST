@@ -128,7 +128,7 @@ function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
   const strongest=rows[0],weakest=rows[rows.length-1];
   const dayElement=analysis.strength.dayMaster?.element;
   return <figure className="fiveElementSpread" aria-label="오행 분포표">
-    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"입니다.":"다섯 기운의 분포를 한눈에 봅니다."}</strong><small>관계 작용을 반영한 현재 계산값</small></figcaption>
+    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"입니다.":"다섯 기운의 분포를 한눈에 봅니다."}</strong><small>지금 사주에서 보이는 오행 비율</small></figcaption>
     <div className="fiveElementRows">
       {ELEMENTS.map(element=>{const value=adjusted?.[element].percentage??native?.[element].percentage??0;return <div className="fiveElementRow" data-element={element} key={element}>
         <b>{customerElement(element)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
@@ -146,10 +146,10 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
     <header className="lifetimeCover book154Cover">
       <div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
       <div className="coverOrnament" aria-hidden="true"><i/><i/><i/></div>
-      <p>평생사주 · {contentSectionCount}개의 풀이</p>
+      <p>평생사주 · 한 권으로 읽는 내 이야기</p>
       <h1>{analysis.person.name}님의<br/>한 권의 사주책</h1>
       <h2>{report.headline}</h2>
-      <span>깊은 풀이를 쉬운 한국어로, 계산 근거는 그대로</span>
+      <span>어려운 말은 줄이고, 내 사주 이야기는 더 쉽게</span>
     </header>
     <nav className="book154Toc" aria-label="평생사주 목차">
       {parts.map(part=>{const count=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count}개 주제</small></a>;})}
@@ -173,14 +173,14 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
             {section.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
             {section.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
             {showEvidence?<EvidenceDetails>
-              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>이 부분은 태어난 순간의 오행 분포와 힘의 균형을 함께 놓고 읽었어요. 더 자세한 계산값은 책 마지막에서 따로 확인할 수 있습니다.</p>}
+              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>이 부분은 태어난 순간의 오행 분포와 기운의 세기를 함께 봤어요. 자세한 숫자는 책 마지막에서 확인할 수 있어요.</p>}
             </EvidenceDetails>:null}
           </article>;
         })}
       </section>})}
       {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산된 평생사주 결과는 정상적으로 표시됩니다.</p><button onClick={onRetry}>평생사주 해석 다시 시도</button></div>}
       <ProfessionalChapter analysis={analysis} report={report}/>
-      <footer className="reportNotice">이 결과는 전통 명리의 계산 근거를 생활 언어로 풀어낸 참고 콘텐츠입니다. 특정 사건을 확정하거나 중요한 현실 판단을 대신하지 않습니다.</footer>
+      <footer className="reportNotice">이 사주책은 전통 명리 계산을 바탕으로 삶의 모습을 쉽게 풀어낸 참고 내용이에요. 중요한 결정은 실제 상황과 함께 판단해 주세요.</footer>
     </main>
   </div>;
 }
@@ -194,13 +194,13 @@ function LifetimeGenerationScreen({ name, stage="CHARACTER_CORE", completedParts
       <div className="generationSeal" aria-hidden="true"><i/><i/><i/></div>
       <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
-      <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
+      <p className="generationLead">사주 계산은 끝났어요. 지금은 타고난 성향부터 일·돈·관계·앞으로의 흐름까지 한 권의 이야기로 정리하고 있어요.</p>
       <p className="generationStage">{stageCopy}</p><div className="generationProgress" aria-hidden="true"><span style={{width:`${stage==="MERGE"?100:Math.max(6,Math.min(96,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
       <div className="generationSteps">
         <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
         <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
         <p><b>3</b><span>10년 흐름과 앞으로 5년의 변화를 따로 읽고 있어요</span></p>
-        <p><b>4</b><span>필요한 모든 풀이가 검증되면 한 번에 보여드릴게요</span></p>
+        <p><b>4</b><span>내용을 다 정리하면 한 번에 보여드릴게요</span></p>
       </div>
       <p className="generationNotice">페이지를 이동하지 않아도 됩니다. 해설이 완성되면 자동으로 결과가 열립니다.</p>
     </section>
