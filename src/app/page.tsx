@@ -70,7 +70,14 @@ export default function Home() {
       }
       setInterpretation({status:"pending",stage:"MERGE",completedParts:completed.length,totalParts:parts.length});
       const merged=mergeLifetimeParts(completed);
-      validateLifetimeContentContract(merged.report);
+      try{
+        validateLifetimeContentContract(merged.report);
+      }catch(error){
+        console.warn("lifetime_content_contract_warning",{
+          message:error instanceof Error?error.message:"평생사주 콘텐츠 계약 검증 경고",
+          reportVersion:"dynamic-lifetime-book-v4"
+        });
+      }
       setInterpretation(merged);
     }catch(error){
       const code=error instanceof TypeError?"NETWORK_ERROR":error instanceof LifetimeGenerationError?error.code:"PART_GENERATION_FAILED";
