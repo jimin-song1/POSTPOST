@@ -41,6 +41,18 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(content.every(row=>new Set(row.noveltyElements).size>=LIFETIME_CONTENT_CONTRACT_V1.novelty.minimumNewElements)).toBe(true);
     expect(content.every(row=>row.claimsUsed?.length&&row.scenesUsed?.length&&row.domainConsequence&&row.priorSectionSummary!==undefined)).toBe(true);
 
+    const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
+    const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
+    for(const section of customerSections){
+      const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
+      const topic=bookSectionById.get(section.id)?.topic;
+      if(topic)expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBeLessThanOrEqual(1);
+      const paragraphSet=new Set(paragraphs.map(paragraph=>paragraph.replace(/\s+/g," ").trim()));
+      for(const point of section.keyPoints??[])expect(paragraphSet.has(point.replace(/\s+/g," ").trim()),section.id).toBe(false);
+    }
+    const sectionFingerprints=customerSections.map(section=>(section.paragraphs?.length?section.paragraphs:[section.body]).join("\n").replace(/\s+/g," ").trim());
+    expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
+
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
     const sharedMarker=characterCore.corePatterns[0];expect(provider.requests.slice(1).every(request=>request.systemPrompt.includes(sharedMarker))).toBe(true);
