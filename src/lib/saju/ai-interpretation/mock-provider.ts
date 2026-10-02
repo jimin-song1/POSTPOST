@@ -232,6 +232,7 @@ function joinUpsideShadow(strength:string,shadow:string){
 }
 function naturalizeNarration(text:string){
   return text
+    .replaceAll("자기준","자기 기준")
     .replaceAll("실제 생활에서는","생활에서는")
     .replaceAll("실제 생활에서","생활에서")
     .replaceAll("중심으로 봅니다.","부터 보는 편이에요.")
