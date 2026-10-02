@@ -46,9 +46,13 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
-      if(topic)expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBeLessThanOrEqual(1);
+      if(topic)expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBe(0);
       const paragraphSet=new Set(paragraphs.map(paragraph=>paragraph.replace(/\s+/g," ").trim()));
-      for(const point of section.keyPoints??[])expect(paragraphSet.has(point.replace(/\s+/g," ").trim()),section.id).toBe(false);
+      for(const point of section.keyPoints??[]){
+        const normalizedPoint=point.replace(/\s+/g," ").trim();
+        expect(paragraphSet.has(normalizedPoint),section.id).toBe(false);
+        expect(normalizedPoint,section.id).not.toBe((section.lead??"").replace(/\s+/g," ").trim());
+      }
     }
     const sectionFingerprints=customerSections.map(section=>(section.paragraphs?.length?section.paragraphs:[section.body]).join("\n").replace(/\s+/g," ").trim());
     expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
