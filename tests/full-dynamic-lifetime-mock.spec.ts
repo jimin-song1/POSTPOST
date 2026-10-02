@@ -31,8 +31,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "사주원국","일주와 오행","직업·학업","재물","애정·자녀","건강","귀인",
-      "십이신살","십이운성","십성","연운","삼재","대운","마치며"
+      "나는 어떤 존재인가","나를 이루는 기운","나에게 맞는 무대","돈과 풍요","사랑과 가족","몸과 마음의 신호","나를 돕는 인연",
+      "내 사주의 특별한 이야기","삶의 에너지 흐름","내 안의 여러 모습","앞으로의 흐름","변화가 커지는 때","큰 운의 흐름","마치며"
     ]);
     expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
     expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
