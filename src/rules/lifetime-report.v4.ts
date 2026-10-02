@@ -32,17 +32,37 @@ const samjaeTopics=["삼재란 무엇인가","내 생년지가 만드는 삼재 
 const yearTopics=["그 해의 두 기운과 내 기본 흐름의 만남","10년 흐름 속 도움과 변화","움직임이 커지는 분야의 행동 기준"];
 const daeunTopics=["전반부와 후반부, 앞뒤 흐름의 차이"];
 
+const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
+  "01":"사주원국",
+  "02":"일주와 오행",
+  "03":"직업·학업",
+  "04":"재물",
+  "05":"애정·자녀",
+  "06":"건강",
+  "07":"귀인",
+  "08":"십이신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운",
+  "12S":"삼재",
+  "13":"대운",
+  "14":"마치며"
+};
+const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
+
 export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number}):DynamicLifetimeBook{
-  const base=LIFETIME_BOOK_PAGES.map(page=>{const part=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
+  const base=LIFETIME_BOOK_PAGES.map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
+    const remappedPartNumber=legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
+    const part=customerPart(remappedPartNumber,legacyPart.title);
     return{id:`legacy-${page.id}`,title:page.title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:page.title,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
-  childTopics.forEach((title,index)=>additions.push(extra(`children-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"09","아이와 가족 역할","CHILDREN","TIMING_CORE")));
-  if(options.includeSamjae)samjaeTopics.forEach((title,index)=>additions.push(extra(`samjae-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"12S","삼재와 인생의 큰 변화","SAMJAE","TIMING_CORE")));
-  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>{const yearlyTitle=`${options.year+offset}년 · ${title}`;additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}`,yearlyTitle,"11","앞으로 5년",(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",yearlyTitle));});
-  for(let daeun=1;daeun<=10;daeun++)daeunTopics.forEach((title,index)=>{const daeunTitle=`${daeun}번째 10년 · ${title}`;additions.push(extra(`daeun-${daeun}-${String(index+1).padStart(2,"0")}`,daeunTitle,"13","10년마다 바뀌는 큰 흐름",(`DAEUN_${daeun}` as LifetimeEvidenceGroup),"TIMING_CORE",daeunTitle));});
+  childTopics.forEach((title,index)=>additions.push(extra(`children-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")));
+  if(options.includeSamjae)samjaeTopics.forEach((title,index)=>additions.push(extra(`samjae-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE")));
+  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>{const yearlyTitle=`${options.year+offset}년 · ${title}`;additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}`,yearlyTitle,"11",YINYANGWAN_STYLE_PART_TITLES["11"],(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",yearlyTitle));});
+  for(let daeun=1;daeun<=10;daeun++)daeunTopics.forEach((title,index)=>{const daeunTitle=`${daeun}번째 10년 · ${title}`;additions.push(extra(`daeun-${daeun}-${String(index+1).padStart(2,"0")}`,daeunTitle,"13",YINYANGWAN_STYLE_PART_TITLES["13"],(`DAEUN_${daeun}` as LifetimeEvidenceGroup),"TIMING_CORE",daeunTitle));});
   const all=[...base,...additions].sort((a,b)=>{
-    const original=LIFETIME_BOOK_V1.parts.map(row=>row.partNumber),insertAt=original.indexOf("13"),order=[...original.slice(0,insertAt),"12S",...original.slice(insertAt)];
+    const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
     return order.indexOf(a.partNumber)-order.indexOf(b.partNumber);});
   const sections=all.map((row,index)=>({...row,sequence:index+1}));
   const partOrder=Array.from(new Set(sections.map(row=>row.partNumber)));
