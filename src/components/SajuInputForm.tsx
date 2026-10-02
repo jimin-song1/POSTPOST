@@ -31,7 +31,7 @@ export function SajuInputForm({ onResult }: { onResult: (value: LifetimeFormResu
   async function submit(event: FormEvent) {
     event.preventDefault(); if (!validate()) return; setLoading(true); setErrors({});
     try { const response = await fetch("/api/saju/result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); const body = await response.json(); if (!response.ok) throw new Error(body.error ?? body.message ?? "요청에 실패했습니다."); onResult({ payload: body, relationshipStatus }); }
-    catch (reason) { setErrors({ submit: reason instanceof Error ? reason.message : "알 수 없는 오류" }); } finally { setLoading(false); }
+    catch (reason) { setErrors({ submit: reason instanceof TypeError ? "네트워크 연결을 확인한 뒤 다시 시도해 주세요." : reason instanceof Error ? reason.message : "알 수 없는 오류" }); } finally { setLoading(false); }
   }
   return <section className="inputBook"><header><span>POSTPOST · 평생사주</span><h1>나의 시간을<br />한 권의 이야기로</h1><p>정확한 계산을 위해 태어난 정보를 차례로 입력해 주세요.</p></header><form onSubmit={submit} noValidate>
     <div className="field"><label htmlFor="customer-name">이름</label><input id="customer-name" value={form.name} onChange={(event) => update("name", event.target.value)} aria-invalid={Boolean(errors.name)} placeholder="이름을 입력해 주세요" />{errors.name && <p className="fieldError">{errors.name}</p>}</div>

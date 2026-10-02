@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SajuInputForm, type LifetimeFormResult } from "@/components/SajuInputForm";
 import { LifetimeReport } from "@/components/LifetimeReport";
 import {buildDynamicLifetimeBook} from "@/rules/lifetime-report.v4";
@@ -55,6 +55,8 @@ function mergeLifetimeParts(parts:InterpretationSuccess[]):InterpretationSuccess
 export default function Home() {
   const [result,setResult]=useState<CustomerResultPayload|null>(null),[relationshipStatus,setRelationshipStatus]=useState<RelationshipStatus>("SINGLE");
   const [interpretation,setInterpretation]=useState<InterpretationUiState>({status:"not_requested"});
+  const [refreshNotice,setRefreshNotice]=useState(false);
+  useEffect(()=>{if(sessionStorage.getItem("postpost-lifetime-result-active")==="true")setRefreshNotice(true);},[]);
   const requestInterpretation=useCallback(async(payload:CustomerResultPayload,relationship:RelationshipStatus)=>{
     const year=new Date().getFullYear(),fortune=payload.analysis.fortune,includeSamjae=fortune.status==="partial"&&"samjae" in fortune&&fortune.samjae.status==="implemented";
     const parts=buildDynamicLifetimeBook({includeSamjae,year}).parts;
@@ -75,8 +77,8 @@ export default function Home() {
       setInterpretation({status:"failed",ruleVersion:"ai-interpretation-v1",error:{code: code, message:error instanceof Error?error.message:"해설 생성 중 오류가 발생했습니다."}});
     }
   },[]);
-  function accept(value:LifetimeFormResult){setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}
+  function accept(value:LifetimeFormResult){sessionStorage.setItem("postpost-lifetime-result-active","true");setRefreshNotice(false);setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}
   if(result)return <LifetimeReport analysis={result.analysis} current={result.current} relationshipStatus={relationshipStatus} interpretation={interpretation}
-    onRetry={()=>void requestInterpretation(result,relationshipStatus)} onRestart={()=>{setResult(null);setInterpretation({status:"not_requested"});}}/>;
-  return <main className="lifetimeInputPage"><SajuInputForm onResult={accept}/><a className="sampleReportLink" href="/dev/lifetime-report">API 키 없이 동적 평생사주 편집 샘플 보기</a><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
+    onRetry={()=>void requestInterpretation(result,relationshipStatus)} onRestart={()=>{sessionStorage.removeItem("postpost-lifetime-result-active");setRefreshNotice(false);setResult(null);setInterpretation({status:"not_requested"});}}/>;
+  return <main className="lifetimeInputPage">{refreshNotice&&<div className="refreshRecoveryNotice" role="status"><b>새로고침되어 이전 결과를 다시 불러올 수 없어요.</b><span>같은 정보를 입력하면 Mock 사주책을 다시 만들 수 있습니다.</span><button onClick={()=>{sessionStorage.removeItem("postpost-lifetime-result-active");setRefreshNotice(false);}}>확인</button></div>}<SajuInputForm onResult={accept}/><a className="sampleReportLink" href="/dev/lifetime-report">API 키 없이 동적 평생사주 편집 샘플 보기</a><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
 }
