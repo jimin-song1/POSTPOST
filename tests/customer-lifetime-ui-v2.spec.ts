@@ -63,5 +63,8 @@ describe("CUSTOMER_LIFETIME_UI_V2 report",()=>{
   it("explains wellness percentages as element composition",async()=>{const source=await reportSource();expect(source).toContain("건강 점수가 아닙니다");expect(source).toContain("기운 <strong>");});
   it("places children metric explanations beside their values",async()=>{const source=await reportSource();expect(source).toContain("출산 가능성을 뜻하지 않습니다");expect(source).toContain("실제 아이의 성별을 맞히는 숫자가 아닙니다");});
   it("labels professional pillar Ten Gods explicitly",async()=>{const source=await reportSource();expect(source).toContain("천간 십성:");});
+  it("uses an editorial five-element spread inside the dynamic lifetime book",async()=>{const source=await reportSource();expect(source).toContain('className="fiveElementSpread"');expect(source).toContain("오행 한눈에 보기");expect(source).toContain("adjustedStrength.elements");expect(source).toContain('section.id==="legacy-book-020"');});
+  it("replaces internal-sounding early book titles with customer language",async()=>{const source=await reportSource();expect(source).toContain('"01":"타고난 나의 중심"');expect(source).toContain('"02":"내 안의 다섯 기운"');expect(source).toContain('"legacy-book-015":"상황마다 달라지는 내 모습"');});
+  it("does not repeat generic evidence drawers on every dynamic page",async()=>{const source=await reportSource();expect(source).toContain('const showEvidence=Boolean(section.professionalDetails||section.metrics?.length)');expect(source).toContain("계산 근거 보기");expect(source).not.toContain("왜 이렇게 보나요?");});
   it("formats customer labels Korean-first and professional labels Han-second",()=>{expect(CUSTOMER_TERMINOLOGY_V1.elements.wood).toEqual({customer:"나무",professional:"목(木)"});});
 });
