@@ -89,7 +89,7 @@ const BOOK_PART_TITLES:Record<string,string>={
 const BOOK_SECTION_TITLES:Record<string,string>={
   "legacy-book-007":"나는 어떤 방식으로 움직이는 사람일까",
   "legacy-book-008":"먼저 한마디로 말하면",
-  "legacy-book-009":"태어난 순간의 네 자리",
+  "legacy-book-009":"태어난 해·달·날·시간이 말해주는 것",
   "legacy-book-015":"상황마다 달라지는 내 모습",
   "legacy-book-016":"내 안의 다섯 기운",
   "legacy-book-017":"내 기운은 얼마나 단단할까",
