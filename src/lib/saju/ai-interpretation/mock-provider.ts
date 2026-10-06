@@ -2579,7 +2579,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/강점이 부담으로 바뀌는 순간/.test(title))return[
     `가장 큰 강점인 ${stem.core}도 한쪽으로 몰리면 ${stem.shadow}으로 바뀔 수 있습니다.`,
-    dominantFamily===undefined?dominantFamilySentence(facts):dominantFamilySentence(facts),
+    dominantFamilySentence(facts),
     "책임감이 강하면 모든 일을 직접 가져오고, 분석력이 강하면 준비가 끝나지 않으며, 독립심이 강하면 도움을 너무 늦게 쓰는 식입니다.",
     "잘하는 힘일수록 '이 정도면 충분하다'는 종료 기준과 다른 사람에게 넘길 기준이 필요합니다.",
     "강점을 줄이는 것이 아니라 강점이 나를 소모하기 전에 사용량을 조절하는 것이 핵심입니다."
@@ -2682,8 +2682,6 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
 
 function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[],facts=consultationFacts(input);
-  const firstContentIdByPart=new Map<string,string>();
-  for(const row of rows)if(row.contentKind==="CONTENT"&&row.partNumber&&!firstContentIdByPart.has(row.partNumber))firstContentIdByPart.set(row.partNumber,row.id);
   const sections=rows.map((row,index)=>{
     const ids=input.reportVersion==="dynamic-lifetime-book-v4"?[...row.evidenceIds]:evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index,facts,input);
@@ -2698,7 +2696,6 @@ function report(input:InterpretationInput):StructuredInterpretation{
         ?[value.scene,value.consequence,value.action]
         :fullParagraphs;
     const pageNo=row.pageNumber??index+1;
-    const group=row.evidenceGroup??"";
     const lead=undefined;
     return {
       id:row.id,
