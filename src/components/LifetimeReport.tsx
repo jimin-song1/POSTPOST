@@ -119,6 +119,18 @@ const daeunAgeLabel=(analysis:SajuAnalysis,index:number)=>{
   const end=Math.max(start,Math.floor(period.endAgeYears));
   return `${start}~${end}세`;
 };
+const PERSONAL_PART_LINES:Record<string,(name:string)=>string>={
+  "01":name=>`${name}님의 기본 성향부터 천천히 읽어볼게요.`,
+  "03":name=>`${name}님에게 잘 맞는 일과 배움의 방향을 봅니다.`,
+  "04":name=>`${name}님의 재물운은 어떻게 움직이는지 살펴봅니다.`,
+  "05":name=>`${name}님의 연애·결혼·가족 관계에서 중요한 흐름을 봅니다.`,
+  "07":name=>`${name}님에게 도움을 주는 사람과 인연의 흐름을 봅니다.`,
+  "11":name=>`${name}님의 앞으로 5년은 어디에서 변화가 커지는지 봅니다.`,
+  "13":name=>`${name}님의 삶을 10년 단위로 나누어 큰 흐름을 봅니다.`,
+  "14":name=>`${name}님의 사주에서 끝까지 남는 핵심을 정리합니다.`
+};
+const personalPartLine=(partNumber:string,name:string)=>PERSONAL_PART_LINES[partNumber]?.(name)??null;
+
 const displaySectionTitle=(section:{id:string;title:string;evidenceGroup?:string},analysis:SajuAnalysis)=>{
   const group=section.evidenceGroup??"";
   const match=group.match(/^DAEUN_(\d+)$/);
@@ -194,7 +206,7 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
     </nav>
     <main className="book154Main">
       {parts.map(part=>{const sections=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
-        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2></header>
+        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2>{personalPartLine(part.partNumber,analysis.person.name)?<p>{personalPartLine(part.partNumber,analysis.person.name)}</p>:null}</header>
         {part.partNumber==="01"?<SajuAtGlance analysis={analysis}/>:null}
         {sections.map((section,index)=>{
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
