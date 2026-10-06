@@ -94,8 +94,15 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
       throw new GroundingValidationError(`${row.id} section의 새 정보 요소가 3개보다 적습니다.`);
   }
 
-  for(const row of report.sections)validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
-    [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
+  for(const row of report.sections){
+    try{
+      validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
+        [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
+    }catch(error){
+      if(error instanceof GroundingValidationError)throw new GroundingValidationError(row.id+": "+error.message);
+      throw error;
+    }
+  }
   for(const row of report.timeline)validateLockedText(`${row.title}\n${row.body}`,
     row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
 
