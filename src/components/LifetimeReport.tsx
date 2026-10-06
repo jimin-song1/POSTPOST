@@ -71,60 +71,23 @@ function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; repo
 
 
 const BOOK_PART_TITLES:Record<string,string>={
-  "01":"나는 어떤 존재인가",
-  "02":"나를 이루는 기운",
-  "03":"직업운과 학업운",
-  "04":"돈과 풍요",
-  "05":"사랑과 가족",
-  "06":"몸과 마음의 신호",
-  "07":"나를 돕는 인연",
-  "08":"내 사주의 특별한 이야기",
-  "09":"삶의 에너지 흐름",
-  "10":"내 안의 여러 모습",
-  "11":"앞으로의 흐름",
-  "12S":"변화가 커지는 때",
-  "13":"큰 운의 흐름",
-  "14":"마치며"
+  "01":"성격과 기본 성향",
+  "02":"일주와 오행",
+  "03":"직업운·학업운",
+  "04":"재물운",
+  "05":"연애운·결혼운·자녀운",
+  "06":"건강운",
+  "07":"귀인운",
+  "08":"신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운 · 앞으로 5년",
+  "12S":"삼재·변화운",
+  "13":"대운",
+  "14":"총정리"
 };
-const BOOK_SECTION_TITLES:Record<string,string>={
-  "legacy-book-007":"나는 어떻게 결정하고 움직일까",
-  "legacy-book-008":"먼저 한마디로 말하면",
-  "legacy-book-009":"사람마다 보여주는 모습이 다른 이유",
-  "legacy-book-010":"처음 만났을 때 보이는 나",
-  "legacy-book-011":"일할 때의 나",
-  "legacy-book-012":"가까운 사람 앞의 나",
-  "legacy-book-013":"혼자 있을 때의 나",
-  "legacy-book-014":"속으로 오래 남는 생각",
-  "legacy-book-015":"상황마다 앞에 나오는 내 모습",
-  "legacy-book-016":"내 안의 다섯 기운",
-  "legacy-book-017":"나는 밀어붙이는 편일까, 도움을 받는 편일까",
-  "legacy-book-020":"내 안의 다섯 기운, 어디에 힘이 몰렸을까",
-  "legacy-book-021":"나를 가장 닮은 기운",
-  "legacy-book-023":"겉으로 보이는 나, 속에서 움직이는 나",
-  "legacy-book-024":"다섯 기운의 균형",
-  "legacy-book-025":"나를 편하게 하는 기운, 지치게 하는 기운",
-  "legacy-book-028":"나는 이렇게 일하는 편이에요",
-  "legacy-book-029":"직장과 사업에서 달라지는 내 모습",
-  "legacy-book-033":"함께 일할 때 나는 어떤 편일까",
-  "legacy-book-036":"돈 앞에서 나는 어떤 사람일까",
-  "legacy-book-037":"돈은 어떻게 들어오고 나갈까",
-  "legacy-book-044":"사랑할 때 나는 어떤 사람일까",
-  "legacy-book-045":"관계에서 자꾸 반복되는 장면",
-  "legacy-book-054":"몸이 먼저 보내는 신호",
-  "legacy-book-065":"도움은 어디에서 들어올까",
-  "legacy-book-075":"유난히 눈에 띄는 내 모습",
-  "legacy-book-086":"내 기운은 언제 살아날까",
-  "legacy-book-097":"내 안에서 자주 앞서는 모습",
-  "legacy-book-110":"앞으로 5년, 먼저 보이는 흐름",
-  "legacy-book-121":"지금은 얼마나 크게 움직이는 때일까",
-  "legacy-book-130":"지금 10년 흐름의 분위기",
-  "legacy-book-146":"결국 나는 어떤 사람일까",
-  "legacy-book-147":"내 장점이 가장 잘 살아나는 순간",
-  "legacy-book-148":"잘하던 일이 오히려 나를 지치게 할 때",
-  "legacy-book-152":"나에게 편한 선택은 무엇일까"
-};
+const customerSectionTitle=(_id:string,fallback:string)=>fallback;
 const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
-const customerSectionTitle=(id:string,fallback:string)=>BOOK_SECTION_TITLES[id]??fallback;
 
 function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
   const dayElement=analysis.strength.dayMaster?.element;
