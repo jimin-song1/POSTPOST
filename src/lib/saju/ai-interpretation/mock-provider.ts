@@ -314,6 +314,71 @@ function pillarElementSentence(pillar:string){
   return `${pillarReading(pillar[0],pillar[1])}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 한 기둥 안에서 만나는 구조입니다.`;
 }
 
+const CATEGORY_LABELS:Record<string,string>={OVERALLFLOW:"전체 흐름",WEALTH:"재물",BUSINESS:"사업",CAREER:"직업",RELATIONSHIP:"관계",STUDY:"학업",CHANGE:"변화"};
+const FAVORABILITY_LABELS:Record<string,string>={
+  PRIMARY_FAVORABLE:"가장 유리한 흐름",STRONG_FAVORABLE:"유리한 흐름",FAVORABLE:"도움이 되는 흐름",
+  CONDITIONAL:"조건을 타는 흐름",NEUTRAL:"중립적인 흐름",UNFAVORABLE:"부담이 커질 수 있는 흐름"
+};
+const ACTIVATION_LABELS:Record<string,string>={LOW:"움직임이 크지 않은 편",MODERATE:"움직임이 적당히 생기는 편",HIGH:"변화와 활동이 커지는 편",VERY_HIGH:"변화와 활동이 매우 커지는 편"};
+
+function rowEvidenceValue(input:InterpretationInput,row:Row,predicate:(id:string)=>boolean){
+  for(const id of row.evidenceIds){
+    if(!predicate(id))continue;
+    const found=input.evidence.find(item=>item.id===id);
+    if(found)return unwrapEvidenceValue(found.value);
+  }
+  return null;
+}
+function periodContext(input:InterpretationInput,row:Row){
+  const value=asRecord(rowEvidenceValue(input,row,id=>id.includes(":PERIOD_CONTEXT")));
+  return{
+    daeunIndex:asNumber(value?.daeunIndex),
+    daeunPillar:asText(value?.daeunPillar),
+    seunYear:asNumber(value?.seunYear),
+    seunPillar:asText(value?.seunPillar),
+    wolunPillar:asText(value?.wolunPillar)
+  };
+}
+function fortuneAxis(input:InterpretationInput,row:Row){
+  const favor=asRecord(rowEvidenceValue(input,row,id=>id.includes(":FAVORABILITY")));
+  const activation=asRecord(rowEvidenceValue(input,row,id=>id.includes(":ACTIVATION")));
+  return{
+    favorabilityLevel:asText(favor?.level),
+    favorabilityScore:asNumber(favor?.score),
+    activationLevel:asText(activation?.level),
+    activationScore:asNumber(activation?.score)
+  };
+}
+function categoryAxes(input:InterpretationInput,row:Row){
+  const rows:Array<{key:string;label:string;support:number;activity:number}>=[];
+  for(const id of row.evidenceIds){
+    if(!id.startsWith("CATEGORY:"))continue;
+    const value=asRecord(input.evidence.find(item=>item.id===id)?.value);
+    if(!value)continue;
+    const key=id.split(":").at(-1)??"";
+    const support=asNumber(value.supportScore),activity=asNumber(value.activityScore);
+    if(support==null&&activity==null)continue;
+    rows.push({key,label:CATEGORY_LABELS[key]??key,support:support??0,activity:activity??0});
+  }
+  return rows;
+}
+function topCategorySentence(input:InterpretationInput,row:Row){
+  const axes=categoryAxes(input,row);
+  if(!axes.length)return"";
+  const active=[...axes].sort((a,b)=>b.activity-a.activity)[0],support=[...axes].sort((a,b)=>b.support-a.support)[0];
+  if(active&&support&&active.key!==support.key)return `움직임이 가장 큰 분야는 ${active.label}, 상대적으로 도움을 받기 쉬운 분야는 ${support.label} 쪽입니다. '바쁜 분야'와 '유리한 분야'가 같지 않을 수 있다는 점이 중요합니다.`;
+  if(active)return `이 시기에는 ${active.label} 쪽의 움직임이 가장 크게 잡힙니다. 변화가 크다는 말은 무조건 좋거나 나쁘다는 뜻이 아니라 실제 선택할 일이 많아진다는 뜻에 가깝습니다.`;
+  return"";
+}
+function fortunePillarSentence(pillar:string){
+  if(!pillar||pillar.length<2)return"";
+  const reading=pillarReading(pillar[0],pillar[1]),stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
+  if(stemElement&&branchElement&&stemElement===branchElement)return `${reading}은 ${elementPro(stemElement)}이 위아래에서 함께 강조되는 시기입니다. 이 기운이 맡는 역할이 평소보다 전면에 나옵니다.`;
+  if(stemElement&&branchElement)return `${reading}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 함께 들어오는 시기입니다. 두 기운이 원국과 어떻게 맞물리는지가 실제 체감을 만듭니다.`;
+  return `${reading}의 기운이 들어오는 시기입니다.`;
+}
+
+
 
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
