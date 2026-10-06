@@ -1128,7 +1128,13 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts){
 
   if(["CORE","PILLARS","HIDDEN_STEMS"].includes(group)){
     const focused=coreChapterExpansion(row);
-    if(focused.length)return focused.map(paragraph=>naturalizeNarration(paragraph.trim())).filter(Boolean);
+    if(focused.length){
+      const depth=chapterDepthExpansion(row,index);
+      return [...focused,...depth]
+        .map(paragraph=>naturalizeNarration(paragraph.trim()))
+        .filter(Boolean)
+        .filter((paragraph,paragraphIndex,rows)=>rows.indexOf(paragraph)===paragraphIndex);
+    }
   }
 
   const paragraphs:string[]=[];
@@ -1139,6 +1145,9 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts){
 
   const coreExpansion=coreChapterExpansion(row);
   if(coreExpansion.length)paragraphs.push(...coreExpansion);
+
+  const depthExpansion=chapterDepthExpansion(row,index);
+  if(depthExpansion.length)paragraphs.push(...depthExpansion);
 
   const extras=sectionExtras(row,value);
   if(extras.length)paragraphs.push(...extras);
