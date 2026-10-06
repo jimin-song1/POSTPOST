@@ -81,6 +81,142 @@ function domainOf(group:string){
   return"GENERAL";
 }
 
+type LooseRecord=Record<string,unknown>;
+const asRecord=(value:unknown):LooseRecord|null=>value!==null&&typeof value==="object"&&!Array.isArray(value)?value as LooseRecord:null;
+const asText=(value:unknown)=>typeof value==="string"?value:"";
+const asNumber=(value:unknown)=>typeof value==="number"&&Number.isFinite(value)?value:null;
+const STEM_READ:Record<string,string>={甲:"갑",乙:"을",丙:"병",丁:"정",戊:"무",己:"기",庚:"경",辛:"신",壬:"임",癸:"계"};
+const BRANCH_READ:Record<string,string>={子:"자",丑:"축",寅:"인",卯:"묘",辰:"진",巳:"사",午:"오",未:"미",申:"신",酉:"유",戌:"술",亥:"해"};
+const STEM_ELEMENT_NAME:Record<string,string>={甲:"갑목",乙:"을목",丙:"병화",丁:"정화",戊:"무토",己:"기토",庚:"경금",辛:"신금",壬:"임수",癸:"계수"};
+const ELEMENT_PRO:Record<string,string>={wood:"목(木)",fire:"화(火)",earth:"토(土)",metal:"금(金)",water:"수(水)"};
+
+function unwrapEvidenceValue(value:unknown){
+  const record=asRecord(value);
+  if(record&&"value" in record)return record.value;
+  return value;
+}
+function evidenceValue(input:InterpretationInput,id:string){
+  return unwrapEvidenceValue(input.evidence.find(row=>row.id===id)?.value);
+}
+function pillarReading(stem:string,branch:string){return (STEM_READ[stem]??stem)+(BRANCH_READ[branch]??branch);}
+
+interface ConsultationFacts{
+  dayStem:string;dayStemName:string;dayPillar:string;dayPillarReading:string;
+  structure:string;strength:string;
+  strongest:{element:string;percentage:number}|null;
+  weakest:{element:string;percentage:number}|null;
+  missing:string[];
+  useful:string[];
+  stageByPosition:Record<string,string>;
+}
+function consultationFacts(input:InterpretationInput):ConsultationFacts{
+  const dayMaster=asRecord(evidenceValue(input,"NATAL:DAY_MASTER"));
+  const pillars=asRecord(evidenceValue(input,"NATAL:PILLARS"));
+  const day=asRecord(pillars?.day);
+  const structure=asRecord(evidenceValue(input,"NATAL:STRUCTURE:PRIMARY"));
+  const strength=asRecord(evidenceValue(input,"NATAL:STRENGTH:ADJUSTED"));
+  const elementRows=input.evidence
+    .filter(row=>row.id.startsWith("NATAL:FIVE_ELEMENTS:ELEMENT:"))
+    .map(row=>asRecord(row.value))
+    .filter((row):row is LooseRecord=>Boolean(row))
+    .map(row=>({element:asText(row.element),percentage:asNumber(row.percentage)??0}))
+    .filter(row=>row.element);
+  const sorted=[...elementRows].sort((a,b)=>b.percentage-a.percentage);
+  const useful=input.evidence
+    .filter(row=>row.id.startsWith("USEFUL_GOD:SYNTHESIS:"))
+    .map(row=>asRecord(row.value))
+    .filter((row):row is LooseRecord=>Boolean(row))
+    .filter(row=>["PRIMARY","SECONDARY","FAVORABLE"].includes(asText(row.role)))
+    .sort((a,b)=>(asNumber(b.score)??0)-(asNumber(a.score)??0))
+    .map(row=>asText(row.element))
+    .filter(Boolean)
+    .slice(0,3);
+  const stagesRoot=asRecord(evidenceValue(input,"NATAL:TWELVE_STAGES"));
+  const stages=asRecord(stagesRoot?.stages);
+  const stageByPosition:Record<string,string>={};
+  for(const position of ["year","month","day","hour"])stageByPosition[position]=asText(stages?.[position]);
+  const dayStem=asText(dayMaster?.stem)||asText(day?.stem),dayBranch=asText(day?.branch);
+  return{
+    dayStem,
+    dayStemName:STEM_ELEMENT_NAME[dayStem]??dayStem,
+    dayPillar:dayStem&&dayBranch?dayStem+dayBranch:"",
+    dayPillarReading:dayStem&&dayBranch?pillarReading(dayStem,dayBranch):"",
+    structure:asText(structure?.type),
+    strength:asText(strength?.level),
+    strongest:sorted[0]??null,
+    weakest:sorted.at(-1)??null,
+    missing:elementRows.filter(row=>row.percentage===0).map(row=>row.element),
+    useful,
+    stageByPosition
+  };
+}
+function elementPro(element:string){return ELEMENT_PRO[element]??element;}
+function elementFact(facts:ConsultationFacts){
+  if(!facts.strongest||!facts.weakest)return"";
+  if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
+  return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고 "+elementPro(facts.weakest.element)+"이 가장 약합니다.";
+}
+function structureMeaning(structure:string){
+  if(structure.includes("정관"))return"책임과 기준을 지키면서 신뢰를 쌓는 힘";
+  if(structure.includes("편관"))return"압박이 있는 자리에서도 결단하고 책임지는 힘";
+  if(structure.includes("정재"))return"꾸준히 관리하고 안정적으로 결과를 쌓는 힘";
+  if(structure.includes("편재"))return"시장과 기회를 읽고 여러 자원을 움직이는 힘";
+  if(structure.includes("식신"))return"배운 것을 결과물로 만들고 꾸준히 생산하는 힘";
+  if(structure.includes("상관"))return"자기 생각을 밖으로 표현하고 기존 방식을 바꾸는 힘";
+  if(structure.includes("정인")||structure.includes("편인"))return"배우고 이해한 것을 자기 것으로 만드는 힘";
+  if(structure.includes("건록")||structure.includes("양인"))return"스스로 방향을 정하고 독립적으로 밀고 가는 힘";
+  return"자기 기준을 세우고 현실에서 결과를 만드는 힘";
+}
+function workVerdict(facts:ConsultationFacts){
+  if(facts.structure.includes("관"))return"조직 안에서도 역할을 해낼 수 있지만, 단순히 지시만 받는 자리보다 판단권과 책임이 함께 주어지는 자리에서 강점이 더 살아납니다.";
+  if(facts.structure.includes("재"))return"일의 결과가 매출·운영·성과처럼 현실적인 숫자로 이어질 때 힘이 잘 살아납니다.";
+  if(facts.structure.includes("식")||facts.structure.includes("상관"))return"기획한 것을 말·콘텐츠·제품·서비스처럼 밖으로 만들어낼 때 직업운이 살아납니다.";
+  if(facts.structure.includes("인"))return"배우고 분석한 것을 전문성으로 바꾸는 일에서 강점이 분명합니다.";
+  return"자기 판단으로 방향을 정하고 결과까지 책임질 수 있는 일에서 강점이 살아납니다.";
+}
+function consultationOpening(row:Row,facts:ConsultationFacts){
+  const title=row.topic??row.title,group=row.evidenceGroup??"";
+  if(group==="ELEMENTS")return elementFact(facts);
+  if(group==="STRENGTH"&&facts.strength)return "전체 기운의 균형은 "+facts.strength+"으로 계산됩니다. 이 값은 의지가 세다 약하다는 뜻보다, 혼자 밀어붙이는 힘과 주변 도움을 쓰는 비중을 보는 기준입니다.";
+  if(group==="STRUCTURE_USEFUL"){
+    const useful=facts.useful.length?facts.useful.map(elementPro).join(" · "):"";
+    if(facts.structure&&useful)return "타고난 구조는 "+facts.structure+"으로 잡히고, 도움 되는 기운은 "+useful+" 순으로 봅니다. "+structureMeaning(facts.structure)+"이 기본축이고, 부족한 쪽을 보완할 때 흐름이 더 매끄러워집니다.";
+    if(facts.structure)return "타고난 구조는 "+facts.structure+"입니다. "+structureMeaning(facts.structure)+"이 이 사주의 기본축입니다.";
+  }
+  if(group==="IDENTITY"){
+    if(/일주|두 글자/.test(title)&&facts.dayPillar)return (facts.dayPillarReading||facts.dayPillar)+" 일주는 이 사주에서 나 자신을 가장 가까이 보는 자리입니다. "+(facts.dayStemName||"일간")+"의 성향이 가까운 관계와 실제 선택에서 가장 직접적으로 드러납니다.";
+    if(facts.dayStemName)return "나를 대표하는 중심은 "+facts.dayStemName+"입니다. "+elementFact(facts).replace(/^오행에서는 /,"")+" 이 조합이 성격의 방향을 만듭니다.";
+  }
+  if(group==="WORK"){
+    if(/직장운/.test(title))return "직장운은 분명히 있습니다. "+workVerdict(facts);
+    if(/사업운/.test(title))return facts.structure.includes("재")
+      ?"사업운은 눈여겨볼 만합니다. 돈과 시장, 운영 결과를 직접 다루는 구조와 연결될수록 장점이 크게 살아납니다."
+      :"사업은 무조건 독립하는 것보다 내가 결정권을 갖고 결과를 직접 확인할 수 있는 구조일 때 잘 맞습니다.";
+    if(/학업운/.test(title))return "학업운은 단순 암기보다 배워서 어디에 쓸지가 분명할수록 강합니다. "+(facts.dayStemName||"자기 중심")+"의 성향상 이해한 것을 자기 기준으로 다시 정리할 때 실력이 빨리 붙습니다.";
+    if(/잘 맞는 일/.test(title))return "직업에서는 직함보다 하루 동안 어떤 판단을 하고 어떤 결과를 만드는지가 더 중요합니다. "+workVerdict(facts);
+    return workVerdict(facts);
+  }
+  if(group==="WEALTH"){
+    if(/기본 성향/.test(title))return "재물운은 단순히 아끼는 힘보다 돈을 어디에 쓰고 어떤 결과로 돌려받는지가 중요합니다. "+(facts.structure?structureMeaning(facts.structure):"자기 기준을 현실 결과로 연결하는 힘")+"이 돈의 선택에도 그대로 이어집니다.";
+    if(/돈의 흐름/.test(title))return "돈의 흐름은 한 번의 큰 행운보다 반복해서 남는 구조를 만드는 쪽에 가깝습니다. "+elementFact(facts)+" 이 균형 때문에 잘하는 부분과 일부러 보완해야 할 부분이 재물관리에서도 갈립니다.";
+    if(/버는 힘/.test(title))return "돈을 버는 힘은 시간을 많이 쓰는 것보다 결과를 구조화하는 데서 커집니다. 기획한 것을 서비스·판매·운영처럼 반복 가능한 형태로 만들수록 재물운을 쓰기 좋습니다.";
+    if(/모으고 지키/.test(title))return"버는 것과 지키는 것은 다른 능력입니다. 수입이 늘어도 사람·확장·새 기회에 돈이 같이 움직이면 남는 돈은 달라지므로, 기준과 정산 구조를 분명히 두는 편이 좋습니다.";
+    if(/인간관계/.test(title))return"돈과 사람을 섞을 때는 호의보다 기준이 먼저입니다. 가까운 사이라도 금액·역할·정산 시점을 분명히 할수록 관계까지 오래 갑니다.";
+  }
+  if(group==="RELATIONSHIP"&&facts.dayPillarReading)return "관계에서는 "+facts.dayPillarReading+" 일주의 성향이 가장 직접적으로 드러납니다. 가까워질수록 겉으로 맞춰주는 것보다 내가 이 사람을 믿을 수 있는가가 훨씬 중요해집니다.";
+  if(group==="WELLNESS"&&facts.strongest&&facts.weakest)return "건강운은 질병을 맞히는 장이 아니라 생활 균형을 보는 장입니다. "+elementPro(facts.strongest.element)+"과 "+elementPro(facts.weakest.element)+"의 차이가 큰 만큼, 무리하는 패턴과 회복 리듬을 일정하게 관리하는 게 중요합니다.";
+  if(group==="TWELVE_STAGES"){
+    const position=/년주/.test(title)?"year":/월주/.test(title)?"month":/일주/.test(title)?"day":/시주/.test(title)?"hour":"";
+    if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
+  }
+  if(group==="TEN_GODS")return "십성은 성격을 열 가지로 쪼개는 표가 아니라, 경쟁·표현·돈·책임·배움 중 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?facts.structure+"이 잡힌 만큼 "+structureMeaning(facts.structure)+"이 중심축으로 작동합니다.":"");
+  if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
+  if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 10년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
+  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
+  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주, ":"")+(facts.structure?facts.structure+", ":"")+(facts.strength?facts.strength+"의 균형":"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
+  return"";
+}
+
 function profile(row:Row,index:number):DomainProfile{
   const topic=row.topic??row.title,domain=domainOf(row.evidenceGroup??"");
   const suffix=index%3===0?"바로 움직이기보다 한 번 더 살펴보는 편이에요.":index%3===1?"상황을 본 뒤 뭐부터 할지 정하는 편이에요.":"지금 확인할 것과 바로 해도 될 일을 나눠보는 편이에요.";
