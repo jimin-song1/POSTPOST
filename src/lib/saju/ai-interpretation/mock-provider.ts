@@ -197,7 +197,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(facts.structure)return "타고난 구조는 "+facts.structure+"입니다. "+structureMeaning(facts.structure)+"이 이 사주의 기본축입니다.";
   }
   if(group==="IDENTITY"){
-    if(/일주|두 글자/.test(title)&&facts.dayPillar)return (facts.dayPillarReading||facts.dayPillar)+" 일주는 이 사주에서 나 자신을 가장 가까이 보는 자리입니다. "+(facts.dayStemName||"일간")+"의 성향이 가까운 관계와 실제 선택에서 가장 직접적으로 드러납니다.";
+    if(/일주|두 글자/.test(title)&&facts.dayPillar)return (facts.dayPillarReading||facts.dayPillar)+" 일주는 이 사주에서 나 자신을 가장 가까이 보는 자리입니다. "+(facts.dayStemName||"나를 대표하는 기운")+"의 성향이 가까운 관계와 실제 선택에서 가장 직접적으로 드러납니다.";
     if(facts.dayStemName)return "나를 대표하는 중심은 "+facts.dayStemName+"입니다. "+elementFact(facts).replace(/^오행에서는 /,"")+" 이 조합이 성격의 방향을 만듭니다.";
   }
   if(group==="WORK"){
