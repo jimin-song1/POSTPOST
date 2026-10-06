@@ -1372,6 +1372,158 @@ function coreChapterExpansion(row:Row){
   }
   return[] as string[];
 }
+
+function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  const id=row.id.replace(/^legacy-/,""),title=row.topic??row.title,group=row.evidenceGroup??"",stem=stemStory(facts);
+  const monthRole=facts.branchMainTenGodByPosition.month||facts.stemTenGodByPosition.month;
+  const dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day;
+  const hourRole=facts.branchMainTenGodByPosition.hour||facts.stemTenGodByPosition.hour;
+  const monthTone=tenGodTone(monthRole),dayTone=tenGodTone(dayRole),hourTone=tenGodTone(hourRole);
+  const strongest=facts.strongest?.element,weakest=facts.weakest?.element;
+  const strongStory=strongest?elementStory(strongest):null,weakStory=weakest?elementStory(weakest):null;
+
+  if(id==="book-007")return[
+    `사주의 중심부터 보면 ${facts.dayStemName||"나를 대표하는 기운"}이 자리합니다. ${stem.image}에 비유하는 기운으로, ${stem.core}이 기본 성향의 뼈대를 만듭니다.`,
+    elementFact(facts)||"오행은 한쪽만 보고 판단하지 않고 다섯 기운의 강약을 함께 봅니다.",
+    dominantFamilySentence(facts)||"십성에서는 한 가지 역할만 앞세우기보다 여러 역할이 어떻게 섞이는지를 함께 봅니다.",
+    facts.structure?`타고난 구조는 ${facts.structure}으로 잡힙니다. 여기서는 이름 자체보다 '${structureMeaning(facts.structure)}'이 삶에서 어떻게 쓰이는지를 보는 게 중요합니다.`:"타고난 구조는 한 가지 이름보다 여러 계산 근거가 같은 방향을 가리키는지 함께 봅니다.",
+    `그래서 이 사주는 단순히 '신중한 사람'처럼 한 단어로 끝내기 어렵습니다. ${stem.core}이 강점으로 작동하고, 반대로 ${stem.shadow}이 부담으로 바뀌는 순간을 함께 보는 편이 정확합니다.`
+  ];
+
+  if(id==="book-008")return[
+    `이 사주를 한 문장으로 줄이면, '${stem.core}을 가진 사람'에 가깝습니다.`,
+    dominantFamilySentence(facts)||`${facts.dayStemName||"중심 기운"}의 성향이 판단과 선택에서 반복해서 나타납니다.`,
+    facts.structure?`${facts.structure}이 함께 잡혀 있기 때문에, 잘하고 싶은 마음만 있는 것이 아니라 실제 역할과 결과까지 책임지려는 힘이 같이 붙습니다.`:"자기 기준이 선 뒤에는 생각을 행동으로 옮기고 결과를 끝까지 확인하려는 힘이 있습니다.",
+    `장점은 한번 방향을 정하면 쉽게 흐트러지지 않는다는 점입니다. 다만 ${stem.shadow}이 강해지면 스스로 만든 기준 때문에 오히려 시작이 늦거나 피로가 커질 수 있습니다.`
+  ];
+
+  if(id==="book-009")return[
+    "이 사주는 한 가지 얼굴로만 설명되는 사람이 아닙니다. 낯선 자리에서는 먼저 분위기와 상대를 읽고, 일에서는 맡은 역할과 기준이 앞에 나오며, 가까운 관계에서는 신뢰와 감정의 무게가 더 커집니다.",
+    pillarRoleSentence(facts,"month","사회생활을 보는 월주"),
+    pillarRoleSentence(facts,"day","나와 가까운 관계를 보는 일주"),
+    "겉에서 보이는 모습과 가까운 사람에게 보이는 모습이 다르다고 해서 모순은 아닙니다. 같은 성향이 관계의 거리와 책임의 크기에 따라 다른 얼굴로 나타나는 것입니다.",
+    "그래서 이 사주는 성격을 한 줄로 고정하기보다, 어떤 자리에서 어떤 힘이 먼저 나오는지를 나눠 읽을 때 훨씬 정확해집니다."
+  ];
+
+  if(id==="book-010")return[
+    `처음 만났을 때는 ${monthTone.front}이 먼저 남기 쉽습니다. 말을 많이 하기보다 상대의 태도와 분위기를 읽고, 어느 정도 파악된 뒤 자기 색을 보여주는 쪽에 가깝습니다.`,
+    pillarRoleSentence(facts,"month","월주"),
+    `이 자리에서 ${monthRole||"사회적 역할"}의 성격이 잡히기 때문에, 첫인상에서도 ${monthTone.gift}이 자연스럽게 드러납니다.`,
+    "처음부터 친근함을 크게 보여주기보다 선을 지키면서 상대를 보는 편이라, 낯선 사람에게는 차분하거나 기준이 분명한 사람으로 기억되기 쉽습니다.",
+    `다만 ${monthTone.shadow}이 강해지면 상대를 충분히 알기 전까지 거리를 오래 둘 수 있습니다. 편해진 뒤에는 처음의 인상보다 훨씬 분명하고 솔직한 면이 나옵니다.`
+  ];
+
+  if(id==="book-011")return[
+    `사회생활에서는 ${monthTone.gift}이 가장 실용적으로 쓰입니다. 맡은 일의 기준과 책임이 분명할수록 실력이 안정적으로 나오는 편입니다.`,
+    pillarRoleSentence(facts,"month","사회생활의 중심이 되는 월주"),
+    facts.structure?`${facts.structure}의 성격까지 더해져, 단순히 시키는 일을 처리하기보다 왜 이 일을 하는지 이해하고 결과의 기준까지 잡으려는 힘이 있습니다.`:"일의 이유와 기준이 납득되면 끝까지 가져가는 힘이 강합니다.",
+    "반대로 역할이 계속 바뀌거나 책임만 있고 결정권은 없는 환경에서는 피로가 빠르게 쌓일 수 있습니다.",
+    "사회에서 가장 강한 모습은 모든 일을 혼자 하는 사람이 아니라, 기준을 세우고 책임질 범위를 분명히 한 뒤 결과를 만들어내는 사람에 가깝습니다."
+  ];
+
+  if(id==="book-012")return[
+    `가까운 사람 앞에서는 ${dayTone.front}보다 감정과 신뢰의 기준이 더 솔직하게 드러납니다. 한번 내 사람이라고 느끼면 쉽게 관계를 가볍게 여기지 않습니다.`,
+    pillarRoleSentence(facts,"day","가까운 관계를 보는 일주"),
+    `${dayRole||"일주의 역할"}의 성격이 이 자리에 놓여 있어, 가까운 관계에서는 ${dayTone.gift}이 중요한 애정 방식이 됩니다.`,
+    "밖에서는 넘길 수 있는 일도 가까운 사람이 약속을 어기거나 말과 행동이 다르면 마음에 오래 남을 수 있습니다.",
+    `그래서 가까운 관계에서는 참는 힘보다 설명하는 힘이 중요합니다. ${dayTone.shadow}이 커지기 전에 서운한 지점을 작게라도 말해두는 편이 관계를 오래 지키는 데 더 유리합니다.`
+  ];
+
+  if(id==="book-013")return[
+    `혼자 있을 때는 밖에서 보이는 모습보다 생각의 양이 훨씬 많아질 수 있습니다. 특히 ${hourRole||"시주의 기운"}이 안쪽에서 작동하면서 앞으로의 계획과 지나간 일을 다시 정리하는 시간이 길어집니다.`,
+    pillarRoleSentence(facts,"hour","속생각과 후반 흐름을 보는 시주"),
+    `이 자리의 장점은 ${hourTone.gift}입니다. 남들이 지나친 부분을 다시 보고 다음 선택을 준비하는 힘으로 연결됩니다.`,
+    "다만 쉬는 시간에도 머릿속에서 계속 다음 일을 계산하면 몸은 쉬어도 생각은 쉬지 못하는 상태가 될 수 있습니다.",
+    `혼자 있는 시간은 생각을 더 늘리는 시간보다 생각을 끝내는 시간으로 써야 합니다. ${hourTone.shadow}이 커질수록 일부러 결론을 내리고 멈추는 습관이 중요합니다.`
+  ];
+
+  if(id==="book-014")return[
+    "겉으로 바로 말하지 않은 생각이 안쪽에 오래 남는 편입니다. 그 자리에서는 지나간 일도 시간이 지난 뒤 다시 떠올리며 의미를 정리할 수 있습니다.",
+    dominantFamilySentence(facts)||"속에서 반복되는 생각은 눈에 보이는 행동보다 더 큰 비중을 차지할 수 있습니다.",
+    "특히 말의 앞뒤가 맞지 않거나 신뢰가 흔들린 일은 단순히 기분이 나빴다는 수준보다 '이 사람을 계속 믿어도 되는가'의 문제로 남기 쉽습니다.",
+    "그래서 겉으로 조용하다고 마음까지 금방 정리된 것은 아닙니다. 반대로 한번 납득하고 마음이 풀리면 같은 일을 오래 붙잡지 않을 수도 있습니다.",
+    "이 사주의 속마음을 이해하려면 감정의 크기보다 무엇을 신뢰의 기준으로 삼는지를 보는 편이 더 정확합니다."
+  ];
+
+  if(id==="book-016"||id==="book-024"){
+    const first=strongest&&strongStory?`가장 강한 ${elementPro(strongest)}은 ${strongStory.gift}과 연결됩니다. 생활에서는 ${strongStory.life}으로 나타나기 쉽습니다.`:"오행의 강약은 다섯 기운을 비교해서 읽습니다.";
+    const second=weakest&&weakStory?`반대로 ${elementPro(weakest)}은 상대적으로 약합니다. 이 기운이 맡는 '${weakStory.life}'은 자동으로 나오기보다 의식적으로 보완할수록 좋아지는 영역입니다.`:"약한 기운은 부족하다는 판정보다 의식적으로 보완할 영역을 보여줍니다.";
+    return[
+      id==="book-016"?"오행표에서 중요한 것은 숫자 하나가 아니라 어느 기운이 앞에 서고 어느 기운이 뒤로 물러나는지입니다. 이 차이가 성격과 생활의 우선순위를 만듭니다.":"오행의 강약은 좋고 나쁨을 매기는 점수가 아닙니다. 어떤 힘은 자연스럽게 쓰고, 어떤 힘은 일부러 꺼내 써야 하는지를 보여주는 지도에 가깝습니다.",
+      first,
+      second,
+      facts.missing.length?`특히 ${facts.missing.map(elementPro).join("·")}이 원국에서 비어 있다는 점은 중요합니다. 능력이 없다는 뜻이 아니라 그 역할이 저절로 켜지기보다 환경과 습관을 통해 작동시키는 편이 좋다는 뜻입니다.`:"다섯 기운이 모두 있어도 비율 차이가 크면 생활에서 체감되는 강약은 분명하게 생깁니다.",
+      "그래서 오행은 '많아서 좋다, 적어서 나쁘다'로 읽지 않습니다. 강한 힘은 과해지는 순간을 조절하고, 약한 힘은 필요한 장면에서 의식적으로 보완하는 것이 핵심입니다."
+    ];
+  }
+
+  if(id==="book-017")return[
+    `전체 기운의 균형을 계산하면 ${strengthMeaning(facts.strength)}입니다.`,
+    "이 값은 의지가 세다 약하다는 성격평가가 아닙니다. 혼자 밀어붙이는 힘과 주변의 도움을 받아 안정되는 힘 가운데 어느 쪽을 더 많이 쓰는지를 보는 기준입니다.",
+    dominantFamilySentence(facts)||"원국에서 반복되는 역할을 함께 보면 실제로 힘을 쓰는 방식이 더 선명해집니다.",
+    "힘이 충분한 사람도 환경이 맞지 않으면 지칠 수 있고, 도움을 많이 쓰는 구조도 좋은 사람과 자원을 잘 연결하면 훨씬 큰 결과를 만들 수 있습니다.",
+    "결국 중요한 것은 강약의 이름보다 내 힘을 어디까지 직접 쓰고, 어느 지점부터 사람·시간·환경의 도움을 받아야 오래 갈 수 있는지를 아는 것입니다."
+  ];
+
+  if(id==="book-018"||id==="book-025")return[
+    usefulSentence(facts)||"도움이 되는 기운은 이미 강한 부분보다 현재 부족한 부분을 보완하는 쪽에서 찾습니다.",
+    facts.structure?`${facts.structure}의 기본축은 '${structureMeaning(facts.structure)}'입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
+    strongest&&strongStory?`이미 강한 ${elementPro(strongest)}의 ${strongStory.life}은 굳이 더 밀어붙이지 않아도 자연스럽게 나옵니다.`:"이미 익숙한 힘은 생활에서 자연스럽게 반복됩니다.",
+    weakest&&weakStory?`반대로 약한 ${elementPro(weakest)}의 ${weakStory.life}은 일정, 사람, 일하는 방식처럼 현실적인 선택으로 보완할 때 체감이 큽니다.`:"부족한 힘은 생활환경과 습관으로 보완할 때 가장 현실적으로 달라집니다.",
+    "사주에서 도움이 되는 기운을 안다는 것은 색이나 물건을 고르는 문제가 아니라, 내가 자주 놓치는 행동을 어떤 방식으로 생활에 넣을지 정하는 데 더 가깝습니다."
+  ];
+
+  if(id==="book-020")return[
+    `오행으로 보면 이 사주의 중심은 ${facts.dayStemName||"나를 대표하는 기운"}에서 시작합니다. ${stem.image}처럼 ${stem.core}이 기본 방향입니다.`,
+    elementFact(facts)||"다섯 기운의 강약이 이 중심 성향을 어떻게 밀어주고 조절하는지 함께 봅니다.",
+    strongest&&strongStory?`여기에 ${elementPro(strongest)}의 비중이 가장 크게 잡혀 ${strongStory.life}이 생활 전반에서 더 자주 쓰입니다.`:"가장 강한 기운이 생활에서 반복적으로 쓰이는 힘을 결정합니다.",
+    weakest&&weakStory?`반면 ${elementPro(weakest)}의 역할은 자동으로 나오기보다 필요할 때 의식적으로 꺼내 쓰는 편이 맞습니다.`:"약한 기운은 일부러 보완할 때 전체 흐름이 안정됩니다.",
+    "이 조합 때문에 같은 일주라도 사람마다 실제 성격과 생활 방식이 달라집니다. 일주만 보지 않고 오행의 강약을 같이 보는 이유가 여기에 있습니다."
+  ];
+
+  if(id==="book-021")return[
+    `나를 대표하는 기운은 ${facts.dayStemName||"중심 기운"}입니다. 명리에서는 ${stem.image}의 이미지로 설명합니다.`,
+    `이 기운의 장점은 ${stem.core}입니다. 스스로 의미를 찾은 일에서는 오래 버티고 자기 방식으로 성장시키는 힘으로 연결됩니다.`,
+    dominantFamilySentence(facts)||"십성의 분포가 이 기운을 어떤 역할로 가장 많이 쓰는지 보여줍니다.",
+    `반대로 ${stem.shadow}이 강해질 때는 같은 장점이 부담으로 바뀔 수 있습니다.`,
+    "그래서 나를 대표하는 기운은 성격을 고정하는 별명이 아니라, 선택 앞에서 가장 먼저 꺼내 쓰는 기본 도구라고 생각하면 이해하기 쉽습니다."
+  ];
+
+  if(id==="book-022")return[
+    `나를 가장 가까이 보여주는 두 글자는 ${facts.dayPillarReading||facts.dayPillar}입니다.`,
+    pillarElementSentence(facts.dayPillar)||"일주는 위아래 두 기운이 한 자리에서 만나는 구조입니다.",
+    pillarRoleSentence(facts,"day","일주"),
+    "이 두 글자는 가까운 관계, 내가 편안함을 느끼는 방식, 중요한 선택에서 끝까지 남는 기준을 읽을 때 중심이 됩니다.",
+    "일주의 이름만 외울 필요는 없습니다. 이 두 글자가 오행과 십성 속에서 어떤 역할을 맡고 있는지까지 같이 봐야 실제 성격과 연결됩니다."
+  ];
+
+  if(id==="book-023")return[
+    "겉으로 보이는 나와 실제 속마음 사이에는 약간의 온도차가 있습니다. 밖에서는 역할에 맞춰 정리된 모습을 보이지만, 안에서는 훨씬 많은 가능성을 비교하고 감정을 오래 정리할 수 있습니다.",
+    pillarRoleSentence(facts,"month","밖에서 먼저 보이는 월주"),
+    pillarRoleSentence(facts,"day","내가 편할 때 드러나는 일주"),
+    "이 차이는 가식이라기보다 상황에 맞춰 다른 힘을 쓰는 능력에 가깝습니다. 사회에서는 책임과 기준이 필요하고, 가까운 관계에서는 신뢰와 감정이 더 중요해지기 때문입니다.",
+    "문제는 밖에서 너무 오래 버티다가 가까운 사람에게 한꺼번에 피로를 풀 때 생깁니다. 겉과 속의 차이가 커질수록 중간에서 마음을 설명하는 시간이 필요합니다."
+  ];
+
+  if(id==="book-026")return[
+    "오행은 성격표 안에서 끝나지 않습니다. 가장 강한 기운은 일할 때, 돈을 쓸 때, 사람을 대할 때 반복해서 같은 우선순위를 만들기 쉽습니다.",
+    strongest&&strongStory?`${elementPro(strongest)}이 강하기 때문에 ${strongStory.life}이 생활의 기본 습관으로 자리하기 쉽습니다.`:"강한 기운은 특별히 의식하지 않아도 생활에서 반복됩니다.",
+    weakest&&weakStory?`반대로 ${elementPro(weakest)}이 약해 ${weakStory.life}은 바쁠수록 가장 먼저 놓치기 쉬운 부분이 됩니다.`:"약한 기운은 바쁠 때 가장 먼저 빠지는 행동으로 확인하기 쉽습니다.",
+    "그래서 잘 풀리는 방법도 단순합니다. 잘하는 힘은 과해지지 않게 조절하고, 약한 힘은 거창하게 바꾸기보다 일정과 습관 속에 작게 넣어두는 편이 오래 갑니다.",
+    usefulSentence(facts)||"오행의 균형은 생활 속 선택으로 조금씩 보완해갈 수 있습니다."
+  ];
+
+  if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
+    consultationOpening(row,facts)||`${title}은 원국의 여러 계산값을 한데 묶어서 읽는 장입니다.`,
+    elementFact(facts)||dominantFamilySentence(facts),
+    facts.structure?`${facts.structure}의 성격과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
+    "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
+  ].filter(Boolean);
+
+  return null;
+}
+
+
 function sectionExtras(row:Row,value:DomainProfile){
   if(!value.extra)return[] as string[];
   const topic=row.topic??row.title,domain=domainOf(row.evidenceGroup??"");
