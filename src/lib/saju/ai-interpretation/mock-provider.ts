@@ -91,7 +91,7 @@ function profile(row:Row,index:number):DomainProfile{
       scene:`사람을 만나거나 중요한 결정을 앞두면 바로 답부터 내기보다 주변 상황을 먼저 살펴요. ${suffix} 마음이 서고 나면 해야 할 일을 정해 바로 움직이는 편이에요.`,
       strength:"주변이 서두른다고 같이 휩쓸리기보다, 내가 중요하게 생각하는 건 쉽게 바꾸지 않는 편이에요. 한번 맡은 일도 중간에 흐지부지 두기보다 끝까지 마무리하려고 해요.",
       shadow:"다만 스스로 이해가 될 때까지 계속 확인하려 들면 시작이 늦어질 수 있어요. 이미 맡은 일까지 혼자 다 챙기려 하면 금방 지치기도 해요.",
-      consequence:`${topic}에서도 이런 모습이 보여요. 처음에는 조용히 살피지만 해야겠다고 마음먹고 나면 내가 어디까지 맡을지 분명하게 정하는 편이에요.`,
+      consequence:"처음에는 조용히 살피지만, 해야겠다고 마음먹고 나면 내가 어디까지 맡을지 분명하게 정하는 편이에요.",
       action:"결정을 앞두고 생각이 너무 많아지면 꼭 확인할 것 두 가지만 남겨보세요. 나머지는 움직이면서 확인해도 괜찮아요.",
       extra:["겉으로는 차분해 보여도 속으로는 여러 경우를 비교하고 있을 때가 많아요. 가까운 사람에게는 결론만 말하기보다 생각하는 과정도 조금씩 이야기해 주는 편이 좋아요."]
     },
@@ -950,47 +950,29 @@ function sectionExtras(row:Row,value:DomainProfile){
   return keep?value.extra:[];
 }
 function buildParagraphs(row:Row,index:number){
-  const value=profile(row,index),topic=row.topic??row.title,angle=editorialAngle(row,index),domain=domainOf(row.evidenceGroup??"");
+  const value=profile(row,index),angle=editorialAngle(row,index);
   const group=row.evidenceGroup??"";
+
   if(["CORE","PILLARS","HIDDEN_STEMS"].includes(group)){
     const focused=coreChapterExpansion(row);
     if(focused.length)return focused.map(paragraph=>naturalizeNarration(paragraph.trim())).filter(Boolean);
   }
+
   const paragraphs=[
     angle.scene,
-    joinUpsideShadow(value.strength,value.shadow),
-    withoutTopicPrefix(angle.consequence,topic)
+    angle.consequence
   ];
 
-  if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain)){
-    const consequence=withoutTopicPrefix(value.consequence,topic);
-    if(consequence&&consequence!==paragraphs[2])paragraphs.push(consequence);
-  }
+  const coreExpansion=coreChapterExpansion(row);
+  if(coreExpansion.length)paragraphs.push(...coreExpansion);
 
-  if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group)){
-    paragraphs.push(value.scene);
-  }
+  const depthExpansion=chapterDepthExpansion(row,index);
+  if(depthExpansion.length)paragraphs.push(...depthExpansion);
 
-  if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group)){
-    paragraphs.push(
-      value.scene,
-      value.action,
-      value.extra?.[0]??""
-    );
-  }
-
-  if(["WORK","WEALTH","RELATIONSHIP"].includes(group)){
-    paragraphs.push(
-      value.scene,
-      value.action
-    );
-  }
+  const extras=sectionExtras(row,value);
+  if(extras.length)paragraphs.push(...extras);
 
   if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(value.timing);
-
-  const coreExpansion=coreChapterExpansion(row);if(coreExpansion.length)paragraphs.push(...coreExpansion);
-  const depthExpansion=chapterDepthExpansion(row,index);if(depthExpansion.length)paragraphs.push(...depthExpansion);
-  const extras=sectionExtras(row,value);if(extras.length)paragraphs.push(...extras);
 
   return paragraphs
     .map(paragraph=>naturalizeNarration(paragraph.trim()))
@@ -1000,6 +982,8 @@ function buildParagraphs(row:Row,index:number){
 
 function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[];
+  const firstContentIdByPart=new Map<string,string>();
+  for(const row of rows)if(row.contentKind==="CONTENT"&&row.partNumber&&!firstContentIdByPart.has(row.partNumber))firstContentIdByPart.set(row.partNumber,row.id);
   const sections=rows.map((row,index)=>{
     const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index);
@@ -1015,7 +999,9 @@ function report(input:InterpretationInput):StructuredInterpretation{
         :fullParagraphs;
     const pageNo=row.pageNumber??index+1;
     const group=row.evidenceGroup??"";
-    const lead=["CORE","PILLARS","HIDDEN_STEMS"].includes(group)?undefined:naturalizeNarration(value.lead);
+    const lead=row.contentKind==="CONTENT"&&row.partNumber&&firstContentIdByPart.get(row.partNumber)===row.id
+      ?naturalizeNarration(value.lead)
+      :undefined;
     return {
       id:row.id,
       chapterNumber:row.chapterNumber,
