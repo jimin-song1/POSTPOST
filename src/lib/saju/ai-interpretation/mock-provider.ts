@@ -292,6 +292,16 @@ function familyPresence(facts:ConsultationFacts,family:string){
   if(count>=1)return `${family}은 원국에 분명히 자리합니다. 필요할 때 ${familyMeaning(family)}을 꺼내 쓸 수 있는 구조입니다.`;
   return `${family}이 원국 전면에 강하게 드러나는 편은 아닙니다. 그래서 ${familyMeaning(family)}은 타고난 자동 반응보다 의식적으로 키울수록 좋아지는 영역입니다.`;
 }
+
+function tenGodTone(role:string){
+  if(["정관","편관"].includes(role))return{front:"단정하고 책임감 있는 인상",gift:"약속과 기준을 지키려는 힘",shadow:"통제받는 느낌에 예민해지거나 스스로에게 엄격해지는 면"};
+  if(["정인","편인"].includes(role))return{front:"차분하게 듣고 관찰하는 인상",gift:"배우고 이해한 뒤 판단하는 힘",shadow:"생각이 길어져 행동이 늦어질 수 있는 면"};
+  if(["정재","편재"].includes(role))return{front:"현실적이고 상황 판단이 빠른 인상",gift:"돈·시간·자원을 실제 결과로 연결하는 힘",shadow:"성과와 손익을 너무 먼저 따질 수 있는 면"};
+  if(["식신","상관"].includes(role))return{front:"표현이 분명하고 반응이 빠른 인상",gift:"생각을 말과 결과물로 밖에 꺼내는 힘",shadow:"말이 앞서거나 답답함을 참기 어려운 면"};
+  if(["비견","겁재"].includes(role))return{front:"자기 색과 기준이 분명한 인상",gift:"스스로 결정하고 경쟁 속에서도 버티는 힘",shadow:"도움을 받기보다 혼자 해결하려는 면"};
+  return{front:"차분하게 상황을 파악하는 인상",gift:"자기 기준을 세운 뒤 움직이는 힘",shadow:"확인이 길어지면 시작이 늦어질 수 있는 면"};
+}
+
 function stageSentence(facts:ConsultationFacts,position:string,label:string){
   const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그 자리에서 힘을 쓰는 고유한 리듬";
   return stage?`${label}의 십이운성은 ${stage}입니다. 여기서는 좋고 나쁨보다 '${meaning}'으로 읽는 편이 정확합니다.`:"";
