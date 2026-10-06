@@ -31,9 +31,12 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "나는 어떤 존재인가","나를 이루는 기운","나에게 맞는 무대","돈과 풍요","사랑과 가족","몸과 마음의 신호","나를 돕는 인연",
-      "내 사주의 특별한 이야기","삶의 에너지 흐름","내 안의 여러 모습","앞으로의 흐름","변화가 커지는 때","큰 운의 흐름","마치며"
+      "성격과 기본 성향","일주와 오행","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","귀인운",
+      "신살","십이운성","십성","연운 · 앞으로 5년","삼재·변화운","대운","총정리"
     ]);
+    expect(book.sections.find(section=>section.id==="legacy-book-015")?.partNumber).toBe("10");
+    for(const id of ["legacy-book-016","legacy-book-017","legacy-book-018"]) expect(book.sections.find(section=>section.id===id)?.partNumber,id).toBe("02");
+    expect(book.sections.find(section=>section.id==="legacy-book-019")?.partNumber).toBe("11");
     expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
     expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
     for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
