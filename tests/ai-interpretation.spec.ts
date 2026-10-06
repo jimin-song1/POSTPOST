@@ -89,6 +89,14 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(structuredInterpretationSchema.safeParse(emptyIds).success).toBe(false);
   });
 
+  it("allows lead-free opening sections in dynamic lifetime v4 when the narrative body is complete",()=>{
+    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
+    const output=validOutput(input);
+    output.sections[0].lead=undefined;
+    expect(input.reportVersion).toBe("dynamic-lifetime-book-v4");
+    expect(()=>validateGrounding(output,input)).not.toThrow();
+  });
+
   it("rejects AI-report boilerplate and technical leakage in customer lifetime prose",()=>{
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
     const aiTone=validOutput(input);aiTone.sections[0].body="첫 문장은 이렇게 해석됩니다.";aiTone.sections[0].lead="다음 내용도 그렇게 해석됩니다.";aiTone.sections[0].paragraphs![0]="마지막 특징 역시 그렇게 해석됩니다.";
