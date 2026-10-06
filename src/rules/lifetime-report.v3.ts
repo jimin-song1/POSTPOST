@@ -52,7 +52,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-016",pageNumber:16,title:"다섯 기운의 기본 분포",evidenceGroup:"ELEMENTS"},
     {id:"book-017",pageNumber:17,title:"내가 힘을 쓰는 크기",evidenceGroup:"STRENGTH"},
     {id:"book-018",pageNumber:18,title:"타고난 삶의 틀과 필요한 기운",evidenceGroup:"STRUCTURE_USEFUL"},
-    {id:"book-019",pageNumber:19,title:"10년·1년·한 달의 시간을 읽는 법",evidenceGroup:"FORTUNE_EXPLAIN"}
+    {id:"book-019",pageNumber:19,title:"운은 언제 어떻게 바뀔까?",evidenceGroup:"FORTUNE_EXPLAIN"}
   ]},
   {partNumber:"02",title:"나를 대표하는 기운과 다섯 기운",pages:[
     {id:"book-020",pageNumber:20,title:"나를 대표하는 기운과 다섯 기운",evidenceGroup:"IDENTITY"},
@@ -61,13 +61,13 @@ export const LIFETIME_BOOK_V1={
     {id:"book-023",pageNumber:23,title:"겉과 속이 다르게 움직이는 지점",evidenceGroup:"IDENTITY"},
     {id:"book-024",pageNumber:24,title:"다섯 기운의 균형",evidenceGroup:"ELEMENTS"},
     {id:"book-025",pageNumber:25,title:"도움이 되는 기운과 부담이 되는 기운",evidenceGroup:"STRUCTURE_USEFUL"},
-    {id:"book-026",pageNumber:26,title:"다섯 기운을 생활에서 쓰는 방식",evidenceGroup:"IDENTITY"}
+    {id:"book-026",pageNumber:26,title:"다섯 기운이 내 생활에서 보이는 모습",evidenceGroup:"IDENTITY"}
   ]},
   {partNumber:"03",title:"일과 배움",pages:[
     {id:"book-027",pageNumber:27,title:"일과 배움",evidenceGroup:"WORK"},
     {id:"book-028",pageNumber:28,title:"일하는 스타일을 한 문장으로",evidenceGroup:"WORK"},
     {id:"book-029",pageNumber:29,title:"직장·사업·배움의 큰 그림",evidenceGroup:"WORK"},
-    {id:"book-030",pageNumber:30,title:"직장에서 힘을 쓰는 방식",evidenceGroup:"WORK"},
+    {id:"book-030",pageNumber:30,title:"직장에서 나는 어떻게 일할까",evidenceGroup:"WORK"},
     {id:"book-031",pageNumber:31,title:"책임과 결정권을 다루는 방식",evidenceGroup:"WORK"},
     {id:"book-032",pageNumber:32,title:"사업을 한다면 보이는 운영 방식",evidenceGroup:"WORK"},
     {id:"book-033",pageNumber:33,title:"사람과 함께 일할 때의 패턴",evidenceGroup:"WORK"},
@@ -98,10 +98,10 @@ export const LIFETIME_BOOK_V1={
   {partNumber:"06",title:"몸과 생활 리듬",pages:[
     {id:"book-053",pageNumber:53,title:"몸과 생활 리듬",evidenceGroup:"WELLNESS"},
     {id:"book-054",pageNumber:54,title:"컨디션을 한 문장으로",evidenceGroup:"WELLNESS"},
-    {id:"book-055",pageNumber:55,title:"다섯 기운으로 보는 생활 리듬",evidenceGroup:"WELLNESS"},
+    {id:"book-055",pageNumber:55,title:"내 생활 리듬은 어떤 편일까",evidenceGroup:"WELLNESS"},
     {id:"book-056",pageNumber:56,title:"쉬고 회복하는 방식",evidenceGroup:"WELLNESS"},
     {id:"book-057",pageNumber:57,title:"긴장과 유연함을 다루는 방식",evidenceGroup:"WELLNESS"},
-    {id:"book-058",pageNumber:58,title:"활력과 따뜻함을 쓰는 방식",evidenceGroup:"WELLNESS"},
+    {id:"book-058",pageNumber:58,title:"나는 언제 기운이 나고 언제 쉽게 지칠까",evidenceGroup:"WELLNESS"},
     {id:"book-059",pageNumber:59,title:"식사와 생활 리듬을 지키는 방식",evidenceGroup:"WELLNESS"},
     {id:"book-060",pageNumber:60,title:"건조함과 정리를 다루는 방식",evidenceGroup:"WELLNESS"},
     {id:"book-061",pageNumber:61,title:"차가움과 회복 시간을 다루는 방식",evidenceGroup:"WELLNESS"},
@@ -123,7 +123,7 @@ export const LIFETIME_BOOK_V1={
   {partNumber:"08",title:"특별하게 드러나는 표지",pages:[
     {id:"book-074",pageNumber:74,title:"특별하게 드러나는 표지",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-075",pageNumber:75,title:"눈에 띄는 특징을 한 문장으로",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-076",pageNumber:76,title:"특별한 표지를 읽는 법",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-076",pageNumber:76,title:"내 사주에서 유난히 눈에 띄는 점",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-077",pageNumber:77,title:"사람의 시선을 끄는 힘",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-078",pageNumber:78,title:"혼자 깊이 파고드는 힘",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-079",pageNumber:79,title:"예민하게 감지하는 힘",evidenceGroup:"STARS_RELATIONS"},
@@ -189,7 +189,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-129",pageNumber:129,title:"10년마다 바뀌는 큰 흐름",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-130",pageNumber:130,title:"지금 큰 흐름을 한 문장으로",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-131",pageNumber:131,title:"평생 10개의 큰 흐름",evidenceGroup:"DAEUN_OVERVIEW"},
-    {id:"book-132",pageNumber:132,title:"10년 흐름을 읽는 법",evidenceGroup:"DAEUN_OVERVIEW"},
+    {id:"book-132",pageNumber:132,title:"10년 흐름은 어떻게 바뀔까",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-133",pageNumber:133,title:"평생 10년 흐름표",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-134",pageNumber:134,title:"첫 번째 10년",evidenceGroup:"DAEUN_1"},
     {id:"book-135",pageNumber:135,title:"두 번째 10년",evidenceGroup:"DAEUN_2"},
