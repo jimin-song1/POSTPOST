@@ -39,7 +39,7 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
   it("allows familiar saju labels while still blocking internal jargon", () => {
     for (const phrase of [
       "관계가 바로 이어지지 않을 수 있습니다.",
-      "오행을 한눈에 봅니다.",
+      "사주 원국을 먼저 봅니다.","오행을 한눈에 봅니다.",
       "일주와 오행",
       "년주와 월주를 함께 봅니다.",
       "십성에서 보이는 성향",
