@@ -227,6 +227,41 @@ function relationSummary(facts:ConsultationFacts){
   if(facts.relationCounts.punishment)rows.push("형(반복해서 신경 쓰이는 압박)");
   return rows;
 }
+
+const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
+  甲:{image:"큰 나무",core:"방향이 정해지면 곧게 밀고 가며 스스로 키워가는 힘",shadow:"의미를 찾지 못하면 움직임이 둔해지고 자기 기준을 쉽게 굽히지 않는 면"},
+  乙:{image:"유연하게 뻗는 풀과 덩굴",core:"상황을 읽고 사람과 자원을 연결하며 꾸준히 자라는 힘",shadow:"주변을 너무 많이 살피면 결정이 늦어지거나 마음을 숨기는 면"},
+  丙:{image:"햇빛",core:"밖으로 드러내고 분위기를 움직이며 빠르게 확산시키는 힘",shadow:"속도가 너무 빨라지면 디테일이나 상대의 속도를 놓치는 면"},
+  丁:{image:"등불",core:"필요한 곳에 집중하고 섬세하게 온기를 전달하는 힘",shadow:"예민함이 커지면 작은 일도 오래 마음에 남는 면"},
+  戊:{image:"큰 산과 넓은 땅",core:"쉽게 흔들리지 않고 책임을 오래 버티는 힘",shadow:"변화를 늦게 받아들이거나 혼자 짐을 많이 지는 면"},
+  己:{image:"잘 다듬은 밭",core:"작은 것을 세심하게 돌보고 현실적으로 정리하는 힘",shadow:"걱정이 많아지면 사소한 부분까지 챙기느라 피로해지는 면"},
+  庚:{image:"단단한 쇠",core:"문제를 빠르게 구분하고 결단해 정리하는 힘",shadow:"기준이 강해지면 말과 판단이 지나치게 날카로워지는 면"},
+  辛:{image:"정교하게 다듬은 금속과 보석",core:"차이를 세밀하게 보고 품질과 기준을 높이는 힘",shadow:"완성도를 높이려다 스스로에게도 엄격해지는 면"},
+  壬:{image:"큰 강과 바다",core:"큰 흐름을 읽고 다양한 사람과 정보를 품는 힘",shadow:"범위가 너무 넓어지면 한곳에 집중하기 어려운 면"},
+  癸:{image:"비와 이슬",core:"작은 변화를 빠르게 감지하고 정보를 섬세하게 받아들이는 힘",shadow:"생각과 감정이 안쪽에 오래 머물러 피로가 쌓이는 면"}
+};
+function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
+function dominantFamilySentence(facts:ConsultationFacts){
+  const family=dominantFamily(facts),count=familyCount(facts,family);
+  return count?`십성을 묶어 보면 \${family}의 비중이 가장 두드러집니다. \${familyMeaning(family)}이 반복해서 앞에 나오는 구조입니다.`:"";
+}
+function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day"|"hour",label:string){
+  const pillar=facts.pillarReadings[position],stemGod=facts.stemTenGodByPosition[position],branchGod=facts.branchMainTenGodByPosition[position];
+  const roles=[stemGod,branchGod].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
+  if(!pillar)return"";
+  return roles.length?`\${label} \${pillar}에는 \${roles.join("·")}의 성격이 함께 걸려 있습니다.`:`\${label} \${pillar}을 중심으로 이 자리를 읽습니다.`;
+}
+function usefulSentence(facts:ConsultationFacts){
+  if(!facts.useful.length)return"";
+  return `도움이 되는 기운은 \${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
+}
+function relationSentence(facts:ConsultationFacts){
+  const rows=relationSummary(facts);return rows.length?`원국의 관계를 보면 \${rows.join(", ")}이 확인됩니다. 이 관계들은 성격 자체보다 사람·일·환경이 부딪히는 순간에 더 선명하게 작동합니다.`:"원국 자체에 큰 충돌 관계가 많이 겹쳐 있는 편은 아닙니다. 변화는 주로 운에서 새로운 관계가 들어올 때 더 크게 체감될 수 있습니다.";
+}
+function starSentence(facts:ConsultationFacts){
+  return facts.starLabels.length?`신살에서는 \${facts.starLabels.slice(0,4).join(" · ")}이 눈에 들어옵니다. 신살 하나로 운명을 정하지 않고, 원국의 성향을 보조해서 설명하는 정도로 보는 것이 맞습니다.`:"신살은 원국 전체를 보조하는 참고표로 읽는 편이 맞습니다. 눈에 띄는 신살이 적더라도 그것이 운의 강약을 뜻하지는 않습니다.";
+}
+
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
   if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
