@@ -262,6 +262,49 @@ function starSentence(facts:ConsultationFacts){
   return facts.starLabels.length?`신살에서는 ${facts.starLabels.slice(0,4).join(" · ")}이 눈에 들어옵니다. 신살 하나로 운명을 정하지 않고, 원국의 성향을 보조해서 설명하는 정도로 보는 것이 맞습니다.`:"신살은 원국 전체를 보조하는 참고표로 읽는 편이 맞습니다. 눈에 띄는 신살이 적더라도 그것이 운의 강약을 뜻하지는 않습니다.";
 }
 
+const ELEMENT_STORY:Record<string,{gift:string;life:string;shadow:string}>={
+  wood:{gift:"성장·기획·확장",life:"무언가를 시작하면 키우고 다음 단계까지 생각하는 힘",shadow:"방향을 너무 많이 벌리면 시작한 일을 정리하는 속도가 늦어질 수 있는 면"},
+  fire:{gift:"표현·생산·노출",life:"머릿속에 있는 것을 말·콘텐츠·행동·결과물로 밖에 꺼내는 힘",shadow:"속도가 너무 빨라지면 준비보다 노출이 앞서 피로가 커질 수 있는 면"},
+  earth:{gift:"현실화·관리·재물",life:"아이디어를 돈·운영·자산처럼 손에 잡히는 결과로 굳히는 힘",shadow:"안정을 지키려는 마음이 커지면 새로운 선택을 늦게 받아들이는 면"},
+  metal:{gift:"기준·책임·정리",life:"무엇이 맞고 틀린지 구분하고 품질과 약속을 지키는 힘",shadow:"기준이 너무 강해지면 자신과 타인에게 모두 엄격해질 수 있는 면"},
+  water:{gift:"정보·학습·감각",life:"상황을 읽고 배우고 기억하며 여러 가능성을 연결하는 힘",shadow:"생각이 계속 이어지면 실행보다 준비가 길어질 수 있는 면"}
+};
+const BRANCH_ELEMENT:Record<string,string>={子:"water",丑:"earth",寅:"wood",卯:"wood",辰:"earth",巳:"fire",午:"fire",未:"earth",申:"metal",酉:"metal",戌:"earth",亥:"water"};
+const STEM_ELEMENT:Record<string,string>={甲:"wood",乙:"wood",丙:"fire",丁:"fire",戊:"earth",己:"earth",庚:"metal",辛:"metal",壬:"water",癸:"water"};
+const STAGE_STORY:Record<string,string>={
+  장생:"새로운 것을 배우고 받아들이며 시작하는 힘",
+  목욕:"사람과 경험 속에서 자신을 드러내고 감각을 넓히는 힘",
+  관대:"사회 속에서 역할을 키우고 자신감을 쌓는 힘",
+  건록:"자기 힘으로 자리를 잡고 독립적으로 움직이는 힘",
+  제왕:"힘이 가장 크게 올라와 영향력과 책임이 함께 커지는 힘",
+  쇠:"불필요한 것을 줄이고 중요한 것에 집중하는 힘",
+  병:"민감해진 감각으로 방향을 다시 살피는 힘",
+  사:"끝난 것을 정리하고 다음 단계로 넘기는 힘",
+  묘:"겉으로 펼치기보다 안에 저장하고 정리하는 힘",
+  절:"기존 흐름을 끊고 새 판으로 넘어가는 힘",
+  태:"아직 드러나지 않은 가능성을 준비하는 힘",
+  양:"작은 가능성을 보호하고 천천히 키우는 힘"
+};
+function elementStory(element:string){return ELEMENT_STORY[element]??{gift:"균형",life:"필요한 힘을 상황에 맞게 쓰는 능력",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
+function familyPresence(facts:ConsultationFacts,family:string){
+  const count=familyCount(facts,family);
+  if(count>=3)return `${family}이 원국에서 분명한 축을 이룹니다. ${familyMeaning(family)}이 여러 자리에서 반복됩니다.`;
+  if(count>=1)return `${family}은 원국에 분명히 자리합니다. 필요할 때 ${familyMeaning(family)}을 꺼내 쓸 수 있는 구조입니다.`;
+  return `${family}이 원국 전면에 강하게 드러나는 편은 아닙니다. 그래서 ${familyMeaning(family)}은 타고난 자동 반응보다 의식적으로 키울수록 좋아지는 영역입니다.`;
+}
+function stageSentence(facts:ConsultationFacts,position:string,label:string){
+  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그 자리에서 힘을 쓰는 고유한 리듬";
+  return stage?`${label}의 십이운성은 ${stage}입니다. 여기서는 좋고 나쁨보다 '${meaning}'으로 읽는 편이 정확합니다.`:"";
+}
+function pillarElementSentence(pillar:string){
+  if(!pillar||pillar.length<2)return"";
+  const stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
+  if(!stemElement||!branchElement)return"";
+  if(stemElement===branchElement)return `${pillarReading(pillar[0],pillar[1])}은 ${elementPro(stemElement)}의 색이 위아래에서 함께 강조되는 기둥입니다.`;
+  return `${pillarReading(pillar[0],pillar[1])}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 한 기둥 안에서 만나는 구조입니다.`;
+}
+
+
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
   if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
