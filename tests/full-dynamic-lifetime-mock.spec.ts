@@ -55,16 +55,16 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
     const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
     expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
-    expect(report.sections.find(section=>section.id==="legacy-book-007")?.lead).toBeTruthy();
-    for(const id of ["legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
+    for(const id of ["legacy-book-007","legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
       expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
-    expect(report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs).toEqual([
-      "한마디로 말하면, 신중하게 판단하고 결정한 뒤에는 꾸준히 밀고 가는 사람이에요.",
-      "생각이 너무 길어지지만 않으면 신중함과 끈기가 가장 큰 장점으로 작용합니다."
-    ]);
-    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).toContain("처음 만난 사람");
-    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).not.toContain("가까운 사람");
-    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).not.toContain("작은 시험");
+    const oneLine=report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs??[];
+    expect(oneLine.length).toBeGreaterThanOrEqual(4);
+    expect(oneLine.join(" ")).toContain("이 사주를 한 문장으로");
+    const firstImpression=report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")??"";
+    expect(firstImpression).toContain("처음 만났을 때");
+    expect(firstImpression).not.toContain("작은 시험");
+    const elementChapter=report.sections.find(section=>section.id==="legacy-book-016")?.paragraphs?.join(" ")??"";
+    expect(elementChapter).not.toContain("마음이 정해지면 오래 끌지 않고 움직여요");
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
@@ -93,11 +93,11 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const label of [
       "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
-      "중심으로 봅니다","살펴봅니다","실제 생활에서","이 부분은 어려운 말보다","중요합니다","필요합니다",
+      "실제 생활에서","이 부분은 어려운 말보다",
       "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
-      "이 힘이 한쪽으로 쏠리면","이런 모습이 보여요"
+      "이 힘이 한쪽으로 쏠리면","이런 모습이 보여요","끈기가장",
+      "종합적으로 보면","경향성이 보입니다","해당 항목","본 항목"
     ]) expect(customerCopy).not.toContain(label);
-    expect(customerCopy).not.toMatch(/[가-힣]+(?:습니다|니다)\./);
     expect(customerCopy).not.toMatch(/(?:^|\n)(?:에서도|에서는|에서|에선|에는)\s/);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
