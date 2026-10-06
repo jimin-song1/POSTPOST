@@ -250,7 +250,7 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  return count?`십성을 묶어 보면 ${family}의 비중이 가장 두드러집니다. ${familyMeaning(family)}이 반복해서 앞에 나오는 구조입니다.`:"";
+  return count?`십성을 큰 역할로 묶어 보면 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서 중요한 선택을 할 때 이 힘이 반복해서 기준이 됩니다.`:"";
 }
 const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
   비견:"내 생각과 기준을 분명히 세우는 힘",
@@ -2279,10 +2279,10 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/^십성$/.test(title)||/한눈에 보기|십성 분포/.test(title))return[
     dominantFamilySentence(facts),
-    `비겁 ${koreanCount(familyCount(facts,"비겁"))} · 식상 ${koreanCount(familyCount(facts,"식상"))} · 재성 ${koreanCount(familyCount(facts,"재성"))} · 관성 ${koreanCount(familyCount(facts,"관성"))} · 인성 ${koreanCount(familyCount(facts,"인성"))}의 비중으로 역할의 무게가 나뉩니다.`,
-    "이 숫자는 점수가 아니라 원국의 여러 자리에서 어떤 역할이 반복해서 나타나는지 보는 참고입니다.",
-    `가장 두드러진 ${dominant}은 ${familyMeaning(dominant)}과 연결됩니다. 반대로 비중이 낮은 역할은 필요할 때 의식적으로 키우는 영역이 됩니다.`,
-    "십성은 성격을 열 가지로 쪼개는 표가 아니라, 일·돈·관계·배움에서 어떤 역할이 먼저 나오는지를 설명하는 언어입니다."
+    "십성은 사람을 열 가지 성격으로 잘라 보는 표가 아닙니다. 내가 스스로 밀어붙이는 힘, 밖으로 표현하는 힘, 돈과 결과를 다루는 힘, 책임을 맡는 힘, 배우고 이해하는 힘이 어떤 비중으로 섞여 있는지를 보는 도구입니다.",
+    `이 사주에서는 ${familyMeaning(dominant)}이 가장 먼저 눈에 들어옵니다. 이 힘은 익숙하게 쓰는 장점이지만, 너무 많이 쓰면 피로의 원인이 될 수도 있습니다.`,
+    "반대로 덜 익숙한 힘은 능력이 없다는 뜻이 아닙니다. 필요한 순간에 의식적으로 꺼내 쓰고 경험을 쌓을수록 전체 균형이 좋아집니다.",
+    "그래서 이 장에서는 어려운 이름을 외우기보다, 어떤 힘이 자연스럽고 어떤 힘은 일부러 키워야 하는지를 중심으로 읽으면 충분합니다."
   ];
 
   if(/십성 10가지 뜻/.test(title))return[
