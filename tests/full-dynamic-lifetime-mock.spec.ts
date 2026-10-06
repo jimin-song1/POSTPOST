@@ -58,9 +58,12 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const id of ["legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
       expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
     expect(report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs).toEqual([
-      "한마디로 말하면, 서두르기보다 한번 살펴본 뒤 마음이 정해지면 꾸준히 가는 사람이에요.",
-      "생각이 너무 길어질 때만 조심하면 신중함이 오히려 큰 장점이 될 수 있어요."
+      "한마디로 말하면, 신중하게 판단하고 결정한 뒤에는 꾸준히 밀고 가는 사람이에요.",
+      "생각이 너무 길어지지만 않으면 신중함과 끈기가 가장 큰 장점으로 작용합니다."
     ]);
+    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).toContain("처음 만난 사람");
+    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).not.toContain("가까운 사람");
+    expect(report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")).not.toContain("작은 시험");
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
