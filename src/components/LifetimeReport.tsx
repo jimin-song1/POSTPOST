@@ -199,13 +199,12 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
         {sections.map((section,index)=>{
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
           const title=displaySectionTitle(section,analysis);
+          const duplicatePartOpening=index===0&&title.replace(/\s+/g,"")===part.title.replace(/\s+/g,"");
           const showFiveElements=false;
           const showDayPillar=section.id==="legacy-book-022";
           const showEvidence=Boolean(section.professionalDetails||section.metrics?.length)||["ELEMENTS","STRENGTH","STRUCTURE_USEFUL"].includes(section.evidenceGroup??"");
-          return <article key={section.id} id={section.id} className="book154Page">
-            <div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div>
-            <p className="book154Eyebrow">{part.title}</p>
-            <h3>{title}</h3>
+          return <article key={section.id} id={section.id} className={`book154Page${duplicatePartOpening?" isPartOpening":""}`}>
+            {!duplicatePartOpening&&<><div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div><p className="book154Eyebrow">{part.title}</p><h3>{title}</h3></>}
             {section.lead&&<p className="book154Lead">{section.lead}</p>}
             {showDayPillar?<DayPillarFocus analysis={analysis}/>:null}
             {showFiveElements?<FiveElementSpread analysis={analysis}/>:null}
