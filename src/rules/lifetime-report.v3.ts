@@ -67,11 +67,11 @@ export const LIFETIME_BOOK_V1={
     {id:"book-027",pageNumber:27,title:"직업운과 학업운",evidenceGroup:"WORK"},
     {id:"book-028",pageNumber:28,title:"나는 어떤 일을 할 때 잘 맞을까",evidenceGroup:"WORK"},
     {id:"book-029",pageNumber:29,title:"직장·사업·학업, 어디에서 강점이 살아날까",evidenceGroup:"WORK"},
-    {id:"book-030",pageNumber:30,title:"직장에서 나는 어떻게 일할까",evidenceGroup:"WORK"},
-    {id:"book-031",pageNumber:31,title:"책임이 커질수록 나는 어떻게 달라질까",evidenceGroup:"WORK"},
-    {id:"book-032",pageNumber:32,title:"사업을 한다면 어떤 방식이 잘 맞을까",evidenceGroup:"WORK"},
-    {id:"book-033",pageNumber:33,title:"사람과 같이 일할 때 나는 어떤 편일까",evidenceGroup:"WORK"},
-    {id:"book-034",pageNumber:34,title:"공부와 시험은 어떤 방식이 잘 맞을까",evidenceGroup:"WORK"}
+    {id:"book-030",pageNumber:30,title:"직장에서는 어떤 모습일까",evidenceGroup:"WORK"},
+    {id:"book-031",pageNumber:31,title:"책임이 커지면 어떻게 달라질까",evidenceGroup:"WORK"},
+    {id:"book-032",pageNumber:32,title:"사업을 한다면 무엇이 잘 맞을까",evidenceGroup:"WORK"},
+    {id:"book-033",pageNumber:33,title:"함께 일할 때 나는 어떤 편일까",evidenceGroup:"WORK"},
+    {id:"book-034",pageNumber:34,title:"공부와 시험은 어떻게 준비할까",evidenceGroup:"WORK"}
   ]},
   {partNumber:"04",title:"돈과 선택",pages:[
     {id:"book-035",pageNumber:35,title:"돈과 선택",evidenceGroup:"WEALTH"},
