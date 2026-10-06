@@ -2705,7 +2705,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
       lead,
       body:paragraphs.join("\n\n"),
       paragraphs,
-      keyPoints:[naturalizeNarration(angle.action)],
+      keyPoints:[`${row.title}의 핵심은 위 해설의 계산 근거와 함께 읽습니다.`],
       evidenceIds:ids,
       partNumber:row.partNumber,
       partTitle:row.partTitle,
