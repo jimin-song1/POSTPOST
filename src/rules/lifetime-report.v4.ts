@@ -27,32 +27,35 @@ const slug=(value:string)=>value.toLowerCase().replace(/[^a-z0-9가-힣]+/g,"-")
 const extra=(id:string,title:string,partNumber:string,partTitle:string,evidenceGroup:LifetimeEvidenceGroup,densityValue:ContentDensity,topic=title)=>
   ({id,title,partNumber,partTitle,evidenceGroup,density:densityValue,topic,contentKind:"CONTENT" as const});
 
-const childTopics=["자녀와 돌봄을 뜻하는 기운","아이와 돌봄의 기운이 겉으로 드러나는 자리","겉으로 보이지 않는 자녀와 돌봄의 기운","태어난 시간의 두 글자","태어난 시간 자리가 보여주는 가족 역할","태어난 시간 자리의 에너지 단계","태어난 시간 자리와 다른 자리의 관계","부모 역할을 맡는 방식","아이와 가까워지는 방식","부모가 되었을 때의 장점","부모 역할이 짐이 되는 순간","가족 역할이 커지는 10년 흐름","가까운 몇 년의 자녀와 가족 테마"];
-const samjaeTopics=["삼재란 무엇인가","내 생년지가 만드는 삼재 주기","들삼재의 시작","눌삼재의 머무름","날삼재의 정리","내 사주에서 삼재가 체감되는 방식","타고난 관계 패턴과 삼재","10년 흐름과 삼재의 중첩","지나온 삼재와 다음 삼재","삼재를 지나가는 현실적인 방식"];
-const yearTopics=["그 해의 두 기운과 내 기본 흐름의 만남","10년 흐름 속 도움과 변화","움직임이 커지는 분야의 행동 기준"];
-const daeunTopics=["전반부와 후반부, 앞뒤 흐름의 차이"];
+const childTopics=["자녀운의 기본 기운","겉으로 드러나는 자녀운","속에 숨은 자녀운","시주로 보는 자녀운","가족 안에서 맡는 역할","시주의 십이운성","시주와 다른 기둥의 관계","부모가 되었을 때의 나","아이와 가까워지는 법","부모 역할의 장점","부모 역할이 부담될 때","자녀·가족운이 커지는 대운","가까운 몇 년의 자녀·가족운"];
+const samjaeTopics=["삼재란 무엇인가","내 삼재 주기","들삼재","눌삼재","날삼재","내 사주에서 삼재가 얼마나 크게 느껴질까","원래 사주와 삼재의 관계","대운과 삼재가 겹칠 때","지나온 삼재와 다음 삼재","삼재 때 기억할 점"];
+const yearTopics=["그해의 전체 분위기","대운과 함께 보는 그해의 흐름","직업·재물·관계 중 어디가 많이 움직일까"];
+const daeunTopics=["이 대운의 전반부와 후반부"];
 
 const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
-  "01":"나는 어떤 존재인가",
-  "02":"나를 이루는 기운",
-  "03":"나에게 맞는 무대",
-  "04":"돈과 풍요",
-  "05":"사랑과 가족",
-  "06":"몸과 마음의 신호",
-  "07":"나를 돕는 인연",
-  "08":"내 사주의 특별한 이야기",
-  "09":"삶의 에너지 흐름",
-  "10":"내 안의 여러 모습",
-  "11":"앞으로의 흐름",
-  "12S":"변화가 커지는 때",
-  "13":"큰 운의 흐름",
-  "14":"마치며"
+  "01":"성격과 기본 성향",
+  "02":"일주와 오행",
+  "03":"직업운·학업운",
+  "04":"재물운",
+  "05":"연애운·결혼운·자녀운",
+  "06":"건강운",
+  "07":"귀인운",
+  "08":"신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운 · 앞으로 5년",
+  "12S":"삼재·변화운",
+  "13":"대운",
+  "14":"총정리"
 };
 const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
 
 export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number}):DynamicLifetimeBook{
   const base=LIFETIME_BOOK_PAGES.map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
-    const remappedPartNumber=legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
+    const remappedPartNumber=page.id==="book-015"?"10":
+      ["book-016","book-017","book-018"].includes(page.id)?"02":
+      page.id==="book-019"?"11":
+      legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
     const part=customerPart(remappedPartNumber,legacyPart.title);
     return{id:`legacy-${page.id}`,title:page.title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:page.title,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
