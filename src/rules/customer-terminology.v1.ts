@@ -20,12 +20,12 @@ export const CUSTOMER_TERMINOLOGY_V1={
 } as const;
 
 export const CUSTOMER_SAFE_SAJU_TERMS=[
-  "오행","년주","월주","일주","시주","십성","십이운성","대운","월운"
+  "원국","오행","년주","월주","일주","시주","십성","십이운성","대운","월운"
 ] as const;
 
 export const CUSTOMER_TECHNICAL_LITERAL_TERMS=[
   "일간","신강","신약","격국","용신","희신","기신","조후","천간",
-  "지장간","식신","자녀궁","원국","득령","득지","득세","투간",
+  "지장간","식신","자녀궁","득령","득지","득세","투간",
   "support","activation","favorability","evidence","evidenceIds","section","claim","domainConsequence","claimsUsed","scenesUsed"
 ] as const;
 
