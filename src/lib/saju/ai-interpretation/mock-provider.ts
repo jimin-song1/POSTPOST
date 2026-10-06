@@ -1011,12 +1011,14 @@ function report(input:InterpretationInput):StructuredInterpretation{
         ?[value.scene,value.consequence,value.action]
         :fullParagraphs;
     const pageNo=row.pageNumber??index+1;
+    const group=row.evidenceGroup??"";
+    const lead=["CORE","PILLARS","HIDDEN_STEMS"].includes(group)?undefined:naturalizeNarration(value.lead);
     return {
       id:row.id,
       chapterNumber:row.chapterNumber,
       title:row.title,
       headline:row.title,
-      lead:naturalizeNarration(value.lead),
+      lead,
       body:paragraphs.join("\n\n"),
       paragraphs,
       keyPoints:[naturalizeNarration(angle.action)],
