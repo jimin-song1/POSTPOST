@@ -185,7 +185,7 @@ function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
         <b>{customerElement(element,true)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
       </div>;})}
     </div>
-    {strongest&&weakest?<p className="fiveElementSummary"><b>{customerElement(strongest.element,true)}</b>이 가장 강하고, <b>{customerElement(weakest.element,true)}</b>이 가장 약합니다. 이 강약 차이가 뒤의 성격·직업·관계 풀이의 바탕이 됩니다.</p>:null}
+
   </figure>;
 }
 
@@ -221,7 +221,6 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
             {showDayPillar?<DayPillarFocus analysis={analysis}/>:null}
             {showFiveElements?<FiveElementSpread analysis={analysis}/>:null}
             <div className="longCopy">{paragraphs.map((paragraph,paragraphIndex)=><p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>)}</div>
-            {section.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,pointIndex)=><p key={pointIndex}>{point}</p>)}</blockquote>:null}
             {section.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
             {section.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
             {showEvidence?<EvidenceDetails>
