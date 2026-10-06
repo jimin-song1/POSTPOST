@@ -112,7 +112,7 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"WEALTH":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:PILLARS","NATAL:FIVE_ELEMENTS:","NATAL:STRUCTURE","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"CHILDREN":return idsByPrefix(evidence,"CHILD:","CONTEXT:CHILD_REALITY_UNKNOWN");
-    case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:");
+    case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:","NATAL:FIVE_ELEMENTS:");
     case"NOBLE":return idsByPrefix(evidence,"NATAL:STARS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
     case"STARS_RELATIONS":return idsByPrefix(evidence,"NATAL:STARS","NATAL:RELATIONS","NATAL:SAMJAE");
     case"TWELVE_STAGES":return idsByPrefix(evidence,"NATAL:TWELVE_STAGES","NATAL:PILLARS");
