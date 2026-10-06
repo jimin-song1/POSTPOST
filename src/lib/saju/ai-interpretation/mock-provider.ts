@@ -1156,7 +1156,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
   const firstContentIdByPart=new Map<string,string>();
   for(const row of rows)if(row.contentKind==="CONTENT"&&row.partNumber&&!firstContentIdByPart.has(row.partNumber))firstContentIdByPart.set(row.partNumber,row.id);
   const sections=rows.map((row,index)=>{
-    const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
+    const ids=input.reportVersion==="dynamic-lifetime-book-v4"?[...row.evidenceIds]:evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index,facts);
     const frontMatterParagraphs=[
       fullParagraphs[0],
