@@ -252,11 +252,29 @@ function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
   return count?`십성을 묶어 보면 ${family}의 비중이 가장 두드러집니다. ${familyMeaning(family)}이 반복해서 앞에 나오는 구조입니다.`:"";
 }
+const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
+  비견:"내 생각과 기준을 분명히 세우는 힘",
+  겁재:"경쟁 속에서도 주도권을 놓치지 않으려는 힘",
+  식신:"생각한 것을 꾸준히 말과 결과물로 만들어내는 힘",
+  상관:"답답한 틀을 깨고 자기 생각을 솔직하게 표현하는 힘",
+  정재:"돈과 생활을 안정적으로 관리하고 쌓아가는 힘",
+  편재:"사람과 기회를 넓게 보고 현실적인 가능성을 빠르게 잡는 힘",
+  정관:"약속과 책임을 중요하게 여기고 기준을 지키는 힘",
+  편관:"압박이 있는 상황에서도 결단하고 책임지려는 힘",
+  정인:"상대의 말과 경험을 충분히 받아들이고 이해하는 힘",
+  편인:"겉으로 드러나지 않은 의미를 깊이 읽고 파고드는 힘"
+};
+function tenGodCustomerMeaning(role:string){
+  return TEN_GOD_CUSTOMER_MEANING[role]??"상황에 맞춰 자기 역할을 찾아가는 힘";
+}
 function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day"|"hour",label:string){
   const pillar=facts.pillarReadings[position],stemGod=facts.stemTenGodByPosition[position],branchGod=facts.branchMainTenGodByPosition[position];
   const roles=[stemGod,branchGod].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
   if(!pillar)return"";
-  return roles.length?`${label} ${pillar}에는 ${roles.join("·")}의 성격이 함께 걸려 있습니다.`:`${label} ${pillar}을 중심으로 이 자리를 읽습니다.`;
+  if(!roles.length)return `${label}에서는 사람과 상황을 대하는 기본 태도가 드러납니다.`;
+  const meanings=roles.map(tenGodCustomerMeaning);
+  if(meanings.length===1)return `${label}에서는 ${meanings[0]}이 자연스럽게 드러납니다.`;
+  return `${label}에서는 ${meanings[0]}과 ${meanings[1]}이 함께 움직입니다.`;
 }
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
@@ -2235,10 +2253,10 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/십성 10가지 뜻/.test(title))return[
     "십성 열 가지는 결국 다섯 역할을 음양에 따라 다시 나눈 것입니다. 비겁은 나와 경쟁, 식상은 표현과 생산, 재성은 돈과 결과, 관성은 책임과 규칙, 인성은 배움과 이해를 맡습니다.",
-    "같은 재성도 정재와 편재가 다르고, 같은 관성도 정관과 편관이 다르지만 처음에는 큰 역할부터 이해하는 편이 쉽습니다.",
+    "같은 돈의 기운 안에서도 안정적으로 관리하는 힘과 기회를 넓게 잡는 힘이 다르고, 같은 책임의 기운 안에서도 기준을 지키는 힘과 압박 속에서 결단하는 힘이 다릅니다. 이름을 외우기보다 실제 행동의 차이로 이해하면 훨씬 쉽습니다.",
     "원국에서는 어느 십성이 있느냐보다 어디에 놓였고 다른 십성과 어떻게 같이 작동하는지가 더 중요합니다.",
     dominantFamilySentence(facts),
-    "뒤의 해설에서는 십성 이름을 외우게 하기보다 실제 생활에서 어떤 행동으로 나타나는지를 연결해서 봅니다."
+    "뒤에서는 어려운 이름보다 실제 생활에서 어떻게 행동하고 선택하는지를 중심으로 이어서 보겠습니다."
   ];
 
   for(const [family,pattern] of [["비겁",/비겁/],["식상",/식상/],["재성",/재성/],["관성",/관성/],["인성",/인성/]] as const){
