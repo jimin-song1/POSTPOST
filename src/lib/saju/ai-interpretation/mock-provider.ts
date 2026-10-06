@@ -1683,6 +1683,85 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 
+
+function relationshipConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  const title=row.topic??row.title,dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day,dayTone=tenGodTone(dayRole);
+
+  if(/연애운·결혼운·자녀운/.test(title))return[
+    `관계운의 중심은 ${facts.dayPillarReading||facts.dayPillar} 일주에서 시작합니다. 가까운 관계일수록 ${dayTone.gift}이 중요하게 작동합니다.`,
+    pillarRoleSentence(facts,"day","가까운 관계를 보는 일주"),
+    relationSentence(facts),
+    "연애와 결혼에서는 처음의 끌림보다 시간이 지나도 믿을 수 있는가, 서로의 역할과 영역을 존중할 수 있는가가 더 중요합니다.",
+    "자녀와 가족운은 별도로 보되, 가까운 사람을 오래 챙기려는 힘이 강점이면서 동시에 과한 책임으로 바뀌지 않도록 선을 두는 것이 핵심입니다."
+  ];
+
+  if(/^연애 성향$/.test(title))return[
+    `연애에서는 ${dayTone.front}보다 신뢰가 쌓인 뒤의 모습이 훨씬 중요합니다. 쉽게 마음을 열기보다 상대가 믿을 만한 사람인지 확인한 뒤 깊어지는 쪽에 가깝습니다.`,
+    pillarRoleSentence(facts,"day","일주"),
+    "마음이 열리면 관계를 가볍게 소비하기보다 오래 이어갈 방법을 생각합니다. 말보다 반복되는 행동과 약속을 더 크게 보는 편입니다.",
+    "반대로 신뢰가 한번 흔들리면 작은 일도 이전과 다르게 보이기 시작할 수 있습니다. 이때 마음속 판단만 끝내고 설명을 줄이면 상대는 이유를 모를 수 있습니다.",
+    "연애에서는 상대를 고르는 눈만큼 마음이 달라진 이유를 제때 말하는 힘이 중요합니다."
+  ];
+
+  if(/반복되는 패턴/.test(title))return[
+    "관계에서 반복되는 패턴은 가까워질수록 기대가 커진다는 데서 시작합니다.",
+    relationSentence(facts),
+    "처음에는 상대의 속도를 존중하다가도 관계가 깊어지면 말하지 않아도 알아주길 기대하거나, 내가 챙긴 만큼 상대도 비슷하게 움직이길 바랄 수 있습니다.",
+    "이 기대가 맞지 않을 때 바로 싸우기보다 속으로 정리하는 시간이 길어지면, 상대에게는 문제가 갑자기 커진 것처럼 보일 수 있습니다.",
+    "가까운 관계일수록 추측보다 설명이 필요합니다. 작은 불편을 작을 때 말하는 것이 가장 큰 반복을 끊는 방법입니다."
+  ];
+
+  if(/가까운 관계에서/.test(title))return[
+    `가까운 사람에게는 ${dayTone.gift}이 애정의 방식으로 나옵니다. 믿는 사람일수록 챙기고 오래 책임지려는 마음이 커집니다.`,
+    "문제는 챙김이 상대의 선택까지 대신하는 순간입니다. 좋은 뜻으로 시작했어도 상대에게는 관리받는 느낌으로 바뀔 수 있습니다.",
+    relationSentence(facts),
+    "가까울수록 역할을 분명히 나누고, 상대가 직접 해볼 몫을 남겨두는 편이 관계를 더 오래 편하게 만듭니다.",
+    "사랑의 크기를 책임의 양으로 증명하려 하기보다, 필요할 때 연결되고 각자의 영역은 남겨두는 방식이 잘 맞습니다."
+  ];
+
+  if(/마음이 가는 상대/.test(title))return[
+    "마음이 가는 상대는 화려한 말보다 생활 태도와 책임감이 일정한 사람에 가깝습니다.",
+    "말이 자주 바뀌거나 중요한 약속을 가볍게 여기는 사람보다는 자기 일을 하고, 자기 몫을 책임지고, 대화가 통하는 사람에게 신뢰가 붙기 쉽습니다.",
+    facts.structure?`${facts.structure}의 기본축 때문에 ${structureMeaning(facts.structure)}을 가진 상대에게 안정감을 느끼기 쉽습니다.`:"관계에서도 기준과 일관성을 중요하게 보는 편입니다.",
+    "다만 나와 비슷하게 기준이 강한 사람끼리는 맞는 부분만큼 부딪히는 부분도 커질 수 있습니다. 존중과 통제가 어디서 갈리는지 보는 게 중요합니다.",
+    "결국 좋은 상대는 나를 대신 결정해주는 사람이 아니라, 각자의 기준을 지키면서도 서로의 선택을 설명할 수 있는 사람입니다."
+  ];
+
+  if(/애정 표현/.test(title))return[
+    "애정 표현은 말만 많이 하는 방식보다 행동으로 챙기는 쪽에 가깝습니다. 필요한 것을 기억하고, 계획을 같이 세우고, 실제로 시간을 내는 식입니다.",
+    dayRole?`${dayRole}의 성격이 일주에 걸려 있어 ${dayTone.gift}이 사랑 표현에도 묻어납니다.`:"가까운 관계에서는 말보다 반복되는 행동을 더 크게 보는 편입니다.",
+    "본인은 행동으로 충분히 표현했다고 생각해도 상대는 말로 확인받고 싶을 수 있습니다. 이 차이를 모르면 서로 사랑하는데도 서운함이 생길 수 있습니다.",
+    "반대로 상대가 말은 잘하지만 행동이 따라오지 않으면 신뢰가 빠르게 떨어질 수 있습니다.",
+    "가장 잘 맞는 표현은 거창한 이벤트보다 '고맙다, 서운했다, 필요하다'를 짧게 말하고 행동으로 이어주는 방식입니다."
+  ];
+
+  if(/다툴 때/.test(title))return[
+    "다툴 때는 바로 폭발하기보다 속으로 정리한 뒤 말하는 쪽에 가깝습니다.",
+    relationSentence(facts),
+    "생각이 정리되는 동안 상대는 문제가 끝난 줄 알 수 있고, 본인은 이미 여러 장면을 연결해 결론을 내릴 수 있습니다. 그래서 나중에 말하면 상대에게는 갑자기 커진 문제처럼 들릴 수 있습니다.",
+    "논리가 다 정리될 때까지 기다리기보다 '지금 조금 서운하다, 생각하고 다시 말하겠다' 정도만 먼저 알려주는 게 좋습니다.",
+    "갈등의 핵심은 누가 맞는지가 아니라 서로 다른 속도로 감정을 처리한다는 점을 이해하고 대화의 시간을 맞추는 데 있습니다."
+  ];
+
+  if(/결혼운/.test(title))return[
+    "결혼운은 함께 사는 것 자체보다 역할과 독립성을 어떻게 나누느냐가 중요합니다.",
+    pillarRoleSentence(facts,"day","배우자와 가장 가까운 생활을 보는 일주"),
+    "가족이 중요해도 자기 일과 자기 공간이 완전히 사라지면 답답함이 커질 수 있습니다. 서로의 영역을 인정하면서 공동의 기준을 만드는 결혼이 더 잘 맞습니다.",
+    relationSentence(facts),
+    "좋은 결혼은 모든 것을 함께하는 상태보다, 함께 책임질 것과 각자 책임질 것을 분명히 나눈 상태에 가깝습니다."
+  ];
+
+  if(row.evidenceGroup==="RELATIONSHIP")return[
+    consultationOpening(row,facts)||`${title}에서는 가까운 관계에서 반복되는 선택을 봅니다.`,
+    pillarRoleSentence(facts,"day","일주"),
+    relationSentence(facts),
+    "관계운은 누가 나타날지를 맞히는 것보다 내가 어떤 사람에게 마음을 열고, 가까워진 뒤 어떤 패턴을 반복하는지 이해하는 데 더 가치가 있습니다."
+  ].filter(Boolean);
+
+  return null;
+}
+
+
 function sectionExtras(row:Row,value:DomainProfile){
   if(!value.extra)return[] as string[];
   const topic=row.topic??row.title,domain=domainOf(row.evidenceGroup??"");
