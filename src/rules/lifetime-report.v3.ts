@@ -63,15 +63,15 @@ export const LIFETIME_BOOK_V1={
     {id:"book-025",pageNumber:25,title:"도움이 되는 기운과 부담이 되는 기운",evidenceGroup:"STRUCTURE_USEFUL"},
     {id:"book-026",pageNumber:26,title:"다섯 기운이 내 생활에서 보이는 모습",evidenceGroup:"IDENTITY"}
   ]},
-  {partNumber:"03",title:"일과 배움",pages:[
-    {id:"book-027",pageNumber:27,title:"일과 배움",evidenceGroup:"WORK"},
-    {id:"book-028",pageNumber:28,title:"일하는 스타일을 한 문장으로",evidenceGroup:"WORK"},
-    {id:"book-029",pageNumber:29,title:"직장·사업·배움의 큰 그림",evidenceGroup:"WORK"},
+  {partNumber:"03",title:"직업운과 학업운",pages:[
+    {id:"book-027",pageNumber:27,title:"직업운과 학업운",evidenceGroup:"WORK"},
+    {id:"book-028",pageNumber:28,title:"나는 어떤 일을 할 때 잘 맞을까",evidenceGroup:"WORK"},
+    {id:"book-029",pageNumber:29,title:"직장·사업·학업, 어디에서 강점이 살아날까",evidenceGroup:"WORK"},
     {id:"book-030",pageNumber:30,title:"직장에서 나는 어떻게 일할까",evidenceGroup:"WORK"},
-    {id:"book-031",pageNumber:31,title:"책임과 결정권을 다루는 방식",evidenceGroup:"WORK"},
-    {id:"book-032",pageNumber:32,title:"사업을 한다면 보이는 운영 방식",evidenceGroup:"WORK"},
-    {id:"book-033",pageNumber:33,title:"사람과 함께 일할 때의 패턴",evidenceGroup:"WORK"},
-    {id:"book-034",pageNumber:34,title:"배우고 시험을 준비하는 방식",evidenceGroup:"WORK"}
+    {id:"book-031",pageNumber:31,title:"책임이 커질수록 나는 어떻게 달라질까",evidenceGroup:"WORK"},
+    {id:"book-032",pageNumber:32,title:"사업을 한다면 어떤 방식이 잘 맞을까",evidenceGroup:"WORK"},
+    {id:"book-033",pageNumber:33,title:"사람과 같이 일할 때 나는 어떤 편일까",evidenceGroup:"WORK"},
+    {id:"book-034",pageNumber:34,title:"공부와 시험은 어떤 방식이 잘 맞을까",evidenceGroup:"WORK"}
   ]},
   {partNumber:"04",title:"돈과 선택",pages:[
     {id:"book-035",pageNumber:35,title:"돈과 선택",evidenceGroup:"WEALTH"},
