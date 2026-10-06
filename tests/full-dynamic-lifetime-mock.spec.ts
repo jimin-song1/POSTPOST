@@ -83,6 +83,11 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       ...(section.keyPoints??[])
     ].join("\n").replace(/\s+/g," ").trim());
     expect(new Set(sectionFingerprints).size).toBe(sectionFingerprints.length);
+    const structureLabel=analysis.structure.primary?.type;
+    if(structureLabel)for(const section of customerSections){
+      const sectionCopy=[section.lead,...(section.paragraphs??[section.body]),...(section.keyPoints??[])].filter(Boolean).join(" ");
+      if(sectionCopy.includes(structureLabel))expect(section.evidenceIds.some(id=>id.startsWith("NATAL:STRUCTURE")),section.id).toBe(true);
+    }
     const customerCopy=customerSections.flatMap(section=>section.paragraphs??[section.body]).join("\n");
     for(const label of [
       "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
