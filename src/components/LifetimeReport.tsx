@@ -87,7 +87,7 @@ const BOOK_PART_TITLES:Record<string,string>={
   "14":"마치며"
 };
 const BOOK_SECTION_TITLES:Record<string,string>={
-  "legacy-book-007":"나는 어떤 방식으로 움직이는 사람일까",
+  "legacy-book-007":"나는 어떻게 결정하고 움직일까",
   "legacy-book-008":"먼저 한마디로 말하면",
   "legacy-book-009":"사람마다 보여주는 모습이 다른 이유",
   "legacy-book-010":"처음 만났을 때 보이는 나",
@@ -105,7 +105,7 @@ const BOOK_SECTION_TITLES:Record<string,string>={
   "legacy-book-025":"나를 편하게 하는 기운, 지치게 하는 기운",
   "legacy-book-028":"나는 이렇게 일하는 편이에요",
   "legacy-book-029":"직장과 사업에서 달라지는 내 모습",
-  "legacy-book-033":"사람과 같이 일할 때",
+  "legacy-book-033":"함께 일할 때 나는 어떤 편일까",
   "legacy-book-036":"돈 앞에서 나는 어떤 사람일까",
   "legacy-book-037":"돈은 어떻게 들어오고 나갈까",
   "legacy-book-044":"사랑할 때 나는 어떤 사람일까",
@@ -120,7 +120,7 @@ const BOOK_SECTION_TITLES:Record<string,string>={
   "legacy-book-130":"지금 10년 흐름의 분위기",
   "legacy-book-146":"결국 나는 어떤 사람일까",
   "legacy-book-147":"내 장점이 가장 잘 살아나는 순간",
-  "legacy-book-148":"잘하던 방식이 나를 지치게 할 때",
+  "legacy-book-148":"잘하던 일이 오히려 나를 지치게 할 때",
   "legacy-book-152":"나에게 편한 선택은 무엇일까"
 };
 const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
