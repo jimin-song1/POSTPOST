@@ -51,6 +51,12 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
     const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
     expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
+    for(const id of ["legacy-book-007","legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
+      expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
+    expect(report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs).toEqual([
+      "한마디로 말하면, 서두르기보다 한번 살펴본 뒤 마음이 정해지면 꾸준히 가는 사람이에요.",
+      "생각이 너무 길어질 때만 조심하면 신중함이 오히려 큰 장점이 될 수 있어요."
+    ]);
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
