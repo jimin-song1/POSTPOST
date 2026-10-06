@@ -49,6 +49,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(ids).toEqual(book.sections.map(row=>row.id));expect(sequences).toEqual(book.sections.map(row=>row.sequence));
     expect(new Set(report.sections.map(row=>row.partNumber)).size).toBe(book.parts.length);
     expect(content.every(row=>new Set(row.noveltyElements).size>=LIFETIME_CONTENT_CONTRACT_V1.novelty.minimumNewElements)).toBe(true);
+    expect(content.every(row=>(row.paragraphs?.length??0)>=4)).toBe(true);
     expect(content.every(row=>row.claimsUsed?.length&&row.scenesUsed?.length&&row.domainConsequence&&row.priorSectionSummary!==undefined)).toBe(true);
 
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
