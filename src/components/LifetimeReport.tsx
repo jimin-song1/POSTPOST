@@ -34,6 +34,18 @@ const STEM_HANGUL: Record<string, string> = { 甲:"갑", 乙:"을", 丙:"병", �
 const BRANCH_HANGUL: Record<string, string> = { 子:"자", 丑:"축", 寅:"인", 卯:"묘", 辰:"진", 巳:"사", 午:"오", 未:"미", 申:"신", 酉:"유", 戌:"술", 亥:"해" };
 const STEM_EASY: Record<string,string> = { 甲:"큰 나무 기운",乙:"부드러운 나무 기운",丙:"밝은 불 기운",丁:"은은한 불 기운",戊:"큰 땅 기운",己:"부드러운 흙 기운",庚:"단단한 쇠 기운",辛:"섬세한 쇠 기운",壬:"큰 물 기운",癸:"잔잔한 물 기운" };
 const BRANCH_ANIMAL: Record<string,string> = { 子:"쥐",丑:"소",寅:"호랑이",卯:"토끼",辰:"용",巳:"뱀",午:"말",未:"양",申:"원숭이",酉:"닭",戌:"개",亥:"돼지" };
+const STEM_PERSONALITY: Record<string,string[]> = {
+  甲:["곧음","주도성"],乙:["섬세함","유연함"],丙:["밝음","추진력"],丁:["따뜻함","집중력"],戊:["든든함","책임감"],
+  己:["차분함","세심함"],庚:["결단력","단단함"],辛:["정교함","기준이 분명함"],壬:["포용력","큰 흐름을 보는 힘"],癸:["감수성","관찰력"]
+};
+const BRANCH_PERSONALITY: Record<string,string[]> = {
+  子:["신중함"],丑:["꾸준함"],寅:["도전성"],卯:["부드러움"],辰:["현실감"],巳:["민첩함"],
+  午:["활기"],未:["배려심"],申:["재치"],酉:["정리력"],戌:["의리"],亥:["깊이 생각함"]
+};
+const pillarKeywords=(stem:string|null,branch:string|null)=>Array.from(new Set([
+  ...(stem?STEM_PERSONALITY[stem]??[]:[]),
+  ...(branch?BRANCH_PERSONALITY[branch]??[]:[])
+])).slice(0,3);
 const PILLAR_CUSTOMER_LABEL: Record<PillarPosition,string> = { year:"태어난 해",month:"태어난 달",day:"태어난 날",hour:"태어난 시간" };
 const pct = (value: number | null | undefined) => value == null ? "—" : `${value.toFixed(1)}%`;
 const score = (value: number | null | undefined) => value == null ? "—" : `${Math.round(value)}%`;
@@ -128,7 +140,7 @@ function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
       {(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position} className={position==="day"?"isDayPillar":undefined}>
         <span>{PILLAR_CUSTOMER_LABEL[position]}</span>
         <b>{pillar.stem??"—"}{pillar.branch??""}</b>
-        <small>{pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:position==="hour"?"태어난 시각 모름":""}</small>
+        <small>{position==="day"&&pillar.stem&&pillar.branch?pillarKeywords(pillar.stem,pillar.branch).join(" · "):pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:position==="hour"?"태어난 시각 모름":""}</small>
         {position==="day"?<em>나를 가장 가까이 보는 자리</em>:null}
       </article>;})}
     </div>
@@ -137,12 +149,12 @@ function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
 }
 
 function DayPillarFocus({analysis}:{analysis:SajuAnalysis}){
-  const pillar=analysis.pillars.day;
+  const pillar=analysis.pillars.day,keywords=pillarKeywords(pillar.stem,pillar.branch);
   return <div className="dayPillarFocus" aria-label="나를 대표하는 일주">
     <span>나를 대표하는 두 글자</span>
     <strong>{pillar.stem??"—"}{pillar.branch??""}</strong>
-    <b>{pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:""}</b>
-    <p>이 두 글자는 나를 가장 가까이 보여주는 일주예요. 성격과 가까운 관계에서의 모습을 볼 때 중심으로 참고해요.</p>
+    {keywords.length?<b>{keywords.join(" · ")}</b>:null}
+    <p>이 두 글자는 나를 가장 가까이 보여주는 일주예요. 어려운 한자 뜻보다, 실제 성격에서 자주 보이는 모습부터 쉽게 풀어볼게요.</p>
   </div>;
 }
 
