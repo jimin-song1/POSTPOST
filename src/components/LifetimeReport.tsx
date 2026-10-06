@@ -32,6 +32,9 @@ const CHILD_BOND: Record<string, string> = { LOW: "천천히 가까워지는 편
 const PILLAR_LABEL: Record<PillarPosition, string> = { year: "년주", month: "월주", day: "일주", hour: "시주" };
 const STEM_HANGUL: Record<string, string> = { 甲:"갑", 乙:"을", 丙:"병", 丁:"정", 戊:"무", 己:"기", 庚:"경", 辛:"신", 壬:"임", 癸:"계" };
 const BRANCH_HANGUL: Record<string, string> = { 子:"자", 丑:"축", 寅:"인", 卯:"묘", 辰:"진", 巳:"사", 午:"오", 未:"미", 申:"신", 酉:"유", 戌:"술", 亥:"해" };
+const STEM_EASY: Record<string,string> = { 甲:"큰 나무 기운",乙:"부드러운 나무 기운",丙:"밝은 불 기운",丁:"은은한 불 기운",戊:"큰 땅 기운",己:"부드러운 흙 기운",庚:"단단한 쇠 기운",辛:"섬세한 쇠 기운",壬:"큰 물 기운",癸:"잔잔한 물 기운" };
+const BRANCH_ANIMAL: Record<string,string> = { 子:"쥐",丑:"소",寅:"호랑이",卯:"토끼",辰:"용",巳:"뱀",午:"말",未:"양",申:"원숭이",酉:"닭",戌:"개",亥:"돼지" };
+const PILLAR_CUSTOMER_LABEL: Record<PillarPosition,string> = { year:"태어난 해",month:"태어난 달",day:"태어난 날",hour:"태어난 시간" };
 const pct = (value: number | null | undefined) => value == null ? "—" : `${value.toFixed(1)}%`;
 const score = (value: number | null | undefined) => value == null ? "—" : `${Math.round(value)}%`;
 const chapterSection = (report: StructuredInterpretation | null, id: string) => report?.sections.find((section) => section.id === id);
@@ -95,9 +98,9 @@ function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
     <header><span>내 사주 한눈에 보기</span><h3>먼저 원국과 오행부터 볼게요</h3>{dayElement?<p>나를 대표하는 기운은 <b>{customerElement(dayElement)}</b>이에요.</p>:null}</header>
     <div className="sajuPillarTable" role="table" aria-label="사주 원국표">
       {(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position} className={position==="day"?"isDayPillar":undefined}>
-        <span>{PILLAR_LABEL[position]}</span>
+        <span>{PILLAR_CUSTOMER_LABEL[position]}</span>
         <b>{pillar.stem??"—"}{pillar.branch??""}</b>
-        <small>{pillar.korean??(position==="hour"?"태어난 시각 모름":"")}</small>
+        <small>{pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:position==="hour"?"태어난 시각 모름":""}</small>
         {position==="day"?<em>나를 가장 가까이 보는 자리</em>:null}
       </article>;})}
     </div>
@@ -110,8 +113,8 @@ function DayPillarFocus({analysis}:{analysis:SajuAnalysis}){
   return <div className="dayPillarFocus" aria-label="나를 대표하는 일주">
     <span>나를 대표하는 두 글자</span>
     <strong>{pillar.stem??"—"}{pillar.branch??""}</strong>
-    <b>{pillar.korean??""}</b>
-    <p>이 두 글자는 내가 어떤 식으로 생각하고, 가까운 사람 앞에서 어떻게 반응하는지를 읽을 때 가장 먼저 보는 자리예요.</p>
+    <b>{pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:""}</b>
+    <p>이 두 글자는 나를 가장 가까이 보여주는 일주예요. 성격과 가까운 관계에서의 모습을 볼 때 중심으로 참고해요.</p>
   </div>;
 }
 
@@ -122,7 +125,7 @@ function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
   const strongest=rows[0],weakest=rows[rows.length-1];
   const dayElement=analysis.strength.dayMaster?.element;
   return <figure className="fiveElementSpread" aria-label="오행 분포표">
-    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"입니다.":"다섯 기운의 분포를 한눈에 봅니다."}</strong><small>지금 사주에서 보이는 오행 비율</small></figcaption>
+    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"이에요.":"다섯 기운이 어떻게 나뉘어 있는지 한눈에 볼게요."}</strong><small>지금 사주에서 보이는 오행 비율</small></figcaption>
     <div className="fiveElementRows">
       {ELEMENTS.map(element=>{const value=adjusted?.[element].percentage??native?.[element].percentage??0;return <div className="fiveElementRow" data-element={element} key={element}>
         <b>{customerElement(element)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
