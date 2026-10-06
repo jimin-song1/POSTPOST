@@ -110,7 +110,7 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"IDENTITY":return idsByPrefix(evidence,"NATAL:DAY_MASTER","NATAL:PILLARS","NATAL:STRENGTH","NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:RELATIONS","NATAL:FIVE_ELEMENTS:");
     case"WORK":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:STRENGTH","NATAL:RELATIONS","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"WEALTH":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:PILLARS","NATAL:FIVE_ELEMENTS:","NATAL:STRUCTURE","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
-    case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
+    case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS","NATAL:STRUCTURE"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"CHILDREN":return idsByPrefix(evidence,"CHILD:","CONTEXT:CHILD_REALITY_UNKNOWN");
     case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:","NATAL:FIVE_ELEMENTS:");
     case"NOBLE":return idsByPrefix(evidence,"NATAL:STARS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
