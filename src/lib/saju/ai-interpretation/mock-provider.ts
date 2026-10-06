@@ -447,8 +447,8 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   if(group==="STRENGTH"&&facts.strength)return "전체 기운을 보면 "+strengthMeaning(facts.strength)+"입니다. 의지가 세다 약하다는 뜻보다, 혼자 밀어붙이는 힘과 주변 도움을 쓰는 비중을 보는 기준입니다.";
   if(group==="STRUCTURE_USEFUL"){
     const useful=facts.useful.length?facts.useful.map(elementPro).join(" · "):"";
-    if(facts.structure&&useful)return "타고난 구조는 "+facts.structure+"으로 잡히고, 도움 되는 기운은 "+useful+" 순으로 봅니다. "+structureMeaning(facts.structure)+"이 기본축이고, 부족한 쪽을 보완할 때 흐름이 더 매끄러워집니다.";
-    if(facts.structure)return "타고난 구조는 "+facts.structure+"입니다. "+structureMeaning(facts.structure)+"이 이 사주의 기본축입니다.";
+    if(facts.structure&&useful)return "타고난 흐름의 중심은 "+structureMeaning(facts.structure)+"입니다. 도움 되는 기운은 "+useful+" 순으로 보고, 부족한 쪽을 보완할 때 전체 흐름이 더 매끄러워집니다.";
+    if(facts.structure)return "타고난 흐름의 중심은 "+structureMeaning(facts.structure)+"입니다. 이 힘이 일과 관계에서 반복해서 중요한 기준으로 작동합니다.";
   }
   if(group==="IDENTITY"){
     if(/일주|두 글자/.test(title)&&facts.dayPillar)return (facts.dayPillarReading||facts.dayPillar)+" 일주는 이 사주에서 나 자신을 가장 가까이 보는 자리입니다. "+(facts.dayStemName||"나를 대표하는 기운")+"의 성향이 가까운 관계와 실제 선택에서 가장 직접적으로 드러납니다.";
@@ -494,7 +494,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
   if(group==="TEN_GODS"){
-    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?facts.structure+"이 잡힌 만큼 "+structureMeaning(facts.structure)+"이 중심축으로 작동합니다.":"");
+    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 이 사주의 중심축으로 작동합니다.":"");
     if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
     if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
     if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
@@ -504,7 +504,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
   if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
-  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주, ":"")+(facts.structure?facts.structure+", ":"")+(facts.strength?strengthMeaning(facts.strength):"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
+  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주의 성향, ":"")+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
 
@@ -1476,14 +1476,14 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     `사주의 중심부터 보면 ${facts.dayStemName||"나를 대표하는 기운"}이 자리합니다. ${stem.image}에 비유하는 기운으로, ${stem.core}이 기본 성향의 뼈대를 만듭니다.`,
     elementFact(facts)||"오행은 한쪽만 보고 판단하지 않고 다섯 기운의 강약을 함께 봅니다.",
     dominantFamilySentence(facts)||"십성에서는 한 가지 역할만 앞세우기보다 여러 역할이 어떻게 섞이는지를 함께 봅니다.",
-    facts.structure?`타고난 구조는 ${facts.structure}으로 잡힙니다. 여기서는 이름 자체보다 '${structureMeaning(facts.structure)}'이 삶에서 어떻게 쓰이는지를 보는 게 중요합니다.`:"타고난 구조는 한 가지 이름보다 여러 계산 근거가 같은 방향을 가리키는지 함께 봅니다.",
+    facts.structure?`타고난 흐름의 중심에는 ${structureMeaning(facts.structure)}이 있습니다. 이 힘이 실제 생활에서 어떻게 쓰이는지를 보는 게 중요합니다.`:"타고난 구조는 한 가지 이름보다 여러 계산 근거가 같은 방향을 가리키는지 함께 봅니다.",
     `그래서 이 사주는 단순히 '신중한 사람'처럼 한 단어로 끝내기 어렵습니다. ${stem.core}이 강점으로 작동하고, 반대로 ${stem.shadow}이 부담으로 바뀌는 순간을 함께 보는 편이 정확합니다.`
   ];
 
   if(id==="book-008")return[
     `이 사주를 한 문장으로 줄이면, '${stem.core}을 가진 사람'에 가깝습니다.`,
     dominantFamilySentence(facts)||`${facts.dayStemName||"중심 기운"}의 성향이 판단과 선택에서 반복해서 나타납니다.`,
-    facts.structure?`${facts.structure}이 함께 잡혀 있기 때문에, 잘하고 싶은 마음만 있는 것이 아니라 실제 역할과 결과까지 책임지려는 힘이 같이 붙습니다.`:"자기 기준이 선 뒤에는 생각을 행동으로 옮기고 결과를 끝까지 확인하려는 힘이 있습니다.",
+    facts.structure?`${structureMeaning(facts.structure)}이 함께 작동하기 때문에, 잘하고 싶은 마음만 있는 것이 아니라 실제 역할과 결과까지 책임지려는 힘이 같이 붙습니다.`:"자기 기준이 선 뒤에는 생각을 행동으로 옮기고 결과를 끝까지 확인하려는 힘이 있습니다.",
     `장점은 한번 방향을 정하면 쉽게 흐트러지지 않는다는 점입니다. 다만 ${stem.shadow}이 강해지면 스스로 만든 기준 때문에 오히려 시작이 늦거나 피로가 커질 수 있습니다.`
   ];
 
@@ -1557,7 +1557,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(id==="book-018"||id==="book-025")return[
     usefulSentence(facts)||"도움이 되는 기운은 이미 강한 부분보다 현재 부족한 부분을 보완하는 쪽에서 찾습니다.",
-    facts.structure?`${facts.structure}의 기본축은 '${structureMeaning(facts.structure)}'입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
+    facts.structure?`이 사주의 기본축은 ${structureMeaning(facts.structure)}입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
     strongest&&strongStory?`이미 강한 ${elementPro(strongest)}의 ${strongStory.life}은 굳이 더 밀어붙이지 않아도 자연스럽게 나옵니다.`:"이미 익숙한 힘은 생활에서 자연스럽게 반복됩니다.",
     weakest&&weakStory?`반대로 약한 ${elementPro(weakest)}의 ${weakStory.life}은 일정, 사람, 일하는 방식처럼 현실적인 선택으로 보완할 때 체감이 큽니다.`:"부족한 힘은 생활환경과 습관으로 보완할 때 가장 현실적으로 달라집니다.",
     "사주에서 도움이 되는 기운을 안다는 것은 색이나 물건을 고르는 문제가 아니라, 내가 자주 놓치는 행동을 어떤 방식으로 생활에 넣을지 정하는 데 더 가깝습니다."
@@ -1606,7 +1606,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
     consultationOpening(row,facts)||`${title}은 원국의 여러 계산값을 한데 묶어서 읽는 장입니다.`,
     elementFact(facts)||dominantFamilySentence(facts),
-    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${facts.structure}의 성격과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
     "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
   ].filter(Boolean);
 
@@ -1622,14 +1622,14 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/직업운·학업운/.test(title))return[
     `직업운의 핵심은 '${familyMeaning(dominant)}'을 실제 결과로 바꾸는 데 있습니다.`,
     dominantFamilySentence(facts),
-    structure?`${structure}이 기본 구조로 잡혀 있어 ${structureMeaning(structure)}이 직업 선택에서 중요한 기준이 됩니다.`:"직업에서는 내가 잘하는 것보다 어떤 책임 구조에서 오래 버틸 수 있는지가 더 중요합니다.",
+    structure?`${structureMeaning(structure)}이 직업 선택에서 중요한 기준이 됩니다.`:"직업에서는 내가 잘하는 것보다 어떤 책임 구조에서 오래 버틸 수 있는지가 더 중요합니다.",
     "단순히 유명한 직업이나 안정적인 직장을 고르는 것보다, 하루 대부분을 어떤 방식으로 판단하고 누구와 책임을 나누는지 보는 편이 잘 맞습니다.",
     "학업도 마찬가지입니다. 배우는 것 자체보다 배운 내용을 실제 일과 결과에 연결할 수 있을 때 성취감이 크게 올라갑니다."
   ];
 
   if(/나에게 잘 맞는 일/.test(title))return[
     `잘 맞는 일은 ${stemStory(facts).core}을 쓸 수 있는 일입니다.`,
-    structure?`특히 ${structure}의 성격 때문에 ${structureMeaning(structure)}이 필요한 역할에서 강점이 살아납니다.`:dominantFamilySentence(facts),
+    structure?`특히 ${structureMeaning(structure)}이 필요한 역할에서 강점이 살아납니다.`:dominantFamilySentence(facts),
     officer>=resource&&officer>=wealth?"기준을 세우고 책임지는 역할, 일정과 품질을 관리하는 일, 사람과 조직의 흐름을 정리하는 일과 잘 맞습니다.":wealth>officer?"시장 반응을 보고 운영·판매·수익 구조를 만드는 일처럼 결과가 숫자로 확인되는 일과 잘 맞습니다.":resource>=output?"분석·기획·교육·전문지식처럼 배우고 이해한 것을 구조화하는 일과 잘 맞습니다.":"아이디어를 콘텐츠·서비스·제품처럼 밖으로 만들어내는 일과 잘 맞습니다.",
     "반대로 의미를 느끼지 못한 반복 업무나 결정권 없이 지시만 수행하는 환경에서는 실력보다 답답함이 먼저 커질 수 있습니다.",
     "직업 이름보다 '내가 판단할 수 있는 범위가 있는가, 만든 결과가 남는가'를 기준으로 고르는 편이 훨씬 정확합니다."
@@ -1639,14 +1639,14 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "직장과 사업 중 하나만 무조건 맞는 사주로 볼 필요는 없습니다. 두 환경에서 쓰는 힘이 다르기 때문입니다.",
     officer>0?"관성이 원국에 있어 조직의 규칙과 역할을 이해하고 책임을 맡는 힘은 갖고 있습니다.":"조직 안에서는 정해진 역할보다 자율성과 결과 책임이 있는 자리가 더 편할 수 있습니다.",
     wealth>0?"재성도 원국에 자리해 시장·돈·운영처럼 현실 결과를 직접 다루는 힘이 있습니다. 이 부분은 독립수입이나 사업을 생각할 때 중요한 근거가 됩니다.":"사업은 단순히 독립하고 싶다는 마음보다 실제 매출과 운영을 다룰 구조를 만들 수 있는지가 더 중요합니다.",
-    structure?`${structure}의 기본축을 보면, 완전히 자유로운 환경보다 기준과 시스템이 있는 상태에서 결정권을 넓혀가는 방식이 더 안정적입니다.`:"처음부터 모든 것을 혼자 만드는 것보다 역할과 시스템을 확보한 뒤 결정권을 넓히는 편이 안정적입니다.",
+    structure?`${structureMeaning(structure)}이 중심에 있기 때문에, 완전히 자유로운 환경보다 기준과 시스템이 있는 상태에서 결정권을 넓혀가는 방식이 더 안정적입니다.`:"처음부터 모든 것을 혼자 만드는 것보다 역할과 시스템을 확보한 뒤 결정권을 넓히는 편이 안정적입니다.",
     "그래서 선택 기준은 '직장이냐 사업이냐'보다 '내가 판단하고 책임질 수 있는 범위가 얼마나 있는가'에 두는 편이 맞습니다."
   ];
 
   if(/^직장운$/.test(title))return[
     "직장운은 분명히 있습니다. 조직 안에서 맡은 역할을 이해하고 결과 기준을 지키는 힘을 실제로 쓸 수 있습니다.",
     familyPresence(facts,"관성"),
-    structure?`${structure}이 잡혀 있어 단순 실무보다 시간이 갈수록 책임과 판단권이 커지는 자리에서 강점이 더 선명해집니다.`:"경력이 쌓일수록 단순 실행보다 판단과 조율이 필요한 역할이 더 잘 맞습니다.",
+    structure?`${structureMeaning(structure)}이 중심에 있어 단순 실무보다 시간이 갈수록 책임과 판단권이 커지는 자리에서 강점이 더 선명해집니다.`:"경력이 쌓일수록 단순 실행보다 판단과 조율이 필요한 역할이 더 잘 맞습니다.",
     "다만 이유를 설명하지 않는 지시나 권한 없이 책임만 커지는 구조에는 스트레스가 크게 쌓일 수 있습니다.",
     "좋은 직장은 편한 곳보다 기준이 분명하고, 내가 결과에 영향을 줄 수 있으며, 성과를 인정받을 구조가 있는 곳입니다."
   ];
@@ -1686,7 +1686,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(row.evidenceGroup==="WORK")return[
     consultationOpening(row,facts)||`${title}에서는 직업에서 가장 많이 쓰는 힘을 봅니다.`,
     dominantFamilySentence(facts),
-    structure?`${structure}이 기본축으로 작동해 ${structureMeaning(structure)}이 일의 기준이 됩니다.`:"일의 기준과 책임 구조가 맞을수록 강점이 오래 유지됩니다.",
+    structure?`${structureMeaning(structure)}이 일의 기준이 됩니다.`:"일의 기준과 책임 구조가 맞을수록 강점이 오래 유지됩니다.",
     "일에서 중요한 것은 잘하는 일을 많이 맡는 것보다, 어떤 역할을 맡았을 때 실력이 가장 안정적으로 반복되는지를 아는 것입니다."
   ].filter(Boolean);
 
@@ -2580,7 +2580,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/^총정리$/.test(title))return[
     `전체 사주를 다시 묶으면 ${facts.dayStemName||"중심 기운"}의 '${stem.core}'과 ${dominant}의 '${familyMeaning(dominant)}'이 가장 오래 남는 축입니다.`,
-    facts.structure?`${facts.structure}이 이 힘에 사회적 역할과 결과의 방향을 붙여줍니다.`:"원국의 여러 기운이 이 중심축을 서로 밀어주고 조절합니다.",
+    facts.structure?`${structureMeaning(facts.structure)}이 이 힘에 사회적 역할과 결과의 방향을 붙여줍니다.`:"원국의 여러 기운이 이 중심축을 서로 밀어주고 조절합니다.",
     elementFact(facts)||"오행의 강약이 잘하는 힘과 의식적으로 보완할 힘을 나눠줍니다.",
     "일·돈·관계는 서로 다른 장이지만 결국 같은 사람이 선택하기 때문에 반복되는 기준이 있습니다.",
     "이제부터는 앞의 내용을 다시 나열하기보다 평생 선택에서 실제로 기억할 몇 가지 기준만 남겨보겠습니다."
@@ -2611,7 +2611,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/직업운·재물운 핵심/.test(title))return[
-    facts.structure?`직업운의 중심은 ${facts.structure}에서 보이는 '${structureMeaning(facts.structure)}'입니다.`:"직업에서는 자기 판단과 결과 책임이 같이 있을 때 강점이 살아납니다.",
+    facts.structure?`직업운의 중심은 ${structureMeaning(facts.structure)}입니다.`:"직업에서는 자기 판단과 결과 책임이 같이 있을 때 강점이 살아납니다.",
     `재물운에서는 ${familyMeaning("재성")}과 ${familyMeaning("식상")}의 연결이 중요합니다. 만들고 밖에 내놓은 것이 실제 돈과 구조로 이어져야 합니다.`,
     familyPresence(facts,"재성"),
     "장기적으로는 시간을 그대로 파는 구조보다 경험과 결과물을 반복 가능한 서비스·상품·운영 구조로 바꾸는 쪽이 유리합니다.",
@@ -2696,7 +2696,7 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
   const fallback=[
     consultationOpening(row,facts)||`${row.topic??row.title}은 원국의 계산 결과를 바탕으로 읽습니다.`,
     elementFact(facts)||dominantFamilySentence(facts),
-    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${facts.structure}의 기본축과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고, 이 장에 배정된 근거 안에서 같은 방향을 가리키는 흐름을 함께 봅니다.",
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고, 이 장에 배정된 근거 안에서 같은 방향을 가리키는 흐름을 함께 봅니다.",
     "이 장에서는 앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 선택과 결과만 남깁니다."
   ].filter(Boolean);
   return (selected??fallback)
@@ -2748,7 +2748,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
     status:"completed",
     reportType:input.reportType,
     headline:facts.dayPillarReading?facts.dayPillarReading+" 일주에서 시작하는 평생사주":"원국에서 시작하는 평생사주",
-    summary:facts.structure?facts.structure+"과 오행의 강약, 대운과 연운을 한 사람의 이야기로 이어서 풀었습니다.":"원국의 오행과 시간 흐름을 한 사람의 이야기로 이어서 풀었습니다.",
+    summary:facts.structure?structureMeaning(facts.structure)+"과 오행의 강약, 대운과 연운을 한 사람의 이야기로 이어서 풀었습니다.":"원국의 오행과 시간 흐름을 한 사람의 이야기로 이어서 풀었습니다.",
     sections,
     highlights:["같은 성향도 일, 돈, 관계에서는 서로 다른 행동으로 나타납니다."],
     cautions:["움직임이 크다는 말과 유리하다는 말은 같은 뜻이 아닙니다."],
