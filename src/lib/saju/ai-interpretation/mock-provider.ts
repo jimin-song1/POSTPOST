@@ -108,6 +108,9 @@ interface ConsultationFacts{
   missing:string[];
   useful:string[];
   stageByPosition:Record<string,string>;
+  tenGodCounts:Record<string,number>;
+  starLabels:string[];
+  relationCounts:{clash:number;break:number;harm:number;wonjin:number;combination:number;punishment:number};
 }
 function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const dayMaster=asRecord(evidenceValue(input,"NATAL:DAY_MASTER"));
@@ -135,6 +138,37 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const stages=asRecord(stagesRoot?.stages);
   const stageByPosition:Record<string,string>={};
   for(const position of ["year","month","day","hour"])stageByPosition[position]=asText(stages?.[position]);
+
+  const tenGodRoot=asRecord(evidenceValue(input,"NATAL:TEN_GODS"));
+  const tenGodCounts:Record<string,number>={};
+  const addTenGod=(value:unknown)=>{const row=asRecord(value);const korean=asText(row?.korean);if(korean)tenGodCounts[korean]=(tenGodCounts[korean]??0)+1;};
+  const heavenly=asRecord(tenGodRoot?.heavenlyStems);
+  for(const position of ["year","month","day","hour"])addTenGod(heavenly?.[position]);
+  const hidden=asRecord(tenGodRoot?.hiddenStems);
+  for(const position of ["year","month","day","hour"]){
+    const rows=hidden?.[position];
+    if(Array.isArray(rows))for(const item of rows)addTenGod(asRecord(item)?.tenGod);
+  }
+
+  const starsRoot=asRecord(evidenceValue(input,"NATAL:STARS"));
+  const starLabels:string[]=[];
+  for(const key of ["nobleStars","peachBlossom","travelHorse","flowerCanopy","ghostGate","wonjin","needle","yangBlade","goegang","whiteTiger"]){
+    const rows=starsRoot?.[key];
+    if(Array.isArray(rows))for(const item of rows){const label=asText(asRecord(item)?.label);if(label&&!starLabels.includes(label))starLabels.push(label);}
+  }
+
+  const relationsRoot=asRecord(evidenceValue(input,"NATAL:RELATIONS"));
+  const branches=asRecord(relationsRoot?.earthlyBranches);
+  const lengthOf=(key:string)=>Array.isArray(branches?.[key])?(branches?.[key] as unknown[]).length:0;
+  const relationCounts={
+    clash:lengthOf("clashes"),
+    break:lengthOf("breaks"),
+    harm:lengthOf("harms"),
+    wonjin:lengthOf("wonjin"),
+    combination:lengthOf("sixCombinations")+lengthOf("threeHarmonies")+lengthOf("directionalCombinations"),
+    punishment:lengthOf("punishments")
+  };
+
   const dayStem=asText(dayMaster?.stem)||asText(day?.stem),dayBranch=asText(day?.branch);
   return{
     dayStem,
@@ -147,10 +181,31 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     weakest:sorted.at(-1)??null,
     missing:elementRows.filter(row=>row.percentage===0).map(row=>row.element),
     useful,
-    stageByPosition
+    stageByPosition,
+    tenGodCounts,
+    starLabels,
+    relationCounts
   };
 }
 function elementPro(element:string){return ELEMENT_PRO[element]??element;}
+const TEN_GOD_FAMILIES:Record<string,string[]>={비겁:["비견","겁재"],식상:["식신","상관"],재성:["정재","편재"],관성:["정관","편관"],인성:["정인","편인"]};
+function familyCount(facts:ConsultationFacts,family:string){return(TEN_GOD_FAMILIES[family]??[]).reduce((sum,name)=>sum+(facts.tenGodCounts[name]??0),0);}
+function dominantFamily(facts:ConsultationFacts){
+  return Object.keys(TEN_GOD_FAMILIES).sort((a,b)=>familyCount(facts,b)-familyCount(facts,a))[0]??"";
+}
+function familyMeaning(family:string){
+  return family==="비겁"?"독립심과 경쟁력":family==="식상"?"표현과 생산력":family==="재성"?"돈과 현실 결과를 다루는 힘":family==="관성"?"책임감과 사회적 기준":family==="인성"?"학습력과 이해력":"자기 기준";
+}
+function relationSummary(facts:ConsultationFacts){
+  const rows:string[]=[];
+  if(facts.relationCounts.clash)rows.push("충(서로 부딪히며 변화를 만드는 관계)");
+  if(facts.relationCounts.break)rows.push("파(가까운 관계에서 균열이 생기기 쉬운 관계)");
+  if(facts.relationCounts.harm)rows.push("해(겉으로 드러나지 않는 불편)");
+  if(facts.relationCounts.wonjin)rows.push("원진(가까울수록 예민해지기 쉬운 관계)");
+  if(facts.relationCounts.combination)rows.push("합(서로 끌어당기며 힘이 모이는 관계)");
+  if(facts.relationCounts.punishment)rows.push("형(반복해서 신경 쓰이는 압박)");
+  return rows;
+}
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
   if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
