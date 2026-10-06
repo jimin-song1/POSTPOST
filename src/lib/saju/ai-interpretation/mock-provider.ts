@@ -660,8 +660,42 @@ function joinUpsideShadow(strength:string,shadow:string){
   const upside=trimOpening(strength),downside=trimOpening(shadow);
   return `${upside} 그런데 이런 모습이 너무 강해지면 ${downside.charAt(0).toLowerCase()+downside.slice(1)}`;
 }
+const CUSTOMER_NARRATION_TERM_MAP:Record<string,string>={
+  "비견":"내 생각과 기준을 지키는 힘",
+  "겁재":"경쟁 속에서 주도권을 잡으려는 힘",
+  "식신":"생각을 꾸준히 말과 결과물로 만드는 힘",
+  "상관":"자기 생각을 솔직하게 밖으로 꺼내는 힘",
+  "정재":"돈과 생활을 안정적으로 관리하는 힘",
+  "편재":"사람과 기회를 넓게 보고 현실적인 가능성을 잡는 힘",
+  "정관":"약속과 책임을 중요하게 여기고 기준을 지키는 힘",
+  "편관":"압박 속에서도 결단하고 책임지는 힘",
+  "정인":"상대의 말과 경험을 받아들이고 이해하는 힘",
+  "편인":"겉으로 드러나지 않은 의미를 깊이 읽는 힘",
+  "비겁":"자기주도와 경쟁의 힘",
+  "식상":"표현하고 만들어내는 힘",
+  "재성":"돈과 현실 결과를 다루는 힘",
+  "관성":"책임과 사회적 기준을 다루는 힘",
+  "인성":"배우고 이해하는 힘",
+  "정관격":"책임과 기준을 지키면서 신뢰를 쌓는 흐름",
+  "편관격":"압박이 있는 자리에서도 결단하고 책임지는 흐름",
+  "정재격":"꾸준히 관리하고 안정적으로 결과를 쌓는 흐름",
+  "편재격":"시장과 기회를 읽고 여러 자원을 움직이는 흐름",
+  "식신격":"배운 것을 결과물로 만들고 꾸준히 생산하는 흐름",
+  "상관격":"자기 생각을 밖으로 표현하고 기존 방식을 바꾸는 흐름",
+  "정인격":"배우고 이해한 것을 자기 것으로 만드는 흐름",
+  "편인격":"깊이 관찰하고 자기 방식으로 해석하는 흐름",
+  "건록격":"스스로 방향을 정하고 독립적으로 밀고 가는 흐름",
+  "양인격":"자기 힘과 결단을 강하게 쓰는 흐름"
+};
+function customerizeNarration(text:string){
+  let result=text;
+  for(const [term,meaning] of Object.entries(CUSTOMER_NARRATION_TERM_MAP)){
+    result=result.split(term).join(meaning);
+  }
+  return result;
+}
 function naturalizeNarration(text:string){
-  return text
+  return customerizeNarration(text)
     .replaceAll("자기준","자기 기준")
     .replace(/\s+/g," ")
     .trim();
