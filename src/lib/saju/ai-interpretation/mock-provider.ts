@@ -156,6 +156,19 @@ function elementFact(facts:ConsultationFacts){
   if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
   return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고 "+elementPro(facts.weakest.element)+"이 가장 약합니다.";
 }
+function strengthMeaning(level:string){
+  const labels:Record<string,string>={
+    "극약":"주변 도움과 회복을 충분히 써야 힘이 안정되는 편",
+    "태약":"혼자 밀어붙이기보다 환경과 도움을 활용할수록 안정되는 편",
+    "신약":"주변의 지원을 잘 활용할 때 본래 실력이 더 잘 살아나는 편",
+    "중화신약":"균형에 가깝지만 주변 도움을 받으면 더 안정적인 편",
+    "중화신강":"균형에 가깝고 필요할 때 스스로 밀어붙이는 힘도 충분한 편",
+    "신강":"자기 힘으로 방향을 정하고 밀고 가는 힘이 분명한 편",
+    "태강":"추진력이 강해 속도 조절과 역할 분담이 중요한 편",
+    "극왕":"한 방향으로 힘이 강하게 몰려 조절과 분산이 중요한 편"
+  };
+  return labels[level]??"전체적으로 균형을 보며 힘을 쓰는 편";
+}
 function structureMeaning(structure:string){
   if(structure.includes("정관"))return"책임과 기준을 지키면서 신뢰를 쌓는 힘";
   if(structure.includes("편관"))return"압박이 있는 자리에서도 결단하고 책임지는 힘";
@@ -177,7 +190,7 @@ function workVerdict(facts:ConsultationFacts){
 function consultationOpening(row:Row,facts:ConsultationFacts){
   const title=row.topic??row.title,group=row.evidenceGroup??"";
   if(group==="ELEMENTS")return elementFact(facts);
-  if(group==="STRENGTH"&&facts.strength)return "전체 기운의 균형은 "+facts.strength+"으로 계산됩니다. 이 값은 의지가 세다 약하다는 뜻보다, 혼자 밀어붙이는 힘과 주변 도움을 쓰는 비중을 보는 기준입니다.";
+  if(group==="STRENGTH"&&facts.strength)return "전체 기운을 보면 "+strengthMeaning(facts.strength)+"입니다. 의지가 세다 약하다는 뜻보다, 혼자 밀어붙이는 힘과 주변 도움을 쓰는 비중을 보는 기준입니다.";
   if(group==="STRUCTURE_USEFUL"){
     const useful=facts.useful.length?facts.useful.map(elementPro).join(" · "):"";
     if(facts.structure&&useful)return "타고난 구조는 "+facts.structure+"으로 잡히고, 도움 되는 기운은 "+useful+" 순으로 봅니다. "+structureMeaning(facts.structure)+"이 기본축이고, 부족한 쪽을 보완할 때 흐름이 더 매끄러워집니다.";
@@ -213,7 +226,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 10년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
   if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
-  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주, ":"")+(facts.structure?facts.structure+", ":"")+(facts.strength?facts.strength+"의 균형":"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
+  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주, ":"")+(facts.structure?facts.structure+", ":"")+(facts.strength?strengthMeaning(facts.strength):"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
 
