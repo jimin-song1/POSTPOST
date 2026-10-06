@@ -243,23 +243,23 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  return count?`십성을 묶어 보면 \${family}의 비중이 가장 두드러집니다. \${familyMeaning(family)}이 반복해서 앞에 나오는 구조입니다.`:"";
+  return count?`십성을 묶어 보면 ${family}의 비중이 가장 두드러집니다. ${familyMeaning(family)}이 반복해서 앞에 나오는 구조입니다.`:"";
 }
 function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day"|"hour",label:string){
   const pillar=facts.pillarReadings[position],stemGod=facts.stemTenGodByPosition[position],branchGod=facts.branchMainTenGodByPosition[position];
   const roles=[stemGod,branchGod].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
   if(!pillar)return"";
-  return roles.length?`\${label} \${pillar}에는 \${roles.join("·")}의 성격이 함께 걸려 있습니다.`:`\${label} \${pillar}을 중심으로 이 자리를 읽습니다.`;
+  return roles.length?`${label} ${pillar}에는 ${roles.join("·")}의 성격이 함께 걸려 있습니다.`:`${label} ${pillar}을 중심으로 이 자리를 읽습니다.`;
 }
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
-  return `도움이 되는 기운은 \${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
+  return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
 }
 function relationSentence(facts:ConsultationFacts){
-  const rows=relationSummary(facts);return rows.length?`원국의 관계를 보면 \${rows.join(", ")}이 확인됩니다. 이 관계들은 성격 자체보다 사람·일·환경이 부딪히는 순간에 더 선명하게 작동합니다.`:"원국 자체에 큰 충돌 관계가 많이 겹쳐 있는 편은 아닙니다. 변화는 주로 운에서 새로운 관계가 들어올 때 더 크게 체감될 수 있습니다.";
+  const rows=relationSummary(facts);return rows.length?`원국의 관계를 보면 ${rows.join(", ")}이 확인됩니다. 이 관계들은 성격 자체보다 사람·일·환경이 부딪히는 순간에 더 선명하게 작동합니다.`:"원국 자체에 큰 충돌 관계가 많이 겹쳐 있는 편은 아닙니다. 변화는 주로 운에서 새로운 관계가 들어올 때 더 크게 체감될 수 있습니다.";
 }
 function starSentence(facts:ConsultationFacts){
-  return facts.starLabels.length?`신살에서는 \${facts.starLabels.slice(0,4).join(" · ")}이 눈에 들어옵니다. 신살 하나로 운명을 정하지 않고, 원국의 성향을 보조해서 설명하는 정도로 보는 것이 맞습니다.`:"신살은 원국 전체를 보조하는 참고표로 읽는 편이 맞습니다. 눈에 띄는 신살이 적더라도 그것이 운의 강약을 뜻하지는 않습니다.";
+  return facts.starLabels.length?`신살에서는 ${facts.starLabels.slice(0,4).join(" · ")}이 눈에 들어옵니다. 신살 하나로 운명을 정하지 않고, 원국의 성향을 보조해서 설명하는 정도로 보는 것이 맞습니다.`:"신살은 원국 전체를 보조하는 참고표로 읽는 편이 맞습니다. 눈에 띄는 신살이 적더라도 그것이 운의 강약을 뜻하지는 않습니다.";
 }
 
 function elementFact(facts:ConsultationFacts){
