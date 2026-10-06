@@ -73,7 +73,7 @@ function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; repo
 const BOOK_PART_TITLES:Record<string,string>={
   "01":"나는 어떤 존재인가",
   "02":"나를 이루는 기운",
-  "03":"나에게 맞는 무대",
+  "03":"직업운과 학업운",
   "04":"돈과 풍요",
   "05":"사랑과 가족",
   "06":"몸과 마음의 신호",
