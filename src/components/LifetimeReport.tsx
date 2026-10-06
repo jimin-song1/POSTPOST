@@ -142,6 +142,16 @@ function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
   </section>;
 }
 
+function DayPillarFocus({analysis}:{analysis:SajuAnalysis}){
+  const pillar=analysis.pillars.day;
+  return <div className="dayPillarFocus" aria-label="나를 대표하는 일주">
+    <span>나를 대표하는 두 글자</span>
+    <strong>{pillar.stem??"—"}{pillar.branch??""}</strong>
+    <b>{pillar.korean??""}</b>
+    <p>이 두 글자는 내가 어떤 식으로 생각하고, 가까운 사람 앞에서 어떻게 반응하는지를 읽을 때 가장 먼저 보는 자리예요.</p>
+  </div>;
+}
+
 function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
   const adjusted=analysis.fiveElements.adjustedStrength.elements;
   const native=analysis.fiveElements.nativeStrength;
@@ -182,12 +192,14 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
           const title=customerSectionTitle(section.id,section.title);
           const showFiveElements=false;
+          const showDayPillar=section.id==="legacy-book-022";
           const showEvidence=Boolean(section.professionalDetails||section.metrics?.length)||["ELEMENTS","STRENGTH","STRUCTURE_USEFUL"].includes(section.evidenceGroup??"");
           return <article key={section.id} id={section.id} className="book154Page">
             <div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div>
             <p className="book154Eyebrow">{part.title}</p>
             <h3>{title}</h3>
             {section.lead&&<p className="book154Lead">{section.lead}</p>}
+            {showDayPillar?<DayPillarFocus analysis={analysis}/>:null}
             {showFiveElements?<FiveElementSpread analysis={analysis}/>:null}
             <div className="longCopy">{paragraphs.map((paragraph,paragraphIndex)=><p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>)}</div>
             {section.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,pointIndex)=><p key={pointIndex}>{point}</p>)}</blockquote>:null}
