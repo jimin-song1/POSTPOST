@@ -85,6 +85,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "이 힘이 한쪽으로 쏠리면"
     ]) expect(customerCopy).not.toContain(label);
     expect(customerCopy).not.toMatch(/[가-힣]+(?:습니다|니다)\./);
+    expect(customerCopy).not.toMatch(/(?:^|\n)(?:에서도|에서는|에서|에선|에는)\s/);
 
     const coreRequests=provider.requests.filter(request=>"corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>));
     expect(coreRequests).toHaveLength(1);
