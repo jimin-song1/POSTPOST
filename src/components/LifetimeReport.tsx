@@ -32,8 +32,6 @@ const CHILD_BOND: Record<string, string> = { LOW: "천천히 가까워지는 편
 const PILLAR_LABEL: Record<PillarPosition, string> = { year: "년주", month: "월주", day: "일주", hour: "시주" };
 const STEM_HANGUL: Record<string, string> = { 甲:"갑", 乙:"을", 丙:"병", 丁:"정", 戊:"무", 己:"기", 庚:"경", 辛:"신", 壬:"임", 癸:"계" };
 const BRANCH_HANGUL: Record<string, string> = { 子:"자", 丑:"축", 寅:"인", 卯:"묘", 辰:"진", 巳:"사", 午:"오", 未:"미", 申:"신", 酉:"유", 戌:"술", 亥:"해" };
-const STEM_EASY: Record<string,string> = { 甲:"큰 나무 기운",乙:"부드러운 나무 기운",丙:"밝은 불 기운",丁:"은은한 불 기운",戊:"큰 땅 기운",己:"부드러운 흙 기운",庚:"단단한 쇠 기운",辛:"섬세한 쇠 기운",壬:"큰 물 기운",癸:"잔잔한 물 기운" };
-const BRANCH_ANIMAL: Record<string,string> = { 子:"쥐",丑:"소",寅:"호랑이",卯:"토끼",辰:"용",巳:"뱀",午:"말",未:"양",申:"원숭이",酉:"닭",戌:"개",亥:"돼지" };
 const STEM_PERSONALITY: Record<string,string[]> = {
   甲:["곧음","주도성"],乙:["섬세함","유연함"],丙:["밝음","추진력"],丁:["따뜻함","집중력"],戊:["든든함","책임감"],
   己:["차분함","세심함"],庚:["결단력","단단함"],辛:["정교함","기준이 분명함"],壬:["포용력","큰 흐름을 보는 힘"],癸:["감수성","관찰력"]
@@ -46,7 +44,7 @@ const pillarKeywords=(stem:string|null,branch:string|null)=>Array.from(new Set([
   ...(stem?STEM_PERSONALITY[stem]??[]:[]),
   ...(branch?BRANCH_PERSONALITY[branch]??[]:[])
 ])).slice(0,3);
-const PILLAR_CUSTOMER_LABEL: Record<PillarPosition,string> = { year:"태어난 해",month:"태어난 달",day:"태어난 날",hour:"태어난 시간" };
+const pillarReading=(stem:string|null,branch:string|null)=>stem&&branch?`${STEM_HANGUL[stem]??""}${BRANCH_HANGUL[branch]??""}`:"";
 const pct = (value: number | null | undefined) => value == null ? "—" : `${value.toFixed(1)}%`;
 const score = (value: number | null | undefined) => value == null ? "—" : `${Math.round(value)}%`;
 const chapterSection = (report: StructuredInterpretation | null, id: string) => report?.sections.find((section) => section.id === id);
@@ -87,7 +85,7 @@ function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; repo
   return <section id="chapter-18" className="professionalRoom"><details><summary><span><small>마지막 장 · 사주 원국</small><b>내 사주 원국 한눈에 보기</b></span><em>펼쳐 보기</em></summary><div className="professionalInner">
     <AiCopy report={report} id="professional" fallback={["앞에서 읽은 내용을 한눈에 확인할 수 있도록 원국과 오행을 모아두었어요."]}/>
     <h3>사주 원국</h3>
-    <div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position}><span>{PILLAR_LABEL[position]}</span><b>{pillar.stem??"—"}{pillar.branch??""}</b><small>{pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:position==="hour"?"태어난 시각 모름":""}</small></article>;})}</div>
+    <div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position}><span>{PILLAR_LABEL[position]}</span><b>{pillar.stem??"—"}{pillar.branch??""}</b><small>{pillarReading(pillar.stem,pillar.branch)|| (position==="hour"?"태어난 시각 모름":"")}</small></article>;})}</div>
     <h3>오행</h3>
     <div className="professionalElements">{ELEMENTS.map(element=><p key={element}><b>{customerElement(element,true)}</b><span>{pct(finalElements?.[element].percentage??native?.[element].percentage)}</span></p>)}</div>
     <h3>전통 명리 분류</h3>
@@ -134,14 +132,18 @@ const displaySectionTitle=(section:{id:string;title:string;evidenceGroup?:string
 
 function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
   const dayElement=analysis.strength.dayMaster?.element;
-  return <section className="sajuAtGlance" aria-label="내 사주 한눈에 보기">
-    <header><span>내 사주 한눈에 보기</span><h3>먼저 원국과 오행부터 볼게요</h3>{dayElement?<p>나를 대표하는 기운은 <b>{customerElement(dayElement)}</b>이에요.</p>:null}</header>
+  return <section className="sajuAtGlance" aria-label="사주 원국과 오행">
+    <header>
+      <span>四柱原局 · FIVE ELEMENTS</span>
+      <h3>사주 원국</h3>
+      {dayElement?<p>나를 대표하는 기운 <b>{customerElement(dayElement,true)}</b></p>:null}
+    </header>
     <div className="sajuPillarTable" role="table" aria-label="사주 원국표">
       {(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position} className={position==="day"?"isDayPillar":undefined}>
-        <span>{PILLAR_CUSTOMER_LABEL[position]}</span>
+        <span>{PILLAR_LABEL[position]}</span>
         <b>{pillar.stem??"—"}{pillar.branch??""}</b>
-        <small>{position==="day"&&pillar.stem&&pillar.branch?pillarKeywords(pillar.stem,pillar.branch).join(" · "):pillar.stem&&pillar.branch?`${STEM_EASY[pillar.stem]} · ${BRANCH_ANIMAL[pillar.branch]}`:position==="hour"?"태어난 시각 모름":""}</small>
-        {position==="day"?<em>나를 가장 가까이 보는 자리</em>:null}
+        <small>{pillarReading(pillar.stem,pillar.branch)|| (position==="hour"?"태어난 시각 모름":"")}</small>
+        {position==="day"?<em>나를 대표하는 일주</em>:null}
       </article>;})}
     </div>
     <FiveElementSpread analysis={analysis}/>
@@ -165,13 +167,13 @@ function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
   const strongest=rows[0],weakest=rows[rows.length-1];
   const dayElement=analysis.strength.dayMaster?.element;
   return <figure className="fiveElementSpread" aria-label="오행 분포표">
-    <figcaption><span>오행 한눈에 보기</span><strong>{dayElement?"나를 대표하는 기운은 "+customerElement(dayElement)+"이에요.":"다섯 기운이 어떻게 나뉘어 있는지 한눈에 볼게요."}</strong><small>지금 사주에서 보이는 오행 비율</small></figcaption>
+    <figcaption><span>五行 · 오행 분포</span><strong>{dayElement?`나를 대표하는 기운 · ${customerElement(dayElement,true)}`:"오행 분포"}</strong><small>목 · 화 · 토 · 금 · 수의 최종 비율</small></figcaption>
     <div className="fiveElementRows">
       {ELEMENTS.map(element=>{const value=adjusted?.[element].percentage??native?.[element].percentage??0;return <div className="fiveElementRow" data-element={element} key={element}>
-        <b>{customerElement(element)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
+        <b>{customerElement(element,true)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
       </div>;})}
     </div>
-    {strongest&&weakest?<p className="fiveElementSummary"><b>{customerElement(strongest.element)}</b> 기운이 가장 또렷하고, <b>{customerElement(weakest.element)}</b> 기운은 상대적으로 조용합니다. 많고 적음만으로 좋고 나쁨을 정하지 않고, 뒤에서 생활 방식과 함께 풀어봅니다.</p>:null}
+    {strongest&&weakest?<p className="fiveElementSummary"><b>{customerElement(strongest.element,true)}</b>이 가장 강하고, <b>{customerElement(weakest.element,true)}</b>이 가장 약합니다. 이 강약 차이가 뒤의 성격·직업·관계 풀이의 바탕이 됩니다.</p>:null}
   </figure>;
 }
 
