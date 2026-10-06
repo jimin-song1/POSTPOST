@@ -201,13 +201,15 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(facts.dayStemName)return "나를 대표하는 중심은 "+facts.dayStemName+"입니다. "+elementFact(facts).replace(/^오행에서는 /,"")+" 이 조합이 성격의 방향을 만듭니다.";
   }
   if(group==="WORK"){
+    if(/잘 맞는 일/.test(title))return "직업에서는 직함보다 하루 동안 어떤 판단을 하고 어떤 결과를 만드는지가 더 중요합니다. "+workVerdict(facts);
     if(/직장운/.test(title))return "직장운은 분명히 있습니다. "+workVerdict(facts);
     if(/사업운/.test(title))return facts.structure.includes("재")
       ?"사업운은 눈여겨볼 만합니다. 돈과 시장, 운영 결과를 직접 다루는 구조와 연결될수록 장점이 크게 살아납니다."
       :"사업은 무조건 독립하는 것보다 내가 결정권을 갖고 결과를 직접 확인할 수 있는 구조일 때 잘 맞습니다.";
+    if(/책임/.test(title))return "책임이 커지면 오히려 집중력이 살아나는 편입니다. 다만 모든 일을 직접 확인하려 들면 강점이 과부하로 바뀌기 쉽습니다.";
+    if(/인간관계/.test(title))return "직장 인간관계에서는 친밀감보다 역할과 약속이 분명한지가 더 중요합니다. 누가 어디까지 맡는지가 선명할수록 불필요한 감정 소모가 줄어듭니다.";
     if(/학업운/.test(title))return "학업운은 단순 암기보다 배워서 어디에 쓸지가 분명할수록 강합니다. "+(facts.dayStemName||"자기 중심")+"의 성향상 이해한 것을 자기 기준으로 다시 정리할 때 실력이 빨리 붙습니다.";
-    if(/잘 맞는 일/.test(title))return "직업에서는 직함보다 하루 동안 어떤 판단을 하고 어떤 결과를 만드는지가 더 중요합니다. "+workVerdict(facts);
-    return workVerdict(facts);
+    return"";
   }
   if(group==="WEALTH"){
     if(/기본 성향/.test(title))return "재물운은 단순히 아끼는 힘보다 돈을 어디에 쓰고 어떤 결과로 돌려받는지가 중요합니다. "+(facts.structure?structureMeaning(facts.structure):"자기 기준을 현실 결과로 연결하는 힘")+"이 돈의 선택에도 그대로 이어집니다.";
@@ -216,13 +218,35 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(/모으고 지키/.test(title))return"버는 것과 지키는 것은 다른 능력입니다. 수입이 늘어도 사람·확장·새 기회에 돈이 같이 움직이면 남는 돈은 달라지므로, 기준과 정산 구조를 분명히 두는 편이 좋습니다.";
     if(/인간관계/.test(title))return"돈과 사람을 섞을 때는 호의보다 기준이 먼저입니다. 가까운 사이라도 금액·역할·정산 시점을 분명히 할수록 관계까지 오래 갑니다.";
   }
-  if(group==="RELATIONSHIP"&&facts.dayPillarReading)return "관계에서는 "+facts.dayPillarReading+" 일주의 성향이 가장 직접적으로 드러납니다. 가까워질수록 겉으로 맞춰주는 것보다 내가 이 사람을 믿을 수 있는가가 훨씬 중요해집니다.";
-  if(group==="WELLNESS"&&facts.strongest&&facts.weakest)return "건강운은 질병을 맞히는 장이 아니라 생활 균형을 보는 장입니다. "+elementPro(facts.strongest.element)+"과 "+elementPro(facts.weakest.element)+"의 차이가 큰 만큼, 무리하는 패턴과 회복 리듬을 일정하게 관리하는 게 중요합니다.";
+  if(group==="RELATIONSHIP"){
+    if(/연애 성향/.test(title)&&facts.dayPillarReading)return "연애에서는 "+facts.dayPillarReading+" 일주의 성향이 가장 직접적으로 드러납니다. 쉽게 마음을 열기보다 신뢰를 확인한 뒤 깊어지는 쪽에 가깝습니다.";
+    if(/마음이 가는 상대/.test(title))return "마음이 가는 상대를 고를 때는 말보다 생활 태도와 책임감을 더 크게 봅니다. 처음의 설렘보다 시간이 지나도 믿을 수 있는지가 중요합니다.";
+    if(/애정 표현/.test(title))return "애정 표현은 말만으로 끝나기보다 챙기고 계획하고 실제로 움직이는 쪽에 가깝습니다. 다만 상대에게도 같은 방식의 반응을 기대하면 서운함이 생길 수 있습니다.";
+    if(/반복되는 패턴/.test(title))return "관계가 깊어질수록 일과 사생활, 내 기준과 상대의 방식이 부딪히는 지점이 중요해집니다. 가까운 사이일수록 설명을 생략하지 않는 게 핵심입니다.";
+    if(/다툴 때/.test(title))return "갈등이 생기면 바로 터뜨리기보다 속으로 정리한 뒤 말하는 편입니다. 문제는 생각이 다 정리될 때까지 기다리면 상대에게는 갑작스럽게 느껴질 수 있다는 점입니다.";
+    if(/결혼운/.test(title))return "결혼운은 관계를 오래 유지하는 힘과 각자의 영역을 지키는 균형이 중요합니다. 함께 살더라도 서로의 역할과 혼자 쓸 시간을 남겨두는 구조가 잘 맞습니다.";
+    if(/가까운 관계/.test(title))return "가까워질수록 챙김이 커지는 편입니다. 다만 잘해주려는 마음이 상대의 선택까지 대신하는 관리로 바뀌지 않도록 선을 두는 게 중요합니다.";
+  }
+  if(group==="WELLNESS"&&facts.strongest&&facts.weakest){
+    if(/몸이 보내는 신호/.test(title))return "건강운에서는 질병 이름보다 생활 균형을 먼저 봅니다. "+elementPro(facts.strongest.element)+"과 "+elementPro(facts.weakest.element)+"의 차이가 크기 때문에 무리한 뒤 회복하는 패턴을 특히 살펴야 합니다.";
+    if(/생활 리듬/.test(title))return "생활 리듬은 몰아서 버티는 것보다 일정한 수면·식사·활동 시간을 유지할 때 안정적입니다.";
+    if(/휴식과 회복/.test(title))return "회복은 아무것도 하지 않는 시간만으로 끝나지 않습니다. 머릿속 흐름을 끊어주는 가벼운 움직임과 장소 전환이 도움이 됩니다.";
+    if(/긴장과 스트레스/.test(title))return "스트레스가 커지면 생각이 많아지고, 생각이 많아질수록 다시 피로가 쌓이는 순환을 만들기 쉽습니다. 머리를 쉬게 하는 시간이 실제 휴식만큼 중요합니다.";
+    if(/활력이 떨어질 때/.test(title))return "활력이 떨어지는 순간은 해야 할 일이 많아서보다 무엇부터 해야 할지 흐려질 때입니다. 우선순위를 하나로 줄이는 게 가장 빠른 회복법입니다.";
+    if(/식사와 생활 습관/.test(title))return "몸은 큰 변화보다 반복되는 작은 습관의 영향을 더 오래 받습니다. 일정한 식사와 수면 시간을 먼저 지키는 편이 맞습니다.";
+  }
   if(group==="TWELVE_STAGES"){
     const position=/년주/.test(title)?"year":/월주/.test(title)?"month":/일주/.test(title)?"day":/시주/.test(title)?"hour":"";
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
-  if(group==="TEN_GODS")return "십성은 성격을 열 가지로 쪼개는 표가 아니라, 경쟁·표현·돈·책임·배움 중 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?facts.structure+"이 잡힌 만큼 "+structureMeaning(facts.structure)+"이 중심축으로 작동합니다.":"");
+  if(group==="TEN_GODS"){
+    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?facts.structure+"이 잡힌 만큼 "+structureMeaning(facts.structure)+"이 중심축으로 작동합니다.":"");
+    if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
+    if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
+    if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
+    if(/관성/.test(title))return "관성은 책임과 규칙, 사회에서 맡는 역할과 연결됩니다. 기준을 지키는 힘이지만 납득되지 않는 통제까지 편하다는 뜻은 아닙니다.";
+    if(/인성/.test(title))return "인성은 배우고 이해하고 받아들이는 힘입니다. 정보를 자기 것으로 만들고 전문성을 쌓는 과정과 연결됩니다.";
+  }
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 10년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
   if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
