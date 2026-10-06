@@ -29,10 +29,10 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
     expect(source).toContain("버전과 evidence IDs");
   });
 
-  it("defines customer-language and anti-boilerplate contracts", () => {
-    for (const phrase of ["STORY FIRST, EVIDENCE SECOND", "상담사가 옆에서 설명하듯", "사주에서는", "~로 해석됩니다", "다른 사람에게 그대로 붙여도 되는", "도움을 함께 쓰다", "바로 이해되는 생활 한국어"])
+  it("defines conclusion-first 상담 copy and anti-boilerplate contracts", () => {
+    for (const phrase of ["CONCLUSION FIRST, SAJU EVIDENCE, HUMAN STORY", "결론 → 명리 근거 → 생활 장면", "실제로 풀이받고 있다", "사주용어", "같은 문단 안에서 바로 뜻을 풀어라", "AI 보고서"])
       expect(LIFETIME_REPORT_SYSTEM_ADDENDUM).toContain(phrase);
-    for (const term of ["용신", "신강", "신약", "격국", "조후", "통관", "병약", "지장간"])
+    for (const term of ["용신", "신강", "신약", "조후", "통관", "병약", "지장간"])
       expect(LIFETIME_REPORT_SYSTEM_ADDENDUM).toContain(term);
   });
 
