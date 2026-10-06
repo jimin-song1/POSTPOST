@@ -98,6 +98,9 @@ function unwrapEvidenceValue(value:unknown){
 function evidenceValue(input:InterpretationInput,id:string){
   return unwrapEvidenceValue(input.evidence.find(row=>row.id===id)?.value);
 }
+function rowHasEvidencePrefix(row:Row,prefix:string){
+  return row.evidenceIds.some(id=>id.startsWith(prefix));
+}
 function pillarReading(stem:string,branch:string){return (STEM_READ[stem]??stem)+(BRANCH_READ[branch]??branch);}
 
 interface ConsultationFacts{
@@ -1581,7 +1584,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
     consultationOpening(row,facts)||`${title}은 원국의 여러 계산값을 한데 묶어서 읽는 장입니다.`,
     elementFact(facts)||dominantFamilySentence(facts),
-    facts.structure?`${facts.structure}의 성격과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${facts.structure}의 성격과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
     "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
   ].filter(Boolean);
 
@@ -1787,7 +1790,7 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(/마음이 가는 상대/.test(title))return[
     "마음이 가는 상대는 화려한 말보다 생활 태도와 책임감이 일정한 사람에 가깝습니다.",
     "말이 자주 바뀌거나 중요한 약속을 가볍게 여기는 사람보다는 자기 일을 하고, 자기 몫을 책임지고, 대화가 통하는 사람에게 신뢰가 붙기 쉽습니다.",
-    facts.structure?`${facts.structure}의 기본축 때문에 ${structureMeaning(facts.structure)}을 가진 상대에게 안정감을 느끼기 쉽습니다.`:"관계에서도 기준과 일관성을 중요하게 보는 편입니다.",
+    "관계에서도 말의 화려함보다 태도의 일관성과 책임감을 더 중요하게 보는 편입니다.",
     "다만 나와 비슷하게 기준이 강한 사람끼리는 맞는 부분만큼 부딪히는 부분도 커질 수 있습니다. 존중과 통제가 어디서 갈리는지 보는 게 중요합니다.",
     "결국 좋은 상대는 나를 대신 결정해주는 사람이 아니라, 각자의 기준을 지키면서도 서로의 선택을 설명할 수 있는 사람입니다."
   ];
@@ -2671,7 +2674,7 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
   const fallback=[
     consultationOpening(row,facts)||`${row.topic??row.title}은 원국의 계산 결과를 바탕으로 읽습니다.`,
     elementFact(facts)||dominantFamilySentence(facts),
-    facts.structure?`${facts.structure}의 기본축과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고 여러 근거가 같은 방향을 가리키는지 확인합니다.",
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${facts.structure}의 기본축과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고, 이 장에 배정된 근거 안에서 같은 방향을 가리키는 흐름을 함께 봅니다.",
     "이 장에서는 앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 선택과 결과만 남깁니다."
   ].filter(Boolean);
   return (selected??fallback)
