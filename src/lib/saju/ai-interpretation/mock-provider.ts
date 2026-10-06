@@ -1085,7 +1085,7 @@ function sectionExtras(row:Row,value:DomainProfile){
     domain==="RELATIONSHIP"?/좋아할 때 표현/.test(topic):false;
   return keep?value.extra:[];
 }
-function buildParagraphs(row:Row,index:number){
+function buildParagraphs(row:Row,index:number,facts:ConsultationFacts){
   const value=profile(row,index),angle=editorialAngle(row,index);
   const group=row.evidenceGroup??"";
 
@@ -1094,16 +1094,14 @@ function buildParagraphs(row:Row,index:number){
     if(focused.length)return focused.map(paragraph=>naturalizeNarration(paragraph.trim())).filter(Boolean);
   }
 
-  const paragraphs=[
-    angle.scene,
-    angle.consequence
-  ];
+  const paragraphs:string[]=[];
+  const opening=consultationOpening(row,facts);
+  if(opening)paragraphs.push(opening);
+
+  paragraphs.push(angle.scene,angle.consequence);
 
   const coreExpansion=coreChapterExpansion(row);
   if(coreExpansion.length)paragraphs.push(...coreExpansion);
-
-  const depthExpansion=chapterDepthExpansion(row,index);
-  if(depthExpansion.length)paragraphs.push(...depthExpansion);
 
   const extras=sectionExtras(row,value);
   if(extras.length)paragraphs.push(...extras);
@@ -1117,12 +1115,12 @@ function buildParagraphs(row:Row,index:number){
 }
 
 function report(input:InterpretationInput):StructuredInterpretation{
-  const rows=input.reportPlan??[];
+  const rows=input.reportPlan??[],facts=consultationFacts(input);
   const firstContentIdByPart=new Map<string,string>();
   for(const row of rows)if(row.contentKind==="CONTENT"&&row.partNumber&&!firstContentIdByPart.has(row.partNumber))firstContentIdByPart.set(row.partNumber,row.id);
   const sections=rows.map((row,index)=>{
     const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
-    const fullParagraphs=buildParagraphs(row,index);
+    const fullParagraphs=buildParagraphs(row,index,facts);
     const frontMatterParagraphs=[
       fullParagraphs[0],
       fullParagraphs[1],
@@ -1163,8 +1161,8 @@ function report(input:InterpretationInput):StructuredInterpretation{
   return {
     status:"completed",
     reportType:input.reportType,
-    headline:"계산은 그대로 두고, 삶의 장면으로 풀었습니다",
-    summary:"한 가지 표지만으로 단정하지 않고 서로 관련된 근거가 실제 선택과 행동에서 어떻게 이어지는지 살폈습니다.",
+    headline:facts.dayPillarReading?facts.dayPillarReading+" 일주에서 시작하는 평생사주":"원국에서 시작하는 평생사주",
+    summary:facts.structure?facts.structure+"과 오행의 강약, 대운과 연운을 한 사람의 이야기로 이어서 풀었습니다.":"원국의 오행과 시간 흐름을 한 사람의 이야기로 이어서 풀었습니다.",
     sections,
     highlights:["같은 성향도 일, 돈, 관계에서는 서로 다른 행동으로 나타납니다."],
     cautions:["움직임이 크다는 말과 유리하다는 말은 같은 뜻이 아닙니다."],
