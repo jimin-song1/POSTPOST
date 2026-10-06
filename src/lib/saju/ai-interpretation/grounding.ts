@@ -81,7 +81,9 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
     if(!input.reportPlan)throw new GroundingValidationError("평생총운 report plan이 없습니다.");
     const expected=input.reportPlan.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`),actual=report.sections.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`);
     if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운의 동적 section 순서 또는 제목이 다릅니다.");
-    for(const row of report.sections){if(!row.headline||!row.lead||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 서술 구조가 불완전합니다.`);
+    for(const row of report.sections){
+      const leadIsValid=input.reportVersion==="dynamic-lifetime-book-v4"||Boolean(row.lead);
+      if(!row.headline||!leadIsValid||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 서술 구조가 불완전합니다.`);
       const plan=input.reportPlan.find(item=>item.id===row.id)!;for(const id of row.evidenceIds)if(!plan.evidenceIds.includes(id))throw new GroundingValidationError(`${row.id} 범위를 벗어난 evidence ID: ${id}`);
       for(const metric of row.metrics??[]){if(!row.evidenceIds.includes(metric.evidenceId))throw new GroundingValidationError(`metric evidence가 section에 인용되지 않았습니다: ${metric.evidenceId}`);
         const inventory=factInventory([evidenceById.get(metric.evidenceId)!.value]);if(!inventory.allowedNumbers.has(metric.value))throw new GroundingValidationError(`근거에 없는 metric 값: ${metric.value}`);}
