@@ -216,7 +216,10 @@ function profile(row:Row,index:number):DomainProfile{
 
 function withoutTopicPrefix(text:string,topic:string){
   if(!text.startsWith(topic))return text;
-  return text.slice(topic.length).replace(/^(?:에서는|은|는|이|가|을|를|과|와)?[,·:\s]*/,"").trim();
+  return text
+    .slice(topic.length)
+    .replace(/^(?:에서도|에서는|에서|에선|에는|은|는|이|가|을|를|과|와|도)?[,·:\s]*/,"")
+    .trim();
 }
 function trimOpening(text:string){
   return text
