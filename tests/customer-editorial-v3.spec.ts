@@ -45,10 +45,15 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
       "십성에서 보이는 성향",
       "십이운성 12단계",
       "대운과 월운의 흐름",
-      "식신과 상관의 기운을 봅니다.",
-      "정관과 편재가 함께 작동합니다.",
+      "비겁과 재성의 큰 역할을 봅니다.",
       "도화와 화개를 함께 봅니다."
     ]) expect(customerTechnicalTermHits(phrase)).toEqual([]);
+    for (const phrase of [
+      "식신과 상관의 기운을 봅니다.",
+      "정관과 편재가 함께 작동합니다.",
+      "비견과 정인의 성격이 함께 걸려 있습니다.",
+      "정관격으로 봅니다."
+    ]) expect(customerTechnicalTermHits(phrase).length).toBeGreaterThan(0);
     expect(customerTechnicalTermHits("천간과 지지의 관계를 봅니다.")).toEqual(expect.arrayContaining(["천간","지지"]));
     expect(customerTechnicalTermHits("대운과 세운의 흐름을 함께 봅니다.")).toEqual(expect.arrayContaining(["세운"]));
     expect(customerTechnicalTermHits("support와 activation을 합치지 않습니다.")).toEqual(expect.arrayContaining(["support","activation"]));
