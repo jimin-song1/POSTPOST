@@ -2645,40 +2645,37 @@ function sectionExtras(row:Row,value:DomainProfile){
     domain==="RELATIONSHIP"?/좋아할 때 표현/.test(topic):false;
   return keep?value.extra:[];
 }
-function buildParagraphs(row:Row,index:number,facts:ConsultationFacts){
-  const value=profile(row,index),angle=editorialAngle(row,index);
-  const group=row.evidenceGroup??"";
-
-  if(["CORE","PILLARS","HIDDEN_STEMS"].includes(group)){
-    const focused=coreChapterExpansion(row);
-    if(focused.length){
-      const depth=chapterDepthExpansion(row,index);
-      return [...focused,...depth]
-        .map(paragraph=>naturalizeNarration(paragraph.trim()))
-        .filter(Boolean)
-        .filter((paragraph,paragraphIndex,rows)=>rows.indexOf(paragraph)===paragraphIndex);
-    }
+function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:InterpretationInput){
+  if(row.contentKind!=="CONTENT"){
+    const value=profile(row,index),angle=editorialAngle(row,index);
+    return [value.scene,value.consequence,angle.action].map(paragraph=>naturalizeNarration(paragraph)).filter(Boolean);
   }
 
-  const paragraphs:string[]=[];
-  const opening=consultationOpening(row,facts);
-  if(opening)paragraphs.push(opening);
-
-  paragraphs.push(angle.scene,angle.consequence);
-
-  const coreExpansion=coreChapterExpansion(row);
-  if(coreExpansion.length)paragraphs.push(...coreExpansion);
-
-  const depthExpansion=chapterDepthExpansion(row,index);
-  if(depthExpansion.length)paragraphs.push(...depthExpansion);
-
-  const extras=sectionExtras(row,value);
-  if(extras.length)paragraphs.push(...extras);
-
-  if(value.timing&&shouldIncludeTimingNote(row))paragraphs.push(value.timing);
-
-  return paragraphs
-    .map(paragraph=>naturalizeNarration(paragraph.trim()))
+  const candidates=[
+    coreIdentityConsultation(row,facts),
+    workConsultation(row,facts),
+    wealthConsultation(row,facts),
+    relationshipConsultation(row,facts),
+    childrenConsultation(row,facts),
+    wellnessConsultation(row,facts),
+    nobleConsultation(row,facts),
+    starRelationConsultation(row,facts),
+    twelveStageConsultation(row,facts),
+    tenGodConsultation(row,facts),
+    timingConsultation(row,facts,input),
+    changeConsultation(row,facts),
+    daeunConsultation(row,facts,input),
+    synthesisConsultation(row,facts)
+  ];
+  const selected=candidates.find((paragraphs):paragraphs is string[]=>Array.isArray(paragraphs)&&paragraphs.length>0);
+  const fallback=[
+    consultationOpening(row,facts)||`${row.topic??row.title}은 원국의 계산 결과를 바탕으로 읽습니다.`,
+    elementFact(facts)||dominantFamilySentence(facts),
+    facts.structure?`${facts.structure}의 기본축과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고 여러 근거가 같은 방향을 가리키는지 확인합니다.",
+    "이 장에서는 앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 선택과 결과만 남깁니다."
+  ].filter(Boolean);
+  return (selected??fallback)
+    .map(paragraph=>naturalizeNarration(paragraph))
     .filter(Boolean)
     .filter((paragraph,paragraphIndex,rows)=>rows.indexOf(paragraph)===paragraphIndex);
 }
@@ -2689,7 +2686,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
   for(const row of rows)if(row.contentKind==="CONTENT"&&row.partNumber&&!firstContentIdByPart.has(row.partNumber))firstContentIdByPart.set(row.partNumber,row.id);
   const sections=rows.map((row,index)=>{
     const ids=input.reportVersion==="dynamic-lifetime-book-v4"?[...row.evidenceIds]:evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
-    const fullParagraphs=buildParagraphs(row,index,facts);
+    const fullParagraphs=buildParagraphs(row,index,facts,input);
     const frontMatterParagraphs=[
       fullParagraphs[0],
       fullParagraphs[1],
@@ -2702,9 +2699,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
         :fullParagraphs;
     const pageNo=row.pageNumber??index+1;
     const group=row.evidenceGroup??"";
-    const lead=row.contentKind==="CONTENT"&&row.partNumber&&firstContentIdByPart.get(row.partNumber)===row.id
-      ?naturalizeNarration(value.lead)
-      :undefined;
+    const lead=undefined;
     return {
       id:row.id,
       chapterNumber:row.chapterNumber,
