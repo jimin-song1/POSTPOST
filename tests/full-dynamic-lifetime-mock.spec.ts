@@ -50,6 +50,9 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(new Set(report.sections.map(row=>row.partNumber)).size).toBe(book.parts.length);
     expect(content.every(row=>new Set(row.noveltyElements).size>=LIFETIME_CONTENT_CONTRACT_V1.novelty.minimumNewElements)).toBe(true);
     expect(content.every(row=>(row.paragraphs?.length??0)>=4)).toBe(true);
+    const part02Copy=content.filter(row=>row.partNumber==="02").flatMap(row=>row.paragraphs??[row.body]).join("\n");
+    expect(part02Copy).not.toContain("처음에는 한 번 더 살피는 편");
+    expect(part02Copy).not.toContain("마음이 정해지면 오래 끌지 않고 움직여요");
     expect(content.every(row=>row.claimsUsed?.length&&row.scenesUsed?.length&&row.domainConsequence&&row.priorSectionSummary!==undefined)).toBe(true);
 
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
@@ -95,7 +98,10 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
       "실제 생활에서","이 부분은 어려운 말보다",
       "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
-      "이 힘이 한쪽으로 쏠리면","이런 모습이 보여요","끈기가장",
+      "이 힘이 한쪽으로 쏠리면","이런 모습이 보여요",
+      "처음에는 한 번 더 살피는 편이지만, 마음이 정해지면 오래 끌지 않고 움직여요",
+      "자기 기준을 지키면서도 다른 사람의 속도를 받아들일 여지가 생기면",
+      "사람은 자리마다 같은 모습으로 살지 않아요","끈기가장",
       "종합적으로 보면","경향성이 보입니다","해당 항목","본 항목"
     ]) expect(customerCopy).not.toContain(label);
     expect(customerCopy).not.toMatch(/(?:^|\n)(?:에서도|에서는|에서|에선|에는)\s/);
