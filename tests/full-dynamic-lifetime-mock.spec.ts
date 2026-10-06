@@ -54,7 +54,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
     const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
     expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
-    for(const id of ["legacy-book-007","legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
+    expect(report.sections.find(section=>section.id==="legacy-book-007")?.lead).toBeTruthy();
+    for(const id of ["legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
       expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
     expect(report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs).toEqual([
       "한마디로 말하면, 서두르기보다 한번 살펴본 뒤 마음이 정해지면 꾸준히 가는 사람이에요.",
@@ -85,7 +86,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
       "중심으로 봅니다","살펴봅니다","실제 생활에서","이 부분은 어려운 말보다","중요합니다","필요합니다",
       "사람 사이 거리","끝을 확인하는 힘","행동의 순서","책임 범위를 분명하게 잡","변화 활성도","체감 난도","자기준",
-      "이 힘이 한쪽으로 쏠리면"
+      "이 힘이 한쪽으로 쏠리면","이런 모습이 보여요"
     ]) expect(customerCopy).not.toContain(label);
     expect(customerCopy).not.toMatch(/[가-힣]+(?:습니다|니다)\./);
     expect(customerCopy).not.toMatch(/(?:^|\n)(?:에서도|에서는|에서|에선|에는)\s/);
