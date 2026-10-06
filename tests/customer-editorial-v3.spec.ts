@@ -36,12 +36,19 @@ describe("CUSTOMER_REPORT_EDITORIAL_REWRITE_V3", () => {
       expect(LIFETIME_REPORT_SYSTEM_ADDENDUM).toContain(term);
   });
 
-  it("distinguishes ordinary Korean from technical saju terminology", () => {
-    for (const phrase of ["관계가 바로 이어지지 않을 수 있습니다.", "부담으로 느껴지지 않도록 여지를 남깁니다.", "결과와 상관없이 기준을 지킵니다.", "기준을 세운 뒤 움직입니다.", "자기신뢰를 지키는 편입니다.", "사용신청을 먼저 확인합니다.", "정신강화를 위한 습관은 별개입니다.", "일주일 동안 기록해 봅니다."])
-      expect(customerTechnicalTermHits(phrase)).toEqual([]);
+  it("allows familiar saju labels while still blocking internal jargon", () => {
+    for (const phrase of [
+      "관계가 바로 이어지지 않을 수 있습니다.",
+      "오행을 한눈에 봅니다.",
+      "일주와 오행",
+      "년주와 월주를 함께 봅니다.",
+      "십성에서 보이는 성향",
+      "십이운성 12단계",
+      "대운과 월운의 흐름"
+    ]) expect(customerTechnicalTermHits(phrase)).toEqual([]);
     expect(customerTechnicalTermHits("천간과 지지의 관계를 봅니다.")).toEqual(expect.arrayContaining(["천간","지지"]));
     expect(customerTechnicalTermHits("식신과 상관의 기운을 봅니다.")).toEqual(expect.arrayContaining(["식신","상관"]));
-    expect(customerTechnicalTermHits("대운과 세운의 흐름을 함께 봅니다.")).toEqual(expect.arrayContaining(["대운","세운"]));
+    expect(customerTechnicalTermHits("대운과 세운의 흐름을 함께 봅니다.")).toEqual(expect.arrayContaining(["세운"]));
     expect(customerTechnicalTermHits("support와 activation을 합치지 않습니다.")).toEqual(expect.arrayContaining(["support","activation"]));
     expect(customerTechnicalTermHits("용신이란 표현과 Support를 고객 문장에 쓰지 않습니다.")).toEqual(expect.arrayContaining(["용신","support"]));
   });
