@@ -111,6 +111,9 @@ interface ConsultationFacts{
   tenGodCounts:Record<string,number>;
   starLabels:string[];
   relationCounts:{clash:number;break:number;harm:number;wonjin:number;combination:number;punishment:number};
+  pillarReadings:Record<string,string>;
+  stemTenGodByPosition:Record<string,string>;
+  branchMainTenGodByPosition:Record<string,string>;
 }
 function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const dayMaster=asRecord(evidenceValue(input,"NATAL:DAY_MASTER"));
@@ -139,15 +142,30 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const stageByPosition:Record<string,string>={};
   for(const position of ["year","month","day","hour"])stageByPosition[position]=asText(stages?.[position]);
 
+  const pillarReadings:Record<string,string>={};
+  for(const position of ["year","month","day","hour"]){
+    const pillar=asRecord(pillars?.[position]),stem=asText(pillar?.stem),branch=asText(pillar?.branch);
+    pillarReadings[position]=stem&&branch?pillarReading(stem,branch):"";
+  }
+
   const tenGodRoot=asRecord(evidenceValue(input,"NATAL:TEN_GODS"));
   const tenGodCounts:Record<string,number>={};
   const addTenGod=(value:unknown)=>{const row=asRecord(value);const korean=asText(row?.korean);if(korean)tenGodCounts[korean]=(tenGodCounts[korean]??0)+1;};
   const heavenly=asRecord(tenGodRoot?.heavenlyStems);
-  for(const position of ["year","month","day","hour"])addTenGod(heavenly?.[position]);
+  const stemTenGodByPosition:Record<string,string>={},branchMainTenGodByPosition:Record<string,string>={};
+  for(const position of ["year","month","day","hour"]){
+    const row=asRecord(heavenly?.[position]);
+    stemTenGodByPosition[position]=asText(row?.korean);
+    addTenGod(row);
+  }
   const hidden=asRecord(tenGodRoot?.hiddenStems);
   for(const position of ["year","month","day","hour"]){
     const rows=hidden?.[position];
-    if(Array.isArray(rows))for(const item of rows)addTenGod(asRecord(item)?.tenGod);
+    if(Array.isArray(rows))for(const item of rows){
+      const row=asRecord(item),role=asText(row?.role),tenGod=asRecord(row?.tenGod);
+      addTenGod(tenGod);
+      if(role==="mainQi")branchMainTenGodByPosition[position]=asText(tenGod?.korean);
+    }
   }
 
   const starsRoot=asRecord(evidenceValue(input,"NATAL:STARS"));
@@ -184,7 +202,10 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     stageByPosition,
     tenGodCounts,
     starLabels,
-    relationCounts
+    relationCounts,
+    pillarReadings,
+    stemTenGodByPosition,
+    branchMainTenGodByPosition
   };
 }
 function elementPro(element:string){return ELEMENT_PRO[element]??element;}
