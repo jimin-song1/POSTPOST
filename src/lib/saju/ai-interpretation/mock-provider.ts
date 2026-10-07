@@ -1697,15 +1697,25 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     "서운한 일이 생겼을 때 너무 오래 혼자 정리하기보다 감정이 커지기 전에 작은 불편부터 말해두는 편이 관계에는 더 좋습니다."
   ];
 
-  if(id==="book-016"||id==="book-024"){
+  if(id==="book-016"){
+    const missingLabel=facts.missing.length===1?elementPro(facts.missing[0]):"";
+    return[
+      elementFact(facts)||"다섯 기운의 분포를 보면 어느 쪽을 평소 더 많이 쓰는지 확인할 수 있습니다.",
+      strongest?`${withParticle(elementPro(strongest),"은","는")} 다섯 기운 가운데 비중이 가장 커서 특별히 의식하지 않아도 관련된 행동이 자주 나오는 편입니다.`:"강한 기운은 평소 자연스럽게 자주 쓰는 방식에 가깝습니다.",
+      facts.missing.length===1?`${withParticle(missingLabel,"이","가")} 비어 있다는 건 그 능력이 없다는 뜻은 아닙니다. 다만 그 방식이 저절로 익숙하게 나오지 않아 환경이나 습관으로 만들어줘야 한다는 뜻에 가깝습니다.`:weakest?`${withParticle(elementPro(weakest),"은","는")} 상대적으로 비중이 낮아 바쁠수록 뒤로 밀리기 쉬운 쪽입니다.`:"비율이 낮은 기운은 필요한 순간에 조금 더 의식해야 할 수 있습니다.",
+      "여기서는 많고 적음을 좋고 나쁨으로 보지 않습니다. 지금 내게 익숙한 방식과 덜 익숙한 방식을 구분하는 정도로 보면 충분합니다."
+    ];
+  }
+
+  if(id==="book-024"){
     const strongBehavior=strongest?elementBehavior(strongest):null,weakBehavior=weakest?elementBehavior(weakest):null;
     const missingLabel=facts.missing.length===1?elementPro(facts.missing[0]):"";
     return[
-      id==="book-016"?"다섯 기운을 보면 평소 자연스럽게 잘 쓰는 방식과, 필요할 때 일부러 꺼내야 하는 방식이 나뉩니다.":"잘하는 쪽과 덜 익숙한 쪽의 차이를 보면 평소 왜 어떤 일은 쉽게 하고, 어떤 일은 시작이 늦어지는지 이해하기 쉬워집니다.",
-      strongBehavior?strongBehavior.natural:"익숙한 방식은 생활에서 비교적 자연스럽게 나오는 편입니다.",
-      weakBehavior?weakBehavior.weak:"덜 익숙한 방식은 필요한 순간에 조금 늦게 나올 수 있습니다.",
-      facts.missing.length===1?`특히 ${withParticle(missingLabel,"이","가")} 사주 안에서 비어 있다는 건 그 능력이 없다는 뜻이 아닙니다. 그 방식이 저절로 나오기보다 의식적으로 연습해야 더 편해진다는 뜻에 가깝습니다.`:facts.missing.length>1?"비어 있는 기운이 여러 개라면 모든 걸 한꺼번에 채우려 하기보다 실제 생활에서 자주 막히는 행동부터 하나씩 보완하는 편이 좋습니다.":"다섯 기운이 모두 있어도 어떤 방식은 익숙하고 어떤 방식은 덜 익숙할 수 있습니다.",
-      weakBehavior?weakBehavior.practice:"덜 익숙한 부분은 생활 속 작은 행동으로 반복해보면 훨씬 편해집니다."
+      "오행의 차이는 숫자보다 실제 생활에서 더 쉽게 느껴집니다. 어떤 일은 별생각 없이 잘하는데, 어떤 일은 알고 있어도 시작이 늦어지는 식입니다.",
+      strongBehavior?strongBehavior.natural:"익숙한 방식은 특별히 애쓰지 않아도 자연스럽게 나오는 편입니다.",
+      weakBehavior?weakBehavior.weak:"덜 익숙한 방식은 필요해도 바로 나오지 않고 준비 시간이 더 필요할 수 있습니다.",
+      facts.missing.length===1?`${withParticle(missingLabel,"이","가")} 비어 있다면 특히 그쪽 행동은 마음먹으면 바로 되는 것보다 일부러 기회를 만들고 반복해야 익숙해지는 쪽에 가깝습니다.`:"비중이 낮은 부분은 바쁠수록 더 쉽게 빠질 수 있습니다.",
+      weakBehavior?weakBehavior.practice:"덜 익숙한 부분은 생활 속 작은 행동으로 반복할수록 훨씬 편해집니다."
     ];
   }
 
@@ -1717,54 +1727,96 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     "일이 커질수록 직접 해야 할 일과 맡겨도 되는 일을 나눠두면 지치지 않고 훨씬 오래 갈 수 있습니다."
   ];
 
-  if(id==="book-018"||id==="book-025")return[
-    usefulSentence(facts)||"도움이 되는 기운은 이미 강한 부분보다 현재 부족한 부분을 보완하는 쪽에서 찾습니다.",
-    facts.structure?`평소 가장 자주 드러나는 성향은 ${structureMeaning(facts.structure)}입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
-    strongest&&strongStory?`이미 강한 ${elementPro(strongest)}의 ${strongStory.life}은 굳이 더 밀어붙이지 않아도 자연스럽게 나옵니다.`:"이미 익숙한 힘은 생활에서 자연스럽게 반복됩니다.",
-    weakest&&weakStory?`반대로 약한 ${elementPro(weakest)}의 ${weakStory.life}은 일정, 사람, 일하는 방식처럼 현실적인 선택으로 보완할 때 체감이 큽니다.`:"부족한 힘은 생활환경과 습관으로 보완할 때 가장 현실적으로 달라집니다.",
-    "사주에서 도움이 되는 기운을 안다는 것은 색이나 물건을 고르는 문제가 아니라, 내가 자주 놓치는 행동을 어떤 방식으로 생활에 넣을지 정하는 데 더 가깝습니다."
-  ];
+  if(id==="book-018"){
+    if(!facts.useful.length)return[
+      "지금은 특정 기운 하나를 무조건 더해야 한다고 보기보다, 평소 자주 막히는 행동부터 보완하는 편이 좋습니다.",
+      "이미 잘하는 부분을 더 세게 밀기보다 덜 익숙한 행동을 생활 안에 조금씩 넣는 쪽이 균형을 잡는 데 도움이 됩니다."
+    ];
+    return[
+      usefulSentence(facts),
+      ...facts.useful.slice(0,3).map((element,index)=>{
+        const guide=usefulElementGuide(element);
+        return `${index+1}순위 ${elementPro(element)}은 ${guide.why} ${guide.where}`;
+      }),
+      "순서가 앞선 기운일수록 지금 생활에서 우선적으로 보완할 가치가 크다는 뜻입니다. 색이나 물건을 찾기보다 실제 행동으로 연결하는 편이 훨씬 현실적입니다."
+    ];
+  }
 
-  if(id==="book-020")return[
-    `타고난 성향을 보면 ${facts.dayStemName||"나를 대표하는 기운"}에서 시작합니다. ${stem.image}처럼 ${stem.core}이 기본 방향입니다.`,
-    elementFact(facts)||"다섯 기운의 강약이 이 중심 성향을 어떻게 밀어주고 조절하는지 함께 봅니다.",
-    strongest&&strongStory?`여기에 ${elementPro(strongest)}의 비중이 가장 크게 잡혀 ${strongStory.life}이 생활 전반에서 더 자주 쓰입니다.`:"가장 강한 기운이 생활에서 반복적으로 쓰이는 힘을 결정합니다.",
-    weakest&&weakStory?`반면 ${elementPro(weakest)}의 역할은 자동으로 나오기보다 필요할 때 의식적으로 꺼내 쓰는 편이 맞습니다.`:"약한 기운은 일부러 보완할 때 전체 흐름이 안정됩니다.",
-    "이 조합 때문에 같은 일주라도 사람마다 실제 성격과 생활 방식이 달라집니다. 일주만 보지 않고 오행의 강약을 같이 보는 이유가 여기에 있습니다."
-  ];
+  if(id==="book-025"){
+    if(!facts.useful.length)return[
+      "부족한 부분은 거창하게 바꾸기보다 실제 생활에서 자주 막히는 장면 하나부터 바꾸는 게 좋습니다.",
+      "작은 행동을 반복해서 익숙하게 만드는 편이 가장 오래 갑니다."
+    ];
+    return[
+      "도움이 되는 기운을 생활에 쓰는 방법은 생각보다 단순합니다. 어려운 이름보다 실제 행동으로 바꾸면 됩니다.",
+      ...facts.useful.slice(0,3).map((element,index)=>{
+        const guide=usefulElementGuide(element);
+        return `${index+1}순위 ${elementPro(element)}은 이렇게 써보세요. ${guide.practice}`;
+      }),
+      "한꺼번에 다 바꾸기보다 지금 가장 자주 막히는 장면과 연결된 한 가지부터 먼저 해보는 편이 좋습니다."
+    ];
+  }
 
-  if(id==="book-021")return[
-    `나를 대표하는 기운은 ${facts.dayStemName||"중심 기운"}입니다. 명리에서는 ${stem.image}의 이미지로 설명합니다.`,
-    `이 기운의 장점은 ${stem.core}입니다. 스스로 의미를 찾은 일에서는 오래 버티고 자기 방식으로 성장시키는 힘으로 연결됩니다.`,
-    dominantFamilySentence(facts)||"십성의 분포가 이 기운을 어떤 역할로 가장 많이 쓰는지 보여줍니다.",
-    `반대로 ${stem.shadow}이 강해질 때는 같은 장점이 부담으로 바뀔 수 있습니다.`,
-    "그래서 나를 대표하는 기운은 성격을 고정하는 별명이 아니라, 선택 앞에서 가장 먼저 꺼내 쓰는 기본 도구라고 생각하면 이해하기 쉽습니다."
-  ];
+  if(id==="book-020"){
+    const counseling=stemCounseling(facts);
+    const weakBehavior=weakest?elementBehavior(weakest):null;
+    const missingWeak=Boolean(weakest&&facts.missing.includes(weakest));
+    return[
+      `나를 대표하는 기운을 쉽게 풀면 ${stem.image}에 가깝습니다. ${counseling.opening}`,
+      strongest?`${withParticle(elementPro(strongest),"이","가")} 가장 강해서 ${elementBehavior(strongest).natural}`:"평소 자연스럽게 자주 쓰는 방식이 성격의 겉모습을 더 선명하게 만듭니다.",
+      missingWeak?`${withParticle(elementPro(weakest!),"이","가")} 비어 있기 때문에 ${weakBehavior?.weak??"그쪽 행동은 저절로 익숙하게 나오지 않을 수 있습니다."} 필요할 때 바로 꺼내 쓰는 능력이라기보다, 환경과 반복 경험을 통해 만들어가는 쪽에 가깝습니다.`:weakBehavior?`${withParticle(elementPro(weakest!),"은","는")} 상대적으로 약해 ${weakBehavior.weak}`:"덜 익숙한 방식은 생활 습관으로 보완할 수 있습니다.",
+      "결국 한 가지 성향으로만 설명되는 사람은 아닙니다. 원래 가진 기본 성향 위에 어떤 행동은 더 자연스럽게 나오고, 어떤 행동은 시간이 더 필요한 식으로 차이가 생깁니다."
+    ];
+  }
 
-  if(id==="book-022")return[
-    `나를 가장 가까이 보여주는 두 글자는 ${facts.dayPillarReading||facts.dayPillar}입니다.`,
-    pillarElementSentence(facts.dayPillar)||"일주는 위아래 두 기운이 한 자리에서 만나는 구조입니다.",
-    pillarRoleSentence(facts,"day","일주"),
-    "이 두 글자는 가까운 관계, 내가 편안함을 느끼는 방식, 중요한 선택에서 끝까지 남는 기준을 읽을 때 중심이 됩니다.",
-    "일주의 이름만 외울 필요는 없습니다. 이 두 글자가 오행과 십성 속에서 어떤 역할을 맡고 있는지까지 같이 봐야 실제 성격과 연결됩니다."
-  ];
+  if(id==="book-021"){
+    const counseling=stemCounseling(facts);
+    return[
+      `나를 대표하는 기운은 ${facts.dayStemName||"중심 기운"}입니다. 쉽게 비유하면 ${stem.image}처럼 움직이는 성향에 가깝습니다.`,
+      counseling.opening,
+      dominantFamilySentence(facts)||"스스로 납득한 뒤 움직일 때 가장 오래 힘을 쓸 수 있습니다.",
+      `이 장점도 과해지면 부담이 될 수 있습니다. ${counseling.shadow}`,
+      "그래서 이 기운은 성격을 고정하는 별명이라기보다, 중요한 선택 앞에서 가장 먼저 나오는 기본 반응으로 이해하면 됩니다."
+    ];
+  }
+
+  if(id==="book-022"){
+    const stemElement=facts.dayPillar?STEM_ELEMENT[facts.dayPillar[0]]:"";
+    const branchElement=facts.dayPillar?BRANCH_ELEMENT[facts.dayPillar[1]]:"";
+    const traits:Record<string,string>={
+      wood:"한번 방향을 정하면 그 일을 키우고 오래 이어가려는 성향",
+      fire:"생각한 것을 밖으로 보여주고 반응을 만들려는 성향",
+      earth:"흐트러진 것을 현실적으로 정리하고 안정시키려는 성향",
+      metal:"무엇을 지킬지 기준을 세우고 깔끔하게 정리하려는 성향",
+      water:"상황을 읽고 여러 가능성을 오래 생각해보는 성향"
+    };
+    return[
+      `나를 가장 가까이 보여주는 두 글자는 ${facts.dayPillarReading||facts.dayPillar}입니다.`,
+      pillarElementSentence(facts.dayPillar)||"두 가지 성향이 한 자리에서 함께 나타나는 조합입니다.",
+      stemElement&&branchElement&&stemElement!==branchElement?`쉽게 말하면 ${traits[stemElement]??"한쪽 성향"}과 ${traits[branchElement]??"다른 성향"}이 같이 있습니다.`:stemElement?"같은 성향이 위아래에서 겹쳐 평소 반응이 더 분명하게 나타날 수 있습니다.":"가까운 관계와 중요한 선택에서 평소보다 본래 성향이 더 또렷하게 드러납니다.",
+      closeRoleBehavior(dayRole),
+      "그래서 가까운 사람 앞에서는 겉으로 보일 때보다 내 생각과 감정이 더 분명해질 수 있습니다. 중요한 건 한자 이름을 외우는 게 아니라, 이 조합이 실제 관계와 선택에서 어떻게 반복되는지를 보는 것입니다."
+    ];
+  }
 
   if(id==="book-023")return[
-    "겉으로 보이는 나와 실제 속마음 사이에는 약간의 온도차가 있습니다. 밖에서는 역할에 맞춰 정리된 모습을 보이지만, 안에서는 훨씬 많은 가능성을 비교하고 감정을 오래 정리할 수 있습니다.",
-    pillarRoleSentence(facts,"month","밖에서 먼저 보이는 월주"),
-    pillarRoleSentence(facts,"day","내가 편할 때 드러나는 일주"),
-    "이 차이는 가식이라기보다 상황에 맞춰 다른 힘을 쓰는 능력에 가깝습니다. 사회에서는 책임과 기준이 필요하고, 가까운 관계에서는 신뢰와 감정이 더 중요해지기 때문입니다.",
-    "문제는 밖에서 너무 오래 버티다가 가까운 사람에게 한꺼번에 피로를 풀 때 생깁니다. 겉과 속의 차이가 커질수록 중간에서 마음을 설명하는 시간이 필요합니다."
+    "밖에서 보이는 모습과 가까운 사람 앞의 모습이 조금 다른 편입니다. 사회에서는 해야 할 일을 먼저 챙기느라 감정을 뒤로 미루지만, 편한 사람 앞에서는 그동안 참았던 마음이 더 솔직하게 나올 수 있습니다.",
+    roleBehavior(monthRole),
+    closeRoleBehavior(dayRole),
+    "그래서 밖에서는 단단하고 괜찮아 보이는데, 가까운 사람에게는 생각보다 예민하거나 지친 모습을 보일 때가 있습니다. 가식이라서가 아니라 밖에서 참고 정리한 게 안전한 관계에서 풀리는 쪽에 가깝습니다.",
+    "문제는 너무 오래 참다가 한꺼번에 풀 때 생깁니다. 힘들다는 말을 완전히 지칠 때까지 미루기보다, 아직 괜찮을 때 조금씩 설명해두면 가까운 관계도 훨씬 편해집니다."
   ];
 
-  if(id==="book-026")return[
-    "오행은 성격표 안에서 끝나지 않습니다. 가장 강한 기운은 일할 때, 돈을 쓸 때, 사람을 대할 때 반복해서 같은 우선순위를 만들기 쉽습니다.",
-    strongest&&strongStory?`${elementPro(strongest)}이 강하기 때문에 ${strongStory.life}이 생활의 기본 습관으로 자리하기 쉽습니다.`:"강한 기운은 특별히 의식하지 않아도 생활에서 반복됩니다.",
-    weakest&&weakStory?`반대로 ${elementPro(weakest)}이 약해 ${weakStory.life}은 바쁠수록 가장 먼저 놓치기 쉬운 부분이 됩니다.`:"약한 기운은 바쁠 때 가장 먼저 빠지는 행동으로 확인하기 쉽습니다.",
-    "그래서 잘 풀리는 방법도 단순합니다. 잘하는 힘은 과해지지 않게 조절하고, 약한 힘은 거창하게 바꾸기보다 일정과 습관 속에 작게 넣어두는 편이 오래 갑니다.",
-    usefulSentence(facts)||"오행의 균형은 생활 속 선택으로 조금씩 보완해갈 수 있습니다."
-  ];
-
+  if(id==="book-026"){
+    const overuse=strongest?elementOveruse(strongest):null;
+    return[
+      strongest?`${withParticle(elementPro(strongest),"이","가")} 강하다는 건 관련된 행동이 익숙하다는 뜻이지만, 익숙한 방식일수록 필요 이상으로 오래 쓰기 쉽습니다.`:"잘하는 방식도 너무 오래 쓰면 장점이 피로로 바뀔 수 있습니다.",
+      strongest?elementBehavior(strongest).natural:"평소 잘하는 방식은 특별히 의식하지 않아도 자연스럽게 나옵니다.",
+      overuse?`이 장점이 과해지면 ${overuse.sign}`:"잘하는 방식 하나로 모든 문제를 풀려고 하면 오히려 선택이 좁아질 수 있습니다.",
+      overuse?overuse.reset:"무엇을 더 할지보다 어디에서 멈출지를 먼저 정해두는 편이 좋습니다.",
+      "잘하는 걸 줄이라는 뜻은 아닙니다. 내 장점이 다른 사람과 나를 지치게 만들기 시작하는 순간만 알아두면 훨씬 오래 쓸 수 있습니다."
+    ];
+  }
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
     consultationOpening(row,facts)||"여러 성향이 실제 생활에서 어떻게 섞여 나타나는지를 함께 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
@@ -1789,13 +1841,16 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "공부도 비슷합니다. 그냥 많이 배우는 것보다 '이걸 어디에 써먹을지'가 분명할 때 집중력이 훨씬 좋아집니다. 그래서 일과 배움은 따로 가기보다 서로 연결될 때 가장 잘 살아납니다."
   ];
 
-  if(/나에게 잘 맞는 일/.test(title))return[
-    `잘 맞는 일은 ${stemStory(facts).core}을 쓸 수 있는 일입니다.`,
-    structure?`특히 ${structureMeaning(structure)}이 필요한 역할에서 강점이 살아납니다.`:dominantFamilySentence(facts),
-    officer>=resource&&officer>=wealth?"기준을 세우고 책임지는 역할, 일정과 품질을 관리하는 일, 사람과 조직의 흐름을 정리하는 일과 잘 맞습니다.":wealth>officer?"시장 반응을 보고 운영·판매·수익 구조를 만드는 일처럼 결과가 숫자로 확인되는 일과 잘 맞습니다.":resource>=output?"분석·기획·교육·전문지식처럼 배우고 이해한 것을 구조화하는 일과 잘 맞습니다.":"아이디어를 콘텐츠·서비스·제품처럼 밖으로 만들어내는 일과 잘 맞습니다.",
-    "반대로 의미를 느끼지 못한 반복 업무나 결정권 없이 지시만 수행하는 환경에서는 실력보다 답답함이 먼저 커질 수 있습니다.",
-    "직업 이름보다 '내가 판단할 수 있는 범위가 있는가, 만든 결과가 남는가'를 기준으로 고르는 편이 훨씬 정확합니다."
-  ];
+  if(/나에게 잘 맞는 일/.test(title)){
+    const jobs=careerExamples(facts);
+    return[
+      "잘 맞는 일은 내가 판단할 수 있는 범위가 있고, 한 일이 실제 결과로 남는 일에 가깝습니다.",
+      jobs.length?`구체적으로는 ${jobs.join(" · ")} 같은 직무를 눈여겨볼 만합니다.`:"기획·운영·관리처럼 판단과 결과 책임이 함께 있는 직무를 먼저 눈여겨볼 만합니다.",
+      officer>=resource&&officer>=wealth?"특히 일정·품질·사람을 조율하고 기준을 세우는 역할에서 강점이 살아나기 쉽습니다.":wealth>officer?"특히 시장 반응과 돈의 흐름을 직접 보고 운영·판매·수익을 연결하는 역할에서 강점이 살아나기 쉽습니다.":resource>=output?"특히 정보를 분석하고 정리해 전문성이나 기획으로 바꾸는 역할이 잘 맞습니다.":"특히 아이디어를 콘텐츠·서비스·제품처럼 밖으로 만들어 실제 반응을 받는 역할이 잘 맞습니다.",
+      "반대로 의미를 느끼기 어려운 반복 업무, 책임은 큰데 결정권은 없는 자리, 이유 없이 지시가 자주 바뀌는 환경에서는 실력보다 답답함과 피로가 먼저 커질 수 있습니다.",
+      "직업 이름 하나를 정답처럼 고르기보다 위 직무들 중에서도 내가 판단할 수 있고 결과를 끝까지 확인할 수 있는 일을 고르는 편이 더 잘 맞습니다."
+    ];
+  }
 
   if(/직장과 사업/.test(title)){
     const monthWork=facts.branchMainTenGodByPosition.month||facts.stemTenGodByPosition.month;
