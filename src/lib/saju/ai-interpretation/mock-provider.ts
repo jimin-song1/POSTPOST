@@ -291,9 +291,17 @@ function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day
   if(meanings.length===1)return `${subject} ${meanings[0]}이 자연스럽게 드러납니다.`;
   return `${subject} ${meanings[0]}과 ${meanings[1]}이 함께 나타납니다.`;
 }
+const USEFUL_ELEMENT_GUIDE:Record<string,{why:string;where:string;practice:string}>={
+  water:{why:"생각이 한 방향으로 굳을 때 다른 가능성을 열고, 필요한 정보를 받아들여 판단을 유연하게 만드는 데 도움을 줍니다.",where:"새로운 일을 검토할 때, 사람의 의견을 들을 때, 막힌 문제에서 다른 방법을 찾을 때 특히 필요합니다.",practice:"결정 전에 다른 관점 하나를 더 확인하고, 혼자 오래 끌기보다 필요한 사람에게 묻는 습관을 만들어보세요."},
+  fire:{why:"머릿속에 있는 생각을 말·행동·콘텐츠처럼 밖으로 꺼내 실제 반응을 받게 하는 데 도움을 줍니다.",where:"발표·영업·콘텐츠·홍보·제안처럼 준비한 것을 밖에 보여줘야 할 때 특히 필요합니다.",practice:"완벽해질 때까지 기다리지 말고 준비가 어느 정도 되면 먼저 말하고, 올리고, 제안해보는 횟수를 늘려보세요."},
+  wood:{why:"생각을 계획으로만 남겨두지 않고 시작하고 키워 다음 단계로 이어가는 데 도움을 줍니다.",where:"새 프로젝트를 시작할 때, 공부한 것을 실전에 써볼 때, 장기 목표를 단계별로 키울 때 특히 필요합니다.",practice:"큰 계획보다 이번 주에 바로 시작할 작은 행동 하나를 정하고 끝까지 이어보세요."},
+  earth:{why:"아이디어를 일정·돈·운영처럼 현실적인 형태로 굳히고 안정적으로 유지하는 데 도움을 줍니다.",where:"사업 운영, 돈 관리, 일정 관리, 반복 가능한 시스템을 만들 때 특히 필요합니다.",practice:"해야 할 일을 기한·금액·담당자처럼 눈에 보이는 기준으로 바꿔두세요."},
+  metal:{why:"선택지가 많을 때 우선순위를 정하고, 무엇을 지킬지 선을 분명하게 세우는 데 도움을 줍니다.",where:"계약·품질·의사결정·정리처럼 기준을 세우고 마무리해야 할 때 특히 필요합니다.",practice:"결정 전에 꼭 지킬 기준 두세 가지만 정하고 나머지는 과감히 덜어내세요."}
+};
+function usefulElementGuide(element:string){return USEFUL_ELEMENT_GUIDE[element]??{why:"부족한 부분을 보완해 선택을 더 편하게 만드는 데 도움을 줍니다.",where:"평소 자주 막히는 장면에서 필요합니다.",practice:"작은 행동으로 반복해 익숙하게 만들어보세요."};}
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
-  return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
+  return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순입니다.`;
 }
 function relationSentence(facts:ConsultationFacts){
   const tension=facts.relationCounts.break||facts.relationCounts.harm||facts.relationCounts.wonjin||facts.relationCounts.punishment;
@@ -353,6 +361,46 @@ const ELEMENT_BEHAVIOR:Record<string,{natural:string;weak:string;practice:string
   water:{natural:"상황을 읽고 정보를 모으고 여러 가능성을 연결하는 건 비교적 자연스러운 편입니다.",weak:"새로운 정보를 받아들이거나 상황을 넓게 비교하는 데 시간이 더 필요할 수 있습니다.",practice:"혼자 생각만 이어가기보다 필요한 정보를 정해 짧게 찾아보고 바로 다음 행동으로 넘기는 습관이 도움이 됩니다."}
 };
 function elementBehavior(element:string){return ELEMENT_BEHAVIOR[element]??{natural:"익숙한 방식은 비교적 자연스럽게 나오는 편입니다.",weak:"덜 익숙한 방식은 필요한 순간에 조금 늦게 나올 수 있습니다.",practice:"생활 속에서 작은 행동으로 반복해보면 훨씬 편해집니다."};}
+const ELEMENT_OVERUSE:Record<string,{sign:string;reset:string}>={
+  wood:{sign:"하고 싶은 일을 계속 벌리면서 이미 시작한 일을 정리하는 속도가 늦어질 수 있습니다.",reset:"새로운 걸 시작하기 전에 지금 하던 일 하나를 끝내는 기준을 먼저 정해두는 편이 좋습니다."},
+  fire:{sign:"반응을 빨리 얻고 싶어 말이나 행동이 앞서거나, 사람들의 반응에 신경을 너무 많이 쓸 수 있습니다.",reset:"바로 반응하기 전에 한 번만 정리하고, 모든 사람에게 보여주려 하기보다 중요한 대상부터 고르는 편이 좋습니다."},
+  earth:{sign:"안전한 선택을 지키려다 변화가 필요한 순간에도 익숙한 방식을 너무 오래 붙잡을 수 있습니다.",reset:"완전히 바꾸기보다 작은 범위에서 먼저 시험해보고 결과가 괜찮으면 넓혀가는 방식이 잘 맞습니다."},
+  metal:{sign:"기준이 높아져 사소한 오류까지 그냥 넘기기 어렵고, 다른 사람의 방식이 답답하게 느껴질 수 있습니다.",reset:"시작 전에 '여기까지면 충분하다'는 완료 기준을 정하고, 덜 중요한 일은 80%에서 넘기는 연습이 도움이 됩니다."},
+  water:{sign:"생각과 가능성이 계속 늘어나 결정이 늦어지거나, 이미 답을 알고도 확인을 반복할 수 있습니다.",reset:"확인할 항목을 세 개 정도로 줄이고 그 안에서 결정을 끝내는 시간을 정해두는 편이 좋습니다."}
+};
+function elementOveruse(element:string){return ELEMENT_OVERUSE[element]??{sign:"잘하는 방식을 너무 오래 쓰면 오히려 피로가 커질 수 있습니다.",reset:"멈출 기준을 미리 정해두는 편이 좋습니다."};}
+function roleBehavior(role:string){
+  if(["정관","편관"].includes(role))return"밖에서는 해야 할 일과 약속을 먼저 챙기고, 맡은 일은 끝까지 정리하려는 모습이 강하게 나옵니다.";
+  if(["정재","편재"].includes(role))return"밖에서는 시간과 돈, 결과처럼 현실적으로 확인되는 부분을 빠르게 챙기는 편입니다.";
+  if(["식신","상관"].includes(role))return"밖에서는 생각을 말이나 결과물로 보여주고, 답답한 상황에서는 의견을 분명하게 내는 편입니다.";
+  if(["정인","편인"].includes(role))return"밖에서는 바로 결론내리기보다 상황을 충분히 보고 이해한 뒤 움직이는 편입니다.";
+  if(["비견","겁재"].includes(role))return"밖에서는 남에게 끌려가기보다 자기 판단을 지키고, 경쟁이 붙을수록 더 집중하는 모습이 나옵니다.";
+  return"밖에서는 상황에 맞춰 해야 할 일을 정리하고 자기 몫을 챙기는 편입니다.";
+}
+function closeRoleBehavior(role:string){
+  if(["정관","편관"].includes(role))return"가까운 사람에게도 약속과 태도의 일관성을 중요하게 보고, 믿음이 깨지면 생각보다 오래 마음에 남을 수 있습니다.";
+  if(["정재","편재"].includes(role))return"가까운 사람에게는 말보다 실제로 챙겨주고 시간을 쓰는 방식으로 마음을 보여주는 편입니다.";
+  if(["식신","상관"].includes(role))return"편한 사람 앞에서는 평소보다 말이 많아지고, 좋고 싫은 감정도 훨씬 솔직하게 드러날 수 있습니다.";
+  if(["정인","편인"].includes(role))return"가까운 사람의 말과 행동을 오래 생각하고, 왜 그랬는지까지 이해하려는 편입니다.";
+  if(["비견","겁재"].includes(role))return"가까운 사람 앞에서는 내 생각이 더 분명해지고, 편한 사이일수록 솔직한 기준을 숨기지 않는 편입니다.";
+  return"가까운 사람 앞에서는 밖에서보다 감정과 자기 생각이 더 솔직하게 드러나는 편입니다.";
+}
+function careerExamples(facts:ConsultationFacts){
+  const roles:string[]=[];
+  const add=(...items:string[])=>{for(const item of items)if(!roles.includes(item))roles.push(item);};
+  const structure=facts.structure;
+  if(structure.includes("관"))add("프로젝트 매니저","운영관리","품질관리·감사","인사·조직관리","공공·행정 직무");
+  if(structure.includes("재"))add("사업운영","영업관리","MD·상품기획","재무·회계","구매·유통");
+  if(structure.includes("식")||structure.includes("상관"))add("콘텐츠 기획","마케팅","브랜드 기획","제품·서비스 기획","크리에이터·제작");
+  if(structure.includes("인"))add("리서치·분석","교육·강의","컨설팅","전문직","데이터·기획");
+  const dominant=dominantFamily(facts);
+  if(dominant==="비겁")add("팀 리더","사업·창업","프리랜서","영업","프로젝트 책임자");
+  if(dominant==="재성")add("사업운영","영업·판매","MD·상품기획","재무관리","고객·거래 관리");
+  if(dominant==="관성")add("운영관리","프로젝트 매니저","품질·컴플라이언스","조직관리","행정");
+  if(dominant==="식상")add("콘텐츠 기획","마케팅","기획·제작","제품개발","교육·발표");
+  if(dominant==="인성")add("분석·리서치","교육","컨설팅","전문직","기획");
+  return roles.slice(0,7);
+}
 function familyPresence(facts:ConsultationFacts,family:string){
   const count=familyCount(facts,family),meaning=familyMeaning(family);
   if(count>=3)return `${meaning}이 평소에도 자연스럽게 나오는 편입니다. 익숙한 만큼 너무 앞세우지만 않으면 장점으로 오래 쓸 수 있습니다.`;
@@ -376,10 +424,11 @@ function stageSentence(facts:ConsultationFacts,position:string,_label:string){
 }
 function pillarElementSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
-  const stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
+  const reading=pillarReading(pillar[0],pillar[1]),stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
   if(!stemElement||!branchElement)return"";
-  if(stemElement===branchElement)return `${pillarReading(pillar[0],pillar[1])}은 ${elementPro(stemElement)}의 색이 위아래에서 함께 강조되는 기둥입니다.`;
-  return `${pillarReading(pillar[0],pillar[1])}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 한 기둥 안에서 만나는 구조입니다.`;
+  const subject=withParticle(reading,"은","는");
+  if(stemElement===branchElement)return `${subject} ${withParticle(elementPro(stemElement),"이","가")} 위아래에 함께 놓여 같은 성향이 더 또렷하게 드러나는 조합입니다.`;
+  return `${subject} ${withParticle(elementPro(stemElement),"과","와")} ${elementPro(branchElement)}가 함께 있는 조합입니다.`;
 }
 
 const CATEGORY_LABELS:Record<string,string>={OVERALLFLOW:"전체 흐름",WEALTH:"재물",BUSINESS:"사업",CAREER:"직업",RELATIONSHIP:"관계",STUDY:"학업",CHANGE:"변화"};
