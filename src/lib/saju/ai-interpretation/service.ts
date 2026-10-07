@@ -65,6 +65,9 @@ function sanitizeCustomerWording(text:string){
     .replaceAll("속에는 꽤 분명한 자기기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
     .replaceAll("속에는 꽤 분명한 자기 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
     .replaceAll("속에는 꽤 분명한 본인 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("일책임감","일관성")
+    .replaceAll("습책임감","습관성")
+    .replaceAll("관계까지키기","관계까지 지키기")
     .replaceAll("자기준","본인 기준")
     .replaceAll("자기기준","본인 기준");
 }
