@@ -250,7 +250,7 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  return count?`십성을 큰 역할로 묶어 보면 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서 중요한 선택을 할 때 이 힘이 반복해서 기준이 됩니다.`:"";
+  return count?`중요한 선택에서 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서도 이 힘이 반복해서 기준이 됩니다.`:"";
 }
 const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
   비견:"내 생각과 기준을 분명히 세우는 힘",
@@ -331,10 +331,10 @@ const STAGE_STORY:Record<string,string>={
 };
 function elementStory(element:string){return ELEMENT_STORY[element]??{gift:"균형",life:"필요한 힘을 상황에 맞게 쓰는 능력",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function familyPresence(facts:ConsultationFacts,family:string){
-  const count=familyCount(facts,family);
-  if(count>=3)return `${family}이 원국에서 분명한 축을 이룹니다. ${familyMeaning(family)}이 여러 자리에서 반복됩니다.`;
-  if(count>=1)return `${family}은 원국에 분명히 자리합니다. 필요할 때 ${familyMeaning(family)}을 꺼내 쓸 수 있는 구조입니다.`;
-  return `${family}이 원국 전면에 강하게 드러나는 편은 아닙니다. 그래서 ${familyMeaning(family)}은 타고난 자동 반응보다 의식적으로 키울수록 좋아지는 영역입니다.`;
+  const count=familyCount(facts,family),meaning=familyMeaning(family);
+  if(count>=3)return `${meaning}이 평소 선택에서 자주 앞에 나옵니다. 익숙하게 쓰는 장점인 만큼 과해지는 순간만 조절하면 좋습니다.`;
+  if(count>=1)return `${meaning}도 갖고 있습니다. 필요한 장면에서는 자연스럽게 꺼내 쓸 수 있는 힘입니다.`;
+  return `${meaning}은 자동으로 나오기보다 경험을 쌓을수록 편해지는 영역입니다.`;
 }
 
 function tenGodTone(role:string){
@@ -492,7 +492,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(/인간관계/.test(title))return"돈과 사람을 섞을 때는 호의보다 기준이 먼저입니다. 가까운 사이라도 금액·역할·정산 시점을 분명히 할수록 관계까지 오래 갑니다.";
   }
   if(group==="RELATIONSHIP"){
-    if(/연애 성향/.test(title)&&facts.dayPillarReading)return "연애에서는 "+facts.dayPillarReading+" 일주의 성향이 가장 직접적으로 드러납니다. 쉽게 마음을 열기보다 신뢰를 확인한 뒤 깊어지는 쪽에 가깝습니다.";
+    if(/연애 성향/.test(title))return "연애는 빠르게 달아오르기보다 신뢰가 쌓인 뒤 깊어지는 쪽에 가깝습니다. 쉽게 마음을 열기보다 상대의 말과 행동이 꾸준한지를 오래 보는 편입니다.";
     if(/마음이 가는 상대/.test(title))return "마음이 가는 상대를 고를 때는 말보다 생활 태도와 책임감을 더 크게 봅니다. 처음의 설렘보다 시간이 지나도 믿을 수 있는지가 중요합니다.";
     if(/애정 표현/.test(title))return "애정 표현은 말만으로 끝나기보다 챙기고 계획하고 실제로 움직이는 쪽에 가깝습니다. 다만 상대에게도 같은 방식의 반응을 기대하면 서운함이 생길 수 있습니다.";
     if(/반복되는 패턴/.test(title))return "관계가 깊어질수록 일과 사생활, 내 기준과 상대의 방식이 부딪히는 지점이 중요해집니다. 가까운 사이일수록 설명을 생략하지 않는 게 핵심입니다.";
