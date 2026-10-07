@@ -186,8 +186,14 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
-    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
-      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
+    let title=section.title,topic=section.topic;
+    const daeunMatch=section.evidenceGroup.match(/^DAEUN_(\d+)$/);
+    if(daeunMatch&&fortune.daeun.status==="implemented"){
+      const period=fortune.daeun.periods.find(item=>item.index===Number(daeunMatch[1]));
+      if(period){title=`${period.sourcePeriod.ageRange} · ${period.pillar.stem}${period.pillar.branch} 대운`;topic=title;}
+    }
+    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
+      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic};
   });
   const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
   if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);
