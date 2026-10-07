@@ -104,7 +104,7 @@ function rowHasEvidencePrefix(row:Row,prefix:string){
 function pillarReading(stem:string,branch:string){return (STEM_READ[stem]??stem)+(BRANCH_READ[branch]??branch);}
 
 interface ConsultationFacts{
-  dayStem:string;dayStemName:string;dayPillar:string;dayPillarReading:string;
+  dayStem:string;dayStemName:string;dayBranch:string;dayPillar:string;dayPillarReading:string;
   structure:string;strength:string;
   strongest:{element:string;percentage:number}|null;
   weakest:{element:string;percentage:number}|null;
@@ -117,6 +117,8 @@ interface ConsultationFacts{
   pillarReadings:Record<string,string>;
   stemTenGodByPosition:Record<string,string>;
   branchMainTenGodByPosition:Record<string,string>;
+  wellnessAttention:Array<{element:string;customerStatus:string;theme:string;traditionalAreas:string[];attentionLevel:string;attentionIndex:number}>;
+  wellnessHabits:Record<string,string>;
 }
 function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const dayMaster=asRecord(evidenceValue(input,"NATAL:DAY_MASTER"));
@@ -190,10 +192,32 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     punishment:lengthOf("punishments")
   };
 
+  const wellnessAttention=input.evidence
+    .filter(row=>row.id.startsWith("WELLNESS:ELEMENT:"))
+    .map(row=>asRecord(row.value))
+    .filter((row):row is LooseRecord=>Boolean(row))
+    .map(row=>({
+      element:asText(row.element),
+      customerStatus:asText(row.customerStatus),
+      theme:asText(row.theme),
+      traditionalAreas:Array.isArray(row.traditionalAreas)?row.traditionalAreas.filter((item):item is string=>typeof item==="string"):[],
+      attentionLevel:asText(row.attentionLevel),
+      attentionIndex:asNumber(row.attentionIndex)??0
+    }))
+    .filter(row=>row.element)
+    .sort((a,b)=>b.attentionIndex-a.attentionIndex);
+  const wellnessHabits:Record<string,string>={};
+  const habitRows=evidenceValue(input,"WELLNESS:HABITS");
+  if(Array.isArray(habitRows))for(const item of habitRows){
+    const row=asRecord(item),element=asText(row?.element),guidance=asText(row?.guidance);
+    if(element&&guidance)wellnessHabits[element]=guidance;
+  }
+
   const dayStem=asText(dayMaster?.stem)||asText(day?.stem),dayBranch=asText(day?.branch);
   return{
     dayStem,
     dayStemName:STEM_ELEMENT_NAME[dayStem]??dayStem,
+    dayBranch,
     dayPillar:dayStem&&dayBranch?dayStem+dayBranch:"",
     dayPillarReading:dayStem&&dayBranch?pillarReading(dayStem,dayBranch):"",
     structure:asText(structure?.type),
@@ -208,7 +232,9 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     relationCounts,
     pillarReadings,
     stemTenGodByPosition,
-    branchMainTenGodByPosition
+    branchMainTenGodByPosition,
+    wellnessAttention,
+    wellnessHabits
   };
 }
 function elementPro(element:string){return ELEMENT_PRO[element]??element;}
