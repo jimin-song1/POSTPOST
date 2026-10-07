@@ -365,7 +365,7 @@ const ELEMENT_OVERUSE:Record<string,{sign:string;reset:string}>={
   wood:{sign:"하고 싶은 일을 계속 벌리면서 이미 시작한 일을 정리하는 속도가 늦어질 수 있습니다.",reset:"새로운 걸 시작하기 전에 지금 하던 일 하나를 끝내는 기준을 먼저 정해두는 편이 좋습니다."},
   fire:{sign:"반응을 빨리 얻고 싶어 말이나 행동이 앞서거나, 사람들의 반응에 신경을 너무 많이 쓸 수 있습니다.",reset:"바로 반응하기 전에 한 번만 정리하고, 모든 사람에게 보여주려 하기보다 중요한 대상부터 고르는 편이 좋습니다."},
   earth:{sign:"안전한 선택을 지키려다 변화가 필요한 순간에도 익숙한 방식을 너무 오래 붙잡을 수 있습니다.",reset:"완전히 바꾸기보다 작은 범위에서 먼저 시험해보고 결과가 괜찮으면 넓혀가는 방식이 잘 맞습니다."},
-  metal:{sign:"기준이 높아져 사소한 오류까지 그냥 넘기기 어렵고, 다른 사람의 방식이 답답하게 느껴질 수 있습니다.",reset:"시작 전에 '여기까지면 충분하다'는 완료 기준을 정하고, 덜 중요한 일은 80%에서 넘기는 연습이 도움이 됩니다."},
+  metal:{sign:"기준이 높아져 사소한 오류까지 그냥 넘기기 어렵고, 다른 사람의 방식이 답답하게 느껴질 수 있습니다.",reset:"시작 전에 '여기까지면 충분하다'는 완료 기준을 정하고, 덜 중요한 일은 완벽하게 붙들기보다 충분히 괜찮은 지점에서 넘기는 연습이 도움이 됩니다."},
   water:{sign:"생각과 가능성이 계속 늘어나 결정이 늦어지거나, 이미 답을 알고도 확인을 반복할 수 있습니다.",reset:"확인할 항목을 세 개 정도로 줄이고 그 안에서 결정을 끝내는 시간을 정해두는 편이 좋습니다."}
 };
 function elementOveruse(element:string){return ELEMENT_OVERUSE[element]??{sign:"잘하는 방식을 너무 오래 쓰면 오히려 피로가 커질 수 있습니다.",reset:"멈출 기준을 미리 정해두는 편이 좋습니다."};}
@@ -1736,7 +1736,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
       usefulSentence(facts),
       ...facts.useful.slice(0,3).map((element,index)=>{
         const guide=usefulElementGuide(element);
-        return `${index+1}순위 ${withParticle(elementPro(element),"은","는")} ${guide.why} ${guide.where}`;
+        return `${index===0?"가장 먼저":index===1?"그다음":"이어서"} ${withParticle(elementPro(element),"은","는")} ${guide.why} ${guide.where}`;
       }),
       "순서가 앞선 기운일수록 지금 생활에서 우선적으로 보완할 가치가 크다는 뜻입니다. 색이나 물건을 찾기보다 실제 행동으로 연결하는 편이 훨씬 현실적입니다."
     ];
@@ -1751,7 +1751,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
       "도움이 되는 기운을 생활에 쓰는 방법은 생각보다 단순합니다. 어려운 이름보다 실제 행동으로 바꾸면 됩니다.",
       ...facts.useful.slice(0,3).map((element,index)=>{
         const guide=usefulElementGuide(element);
-        return `${index+1}순위 ${withParticle(elementPro(element),"은","는")} 이렇게 써보세요. ${guide.practice}`;
+        return `${index===0?"가장 먼저":index===1?"그다음":"이어서"} ${withParticle(elementPro(element),"은","는")} 이렇게 써보세요. ${guide.practice}`;
       }),
       "한꺼번에 다 바꾸기보다 지금 가장 자주 막히는 장면과 연결된 한 가지부터 먼저 해보는 편이 좋습니다."
     ];
