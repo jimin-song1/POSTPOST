@@ -54,6 +54,7 @@ function addPillarContext(row:FortuneSynthesisPeriod,fortune:FortuneResult,evide
     item.period.startInstant===row.period.startInstant&&item.period.endInstant===row.period.endInstant):undefined;
   evidence.push(fact(`FORTUNE:${row.synthesisId}:PERIOD_CONTEXT`,"FORTUNE",{
     daeunIndex:row.context.daeunIndex,daeunPillar:daeun?`${daeun.pillar.stem}${daeun.pillar.branch}`:null,
+    daeunAgeRange:daeun?.sourcePeriod.ageRange??null,startAgeYears:daeun?.sourcePeriod.startAgeYears??null,endAgeYears:daeun?.sourcePeriod.endAgeYears??null,
     seunYear:row.context.seunYear??null,seunPillar:seun?`${seun.pillar.stem}${seun.pillar.branch}`:null,
     wolunPillar:wolun?`${wolun.pillar.stem}${wolun.pillar.branch}`:null,period:row.period}));
 }
@@ -164,7 +165,9 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
     fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
   if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
-  for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
+  const daeunCategoryById=new Map(categories.daeun.map(row=>[row.synthesisId,row]));
+  for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
+    const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
   const selectedSeun=synthesis.seun.filter(row=>row.context.seunYear!=null&&row.context.seunYear>=currentYear&&row.context.seunYear<=currentYear+4);
   const seunCategoryById=new Map(categories.seun.map(row=>[row.synthesisId,row]));
@@ -177,10 +180,6 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const wolunCategoryById=new Map(categories.wolun.map(row=>[row.synthesisId,row]));
   for(const row of selectedWolun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=wolunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
-
-  const activeDaeunIndexes=new Set(selectedSeun.map(row=>row.context.daeunIndex));
-  const daeunCategoryById=new Map(categories.daeun.map(row=>[row.synthesisId,row]));
-  for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
   const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus});
