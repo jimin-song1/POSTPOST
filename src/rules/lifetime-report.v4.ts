@@ -11,11 +11,11 @@ export interface DynamicBookPart{partNumber:string;title:string;requiredTopics:s
 export interface DynamicLifetimeBook{version:"dynamic-lifetime-book-v4";parts:DynamicBookPart[];sections:DynamicBookSection[];contentSectionCount:number;}
 
 export const LIFETIME_CONTENT_CONTRACT_V1={
-  version:"lifetime-content-contract-v1",minimumContentSections:130,recommendedContentSections:{min:140,max:null},
-  totalCharacters:{minimum:90_000,recommendedMin:110_000,recommendedMax:140_000},
-  sectionCharacters:{CONCEPT:{min:250,recommendedMax:450},GENERAL:{min:550,recommendedMax:900},CORE:{min:900,recommendedMax:1400},TIMING_CORE:{min:1000,recommendedMax:1800}},
-  chapterMinimumCharacters:{CORE:8000,IDENTITY:8000,WORK:8000,WEALTH:8000,RELATIONSHIP:8000,CHILDREN:6000,WELLNESS:6000,
-    NOBLE_STARS:7000,TEN_GODS_STAGES:8000,YEARLY:12000,SAMJAE:6000,DAEUN:15000,SYNTHESIS:4000},
+  version:"lifetime-content-contract-v1",minimumContentSections:130,recommendedContentSections:{min:130,max:null},
+  totalCharacters:{minimum:50_000,recommendedMin:65_000,recommendedMax:120_000},
+  sectionCharacters:{CONCEPT:{min:180,recommendedMax:450},GENERAL:{min:320,recommendedMax:850},CORE:{min:420,recommendedMax:1200},TIMING_CORE:{min:420,recommendedMax:1300}},
+  chapterMinimumCharacters:{CORE:3000,IDENTITY:2200,WORK:2200,WEALTH:2400,RELATIONSHIP:2200,CHILDREN:700,WELLNESS:2600,
+    NOBLE_STARS:3200,TEN_GODS_STAGES:3400,YEARLY:2800,SAMJAE:450,DAEUN:4200,SYNTHESIS:2200},
   novelty:{minimumNewElements:3,maxReusedCoreClaim:1,maxReusedScene:0,semanticDuplicateThreshold:0.9},
   requiredChapters:["CORE","IDENTITY","WORK","WEALTH","RELATIONSHIP","CHILDREN","WELLNESS","NOBLE_STARS","TEN_GODS_STAGES","YEARLY","SAMJAE","DAEUN","SYNTHESIS"]
 } as const;
