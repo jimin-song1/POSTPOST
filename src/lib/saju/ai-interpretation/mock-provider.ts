@@ -2067,7 +2067,7 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
   const relationshipStatus=input.minimalContext.relationshipStatus;
 
   if(/미래 배우자는 어떤 사람일까/.test(title)&&relationshipStatus==="SINGLE")return[
-    "배우자 자리는 화려하게 끌리는 사람보다 시간이 지나도 믿을 수 있는 사람에게 더 마음이 가는 쪽으로 읽힙니다.",
+    "잘 맞는 미래 배우자는 처음부터 강하게 끌리는 사람보다, 시간이 지나도 믿을 수 있고 생활 태도가 꾸준한 사람에 가깝습니다.",
     "말을 잘하는 것보다 자기 일을 꾸준히 하고, 약속한 걸 실제 행동으로 보여주며, 감정이 생겨도 대화를 피하지 않는 사람이 잘 맞는 편입니다.",
     "본인도 자기 판단이 분명한 만큼 상대까지 지나치게 강한 사람보다는, 자기 생각은 있으면서도 서로 설명하고 조율할 수 있는 사람이 관계를 오래 편하게 만들어줍니다.",
     "가까워질수록 챙김과 책임이 커지는 편이라, 미래 배우자는 받기만 하는 사람보다 자기 몫을 스스로 해내는 사람이 잘 맞습니다.",
