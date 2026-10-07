@@ -419,7 +419,7 @@ function fortunePillarSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
   const reading=pillarReading(pillar[0],pillar[1]),stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
   if(stemElement&&branchElement&&stemElement===branchElement)return `${reading}은 ${elementPro(stemElement)}이 위아래에서 함께 강조되는 시기입니다. 이 기운이 맡는 역할이 평소보다 전면에 나옵니다.`;
-  if(stemElement&&branchElement)return `${reading}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 함께 들어오는 시기입니다. 두 기운이 원국과 어떻게 맞물리는지가 실제 체감을 만듭니다.`;
+  if(stemElement&&branchElement)return `${reading}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 함께 들어오는 시기입니다. 평소 가진 성향과 만나면서 어느 분야의 움직임이 커지는지가 중요합니다.`;
   return `${reading}의 기운이 들어오는 시기입니다.`;
 }
 
@@ -427,7 +427,7 @@ function fortunePillarSentence(pillar:string){
 
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
-  if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 원국에서 비어 있습니다.";
+  if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 사주 안에서 비어 있습니다.";
   return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고 "+elementPro(facts.weakest.element)+"이 가장 약합니다.";
 }
 function strengthMeaning(level:string){
@@ -2422,7 +2422,7 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
       "앞으로 다섯 해에서 기억할 것은 '좋은 해를 기다리는 것'보다 해마다 다른 역할을 제대로 쓰는 것입니다.",
       "지원이 높은 해에는 결과를 남기고, 움직임이 큰 해에는 선택지를 정리하며, 부담이 큰 해에는 무리한 확장보다 구조를 다듬는 편이 좋습니다.",
       "한 해의 평가를 연말 결과 하나로만 하지 말고 그해 새로 생긴 역할·사람·기술이 다음 해에 무엇으로 이어졌는지까지 보세요.",
-      "운이 바뀌어도 원국의 강점은 사라지지 않습니다. 다만 같은 강점을 쓰는 방법이 시기마다 달라집니다.",
+      "운이 바뀌어도 타고난 강점이 사라지는 것은 아닙니다. 다만 같은 강점을 쓰는 방법이 시기마다 달라집니다.",
       "다섯 해의 흐름은 미래를 확정하는 예언보다 지금 무엇을 먼저 준비할지 정하는 장기 일정표로 쓰는 편이 가장 유용합니다."
     ];
 
@@ -2439,8 +2439,8 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
     const heading=year?`${year}년`:title;
     return[
       periodPillar?`${heading}은 ${pillarReading(periodPillar[0],periodPillar[1])}의 기운이 들어오는 해입니다.`:`${heading}은 앞뒤 해와 비교해 어떤 분야가 움직이는지 보는 해입니다.`,
-      periodPillar?fortunePillarSentence(periodPillar):"그해의 간지와 현재 대운, 원국의 관계를 함께 봅니다.",
-      favor&&activation?`계산상 ${favor}이면서 ${activation}입니다. 도움을 받는 정도와 실제 변화량을 따로 봐야 이 해의 성격이 정확해집니다.`:favor?`전체적으로 ${favor}으로 읽습니다.`:activation?`이 해는 ${activation}입니다.`:"한 해의 분위기는 지원과 활동을 나누어 판단합니다.",
+      periodPillar?fortunePillarSentence(periodPillar):"앞뒤 해와 비교해 이 해에 어떤 분야의 움직임이 커지는지 봅니다.",
+      favor&&activation?`이 해는 ${favor}에 가깝고, ${activation}입니다. 편한 해인지보다 기회와 움직임이 어디에 몰리는지가 더 중요합니다.`:favor?`이 해는 ${favor}에 가깝습니다.`:activation?`이 해는 ${activation}입니다.`:"한 해의 분위기는 도움을 받는 정도와 실제 움직임을 나눠서 봅니다.",
       topCategorySentence(input,row)||"직업·재물·관계·학업·변화 가운데 어느 분야의 선택이 많아지는지를 따로 확인합니다.",
       activation.includes("커지는")||activation.includes("매우")?"움직임이 큰 해에는 기회와 부담이 같이 늘 수 있습니다. 모든 제안을 잡기보다 이후에도 남길 선택을 고르는 편이 좋습니다.":"움직임이 크지 않은 해에는 억지로 판을 키우기보다 기존 결과를 정리하고 다음 변화를 준비하는 편이 좋습니다."
     ];
