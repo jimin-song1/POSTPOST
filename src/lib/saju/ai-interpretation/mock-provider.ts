@@ -2923,7 +2923,7 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
   return null;
 }
 
-function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+function changeConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   const title=row.topic??row.title,group=row.evidenceGroup??"";
 
   if(group==="CHANGE"){
@@ -2993,52 +2993,26 @@ function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   }
 
   if(group==="SAMJAE"){
-    if(/삼재를 너무 무섭게 볼 필요 없는 이유|삼재란 무엇인가/.test(title))return[
-      "삼재라는 말 때문에 먼저 겁먹을 필요는 없습니다. 모든 사람에게 같은 나쁜 일이 생기는 시기를 뜻하는 건 아닙니다.",
-      "전통적으로는 변화가 겹치기 쉬운 몇 해를 묶어보는 방식인데, 실제로는 그 시기에 일·관계·이동이 얼마나 바빠지는지를 함께 보는 게 더 현실적입니다.",
-      "변화가 거의 없으면 가볍게 지나갈 수도 있고, 반대로 삼재가 아니어도 큰 선택이 몰리는 해는 있을 수 있습니다.",
-      "이 시기를 공포의 기준으로 보기보다 중요한 계약이나 이동에서 확인을 조금 더 늘리는 정도로 활용하면 충분합니다."
-    ];
-
-    if(/내게 변화가 크게 느껴지는 주기|내 삼재 주기/.test(title))return[
-      "변화가 크게 느껴지는 주기는 평소보다 선택과 정리가 많아지는 몇 해를 묶어보는 방식입니다.",
-      "본인에게는 사람, 일, 생활환경 가운데 어디가 먼저 흔들리는지에 따라 체감이 달라질 수 있습니다.",
-      "중요한 건 이름보다 그 시기에 무엇을 새로 시작하고 무엇을 정리해야 하는지를 미리 보는 것입니다.",
-      "바뀌는 것보다 계속 가져갈 것을 먼저 정해두면 변화가 많아도 훨씬 덜 흔들립니다."
-    ];
-
-    if(/변화가 시작되는 때|들삼재/.test(title))return[
-      "변화가 시작되는 때에는 새로운 일이 들어오거나 익숙한 환경이 조금씩 달라지기 시작할 수 있습니다.",
-      "처음부터 큰 사건이 생긴다고 보기보다 사람·일·생활환경 가운데 무엇이 먼저 달라지는지를 살펴보는 편이 좋습니다.",
-      "새 선택이 많아지면 한꺼번에 전부 바꾸지 말고 처음 들어온 변화가 실제로 필요한지부터 확인해보세요.",
-      "초반에 기준을 잘 잡아두면 이어지는 변화도 훨씬 덜 피곤하게 지나갈 수 있습니다."
-    ];
-
-    if(/변화가 한가운데 들어오는 때|눌삼재/.test(title))return[
-      "변화가 한가운데 들어오는 때에는 이미 시작한 일을 계속 가져갈지, 방향을 바꿀지 고민하는 장면이 많아질 수 있습니다.",
-      "일정과 책임이 겹치면 새로 시작하는 것보다 이미 벌인 일을 정리하고 구조를 다듬는 일이 더 중요해질 수 있습니다.",
-      "움직임이 많다고 무조건 멈출 필요는 없지만, 시간과 돈을 과하게 넓히는 건 조심하는 편이 좋습니다.",
-      "버티는 것보다 불필요한 부담을 줄이는 해로 쓰는 게 더 현실적입니다."
-    ];
-
-    if(/변화가 정리되는 때|날삼재/.test(title))return[
-      "변화가 정리되는 때에는 앞에서 시작된 일이 실제 결과나 새로운 생활 방식으로 굳어질 수 있습니다.",
-      "모든 문제가 자동으로 끝난다기보다 무엇을 계속 가져가고 무엇을 놓을지가 전보다 분명해지는 쪽에 가깝습니다.",
-      "새로운 판을 또 벌이기보다 지난 변화에서 얻은 걸 정리해 다음 흐름의 기반으로 만드는 편이 좋습니다.",
-      "끝났다는 안도보다 무엇을 남겼는지를 보는 게 더 중요합니다."
-    ];
-
-    if(/나는 변화를 얼마나 크게 느끼는 편일까|원래 성향과 변화 시기가 만날 때|10년 흐름과 변화 시기가 겹칠 때|지나온 변화와 다음 변화|변화가 큰 때 기억할 점/.test(title))return[
-      "변화 시기를 얼마나 크게 느끼는지는 원래 성향과 그때 맡고 있는 역할에 따라 달라집니다.",
-      relationSentence(facts),
-      "일과 돈, 관계가 동시에 움직이면 체감이 커질 수 있고 한 분야만 움직이면 비교적 조용하게 지나갈 수도 있습니다.",
-      "이름을 겁내기보다 일정과 책임이 어디에 몰리는지 보고, 되돌리기 어려운 선택에만 확인을 더하는 편이 좋습니다."
-    ];
-
+    const root=asRecord(evidenceValue(input,"FORTUNE:SAMJAE"));
+    const cycles=Array.isArray(root?.samjaeCycles)?root?.samjaeCycles:[];
+    const requestedYear=typeof input.minimalContext.requestedYear==="number"?input.minimalContext.requestedYear:null;
+    const normalized=cycles.map(item=>asRecord(item)).filter((item):item is LooseRecord=>Boolean(item));
+    const cycle=(requestedYear!=null?normalized.filter(item=>(asNumber(item.endYear)??-Infinity)>=requestedYear).sort((a,b)=>(asNumber(a.startYear)??0)-(asNumber(b.startYear)??0))[0]:normalized[0])??null;
+    if(cycle){
+      const start=asNumber(cycle.startYear),middle=asNumber(cycle.middleYear),end=asNumber(cycle.endYear);
+      const years=[start,middle,end].filter((year):year is number=>year!=null);
+      return[
+        years.length===3?("다음 삼재 흐름은 "+start+"년 들삼재 · "+middle+"년 눌삼재 · "+end+"년 날삼재로 이어집니다."):"삼재는 세 해가 이어지는 변화 구간으로 봅니다.",
+        "삼재라고 세 해 모두 나쁜 일이 생긴다는 뜻은 아닙니다. 원래 사주의 합·충·형·파·해와 그해 활동량이 같이 커질 때 체감이 더 커질 수 있습니다.",
+        facts.relationCounts.clash+facts.relationCounts.punishment+facts.relationCounts.break+facts.relationCounts.harm>0?"원국에도 부딪힘이나 반복 압박의 관계가 있어 삼재 기간에는 일정·계약·관계 변화를 한꺼번에 몰지 않는 편이 좋습니다.":"원국에서 충돌 관계가 과하게 겹치는 편은 아니라 삼재 자체를 크게 겁내기보다 실제로 바빠지는 분야를 보는 게 더 중요합니다.",
+        "들삼재에는 새 변화가 시작되는지, 눌삼재에는 벌인 일을 어떻게 유지·정리할지, 날삼재에는 무엇을 남기고 끝낼지를 보는 식으로 쓰면 됩니다.",
+        "즉 삼재는 공포의 시기표가 아니라 변화가 몰릴 수 있는 세 해를 미리 알고 중요한 결정의 확인 절차를 조금 늘리는 참고에 가깝습니다."
+      ];
+    }
     return[
-      "이 시기는 이름 자체보다 실제 생활에서 무엇이 바뀌고 어떤 선택이 늘어나는지를 보는 게 중요합니다.",
-      relationSentence(facts),
-      "겁내기보다 중요한 계약과 이동에서 확인을 하나 더 늘리는 정도로 활용하는 편이 현실적입니다."
+      "삼재는 세 해가 이어지는 변화 구간을 보는 전통 기준입니다.",
+      "현재 계산에서 구체 연도 정보가 잡히지 않으면 억지로 날짜를 찍기보다 실제 세운의 변화량과 함께 보는 편이 맞습니다.",
+      "삼재 자체보다 중요한 계약·이동·관계 변화가 겹치는지 확인하는 게 더 현실적입니다."
     ];
   }
 
@@ -3227,7 +3201,7 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
     twelveStageConsultation(row,facts),
     tenGodConsultation(row,facts),
     timingConsultation(row,facts,input),
-    changeConsultation(row,facts),
+    changeConsultation(row,facts,input),
     daeunConsultation(row,facts,input),
     synthesisConsultation(row,facts)
   ];
