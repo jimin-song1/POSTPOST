@@ -119,6 +119,7 @@ interface ConsultationFacts{
   branchMainTenGodByPosition:Record<string,string>;
   wellnessAttention:Array<{element:string;customerStatus:string;theme:string;traditionalAreas:string[];attentionLevel:string;attentionIndex:number}>;
   wellnessHabits:Record<string,string>;
+  wellnessPeriods:Array<{daeunIndex:number;ageRange:string;pillar:string;attention:number;level:string}>;
 }
 function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const dayMaster=asRecord(evidenceValue(input,"NATAL:DAY_MASTER"));
@@ -213,6 +214,20 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     if(element&&guidance)wellnessHabits[element]=guidance;
   }
 
+  const wellnessPeriods:ConsultationFacts["wellnessPeriods"]=[];
+  const lifetimeWellness=evidenceValue(input,"WELLNESS:LIFETIME_CONTEXT");
+  if(Array.isArray(lifetimeWellness))for(const item of lifetimeWellness){
+    const row=asRecord(item);
+    if(!row)continue;
+    wellnessPeriods.push({
+      daeunIndex:asNumber(row.daeunIndex)??0,
+      ageRange:asText(row.ageRange),
+      pillar:asText(row.pillar),
+      attention:asNumber(row.attention)??0,
+      level:asText(row.level)
+    });
+  }
+
   const dayStem=asText(dayMaster?.stem)||asText(day?.stem),dayBranch=asText(day?.branch);
   return{
     dayStem,
@@ -234,7 +249,8 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
     stemTenGodByPosition,
     branchMainTenGodByPosition,
     wellnessAttention,
-    wellnessHabits
+    wellnessHabits,
+    wellnessPeriods
   };
 }
 function elementPro(element:string){return ELEMENT_PRO[element]??element;}
@@ -527,11 +543,90 @@ function periodContext(input:InterpretationInput,row:Row){
   return{
     daeunIndex:asNumber(value?.daeunIndex),
     daeunPillar:asText(value?.daeunPillar),
+    daeunAgeRange:asText(value?.daeunAgeRange),
+    startAgeYears:asNumber(value?.startAgeYears),
+    endAgeYears:asNumber(value?.endAgeYears),
     seunYear:asNumber(value?.seunYear),
     seunPillar:asText(value?.seunPillar),
-    wolunPillar:asText(value?.wolunPillar)
+    wolunPillar:asText(value?.wolunPillar),
+    period:asRecord(value?.period)
   };
 }
+type FortuneSnapshot={
+  synthesisId:string;year:number|null;daeunIndex:number|null;daeunPillar:string;ageRange:string;startAge:number|null;endAge:number|null;
+  favorabilityScore:number;favorabilityLevel:string;activationScore:number;activationLevel:string;
+  categories:Array<{key:string;label:string;support:number;activity:number}>;
+};
+function snapshotCategories(input:InterpretationInput,synthesisId:string){
+  const rows:Array<{key:string;label:string;support:number;activity:number}>=[];
+  const prefix=`CATEGORY:${synthesisId}:`;
+  for(const evidence of input.evidence){
+    if(!evidence.id.startsWith(prefix))continue;
+    const value=asRecord(evidence.value),key=evidence.id.slice(prefix.length);
+    const support=asNumber(value?.supportScore),activity=asNumber(value?.activityScore);
+    if(support==null&&activity==null)continue;
+    rows.push({key,label:CATEGORY_LABELS[key]??key,support:support??0,activity:activity??0});
+  }
+  return rows;
+}
+function fortuneSnapshots(input:InterpretationInput,row:Row){
+  const snapshots:FortuneSnapshot[]=[];
+  for(const id of row.evidenceIds){
+    if(!id.startsWith("FORTUNE:")||!id.endsWith(":PERIOD_CONTEXT"))continue;
+    const synthesisId=id.slice("FORTUNE:".length,-":PERIOD_CONTEXT".length);
+    const context=asRecord(evidenceValue(input,id));
+    if(!context)continue;
+    const favor=asRecord(evidenceValue(input,`FORTUNE:${synthesisId}:FAVORABILITY`));
+    const activation=asRecord(evidenceValue(input,`FORTUNE:${synthesisId}:ACTIVATION`));
+    snapshots.push({
+      synthesisId,
+      year:asNumber(context.seunYear),
+      daeunIndex:asNumber(context.daeunIndex),
+      daeunPillar:asText(context.daeunPillar),
+      ageRange:asText(context.daeunAgeRange),
+      startAge:asNumber(context.startAgeYears),
+      endAge:asNumber(context.endAgeYears),
+      favorabilityScore:asNumber(favor?.score)??0,
+      favorabilityLevel:asText(favor?.level),
+      activationScore:asNumber(activation?.score)??0,
+      activationLevel:asText(activation?.level),
+      categories:snapshotCategories(input,synthesisId)
+    });
+  }
+  return snapshots;
+}
+function topSnapshotCategory(snapshot:FortuneSnapshot,mode:"activity"|"support"){
+  if(!snapshot.categories.length)return null;
+  return [...snapshot.categories].sort((a,b)=>mode==="activity"?b.activity-a.activity:b.support-a.support)[0]??null;
+}
+function categoryLifeSentence(label:string){
+  if(label==="재물")return"돈의 출입·수입 구조·큰 지출처럼 재물 선택이 많아지기 쉽습니다.";
+  if(label==="사업")return"사업·부수입·고객·판매처럼 시장 반응을 직접 확인할 일이 늘기 쉽습니다.";
+  if(label==="직업")return"직무 변화·책임 확대·이직이나 역할 조정처럼 일의 자리가 움직이기 쉽습니다.";
+  if(label==="관계")return"새로운 만남, 관계 정리, 결혼처럼 사람과의 거리 조정이 중요해지기 쉽습니다.";
+  if(label==="학업")return"자격증·전문 공부·새 기술처럼 앞으로 써먹을 배움에 시간을 쓰기 좋습니다.";
+  if(label==="변화")return"이동·환경 변화·새로운 선택처럼 익숙한 생활 틀을 바꿀 일이 많아질 수 있습니다.";
+  return`${label} 쪽에서 평소보다 선택할 일이 늘기 쉽습니다.`;
+}
+function partnerAppearanceSentence(facts:ConsultationFacts){
+  const element=BRANCH_ELEMENT[facts.dayBranch]??"";
+  const byElement:Record<string,string>={
+    wood:"전체적으로 길고 단정한 선, 자연스럽고 깔끔한 인상이 먼저 들어오는 사람",
+    fire:"표정과 눈빛이 밝고 생기가 있으며, 말하거나 움직일 때 존재감이 살아나는 사람",
+    earth:"편안하고 안정감 있는 인상, 과하게 꾸미기보다 단정하고 든든한 분위기의 사람",
+    metal:"이목구비나 선이 또렷하고 깔끔하며, 옷차림도 정돈된 인상을 주는 사람",
+    water:"선이 부드럽고 차분하며, 눈빛이나 분위기에서 조용하고 유연한 느낌이 나는 사람"
+  };
+  const role=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day;
+  const style=["정관","편관"].includes(role)?"옷차림이나 태도도 단정하고 자기관리가 되는 쪽":
+    ["정재","편재"].includes(role)?"실용적이면서도 상황에 맞게 센스 있게 꾸미는 쪽":
+    ["식신","상관"].includes(role)?"표정이 풍부하거나 말할 때 매력이 살아나는 쪽":
+    ["정인","편인"].includes(role)?"차분하고 지적인 분위기, 과한 꾸밈보다 자기 취향이 보이는 쪽":
+    ["비견","겁재"].includes(role)?"활동적이고 자기 색이 분명한 인상":"꾸밈보다 전체 분위기가 안정적인 쪽";
+  const base=byElement[element]??"깔끔하고 자기 생활이 느껴지는 인상의 사람";
+  return `배우자 자리인 일지의 분위기를 외형으로 풀면, ${base}에게 마음이 갈 가능성이 있습니다. 스타일은 ${style}이 더 잘 맞습니다. 정확한 키·얼굴형을 단정하는 뜻은 아니고, 첫인상과 분위기의 경향으로 보는 편이 맞습니다.`;
+}
+
 function fortuneAxis(input:InterpretationInput,row:Row){
   const favor=asRecord(rowEvidenceValue(input,row,id=>id.includes(":FAVORABILITY")));
   const activation=asRecord(rowEvidenceValue(input,row,id=>id.includes(":ACTIVATION")));
