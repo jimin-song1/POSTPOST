@@ -81,7 +81,7 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     let personalized=first;
     if(id==="book-007")personalized=first.replace(/^이 사주는 기본적으로\s*/,`${label}은 기본적으로 `);
     else if(id==="book-008")personalized=first.replace(/^한 문장으로 줄이면,\s*/,`한 문장으로 줄이면, ${label}은 `);
-    else if(["book-009","book-010","book-011","book-012","book-013","book-014","book-017","book-024"].includes(id)&&!first.startsWith(label))
+    else if(["book-009","book-010","book-011","book-012","book-013","book-014","book-017"].includes(id)&&!first.startsWith(label))
       personalized=`${label}은 ${first}`;
     else if(id==="book-020")personalized=first.replace(/^나를 대표하는 기운을 쉽게 풀면\s*/,`${label}을 대표하는 기운을 쉽게 풀면 `);
     else if(id==="book-021")personalized=first.replace(/^나를 대표하는 기운은\s*/,`${label}을 대표하는 기운은 `);
