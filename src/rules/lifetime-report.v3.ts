@@ -67,11 +67,11 @@ export const LIFETIME_BOOK_V1={
     {id:"book-027",pageNumber:27,title:"직업운·학업운",evidenceGroup:"WORK"},
     {id:"book-028",pageNumber:28,title:"나에게 잘 맞는 일",evidenceGroup:"WORK"},
     {id:"book-029",pageNumber:29,title:"직장과 사업 중 어디가 더 잘 맞을까",evidenceGroup:"WORK"},
-    {id:"book-030",pageNumber:30,title:"직장운",evidenceGroup:"WORK"},
+    {id:"book-030",pageNumber:30,title:"직장에서 잘 풀리는 방식",evidenceGroup:"WORK"},
     {id:"book-031",pageNumber:31,title:"책임이 커질 때의 나",evidenceGroup:"WORK"},
     {id:"book-032",pageNumber:32,title:"직장 인간관계",evidenceGroup:"WORK"},
     {id:"book-033",pageNumber:33,title:"사업운",evidenceGroup:"WORK"},
-    {id:"book-034",pageNumber:34,title:"학업운",evidenceGroup:"WORK"}
+    {id:"book-034",pageNumber:34,title:"어떤 공부가 잘 맞을까",evidenceGroup:"WORK"}
   ]},
   {partNumber:"04",title:"재물운",pages:[
     {id:"book-035",pageNumber:35,title:"재물운",evidenceGroup:"WEALTH"},
