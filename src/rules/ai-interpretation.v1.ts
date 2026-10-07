@@ -1,5 +1,6 @@
 import type { InterpretationReportType } from "@/types/ai-interpretation";
 
+// v4 intentionally invalidates stale lifetime narration cache after the counseling-style rewrite.
 export const AI_INTERPRETATION_V1={
   ruleVersion:"ai-interpretation-v1",inputVersion:"interpretation-input-v1",schemaVersion:"interpretation-schema-v1",
   promptVersion:"interpretation-prompt-v4",groundingVersion:"interpretation-grounding-v3",modelConfigVersion:"openai-model-config-v3",
