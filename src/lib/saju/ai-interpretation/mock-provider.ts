@@ -222,7 +222,7 @@ function koreanCount(value:number){
   return Number.isInteger(value)&&value>=0&&value<=10?words[value]:String(value);
 }
 function familyMeaning(family:string){
-  return family==="비겁"?"독립심과 경쟁력":family==="식상"?"표현과 생산력":family==="재성"?"돈과 현실 결과를 다루는 힘":family==="관성"?"책임감과 사회적 기준":family==="인성"?"학습력과 이해력":"자기 기준";
+  return family==="비겁"?"스스로 판단하고 밀고 가는 성향":family==="식상"?"생각을 말과 결과물로 꺼내는 성향":family==="재성"?"돈과 현실 결과를 챙기는 성향":family==="관성"?"책임과 약속을 중요하게 보는 성향":family==="인성"?"충분히 이해하고 자기 것으로 만드는 성향":"자기 판단을 중요하게 보는 성향";
 }
 const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
   甲:{image:"큰 나무",core:"방향이 정해지면 곧게 밀고 가며 스스로 키워가는 힘",shadow:"의미를 찾지 못하면 움직임이 둔해지고 자기 기준을 쉽게 굽히지 않는 면"},
@@ -237,9 +237,28 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
   癸:{image:"비와 이슬",core:"작은 변화를 빠르게 감지하고 정보를 섬세하게 받아들이는 힘",shadow:"생각과 감정이 안쪽에 오래 머물러 피로가 쌓이는 면"}
 };
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
+const STEM_COUNSELING:Record<string,{opening:string;shadow:string}>={
+  甲:{opening:"자기 방향이 분명한 편입니다. 한번 마음을 정하면 쉽게 흔들리지 않고, 시간이 걸리더라도 자기 방식대로 끝까지 해내려는 편입니다.",shadow:"왜 해야 하는지 납득되지 않으면 움직임이 확 느려지고, 자기 생각을 너무 오래 붙들면 고집처럼 보일 수 있습니다."},
+  乙:{opening:"주변 상황을 빠르게 읽고 그 안에서 자기 길을 찾는 편입니다. 처음부터 세게 밀기보다 사람과 환경을 보면서 가장 오래 갈 방법을 고릅니다.",shadow:"주변을 너무 많이 살피면 결정을 미루거나 정작 자기 마음을 뒤로 미룰 수 있습니다."},
+  丙:{opening:"생각이 정리되면 밖으로 빠르게 보여주는 편입니다. 분위기를 밝게 만들고 사람을 움직이게 하는 데 강점이 있습니다.",shadow:"속도가 너무 빨라지면 세부적인 부분이나 상대가 따라오는 속도를 놓칠 수 있습니다."},
+  丁:{opening:"필요한 사람과 일에 집중해서 정성을 쓰는 편입니다. 크게 드러내기보다 가까운 곳을 세심하게 챙길 때 장점이 잘 살아납니다.",shadow:"예민함이 커지면 작은 말이나 상황도 오래 마음에 남을 수 있습니다."},
+  戊:{opening:"쉽게 흔들리지 않고 한번 맡은 일은 오래 버티는 편입니다. 주변에서는 든든하고 책임감 있는 사람으로 보기 쉽습니다.",shadow:"변화를 늦게 받아들이거나 혼자 너무 많은 책임을 들고 가면 피로가 쌓일 수 있습니다."},
+  己:{opening:"작은 부분을 놓치지 않고 현실적으로 정리하는 편입니다. 사람이나 일을 꾸준히 돌보고 안정시키는 데 강점이 있습니다.",shadow:"걱정이 많아지면 사소한 부분까지 직접 챙기느라 쉽게 지칠 수 있습니다."},
+  庚:{opening:"무엇이 필요한지 빠르게 구분하고 결정을 내리는 편입니다. 문제가 생기면 오래 끌기보다 정리하고 다음으로 넘어가려 합니다.",shadow:"기준이 너무 강해지면 말이나 판단이 상대에게 날카롭게 느껴질 수 있습니다."},
+  辛:{opening:"차이를 세밀하게 보고 완성도를 높이는 편입니다. 작은 부분까지 잘 다듬어 결과의 질을 끌어올리는 데 강점이 있습니다.",shadow:"잘하고 싶은 마음이 커질수록 자신과 주변 사람에게 지나치게 엄격해질 수 있습니다."},
+  壬:{opening:"큰 그림을 보면서 여러 사람과 정보를 함께 다루는 편입니다. 한 가지 방식에 갇히기보다 가능성을 넓게 보는 데 강점이 있습니다.",shadow:"관심과 선택지가 너무 많아지면 한곳에 집중하는 시간이 짧아질 수 있습니다."},
+  癸:{opening:"작은 변화와 분위기를 빠르게 알아차리는 편입니다. 겉으로는 조용해 보여도 속에서는 많은 정보를 받아들이고 정리합니다.",shadow:"생각과 감정을 안에 오래 담아두면 혼자 지치는 시간이 길어질 수 있습니다."}
+};
+function stemCounseling(facts:ConsultationFacts){return STEM_COUNSELING[facts.dayStem]??{opening:"자기 방식이 분명하고, 납득한 일은 꾸준히 끝까지 가져가는 편입니다.",shadow:"한쪽 생각에 오래 머물면 시작이 늦거나 피로가 커질 수 있습니다."};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  return count?`중요한 선택에서 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서도 이 힘이 반복해서 기준이 됩니다.`:"";
+  if(!count)return"";
+  if(family==="비겁")return"남이 정해준 답보다 내가 납득한 방식대로 움직이려는 편입니다. 의견이 갈리거나 경쟁이 붙을수록 자기 판단을 쉽게 놓지 않습니다.";
+  if(family==="식상")return"생각만 오래 품기보다 말하거나 만들어서 밖으로 보여줄 때 장점이 잘 살아납니다. 결과물이 눈에 보일수록 속도도 붙는 편입니다.";
+  if(family==="재성")return"현실적인 결과를 중요하게 보는 편입니다. 돈·시간·성과처럼 실제로 남는 것이 분명할수록 판단도 빨라집니다.";
+  if(family==="관성")return"맡은 일과 약속을 가볍게 넘기지 않는 편입니다. 주변에서는 책임감 있고 믿을 만한 사람으로 보기 쉽습니다.";
+  if(family==="인성")return"바로 결론을 내리기보다 충분히 이해하고 자기 방식으로 정리한 뒤 움직이는 편입니다. 배우고 파고드는 일에도 강점이 있습니다.";
+  return"중요한 선택에서는 남의 말보다 스스로 납득할 수 있는지를 중요하게 봅니다.";
 }
 const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
   비견:"내 생각과 기준을 세우는 힘",
@@ -292,7 +311,7 @@ const STAR_CUSTOMER_MEANING:ReadonlyArray<readonly [string,string]>=[
 ];
 function starSentence(facts:ConsultationFacts){
   const meanings=Array.from(new Set(facts.starLabels.flatMap(label=>STAR_CUSTOMER_MEANING.filter(([token])=>label.includes(token)).map(([,meaning])=>meaning))));
-  return meanings.length?`이 사주에서 눈에 띄는 특징은 ${meanings.slice(0,4).join(", ")}입니다. 이름을 외우기보다 실제 생활에서 언제 이 모습이 나오는지를 보는 편이 더 중요합니다.`:"특별한 이름을 붙이기보다 실제 생활에서 반복되는 성향을 중심으로 보는 편이 더 정확합니다.";
+  return meanings.length?`평소 눈에 띄는 특징은 ${meanings.slice(0,4).join(", ")}입니다. 이름을 외우기보다 실제 생활에서 언제 이 모습이 나오는지를 보는 편이 더 중요합니다.`:"특별한 이름을 붙이기보다 실제 생활에서 반복되는 성향을 중심으로 보는 편이 더 정확합니다.";
 }
 
 const ELEMENT_STORY:Record<string,{gift:string;life:string;shadow:string}>={
@@ -433,15 +452,15 @@ function strengthMeaning(level:string){
   return labels[level]??"전체적으로 균형을 보며 힘을 쓰는 편";
 }
 function structureMeaning(structure:string){
-  if(structure.includes("정관"))return"책임과 기준을 지키면서 신뢰를 쌓는 힘";
-  if(structure.includes("편관"))return"압박이 있는 자리에서도 결단하고 책임지는 힘";
-  if(structure.includes("정재"))return"꾸준히 관리하고 안정적으로 결과를 쌓는 힘";
-  if(structure.includes("편재"))return"시장과 기회를 읽고 여러 자원을 움직이는 힘";
-  if(structure.includes("식신"))return"배운 것을 결과물로 만들고 꾸준히 생산하는 힘";
-  if(structure.includes("상관"))return"자기 생각을 밖으로 표현하고 기존 방식을 바꾸는 힘";
-  if(structure.includes("정인")||structure.includes("편인"))return"배우고 이해한 것을 자기 것으로 만드는 힘";
-  if(structure.includes("건록")||structure.includes("양인"))return"스스로 방향을 정하고 독립적으로 밀고 가는 힘";
-  return"자기 기준을 세우고 현실에서 결과를 만드는 힘";
+  if(structure.includes("정관"))return"책임과 약속을 중요하게 여기고 신뢰를 쌓는 성향";
+  if(structure.includes("편관"))return"압박이 있어도 결단하고 맡은 몫을 끝까지 책임지는 성향";
+  if(structure.includes("정재"))return"꾸준히 관리하면서 안정적인 결과를 쌓아가는 성향";
+  if(structure.includes("편재"))return"사람과 기회를 넓게 보고 현실적인 가능성을 빠르게 잡는 성향";
+  if(structure.includes("식신"))return"배운 것을 실제 결과물로 꾸준히 만들어내는 성향";
+  if(structure.includes("상관"))return"자기 생각을 분명히 표현하고 답답한 방식을 바꾸려는 성향";
+  if(structure.includes("정인")||structure.includes("편인"))return"충분히 이해하고 자기 방식으로 정리한 뒤 움직이는 성향";
+  if(structure.includes("건록")||structure.includes("양인"))return"스스로 방향을 정하고 자기 방식대로 밀고 가는 성향";
+  return"스스로 기준을 세우고 실제 결과까지 챙기려는 성향";
 }
 function workVerdict(facts:ConsultationFacts){
   if(facts.structure.includes("관"))return"조직 안에서도 역할을 해낼 수 있지만, 단순히 지시만 받는 자리보다 판단권과 책임이 함께 주어지는 자리에서 강점이 더 살아납니다.";
@@ -456,8 +475,8 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   if(group==="STRENGTH"&&facts.strength)return "전체 기운을 보면 "+strengthMeaning(facts.strength)+"입니다. 의지가 세다 약하다는 뜻보다, 혼자 밀어붙이는 힘과 주변 도움을 쓰는 비중을 보는 기준입니다.";
   if(group==="STRUCTURE_USEFUL"){
     const useful=facts.useful.length?facts.useful.map(elementPro).join(" · "):"";
-    if(facts.structure&&useful)return "타고난 흐름의 중심은 "+structureMeaning(facts.structure)+"입니다. 도움 되는 기운은 "+useful+" 순으로 보고, 부족한 쪽을 보완할 때 전체 흐름이 더 매끄러워집니다.";
-    if(facts.structure)return "타고난 흐름의 중심은 "+structureMeaning(facts.structure)+"입니다. 이 힘이 일과 관계에서 반복해서 중요한 기준으로 작동합니다.";
+    if(facts.structure&&useful)return "평소 가장 자주 드러나는 모습은 "+structureMeaning(facts.structure)+"입니다. 도움 되는 기운은 "+useful+" 순으로 보고, 부족한 쪽을 보완할 때 전체 흐름이 더 매끄러워집니다.";
+    if(facts.structure)return "평소 가장 자주 드러나는 모습은 "+structureMeaning(facts.structure)+"입니다. 일과 관계에서도 비슷한 선택 기준이 반복해서 나타납니다.";
   }
   if(group==="IDENTITY"){
     if(/일주|두 글자/.test(title)&&facts.dayPillar)return (facts.dayPillarReading||facts.dayPillar)+" 일주는 이 사주에서 나 자신을 가장 가까이 보는 자리입니다. "+(facts.dayStemName||"나를 대표하는 기운")+"의 성향이 가까운 관계와 실제 선택에서 가장 직접적으로 드러납니다.";
@@ -503,16 +522,16 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
   if(group==="TEN_GODS"){
-    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 이 사주의 중심축으로 작동합니다.":"");
+    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 평소 선택에서 자주 드러납니다.":"");
     if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
     if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
     if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
     if(/관성/.test(title))return "관성은 책임과 규칙, 사회에서 맡는 역할과 연결됩니다. 기준을 지키는 힘이지만 납득되지 않는 통제까지 편하다는 뜻은 아닙니다.";
     if(/인성/.test(title))return "인성은 배우고 이해하고 받아들이는 힘입니다. 정보를 자기 것으로 만들고 전문성을 쌓는 과정과 연결됩니다.";
   }
-  if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
+  if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 특정 사건을 맞히기보다 그 시기에 일·돈·관계 중 어디가 더 바빠지는지를 살펴봅니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
-  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
+  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 평소 모습과 그 시기의 변화를 함께 보면서 어디에서 선택할 일이 많아지는지를 살펴봅니다.";
   if(group==="SYNTHESIS")return "앞의 내용을 다시 나열하기보다, "+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"전체적인 균형")+"을 함께 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
@@ -612,7 +631,7 @@ function profile(row:Row,index:number):DomainProfile{
     },
     SYNTHESIS:{
       headline:`${topic}`,
-      lead:"끝까지 읽고 나면 몇 가지 반복되는 모습이 남아요. 그게 이 사주에서 가장 오래 가져갈 중심이에요.",
+      lead:"끝까지 읽고 나면 몇 가지 반복되는 모습이 남아요. 그게 오래 반복되는 핵심 성향이에요.",
       scene:"중요한 선택이 겹치면 충분히 살펴본 뒤 마음이 정해진 순간부터 직접 움직여요. 일에서는 책임감으로, 돈에서는 신중함으로, 관계에서는 오래 지켜보는 태도로 드러나요.",
       strength:"서두르지 않으면서도 한번 결정하고 나면 끝까지 가져가는 힘이 있어요. 같은 장점이 상황에 따라 조금씩 다른 모습으로 나와요.",
       shadow:"다만 확인도 책임도 전부 내 몫이라고 생각하기 시작하면 금방 지칠 수 있어요. 모든 걸 완벽하게 하려 하기보다 지금 제일 중요한 것만 남기는 편이 좋아요.",
@@ -706,6 +725,15 @@ function customerizeNarration(text:string){
 function naturalizeNarration(text:string){
   return customerizeNarration(text)
     .replaceAll("자기준","자기 기준")
+    .replaceAll("작동합니다","드러납니다")
+    .replaceAll("작동하고","드러나고")
+    .replaceAll("작동하는","드러나는")
+    .replaceAll("작동하기","드러나기")
+    .replaceAll("이 장의 목적은 ","중요한 건 ")
+    .replaceAll("이 장의 핵심은 ","핵심은 ")
+    .replaceAll("이 장에서는 ","")
+    .replaceAll("보는 편이 정확합니다","이해하는 편이 자연스럽습니다")
+    .replaceAll("보는 편이 맞습니다","이해하는 편이 자연스럽습니다")
     .replace(/\s+/g," ")
     .trim();
 }
@@ -1059,7 +1087,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "결정을 앞둔 순간, 가까운 사람과 부딪힌 순간, 혼자 정리하는 순간을 나눠 보면 그 차이가 더 잘 보입니다.",
       "무엇을 먼저 확인하고 무엇을 뒤로 미루는지 살피면 단순한 성격표보다 실제 선택 방식을 이해하기 쉽습니다.",
       "특히 책임을 맡았을 때 나타나는 행동은 평소의 말보다 오래 반복되는 경향을 보여 줍니다.",
-      "상황이 바뀌어도 끝까지 남는 기준이 무엇인지 보면 이 사람만의 중심을 찾기 쉬워집니다.",
+      "상황이 바뀌어도 끝까지 남는 기준이 무엇인지 보면 본인에게 오래 남는 기준을 찾기 쉬워집니다.",
       "잘하는 것만 보지 말고 피곤할 때 어떤 방식으로 무너지는지도 함께 봐야 균형이 맞습니다."
     ],
     practiceA:[
@@ -1134,7 +1162,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "관리 기준이 단순할수록 감정이 흔들리는 순간에도 원래 계획으로 돌아오기 쉬워집니다.",
       "손실을 피하려는 마음이 너무 커지면 성장 기회까지 막힐 수 있으므로 위험을 없애기보다 감당할 범위를 정하는 편이 현실적입니다.",
       "반대로 자신감이 커질수록 확인 절차를 줄이고 싶어질 수 있으니 큰 선택일수록 평소의 검토 순서를 유지하는 것이 좋습니다.",
-      "재물 계획은 미래를 맞히는 일이 아니라 현재의 선택이 생활에 어떤 부담을 남기는지 점검하는 과정으로 보는 편이 맞습니다."
+      "재물 계획은 미래를 맞히는 일이 아니라 현재의 선택이 생활에 어떤 부담을 남기는지 점검하는 과정으로 이해하는 편이 자연스럽습니다."
     ]
   },
   RELATIONSHIP:{
@@ -1344,7 +1372,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "좋은 인연은 의존하게 만드는 사람이 아니라 선택권을 넓혀주는 사람에 가까워요.",
       "도움을 받는다고 내 기준을 내려놓을 필요는 없어요. 오히려 기준이 분명할수록 관계가 오래 갑니다.",
       "귀인운이 강한 시기에는 새로운 사람을 많이 만나는 것보다 필요한 연결을 놓치지 않는 게 더 중요해요.",
-      "사람에게 기대는 것과 관계를 활용하는 건 달라요. 서로의 역할이 분명할 때 귀인운이 가장 편하게 작동해요."
+      "사람에게 기대는 것과 관계를 활용하는 건 달라요. 서로의 역할이 분명할 때 좋은 인연의 도움을 가장 편하게 받을 수 있어요."
     ]
   },
   ROLES:{
@@ -1352,7 +1380,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "십성과 십이운성은 사람을 여러 조각으로 나누는 표가 아니라, 상황마다 어떤 역할과 에너지가 먼저 나오는지를 보는 도구예요.",
       "일할 때 앞에 나오는 성향과 가까운 사람 앞에서 나오는 성향이 다를 수 있는 이유도 역할이 달라지기 때문이에요.",
       "어떤 역할이 강하다고 해서 그 역할만 평생 쓰는 건 아니에요. 환경에 따라 앞에 나오는 힘이 달라집니다.",
-      "배우는 힘, 표현하는 힘, 돈을 다루는 힘, 책임지는 힘은 서로 따로 움직이기도 하고 한 장면에서 같이 작동하기도 해요.",
+      "배우는 힘, 표현하는 힘, 돈을 다루는 힘, 책임지는 힘은 서로 따로 움직이기도 하고 한 장면에서 같이 드러나기도 해요.",
       "십성은 좋고 나쁨보다 어떤 역할을 많이 쓰고 어떤 역할은 의식적으로 키워야 하는지를 보는 데 더 유용해요."
     ],
     contextB:[
@@ -1380,7 +1408,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
   GENERAL:{
     contextA:[
       "사주 해설은 용어를 많이 아는 것보다 서로 다른 계산값이 한 사람 안에서 어떻게 연결되는지를 읽는 데 의미가 있어요.",
-      "한 가지 값만 보면 단순해 보이지만 원국 전체를 같이 보면 같은 특징도 전혀 다른 방향으로 작동할 수 있어요.",
+      "한 가지 값만 보면 단순해 보이지만 전체 성향을 같이 보면 같은 특징도 상황에 따라 전혀 다르게 나타날 수 있어요.",
       "사주에서 중요한 건 하나의 단어보다 여러 근거가 같은 방향을 가리키는지 확인하는 일이에요.",
       "좋은 특징도 너무 과하면 부담이 되고, 약한 특징도 필요한 시기에 잘 쓰면 강점이 될 수 있어요.",
       "계산값은 결론을 대신하는 답이 아니라 왜 이런 모습이 반복되는지 설명해주는 근거에 가까워요."
@@ -1462,7 +1490,7 @@ function coreChapterExpansion(row:Row){
       "생각이 너무 길어지지만 않으면, 신중함과 끈기가 가장 큰 장점으로 작용합니다."
     ],
     "legacy-book-009":[
-      "이 사람 안에는 한 가지 모습만 있는 게 아닙니다. 낯선 사람 앞에서는 먼저 분위기를 읽고, 일을 할 때는 책임과 기준이 앞에 서며, 가까운 사람 앞에서는 감정과 신뢰가 훨씬 솔직하게 드러납니다.",
+      "한 가지 모습으로만 설명되는 사람은 아닙니다. 낯선 사람 앞에서는 먼저 분위기를 읽고, 일을 할 때는 책임과 기준이 앞에 서며, 가까운 사람 앞에서는 감정과 신뢰가 훨씬 솔직하게 드러납니다.",
       "서로 다른 사람처럼 보이는 순간도 있지만 사실은 같은 사람이 자리마다 다른 힘을 꺼내 쓰는 거예요. 그래서 이 사주는 한 단어로 성격을 정하기보다, 관계의 거리와 맡은 역할에 따라 어떤 모습이 앞에 나오는지를 함께 보는 편이 더 정확합니다."
     ],
     "legacy-book-010":[
@@ -1515,27 +1543,32 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   const strongest=facts.strongest?.element,weakest=facts.weakest?.element;
   const strongStory=strongest?elementStory(strongest):null,weakStory=weakest?elementStory(weakest):null;
 
-  if(id==="book-007")return[
-    `기본 성향을 보면 ${stem.image}처럼 자기 방향이 한번 잡히면 쉽게 흔들리지 않는 편입니다. ${stem.core}이 평소 선택과 행동에서 자주 드러납니다.`,
-    facts.strongest&&facts.weakest?`잘 쓰는 부분과 덜 쓰는 부분의 차이가 꽤 분명한 편입니다. 그래서 모든 상황에서 같은 모습이 나오기보다, 익숙한 일에서는 빠르고 낯선 일에서는 한 번 더 살피는 식으로 차이가 생길 수 있습니다.`:"한 가지 성격으로 딱 잘라 말하기보다 상황에 따라 달라지는 모습을 함께 보는 편이 맞습니다.",
-    dominantFamilySentence(facts)||"중요한 선택에서는 남이 정한 답보다 내가 납득할 수 있는지를 더 중요하게 봅니다.",
-    facts.structure?`${structureMeaning(facts.structure)}이 강하게 드러나는 편이라, 맡은 일이나 약속을 가볍게 넘기기보다 끝까지 책임지려는 모습이 자주 보입니다.`:"한번 마음을 정하면 생각에서 끝내지 않고 실제 행동으로 옮기려는 편입니다.",
-    `목표가 분명할 때는 추진력이 좋습니다. 반대로 왜 해야 하는지 스스로 납득되지 않으면 속도가 확 느려질 수 있고, ${stem.shadow}이 고집이나 피로로 보일 때도 있습니다. 그래서 무조건 열심히 하는 사람이라기보다, 의미 있다고 느끼는 일에 힘을 제대로 쓰는 사람에 가깝습니다.`
-  ];
+  if(id==="book-007"){
+    const counseling=stemCounseling(facts);
+    return[
+      `이 사주는 기본적으로 ${counseling.opening}`,
+      dominantFamilySentence(facts)||"남의 기준에 맞추기보다 스스로 판단하고 움직이려는 성향이 강한 편입니다. 그래서 일이나 돈, 사람을 선택할 때도 내가 납득할 수 있느냐가 꽤 중요합니다.",
+      facts.structure?`${structureMeaning(facts.structure)}이라 한번 맡은 일은 쉽게 놓지 않습니다. 주변에서는 믿고 맡길 수 있는 사람으로 보이기 쉽지만, 본인이 옳다고 생각한 기준을 너무 오래 붙들면 답답하거나 고집스럽게 보일 수도 있습니다.`:"한번 맡은 일은 쉽게 놓지 않고, 시작한 일은 마무리까지 확인하려는 편입니다.",
+      `목표가 분명할 때는 추진력이 강해집니다. 반대로 ${counseling.shadow} 그래서 무조건 열심히 하는 사람이라기보다, 자기가 의미 있다고 느끼는 일에 힘을 제대로 쓰는 사람에 가깝습니다.`
+    ];
+  }
 
-  if(id==="book-008")return[
-    "한 문장으로 줄이면, 남이 정해준 방향보다 스스로 납득한 방향에서 훨씬 오래 힘을 쓰는 사람에 가깝습니다.",
-    dominantFamilySentence(facts)||"생각이 정리되기 전에는 신중하지만, 마음이 정해진 뒤에는 행동이 빨라지는 편입니다.",
-    facts.structure?`${structureMeaning(facts.structure)}이 두드러져서, 잘하고 싶다는 마음이 실제 책임과 마무리까지 이어지는 편입니다.`:"자기 기준이 선 뒤에는 말보다 행동으로 보여주려는 편입니다.",
-    `한번 정한 일을 꾸준히 가져가는 건 큰 장점입니다. 다만 ${stem.shadow}이 강해지면 스스로 만든 기준 때문에 시작이 늦거나 혼자 지치는 일이 생길 수 있습니다.`
-  ];
+  if(id==="book-008"){
+    const counseling=stemCounseling(facts);
+    return[
+      "한 문장으로 줄이면, 남이 정해준 방향보다 스스로 납득한 방향에서 훨씬 오래 가는 사람에 가깝습니다.",
+      dominantFamilySentence(facts)||"생각이 정리되기 전에는 신중하지만, 마음이 정해진 뒤에는 행동이 빨라지는 편입니다.",
+      facts.structure?`${structureMeaning(facts.structure)}이라 잘하고 싶다는 마음이 실제 책임과 마무리까지 이어지는 편입니다.`:"자기 기준이 선 뒤에는 말보다 행동으로 보여주려는 편입니다.",
+      `한번 정한 일을 꾸준히 가져가는 건 큰 장점입니다. 다만 ${counseling.shadow}`
+    ];
+  }
 
   if(id==="book-009")return[
     "한 가지 모습으로만 설명되는 사람은 아닙니다. 낯선 사람 앞에서는 먼저 분위기를 읽고, 일을 할 때는 책임과 기준이 앞에 서며, 가까운 사람 앞에서는 감정과 신뢰가 훨씬 솔직하게 드러납니다.",
     "사회에서는 맡은 역할을 가볍게 넘기지 않고, 한번 책임진 일은 끝까지 정리하려는 힘이 강합니다.",
     "반대로 가까운 관계에서는 옳고 그름보다 '이 사람을 믿어도 되는가'가 더 중요해집니다. 한번 마음을 준 사람에게는 생각보다 오래 정을 쓰는 편입니다.",
     "자리마다 보이는 모습이 조금씩 다른 건 모순이 아닙니다. 상황에 따라 가장 필요한 힘을 먼저 꺼내 쓰는 것입니다.",
-    "그래서 이 사람을 제대로 읽으려면 일할 때와 사랑할 때, 혼자 있을 때의 모습까지 함께 봐야 합니다."
+    "그래서 본인을 제대로 이해하려면 일할 때와 사랑할 때, 혼자 있을 때의 모습까지 함께 봐야 합니다."
   ];
 
   if(id==="book-010")return[
@@ -1575,7 +1608,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     dominantFamilySentence(facts)||"속에서 반복되는 생각은 눈에 보이는 행동보다 더 큰 비중을 차지할 수 있습니다.",
     "특히 말의 앞뒤가 맞지 않거나 신뢰가 흔들린 일은 단순히 기분이 나빴다는 수준보다 '이 사람을 계속 믿어도 되는가'의 문제로 남기 쉽습니다.",
     "그래서 겉으로 조용하다고 마음까지 금방 정리된 것은 아닙니다. 반대로 한번 납득하고 마음이 풀리면 같은 일을 오래 붙잡지 않을 수도 있습니다.",
-    "이 사주의 속마음을 이해하려면 감정의 크기보다 무엇을 신뢰의 기준으로 삼는지를 보는 편이 더 정확합니다."
+    "속마음을 이해하려면 감정의 크기보다 무엇을 신뢰의 기준으로 삼는지를 보는 편이 더 정확합니다."
   ];
 
   if(id==="book-016"||id==="book-024"){
@@ -1600,14 +1633,14 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(id==="book-018"||id==="book-025")return[
     usefulSentence(facts)||"도움이 되는 기운은 이미 강한 부분보다 현재 부족한 부분을 보완하는 쪽에서 찾습니다.",
-    facts.structure?`이 사주의 기본축은 ${structureMeaning(facts.structure)}입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
+    facts.structure?`평소 가장 자주 드러나는 성향은 ${structureMeaning(facts.structure)}입니다. 도움 되는 기운은 이 장점을 없애는 것이 아니라 더 편하게 쓰게 만들어주는 역할을 합니다.`:"도움 되는 기운은 타고난 장점을 바꾸기보다 과한 부분을 덜고 부족한 부분을 채우는 역할에 가깝습니다.",
     strongest&&strongStory?`이미 강한 ${elementPro(strongest)}의 ${strongStory.life}은 굳이 더 밀어붙이지 않아도 자연스럽게 나옵니다.`:"이미 익숙한 힘은 생활에서 자연스럽게 반복됩니다.",
     weakest&&weakStory?`반대로 약한 ${elementPro(weakest)}의 ${weakStory.life}은 일정, 사람, 일하는 방식처럼 현실적인 선택으로 보완할 때 체감이 큽니다.`:"부족한 힘은 생활환경과 습관으로 보완할 때 가장 현실적으로 달라집니다.",
     "사주에서 도움이 되는 기운을 안다는 것은 색이나 물건을 고르는 문제가 아니라, 내가 자주 놓치는 행동을 어떤 방식으로 생활에 넣을지 정하는 데 더 가깝습니다."
   ];
 
   if(id==="book-020")return[
-    `오행으로 보면 이 사주의 중심은 ${facts.dayStemName||"나를 대표하는 기운"}에서 시작합니다. ${stem.image}처럼 ${stem.core}이 기본 방향입니다.`,
+    `타고난 성향을 보면 ${facts.dayStemName||"나를 대표하는 기운"}에서 시작합니다. ${stem.image}처럼 ${stem.core}이 기본 방향입니다.`,
     elementFact(facts)||"다섯 기운의 강약이 이 중심 성향을 어떻게 밀어주고 조절하는지 함께 봅니다.",
     strongest&&strongStory?`여기에 ${elementPro(strongest)}의 비중이 가장 크게 잡혀 ${strongStory.life}이 생활 전반에서 더 자주 쓰입니다.`:"가장 강한 기운이 생활에서 반복적으로 쓰이는 힘을 결정합니다.",
     weakest&&weakStory?`반면 ${elementPro(weakest)}의 역할은 자동으로 나오기보다 필요할 때 의식적으로 꺼내 쓰는 편이 맞습니다.`:"약한 기운은 일부러 보완할 때 전체 흐름이 안정됩니다.",
@@ -1649,7 +1682,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
     consultationOpening(row,facts)||"여러 성향이 실제 생활에서 어떻게 섞여 나타나는지를 함께 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
-    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 나타나는지를 살펴보는 게 중요합니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
     "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
   ].filter(Boolean);
 
@@ -1718,7 +1751,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/^사업운$/.test(title))return[
     wealth>0?"사업운은 눈여겨볼 만합니다. 시장과 돈, 운영 결과를 직접 다루는 감각이 있어 결과가 눈에 보이는 일에서 강점이 살아납니다.":"사업운은 '사업가 기질' 한마디보다 결과를 밖에 내놓고 시장 반응을 확인하는 힘을 얼마나 키우느냐가 중요합니다.",
     familyPresence(facts,"재성"),
-    output>0?"식상도 함께 작동하기 때문에 만들고 표현한 것을 판매와 결과로 연결하는 흐름을 쓰기 좋습니다.":"표현과 생산을 맡는 식상은 의식적으로 키워야 합니다. 좋은 아이디어를 갖고 있는 것과 상품·콘텐츠·서비스로 내놓는 것은 다른 단계입니다.",
+    output>0?"표현하고 만들어내는 성향도 함께 있어서 만들고 표현한 것을 판매와 결과로 연결하는 흐름을 쓰기 좋습니다.":"표현과 생산을 맡는 식상은 의식적으로 키워야 합니다. 좋은 아이디어를 갖고 있는 것과 상품·콘텐츠·서비스로 내놓는 것은 다른 단계입니다.",
     "사업에서 강점은 방향을 잡고 구조를 만드는 힘입니다. 반대로 아이디어가 늘어날수록 하나가 자리 잡기 전에 다음 판을 벌리는 것은 조심해야 합니다.",
     "가장 좋은 방식은 하나를 만들어 반응을 확인하고, 반복 가능하게 정리한 뒤 다음 확장으로 넘어가는 것입니다."
   ];
@@ -1736,7 +1769,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     familyPresence(facts,"인성"),
     "특히 자격, 전문기술, 실무지식처럼 '이걸 배우면 어디에 쓸지'가 분명한 공부에서 집중력이 높아집니다.",
     output>0?"배운 것을 설명하거나 결과물로 만들어보면 이해가 더 빠르게 굳습니다.":"배움이 준비에서 끝나지 않도록 작은 결과물이나 실전 적용을 함께 두는 것이 중요합니다.",
-    "이 사주의 공부는 학위나 점수 자체보다 선택권을 넓히고 실제 일을 더 잘하게 만드는 도구로 쓸 때 가장 힘이 큽니다."
+    "공부는 학위나 점수 자체보다 선택권을 넓히고 실제 일을 더 잘하게 만드는 도구로 쓸 때 가장 힘이 큽니다."
   ];
 
   if(row.evidenceGroup==="WORK")return[
@@ -1771,7 +1804,7 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/^돈의 흐름$/.test(title))return[
-    "돈의 흐름은 들어오는 돈만 보면 반쪽입니다. 이 사주는 돈이 어디로 다시 나가고 무엇으로 남는지까지 함께 봐야 합니다.",
+    "돈의 흐름은 들어오는 돈만 보면 반쪽입니다. 돈은 들어오는 것보다 어디에 쓰이고 무엇으로 남는지까지 함께 살펴야 합니다.",
     familyPresence(facts,"재성"),
     peer>0?"확장, 사람, 공동 프로젝트처럼 '같이 움직이는 돈'에서 새는 구멍이 생기지 않도록 관리해야 합니다.":"반복해서 나가는 비용과 한 번 쓰고 끝나는 비용을 구분하면 돈의 흐름이 훨씬 선명해집니다.",
     facts.useful.length?usefulSentence(facts):"오행의 균형을 보면 돈을 벌 때 필요한 힘과 지킬 때 필요한 힘이 같지 않을 수 있습니다.",
@@ -1803,7 +1836,7 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/큰 기회/.test(title))return[
-    "큰 기회가 들어왔을 때 이 사주가 가장 조심해야 할 것은 기회 자체보다 '확장 속도'입니다.",
+    "큰 기회가 들어왔을 때 가장 조심해야 할 것은 기회 자체보다 '확장 속도'입니다.",
     output>0?"식상이 움직이면 새로운 아이디어와 결과물이 계속 생길 수 있어, 하나가 자리 잡기 전에 다음 것을 만들고 싶어질 수 있습니다.":"아이디어가 많아질수록 동시에 여러 판을 벌이기보다 지금 검증 중인 것의 결과를 먼저 보는 편이 좋습니다.",
     wealth>0?"재성이 있기 때문에 좋은 기회를 실제 돈으로 연결할 힘은 있지만, 숫자가 좋다고 모든 기회를 잡을 필요는 없습니다.":"수익 가능성보다 손실을 감당할 수 있는 범위와 회수 시점을 먼저 보는 편이 안전합니다.",
     "가장 좋은 순서는 하나를 시험하고, 반응을 확인하고, 반복 가능하게 만든 뒤 다음 확장으로 넘어가는 것입니다.",
@@ -1819,7 +1852,7 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(row.evidenceGroup==="WEALTH")return[
-    consultationOpening(row,facts)||`${title}은 돈을 만들고 지키는 힘을 따로 나눠 보는 장입니다.`,
+    consultationOpening(row,facts)||`${title}에서는 버는 방식과 지키는 방식을 따로 생각해보는 게 좋습니다.`,
     familyPresence(facts,"재성"),
     peer>0?familyPresence(facts,"비겁"):"돈과 사람의 경계를 나눌수록 재물 관리가 편해집니다.",
     "재물운은 금액 하나보다 반복되는 선택과 관리 구조를 보는 편이 더 정확합니다."
@@ -1975,7 +2008,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   const strong=strongest?elementStory(strongest):null,weak=weakest?elementStory(weakest):null;
 
   if(/^건강운$/.test(title))return[
-    "건강운은 질병 이름을 맞히는 장이 아니라, 생활이 무너질 때 어떤 패턴부터 흔들리는지를 보는 장입니다.",
+    "건강운에서는 질병 이름을 맞히기보다 바쁠 때 수면·식사·휴식 중 무엇부터 무너지는지를 살펴봅니다.",
     strongest&&strong?`가장 강한 ${elementPro(strongest)}은 ${strong.life}과 연결되고, 이 힘을 오래 쓰면 장점만큼 피로도 같이 쌓일 수 있습니다.`:"오행의 강약을 생활 리듬과 함께 봅니다.",
     weakest&&weak?`반대로 약한 ${elementPro(weakest)}의 '${weak.life}'은 바쁠수록 가장 먼저 놓치기 쉬운 부분입니다.`:"약한 기운은 회복과 생활습관에서 먼저 보완할 부분을 알려줍니다.",
     "그래서 건강운에서는 무리한 뒤 몰아서 쉬는 패턴보다 수면·식사·활동을 일정하게 유지하는 힘을 더 중요하게 봅니다.",
@@ -2026,7 +2059,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "생활 습관에서는 거창한 관리보다 규칙성이 중요합니다.",
     "식사·수면·움직임 가운데 하나만 매일 비슷한 시간에 유지해도 전체 리듬을 잡는 기준점이 생깁니다.",
     "바쁜 날에 모든 습관을 포기하지 말고 최소한 지킬 한 가지를 남겨두는 편이 좋습니다.",
-    "무리해서 며칠 몰아붙였다가 길게 쉬는 방식보다 일정한 속도로 가는 편이 이 사주에는 더 안정적입니다.",
+    "무리해서 며칠 몰아붙였다가 길게 쉬는 방식보다 일정한 속도로 가는 편이 더 안정적입니다.",
     "건강 관리도 완벽한 계획보다 다음 주에도 반복할 수 있는 기준을 만드는 것이 핵심입니다."
   ];
 
@@ -2055,7 +2088,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(row.evidenceGroup==="WELLNESS")return[
-    consultationOpening(row,facts)||`${title}은 생활 리듬과 회복 방식을 보는 장입니다.`,
+    consultationOpening(row,facts)||`${title}에서는 생활 리듬과 회복 방식을 살펴봅니다.`,
     elementFact(facts)||"오행의 균형을 생활 습관과 연결해서 봅니다.",
     "건강운은 진단이나 치료를 대신하지 않습니다. 몸의 불편은 실제 의료 판단을 우선합니다.",
     "사주에서는 어떤 상황에서 무리하고 어떤 방식으로 회복하는지를 생활 기준으로 정리하는 정도가 가장 안전합니다."
@@ -2073,7 +2106,7 @@ function nobleConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/^귀인운$/.test(title)||/^귀인복$/.test(title))return[
     noble.length?`도움을 받을 수 있는 인연의 흐름이 있습니다. 다만 누군가가 늘 곁에서 모든 일을 해결해준다는 뜻은 아닙니다.`:"귀인운은 타고난 이름 하나보다 필요한 순간에 맞는 사람과 연결되는 방식으로 읽는 편이 정확합니다.",
-    "이 사주에서 중요한 것은 도움의 양보다 타이밍입니다. 혼자 해결하기 어려운 문제를 만났을 때 경험이 맞는 사람에게 정확히 묻는 능력이 귀인운을 실제 힘으로 바꿉니다.",
+    "도움은 많고 적음보다 필요한 순간에 제대로 받는지가 더 중요합니다. 혼자 해결하기 어려운 문제를 만났을 때 경험이 맞는 사람에게 정확히 묻는 능력이 귀인운을 실제 힘으로 바꿉니다.",
     dominantFamily(facts)==="인성"?"선생·전문가·자료·배움 자체가 큰 도움으로 들어오기 쉬운 편입니다. 사람 한 명뿐 아니라 좋은 정보와 교육도 넓은 의미의 귀인이 됩니다.":"귀인은 친한 사람으로만 들어오지 않습니다. 일·거래·배움·소개처럼 목적이 분명한 관계에서 더 실질적인 도움을 받을 수 있습니다.",
     "도움을 받는다고 내 기준을 내려놓을 필요는 없습니다. 오히려 내가 필요한 것과 책임질 것을 구분할수록 좋은 인연이 오래 갑니다.",
     "귀인운을 잘 쓰는 사람은 귀인을 기다리는 사람이 아니라, 기회가 왔을 때 알아보고 연결할 준비가 된 사람입니다."
@@ -2090,7 +2123,7 @@ function nobleConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/내 사주에 들어온 귀인/.test(title))return[
     noble.length?`도움을 뜻하는 인연의 표시가 들어와 있습니다.`:"평소 도움을 받는 일이 많지 않더라도 특정 시기에 좋은 연결이 들어올 수 있습니다.",
     starSentence(facts),
-    "귀인이 있다는 말은 평생 도움만 받는다는 뜻이 아닙니다. 오히려 중요한 선택 앞에서 적절한 연결이 생길 가능성을 하나의 장점으로 보는 편이 맞습니다.",
+    "귀인이 있다는 말은 평생 도움만 받는다는 뜻이 아닙니다. 오히려 중요한 선택 앞에서 적절한 연결이 생길 가능성을 하나의 장점으로 이해하는 편이 자연스럽습니다.",
     "그 연결을 살리려면 평소 혼자 해결하는 습관만 고집하지 않고, 필요한 순간에 도움을 요청할 수 있어야 합니다.",
     "좋은 인연은 한 번의 호의보다 시간이 지나며 선택과 결과를 바꿔주는 관계로 확인됩니다."
   ];
@@ -2098,7 +2131,7 @@ function nobleConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/배움에서 만나는 귀인/.test(title))return[
     "배움에서 만나는 귀인은 단순히 지식을 많이 알려주는 사람이 아닙니다. 내가 무엇을 더 배워야 하는지 방향을 잡아주는 사람이 더 중요합니다.",
     familyPresence(facts,"인성"),
-    "책·강의·자료처럼 사람이 아닌 정보도 이 사주에서는 충분히 귀인 역할을 할 수 있습니다.",
+    "책·강의·자료처럼 사람이 아닌 정보도 충분히 좋은 도움 역할을 할 수 있습니다.",
     "배운 것을 바로 작은 일에 적용해보면 어떤 인연과 정보가 실제로 도움이 되는지 빠르게 구분할 수 있습니다.",
     "배움의 귀인을 잘 쓰는 핵심은 많이 듣는 것이 아니라, 좋은 지식을 내 선택과 결과로 바꾸는 데 있습니다."
   ];
@@ -2137,7 +2170,7 @@ function nobleConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(row.evidenceGroup==="NOBLE")return[
     starSentence(facts),
-    noble.length?`좋은 인연은 사람 한 명보다 필요한 순간에 들어오는 조언·소개·기회처럼 나타날 수 있습니다.`:"귀인운은 원국과 시기를 함께 보는 편이 좋습니다.",
+    noble.length?`좋은 인연은 사람 한 명보다 필요한 순간에 들어오는 조언·소개·기회처럼 나타날 수 있습니다.`:"귀인운은 평소 성향과 시기를 함께 살펴보는 편이 좋습니다.",
     "귀인운은 의존을 뜻하지 않습니다. 필요한 순간에 맞는 사람과 연결되고 그 도움을 실제 결과로 바꾸는 능력에 가깝습니다.",
     "좋은 인연일수록 역할과 기대가 분명할 때 오래갑니다."
   ];
@@ -2152,13 +2185,13 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(/^신살$/.test(title)||/눈에 띄는 신살|강하게 보이는 신살/.test(title))return[
     starSentence(facts),
     "신살은 성격과 사건을 단독으로 결정하는 힘이 아닙니다. 다른 계산 결과와 같은 방향을 가리킬 때 의미가 더 선명해집니다.",
-    "예를 들어 대중성 신호가 있어도 표현하는 힘이 실제로 작동해야 사람 앞에 드러나고, 이동 신호가 있어도 실제 운에서 변화가 들어와야 체감이 커질 수 있습니다.",
+    "예를 들어 대중성 신호가 있어도 표현하는 힘이 실제로 드러나야 사람 앞에 드러나고, 이동 신호가 있어도 실제 운에서 변화가 들어와야 체감이 커질 수 있습니다.",
     "중요한 건 이름을 외우는 게 아니라, 이 성향이 어디에서 장점이 되고 언제 피로로 바뀌는지를 아는 것입니다."
   ];
 
   if(/사람의 시선을 끄는 힘/.test(title))return[
     has("도화")?"사람들 사이에서 눈에 띄고 기억에 남는 힘이 있습니다. 이건 연애운만 뜻하는 게 아니라 말투, 분위기, 취향, 캐릭터처럼 '이 사람은 뭔가 다르다'는 인상을 남기는 쪽으로도 나타납니다.":"대중에게 보이는 힘은 외모 하나로 결정되지 않습니다. 표현력과 이미지, 사람 앞에서 드러나는 태도가 함께 작용합니다.",
-    "이 힘은 외모만을 뜻하지 않습니다. 말투, 분위기, 캐릭터, 취향, 브랜드처럼 '이 사람은 뭔가 다르다'는 인상을 만드는 쪽으로도 작동합니다.",
+    "이 힘은 외모만을 뜻하지 않습니다. 말투, 분위기, 캐릭터, 취향, 브랜드처럼 '이 사람은 뭔가 다르다'는 인상을 만드는 쪽으로도 드러납니다.",
     familyCount(facts,"식상")>0?"식상까지 함께 있으면 이 주목도를 콘텐츠와 표현으로 연결하기 좋습니다.":"표현을 맡는 식상이 약하다면 주목을 받는 것과 꾸준히 콘텐츠를 내놓는 것은 별개의 과제가 될 수 있습니다.",
     "잘 쓰면 대중성, 홍보, 콘텐츠, 고객 접점에서 장점이 됩니다. 반대로 타인의 반응을 지나치게 의식하면 자기 기준이 흔들릴 수 있습니다.",
     "주목받는 힘의 핵심은 더 튀는 것이 아니라 나만의 특징을 꾸준히 같은 방향으로 보여주는 데 있습니다."
@@ -2166,14 +2199,14 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(/혼자 깊이 파고드는 힘/.test(title))return[
     has("화개")?"혼자 있는 시간에 한 분야를 깊게 파고드는 힘이 강한 편입니다. 관심이 생긴 주제는 겉핥기보다 자기 방식으로 끝까지 이해하려고 합니다.":"혼자 깊이 파고드는 힘은 한 가지 표시보다 평소 배우고 생각하는 습관을 함께 봐야 더 정확합니다.",
-    familyCount(facts,"인성")>0?"인성도 함께 작동해 관심이 생긴 분야를 자료·공부·전문지식으로 깊게 확장하는 힘이 있습니다.":"관심이 생긴 주제는 겉핥기보다 자기 방식으로 정리해 이해하려는 경향이 있습니다.",
+    familyCount(facts,"인성")>0?"배우고 이해하는 성향도 함께 있어서 관심이 생긴 분야를 자료·공부·전문지식으로 깊게 확장하는 힘이 있습니다.":"관심이 생긴 주제는 겉핥기보다 자기 방식으로 정리해 이해하려는 경향이 있습니다.",
     "이 힘은 연구, 전문지식, 기획, 심리, 철학처럼 답이 한 번에 나오지 않는 분야에서 장점이 될 수 있습니다.",
     "반대로 혼자 생각하는 시간이 너무 길어지면 밖으로 결과를 내는 속도가 늦어질 수 있습니다.",
     "깊이 파는 힘은 세상과 끊어질 때보다 배운 것을 밖에 꺼내 사람과 연결할 때 가장 크게 살아납니다."
   ];
 
   if(/예민하게 감지하는 힘/.test(title))return[
-    "이 사주는 사람의 말 자체보다 말투와 분위기, 앞뒤의 변화까지 같이 읽는 힘을 중요하게 봅니다.",
+    "사람의 말 자체보다 말투와 분위기, 앞뒤의 변화까지 같이 읽는 힘을 중요하게 봅니다.",
     has("귀문")||has("원진")?"가까운 사람의 말투나 분위기가 평소와 조금만 달라져도 빨리 알아차리는 편입니다. 장점은 섬세함이지만, 실제 일보다 가능성을 먼저 생각하면 피로가 커질 수 있습니다.":"작은 변화도 빠르게 감지하는 편이라 사람의 반응이나 분위기를 읽는 데 강점이 있습니다.",
     "장점은 남들이 지나친 신호를 빨리 알아차린다는 점입니다. 고객 반응이나 관계의 분위기를 읽는 일에서는 큰 강점이 됩니다.",
     "단점은 실제로 일어난 일보다 가능성을 더 많이 생각해 피로가 커질 수 있다는 점입니다.",
@@ -2215,16 +2248,16 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(/신살은 어떻게 봐야/.test(title))return[
     "신살은 사주의 메인 계산이 아니라 보조 설명입니다. 신살 하나로 성격, 결혼, 재물, 사건을 확정하는 방식은 피하는 게 맞습니다.",
     starSentence(facts),
-    "오행·십성·원국 관계에서 이미 보이는 특징과 신살이 같은 방향을 가리킬 때 그 의미를 조금 더 강하게 볼 수 있습니다.",
+    "평소 성향과 보조적인 특징이 같은 방향을 가리킬 때 그 의미를 조금 더 강하게 볼 수 있습니다.",
     "반대로 신살 이름은 강해 보여도 다른 계산에서 근거가 약하면 참고 수준으로 두는 편이 안전합니다.",
-    "이 사주에서 신살의 가치는 운명을 겁주는 데 있지 않고, 이미 가진 장점을 어디에 활용할지 설명해주는 보조 언어에 있습니다."
+    "신살은 운명을 겁주는 데 있지 않고, 이미 가진 장점을 어디에 활용할지 설명해주는 보조 언어에 있습니다."
   ];
 
   if(row.evidenceGroup==="STARS_RELATIONS")return[
     starSentence(facts),
     relationSentence(facts),
-    "신살과 원국 관계는 단독으로 결론을 내리지 않고 오행·십성의 흐름과 같은 방향을 가리키는지 확인합니다.",
-    "이 장의 목적은 무서운 이름을 붙이는 것이 아니라 실제 생활에서 어떤 힘이 반복되는지 이해하는 데 있습니다."
+    "신살 하나만으로 결론을 내리지 않고 평소 성향과 같은 방향을 가리키는지 확인합니다.",
+    "중요한 건 무서운 이름을 붙이는 게 아니라 실제 생활에서 어떤 모습이 반복되는지 이해하는 것입니다."
   ];
 
   return null;
@@ -2280,11 +2313,11 @@ function twelveStageConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "후반으로 갈수록 직접 모든 일을 처리하는 힘보다 경험을 이용해 판단하고 선택하는 힘이 더 중요해집니다.",
     "지금까지 쌓은 전문성과 관계를 어떻게 남기고 전달할지가 후반 만족도와 연결될 수 있습니다.",
     "모든 역할을 끝까지 붙잡기보다 중요한 것만 남기고 다른 사람에게 넘길 수 있는 능력이 필요합니다.",
-    "후반의 운은 활동이 줄어든다는 뜻보다 힘을 쓰는 방식이 더 선택적으로 바뀐다는 뜻으로 보는 편이 맞습니다."
+    "후반의 운은 활동이 줄어든다는 뜻보다 힘을 쓰는 방식이 더 선택적으로 바뀐다는 뜻으로 이해하는 편이 자연스럽습니다."
   ];
 
   if(row.evidenceGroup==="TWELVE_STAGES")return[
-    `${title}은 십이운성의 이름보다 그 자리에 놓인 단계가 어떤 힘을 쓰는지 보는 장입니다.`,
+    `${title}은 십이운성의 이름보다 그 자리에 놓인 단계가 어떤 힘을 쓰는지 살펴보는 내용입니다.`,
     ...all.map(([position,label])=>stageSentence(facts,position,label)).filter(Boolean).slice(0,2),
     "십이운성은 좋고 나쁨을 단정하지 않고 오행·십성·대운과 함께 봅니다."
   ];
@@ -2300,7 +2333,7 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/^십성$/.test(title)||/한눈에 보기|십성 분포/.test(title))return[
     dominantFamilySentence(facts),
     "십성은 사람을 열 가지 성격으로 잘라 보는 표가 아닙니다. 내가 스스로 밀어붙이는 힘, 밖으로 표현하는 힘, 돈과 결과를 다루는 힘, 책임을 맡는 힘, 배우고 이해하는 힘이 어떤 비중으로 섞여 있는지를 보는 도구입니다.",
-    `이 사주에서는 ${familyMeaning(dominant)}이 가장 먼저 눈에 들어옵니다. 이 힘은 익숙하게 쓰는 장점이지만, 너무 많이 쓰면 피로의 원인이 될 수도 있습니다.`,
+    `평소에는 ${familyMeaning(dominant)}이 가장 먼저 눈에 들어옵니다. 이 힘은 익숙하게 쓰는 장점이지만, 너무 많이 쓰면 피로의 원인이 될 수도 있습니다.`,
     "반대로 덜 익숙한 힘은 능력이 없다는 뜻이 아닙니다. 필요한 순간에 의식적으로 꺼내 쓰고 경험을 쌓을수록 전체 균형이 좋아집니다.",
     "어려운 이름을 외우기보다, 어떤 힘이 자연스럽고 어떤 힘은 일부러 키워야 하는지만 이해하면 충분합니다."
   ];
@@ -2375,7 +2408,7 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
     "대운·연운·월운은 같은 운을 세 번 말하는 것이 아닙니다. 각각 보는 시간의 크기가 다릅니다.",
     "대운은 약 십 년 동안 이어지는 큰 환경과 역할의 변화를 보고, 연운은 그 십 년 안에서 특정 해에 무엇이 더 움직이는지를 봅니다.",
     "월운은 한 해 안에서도 변화가 집중되는 달을 좁혀보는 도구입니다. 큰 흐름이 좋아도 특정 달에는 일이 몰릴 수 있고, 반대로 부담 있는 해에도 편하게 지나가는 달이 있습니다.",
-    "POSTPOST는 '도움이 되는 정도'와 '움직임이 큰 정도'를 따로 계산합니다. 일이 많이 생긴다고 무조건 좋은 운이 아니고, 조용하다고 나쁜 운도 아닙니다.",
+    "시기를 볼 때는 '도움을 받기 쉬운가'와 '실제로 일이 많이 생기는가'를 따로 생각해야 합니다. 바쁘다고 무조건 좋은 시기도 아니고, 조용하다고 나쁜 시기도 아닙니다.",
     "그래서 시기운은 사건을 맞히기보다 언제 무엇을 준비하고, 어느 분야에서 선택이 많아질지를 보는 방식으로 읽습니다."
   ];
 
@@ -2433,7 +2466,7 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
   }
 
   if(group==="MONTHLY")return[
-    "월운은 한 해를 열두 조각으로 나눠 '언제 체감이 커지는가'를 보는 장입니다.",
+    "월운은 한 해를 열두 조각으로 나눠 '언제 체감이 커지는가'를 살펴보는 내용입니다.",
     "연운이 전체 배경이라면 월운은 실제 일정이 몰리거나 관계·계약·이동이 집중되는 구간을 더 좁게 보여줍니다.",
     "변화가 큰 달이라고 나쁜 달은 아닙니다. 해야 할 일이 많고 결정을 미루기 어려운 달에 가깝습니다.",
     "큰 계약이나 이동처럼 되돌리기 어려운 선택은 움직임이 큰 달에 확인 절차를 하나 더 두는 정도가 현실적인 활용법입니다.",
@@ -2553,9 +2586,9 @@ function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     ];
 
     return[
-      `${title}은 삼재 이름 자체보다 실제 생활에서 어떤 변화가 겹치는지를 보는 장입니다.`,
+      `${title}은 삼재 이름 자체보다 실제 생활에서 어떤 변화가 겹치는지를 살펴보는 내용입니다.`,
       relationSentence(facts),
-      "삼재는 좋고 나쁨을 단정하기보다 같은 시기의 큰 흐름과 해마다 달라지는 움직임을 함께 보는 편이 맞습니다.",
+      "삼재는 좋고 나쁨을 단정하기보다 같은 시기의 큰 흐름과 해마다 달라지는 움직임을 함께 이해하는 편이 자연스럽습니다.",
       "겁내기보다 큰 계약과 이동에서 확인을 하나 더 늘리는 정도로 활용하는 편이 현실적입니다."
     ];
   }
@@ -2641,7 +2674,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/결국 나는 어떤 사람인가/.test(title))return[
-    `결국 이 사주는 ${stem.core}을 가진 사람입니다.`,
+    `결국 평소에는 ${stem.core}을 가진 사람입니다.`,
     dominantFamilySentence(facts),
     "남이 만들어놓은 기준을 그대로 따라가기보다 스스로 납득한 방향을 오래 가져갈 때 힘이 가장 안정적입니다.",
     `반대로 ${stem.shadow}이 강해질 때는 장점이 피로와 지연으로 바뀔 수 있습니다.`,
@@ -2693,7 +2726,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     facts.strongest?`강한 ${elementPro(facts.strongest.element)}의 힘은 이미 자연스럽게 나오므로, 과해지는 순간을 조절하는 게 먼저입니다.`:"잘하는 힘은 필요한 만큼 쓰고 멈출 기준이 필요합니다.",
     facts.weakest?`약한 ${elementPro(facts.weakest.element)}은 ${elementStory(facts.weakest.element).life}과 연결되므로, 이 행동을 일정과 습관 속에 작게 넣는 편이 좋습니다.`:"덜 익숙한 힘은 작은 습관으로 반복해서 쓰는 편이 좋습니다.",
     "결정할 때는 완벽한 답을 찾기보다 지금 확인해야 할 것과 움직이면서 수정해도 될 것을 나누세요.",
-    "이 사주에 가장 도움이 되는 선택은 내 강점을 없애는 선택이 아니라, 강점을 결과로 이어주고 피로를 줄여주는 선택입니다."
+    "가장 도움이 되는 선택은 내 강점을 없애는 선택이 아니라, 강점을 결과로 이어주고 피로를 줄여주는 선택입니다."
   ];
 
   if(/평생 기억할 다섯 가지/.test(title))return[
@@ -2748,10 +2781,10 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
   ];
   const selected=candidates.find((paragraphs):paragraphs is string[]=>Array.isArray(paragraphs)&&paragraphs.length>0);
   const fallback=[
-    consultationOpening(row,facts)||"이 부분에서는 실제 생활에서 반복되는 선택과 반응을 중심으로 봅니다.",
+    consultationOpening(row,facts)||"평소 비슷한 상황에서 어떤 선택과 반응이 반복되는지를 살펴보면 성향이 더 분명해집니다.",
     elementFact(facts)||dominantFamilySentence(facts),
-    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}이 실제 선택에서 어떻게 드러나는지가 중요합니다.`:"한 가지 특징만 떼어 판단하지 않고 여러 모습이 같은 방향을 가리키는지 함께 봅니다.",
-    "앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 모습만 남깁니다."
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}이 실제 선택에서 자주 드러납니다.`:"한 가지 특징만 떼어 보기보다 여러 상황에서 비슷한 선택이 반복되는지를 보면 이해하기 쉽습니다.",
+    "앞에서 나온 성향이 이 상황에서는 어떻게 달라지는지만 이어서 살펴보면 됩니다."
   ].filter(Boolean);
   return (selected??fallback)
     .map(paragraph=>naturalizeNarration(paragraph))
