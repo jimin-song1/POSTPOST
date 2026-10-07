@@ -346,9 +346,10 @@ function tenGodTone(role:string){
   return{front:"차분하게 상황을 파악하는 인상",gift:"자기 기준을 세운 뒤 움직이는 힘",shadow:"확인이 길어지면 시작이 늦어질 수 있는 면"};
 }
 
-function stageSentence(facts:ConsultationFacts,position:string,label:string){
-  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그 자리에서 힘을 쓰는 고유한 리듬";
-  return stage?`${label}의 십이운성은 ${stage}입니다. 여기서는 좋고 나쁨보다 '${meaning}'으로 읽는 편이 정확합니다.`:"";
+function stageSentence(facts:ConsultationFacts,position:string,_label:string){
+  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그때 필요한 힘을 쓰는 고유한 리듬";
+  const context=position==="year"?"인생 초반에는":position==="month"?"사회생활에서는":position==="day"?"가까운 관계와 중요한 선택에서는":"인생 후반으로 갈수록";
+  return stage?`${context} ${stage}의 흐름이 들어옵니다. 쉽게 말하면 ${meaning}이 중요한 시기와 장면에서 더 잘 드러납니다.`:"";
 }
 function pillarElementSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
@@ -2267,7 +2268,7 @@ function twelveStageConsultation(row:Row,facts:ConsultationFacts):string[]|null{
       stageSentence(facts,position,label),
       pillarRoleSentence(facts,position,label),
       facts.stageByPosition[position]?`${facts.stageByPosition[position]}의 핵심은 ${STAGE_STORY[facts.stageByPosition[position]]??"그 자리의 고유한 리듬"}입니다.`:"이 자리의 단계는 다른 기둥과 함께 읽습니다.",
-      position==="year"?"년주는 초반 환경과 바깥에서 처음 접하는 세계를 보는 자리입니다. 이 단계는 새로운 환경을 받아들이는 방식과 연결해 읽습니다.":position==="month"?"월주는 사회생활과 직업의 중심 자리입니다. 이 단계는 일을 배우고 역할을 키우는 과정과 연결해 읽습니다.":position==="day"?"일주는 나 자신과 가까운 관계의 중심 자리입니다. 이 단계는 감정과 선택을 가장 가까이서 쓰는 방식과 연결됩니다.":"시주는 후반 흐름과 결과, 자녀·미래 계획을 보는 자리입니다. 이 단계는 시간이 갈수록 힘을 어디에 집중하는지와 연결됩니다.",
+      position==="year"?"초반에는 새로운 환경을 받아들이고 자기 기준을 만드는 과정과 연결됩니다.":position==="month"?"사회생활에서는 일을 배우고 역할을 키우는 과정과 연결됩니다.":position==="day"?"가까운 관계에서는 감정과 중요한 선택을 다루는 모습으로 연결됩니다.":"후반으로 갈수록 경험을 어디에 집중하고 무엇을 남길지가 중요해집니다.",
       "십이운성 하나만으로 결론을 내리지 않고 오행과 십성, 원국 관계를 함께 볼 때 실제 모습이 더 선명해집니다."
     ];
   }
@@ -2321,7 +2322,7 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(/십성 10가지 뜻/.test(title))return[
     "십성 열 가지는 결국 다섯 역할을 음양에 따라 다시 나눈 것입니다. 비겁은 나와 경쟁, 식상은 표현과 생산, 재성은 돈과 결과, 관성은 책임과 규칙, 인성은 배움과 이해를 맡습니다.",
     "같은 돈의 기운 안에서도 안정적으로 관리하는 힘과 기회를 넓게 잡는 힘이 다르고, 같은 책임의 기운 안에서도 기준을 지키는 힘과 압박 속에서 결단하는 힘이 다릅니다. 이름을 외우기보다 실제 행동의 차이로 이해하면 훨씬 쉽습니다.",
-    "원국에서는 어느 십성이 있느냐보다 어디에 놓였고 다른 십성과 어떻게 같이 작동하는지가 더 중요합니다.",
+    "중요한 건 어려운 이름보다 이 힘들이 실제 생활에서 어디에서 자주 나오고 서로 어떻게 섞이는지입니다.",
     dominantFamilySentence(facts),
     "뒤에서는 어려운 이름보다 실제 생활에서 어떻게 행동하고 선택하는지를 중심으로 이어서 보겠습니다."
   ];
@@ -2330,8 +2331,8 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     if(pattern.test(title))return[
       familyPresence(facts,family),
       family==="비겁"?"비겁은 스스로 결정하고 버티는 힘입니다. 잘 쓰면 독립성과 경쟁력이 되지만, 과해지면 도움을 받기보다 모든 일을 직접 하려는 모습으로 바뀔 수 있습니다.":family==="식상"?"식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 힘을 씁니다.":family==="재성"?"재성은 돈만 뜻하지 않습니다. 시간·자원·사람을 현실적인 결과로 운영하고 매출·자산처럼 숫자로 남기는 힘입니다.":family==="관성"?"관성은 책임과 규칙, 사회에서 맡는 역할을 뜻합니다. 기준을 지키고 신뢰를 쌓는 힘이지만, 통제와 압박이 과해지면 스트레스가 커질 수 있습니다.":"인성은 배우고 이해하고 받아들이는 힘입니다. 정보를 자기 것으로 만들고 전문성을 쌓는 데 강하지만, 생각과 준비만 길어질 수 있다는 점도 함께 봅니다.",
-      `이 사주에서는 ${family}의 비중이 ${koreanCount(familyCount(facts,family))}으로 잡힙니다. 다른 역할과의 상대적인 크기를 같이 봐야 실제 체감이 맞습니다.`,
-      family===dominant?`현재 원국에서 ${family}은 가장 두드러진 축이므로 일과 관계에서 이 역할을 자주 쓰게 됩니다.`:`${family}은 가장 강한 축은 아니기 때문에 필요한 장면에서 의식적으로 꺼내 쓰는 방식이 중요합니다.`,
+      family===dominant?"이 힘은 평소 선택에서 자주 앞에 나오는 편입니다. 익숙하게 잘 쓰는 만큼 과해지는 순간만 조절하면 좋습니다.":"이 힘은 늘 앞에 나오는 편은 아니지만, 필요한 장면에서 의식적으로 쓰면 전체 균형이 좋아집니다.",
+      family===dominant?"일과 관계에서도 이 힘을 자주 쓰게 됩니다. 그래서 장점이 분명한 만큼 피로가 쌓이는 순간도 알아두는 편이 좋습니다.":"필요한 장면에서 이 힘을 일부러 꺼내 쓰는 연습이 도움이 됩니다.",
       "강한 십성은 더 키우는 것보다 과해지는 순간을 조절하고, 약한 십성은 능력이 없다고 보기보다 필요한 때 쓸 수 있도록 경험을 쌓는 편이 좋습니다."
     ];
   }
@@ -2370,9 +2371,9 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(row.evidenceGroup==="TEN_GODS")return[
     dominantFamilySentence(facts),
-    `${title}에서는 십성이 실제 생활에서 맡는 역할을 중심으로 봅니다.`,
+    "십성은 어려운 이름을 외우는 표가 아니라, 일·돈·관계에서 어떤 힘을 자연스럽게 쓰는지 이해하는 데 도움이 됩니다.",
     familyPresence(facts,dominant),
-    "십성은 좋고 나쁨보다 강한 역할은 어디에서 장점이 되고 약한 역할은 어디에서 보완이 필요한지 나눠 보는 것이 핵심입니다."
+    "잘 쓰는 힘은 과해지는 순간을 조절하고, 덜 익숙한 힘은 필요한 장면에서 조금씩 써보는 정도로 이해하면 충분합니다."
   ];
 
   return null;
