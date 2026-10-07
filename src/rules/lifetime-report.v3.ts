@@ -91,39 +91,39 @@ export const LIFETIME_BOOK_V1={
     {id:"book-047",pageNumber:47,title:"마음이 가는 상대",evidenceGroup:"RELATIONSHIP"},
     {id:"book-048",pageNumber:48,title:"애정 표현",evidenceGroup:"RELATIONSHIP"},
     {id:"book-049",pageNumber:49,title:"다툴 때의 나",evidenceGroup:"RELATIONSHIP"},
-    {id:"book-050",pageNumber:50,title:"현재 관계와 결혼운",evidenceGroup:"RELATIONSHIP"},
-    {id:"book-051",pageNumber:51,title:"자녀운",evidenceGroup:"CHILDREN"},
-    {id:"book-052",pageNumber:52,title:"가족운",evidenceGroup:"CHILDREN"}
+    {id:"book-050",pageNumber:50,title:"연애의 다음 단계와 결혼",evidenceGroup:"RELATIONSHIP"},
+    {id:"book-051",pageNumber:51,title:"부모가 되었을 때의 나",evidenceGroup:"CHILDREN"},
+    {id:"book-052",pageNumber:52,title:"가족 안에서 맡게 되는 역할",evidenceGroup:"CHILDREN"}
   ]},
   {partNumber:"06",title:"건강운",pages:[
-    {id:"book-053",pageNumber:53,title:"건강운",evidenceGroup:"WELLNESS"},
-    {id:"book-054",pageNumber:54,title:"몸이 보내는 신호",evidenceGroup:"WELLNESS"},
-    {id:"book-055",pageNumber:55,title:"생활 리듬",evidenceGroup:"WELLNESS"},
-    {id:"book-056",pageNumber:56,title:"휴식과 회복",evidenceGroup:"WELLNESS"},
-    {id:"book-057",pageNumber:57,title:"긴장과 스트레스",evidenceGroup:"WELLNESS"},
-    {id:"book-058",pageNumber:58,title:"활력이 떨어질 때",evidenceGroup:"WELLNESS"},
-    {id:"book-059",pageNumber:59,title:"식사와 생활 습관",evidenceGroup:"WELLNESS"},
-    {id:"book-060",pageNumber:60,title:"건조함이 강할 때",evidenceGroup:"WELLNESS"},
-    {id:"book-061",pageNumber:61,title:"몸이 차고 회복이 느릴 때",evidenceGroup:"WELLNESS"},
-    {id:"book-062",pageNumber:62,title:"잘 지키는 습관과 놓치기 쉬운 습관",evidenceGroup:"WELLNESS"},
-    {id:"book-063",pageNumber:63,title:"대운에서 건강 리듬이 흔들릴 때",evidenceGroup:"WELLNESS"}
+    {id:"book-053",pageNumber:53,title:"내가 무리하는 방식",evidenceGroup:"WELLNESS"},
+    {id:"book-054",pageNumber:54,title:"피로가 쌓일 때 먼저 달라지는 것",evidenceGroup:"WELLNESS"},
+    {id:"book-055",pageNumber:55,title:"나에게 맞는 생활 리듬",evidenceGroup:"WELLNESS"},
+    {id:"book-056",pageNumber:56,title:"어떻게 쉬어야 회복이 빠를까",evidenceGroup:"WELLNESS"},
+    {id:"book-057",pageNumber:57,title:"스트레스가 쌓이는 방식",evidenceGroup:"WELLNESS"},
+    {id:"book-058",pageNumber:58,title:"기운이 떨어질 때 필요한 것",evidenceGroup:"WELLNESS"},
+    {id:"book-059",pageNumber:59,title:"바쁠수록 놓치기 쉬운 생활 습관",evidenceGroup:"WELLNESS"},
+    {id:"book-060",pageNumber:60,title:"몸과 마음이 메말라가는 느낌이 들 때",evidenceGroup:"WELLNESS"},
+    {id:"book-061",pageNumber:61,title:"회복이 더디게 느껴질 때",evidenceGroup:"WELLNESS"},
+    {id:"book-062",pageNumber:62,title:"잘 지키는 것과 자꾸 놓치는 것",evidenceGroup:"WELLNESS"},
+    {id:"book-063",pageNumber:63,title:"생활 리듬이 크게 흔들리는 시기",evidenceGroup:"WELLNESS"}
   ]},
   {partNumber:"07",title:"귀인운",pages:[
-    {id:"book-064",pageNumber:64,title:"귀인운",evidenceGroup:"NOBLE"},
-    {id:"book-065",pageNumber:65,title:"귀인복",evidenceGroup:"NOBLE"},
-    {id:"book-066",pageNumber:66,title:"사주에서 말하는 귀인이란",evidenceGroup:"NOBLE"},
-    {id:"book-067",pageNumber:67,title:"내 사주에 들어온 귀인",evidenceGroup:"NOBLE"},
-    {id:"book-068",pageNumber:68,title:"배움에서 만나는 귀인",evidenceGroup:"NOBLE"},
-    {id:"book-069",pageNumber:69,title:"뜻밖의 기회를 주는 귀인",evidenceGroup:"NOBLE"},
-    {id:"book-070",pageNumber:70,title:"그 밖의 귀인",evidenceGroup:"NOBLE"},
-    {id:"book-071",pageNumber:71,title:"귀인은 어디에서 만날까",evidenceGroup:"NOBLE"},
-    {id:"book-072",pageNumber:72,title:"귀인운이 강해지는 때",evidenceGroup:"NOBLE"},
-    {id:"book-073",pageNumber:73,title:"귀인을 알아보는 법",evidenceGroup:"NOBLE"}
+    {id:"book-064",pageNumber:64,title:"내게 도움이 되는 사람은 어떤 사람일까",evidenceGroup:"NOBLE"},
+    {id:"book-065",pageNumber:65,title:"도움을 받을 복은 어떻게 들어올까",evidenceGroup:"NOBLE"},
+    {id:"book-066",pageNumber:66,title:"나를 도와주는 인연의 모습",evidenceGroup:"NOBLE"},
+    {id:"book-067",pageNumber:67,title:"내게 실제로 도움이 되기 쉬운 사람",evidenceGroup:"NOBLE"},
+    {id:"book-068",pageNumber:68,title:"배우는 과정에서 만나는 좋은 인연",evidenceGroup:"NOBLE"},
+    {id:"book-069",pageNumber:69,title:"기회를 연결해주는 사람",evidenceGroup:"NOBLE"},
+    {id:"book-070",pageNumber:70,title:"사람 말고도 도움이 되는 것들",evidenceGroup:"NOBLE"},
+    {id:"book-071",pageNumber:71,title:"좋은 인연은 어디에서 만나기 쉬울까",evidenceGroup:"NOBLE"},
+    {id:"book-072",pageNumber:72,title:"도움을 받기 쉬운 시기",evidenceGroup:"NOBLE"},
+    {id:"book-073",pageNumber:73,title:"좋은 인연을 알아보는 법",evidenceGroup:"NOBLE"}
   ]},
-  {partNumber:"08",title:"신살",pages:[
-    {id:"book-074",pageNumber:74,title:"신살",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-075",pageNumber:75,title:"눈에 띄는 신살",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-076",pageNumber:76,title:"내 사주에서 강하게 보이는 신살",evidenceGroup:"STARS_RELATIONS"},
+  {partNumber:"08",title:"눈에 띄는 특별한 성향",pages:[
+    {id:"book-074",pageNumber:74,title:"눈에 띄는 특별한 성향",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-075",pageNumber:75,title:"유독 강하게 드러나는 특징",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-076",pageNumber:76,title:"반복해서 눈에 띄는 성향",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-077",pageNumber:77,title:"사람의 시선을 끄는 힘",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-078",pageNumber:78,title:"혼자 깊이 파고드는 힘",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-079",pageNumber:79,title:"예민하게 감지하는 힘",evidenceGroup:"STARS_RELATIONS"},
@@ -131,38 +131,38 @@ export const LIFETIME_BOOK_V1={
     {id:"book-081",pageNumber:81,title:"날카롭게 몰입하는 힘",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-082",pageNumber:82,title:"부딪힘·흔들림·신경 쓰임",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-083",pageNumber:83,title:"서로 끌어당기고 커지는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-084",pageNumber:84,title:"신살은 어떻게 봐야 할까",evidenceGroup:"STARS_RELATIONS"}
+    {id:"book-084",pageNumber:84,title:"이런 특징은 어떻게 받아들이면 될까",evidenceGroup:"STARS_RELATIONS"}
   ]},
-  {partNumber:"09",title:"십이운성",pages:[
-    {id:"book-085",pageNumber:85,title:"십이운성",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-086",pageNumber:86,title:"내 십이운성 한눈에 보기",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-087",pageNumber:87,title:"십이운성 12단계",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-088",pageNumber:88,title:"십이운성이 뜻하는 것",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-089",pageNumber:89,title:"년주의 십이운성",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-090",pageNumber:90,title:"월주의 십이운성",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-091",pageNumber:91,title:"일주의 십이운성",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-092",pageNumber:92,title:"시주의 십이운성",evidenceGroup:"TWELVE_STAGES"},
+  {partNumber:"09",title:"나이에 따라 달라지는 모습",pages:[
+    {id:"book-085",pageNumber:85,title:"나이에 따라 달라지는 모습",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-086",pageNumber:86,title:"내 삶에서 힘을 쓰는 방식 한눈에 보기",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-087",pageNumber:87,title:"삶의 단계마다 달라지는 역할",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-088",pageNumber:88,title:"같은 사람도 시기마다 달라지는 이유",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-089",pageNumber:89,title:"어릴 때 익힌 모습",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-090",pageNumber:90,title:"사회생활에서 강해지는 모습",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-091",pageNumber:91,title:"가까운 관계에서 드러나는 모습",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-092",pageNumber:92,title:"부모가 되었을 때 더 강해지는 모습",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-093",pageNumber:93,title:"인생 초반의 흐름",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-094",pageNumber:94,title:"인생 중반의 흐름",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-095",pageNumber:95,title:"인생 후반의 흐름",evidenceGroup:"TWELVE_STAGES"}
   ]},
-  {partNumber:"10",title:"십성",pages:[
-    {id:"book-096",pageNumber:96,title:"십성",evidenceGroup:"TEN_GODS"},
-    {id:"book-097",pageNumber:97,title:"내 십성 한눈에 보기",evidenceGroup:"TEN_GODS"},
-    {id:"book-098",pageNumber:98,title:"십성 분포",evidenceGroup:"TEN_GODS"},
-    {id:"book-099",pageNumber:99,title:"십성 10가지 뜻",evidenceGroup:"TEN_GODS"},
+  {partNumber:"10",title:"내가 일·돈·사람을 다루는 방식",pages:[
+    {id:"book-096",pageNumber:96,title:"내가 일·돈·사람을 다루는 방식",evidenceGroup:"TEN_GODS"},
+    {id:"book-097",pageNumber:97,title:"내가 자주 쓰는 성향 한눈에 보기",evidenceGroup:"TEN_GODS"},
+    {id:"book-098",pageNumber:98,title:"어떤 성향을 자주 쓰는 편일까",evidenceGroup:"TEN_GODS"},
+    {id:"book-099",pageNumber:99,title:"내 안의 여러 역할은 어떻게 다를까",evidenceGroup:"TEN_GODS"},
     {id:"book-100",pageNumber:100,title:"비겁 · 경쟁하고 버티는 힘",evidenceGroup:"TEN_GODS"},
     {id:"book-101",pageNumber:101,title:"식상 · 표현하고 만들어내는 힘",evidenceGroup:"TEN_GODS"},
     {id:"book-102",pageNumber:102,title:"재성 · 돈과 결과를 만드는 힘",evidenceGroup:"TEN_GODS"},
     {id:"book-103",pageNumber:103,title:"관성 · 책임과 규칙",evidenceGroup:"TEN_GODS"},
     {id:"book-104",pageNumber:104,title:"인성 · 배우고 받아들이는 힘",evidenceGroup:"TEN_GODS"},
-    {id:"book-105",pageNumber:105,title:"겉으로 드러난 십성",evidenceGroup:"TEN_GODS"},
-    {id:"book-106",pageNumber:106,title:"속에 숨은 십성",evidenceGroup:"TEN_GODS"},
+    {id:"book-105",pageNumber:105,title:"남들이 먼저 보는 내 모습",evidenceGroup:"TEN_GODS"},
+    {id:"book-106",pageNumber:106,title:"가까워져야 보이는 내 모습",evidenceGroup:"TEN_GODS"},
     {id:"book-107",pageNumber:107,title:"겉으로 보이는 나와 속마음의 차이",evidenceGroup:"TEN_GODS"},
-    {id:"book-108",pageNumber:108,title:"상황마다 달라지는 십성",evidenceGroup:"TEN_GODS"}
+    {id:"book-108",pageNumber:108,title:"상황마다 달라지는 내 모습",evidenceGroup:"TEN_GODS"}
   ]},
-  {partNumber:"11",title:"연운 · 앞으로 5년",pages:[
-    {id:"book-109",pageNumber:109,title:"연운 · 앞으로 5년",evidenceGroup:"YEARLY_OVERVIEW"},
+  {partNumber:"11",title:"앞으로 5년",pages:[
+    {id:"book-109",pageNumber:109,title:"앞으로 5년",evidenceGroup:"YEARLY_OVERVIEW"},
     {id:"book-110",pageNumber:110,title:"앞으로 5년 한눈에 보기",evidenceGroup:"YEARLY_OVERVIEW"},
     {id:"book-111",pageNumber:111,title:"5년 전체 흐름",evidenceGroup:"YEARLY_OVERVIEW"},
     {id:"book-112",pageNumber:112,title:"첫 번째 해",evidenceGroup:"YEAR_1"},
@@ -170,27 +170,27 @@ export const LIFETIME_BOOK_V1={
     {id:"book-114",pageNumber:114,title:"세 번째 해",evidenceGroup:"YEAR_3"},
     {id:"book-115",pageNumber:115,title:"네 번째 해",evidenceGroup:"YEAR_4"},
     {id:"book-116",pageNumber:116,title:"다섯 번째 해",evidenceGroup:"YEAR_5"},
-    {id:"book-117",pageNumber:117,title:"월운 · 변화가 큰 달",evidenceGroup:"MONTHLY"},
+    {id:"book-117",pageNumber:117,title:"변화가 크게 느껴지는 달",evidenceGroup:"MONTHLY"},
     {id:"book-118",pageNumber:118,title:"5년 동안 직업·재물·관계 변화",evidenceGroup:"YEARLY_OVERVIEW"},
     {id:"book-119",pageNumber:119,title:"앞으로 5년에서 기억할 점",evidenceGroup:"YEARLY_OVERVIEW"}
   ]},
-  {partNumber:"12",title:"삼재·변화운",pages:[
-    {id:"book-120",pageNumber:120,title:"삼재·변화운",evidenceGroup:"CHANGE"},
+  {partNumber:"12",title:"변화가 커지는 시기",pages:[
+    {id:"book-120",pageNumber:120,title:"변화가 커지는 시기",evidenceGroup:"CHANGE"},
     {id:"book-121",pageNumber:121,title:"지금 변화운은 어느 정도일까",evidenceGroup:"CHANGE"},
     {id:"book-122",pageNumber:122,title:"변화운이 커진다는 뜻",evidenceGroup:"CHANGE"},
     {id:"book-123",pageNumber:123,title:"부딪힘이 변화를 만드는 때",evidenceGroup:"CHANGE"},
     {id:"book-124",pageNumber:124,title:"서로 모이며 일이 커지는 때",evidenceGroup:"CHANGE"},
     {id:"book-125",pageNumber:125,title:"반복해서 신경 쓰이게 하는 압박",evidenceGroup:"CHANGE"},
-    {id:"book-126",pageNumber:126,title:"기운이 실제로 옮겨 가는 관계",evidenceGroup:"CHANGE"},
+    {id:"book-126",pageNumber:126,title:"사람과 환경 때문에 방향이 바뀌는 때",evidenceGroup:"CHANGE"},
     {id:"book-127",pageNumber:127,title:"변화가 큰 시기",evidenceGroup:"CHANGE"},
     {id:"book-128",pageNumber:128,title:"변화가 큰 때 기억할 점",evidenceGroup:"CHANGE"}
   ]},
-  {partNumber:"13",title:"대운",pages:[
-    {id:"book-129",pageNumber:129,title:"대운",evidenceGroup:"DAEUN_OVERVIEW"},
-    {id:"book-130",pageNumber:130,title:"현재 대운",evidenceGroup:"DAEUN_OVERVIEW"},
-    {id:"book-131",pageNumber:131,title:"평생 대운",evidenceGroup:"DAEUN_OVERVIEW"},
-    {id:"book-132",pageNumber:132,title:"대운은 어떻게 바뀔까",evidenceGroup:"DAEUN_OVERVIEW"},
-    {id:"book-133",pageNumber:133,title:"대운표",evidenceGroup:"DAEUN_OVERVIEW"},
+  {partNumber:"13",title:"10년 단위 큰 흐름",pages:[
+    {id:"book-129",pageNumber:129,title:"10년 단위 큰 흐름",evidenceGroup:"DAEUN_OVERVIEW"},
+    {id:"book-130",pageNumber:130,title:"지금 지나고 있는 10년",evidenceGroup:"DAEUN_OVERVIEW"},
+    {id:"book-131",pageNumber:131,title:"평생 10년 흐름 한눈에 보기",evidenceGroup:"DAEUN_OVERVIEW"},
+    {id:"book-132",pageNumber:132,title:"10년 흐름이 바뀔 때 느껴지는 변화",evidenceGroup:"DAEUN_OVERVIEW"},
+    {id:"book-133",pageNumber:133,title:"내 평생 10년 흐름표",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-134",pageNumber:134,title:"첫 번째 10년",evidenceGroup:"DAEUN_1"},
     {id:"book-135",pageNumber:135,title:"두 번째 10년",evidenceGroup:"DAEUN_2"},
     {id:"book-136",pageNumber:136,title:"세 번째 10년",evidenceGroup:"DAEUN_3"},
@@ -201,7 +201,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-141",pageNumber:141,title:"여덟 번째 10년",evidenceGroup:"DAEUN_8"},
     {id:"book-142",pageNumber:142,title:"아홉 번째 10년",evidenceGroup:"DAEUN_9"},
     {id:"book-143",pageNumber:143,title:"열 번째 10년",evidenceGroup:"DAEUN_10"},
-    {id:"book-144",pageNumber:144,title:"초·중·후반 대운 요약",evidenceGroup:"DAEUN_OVERVIEW"}
+    {id:"book-144",pageNumber:144,title:"인생 초반·중반·후반의 큰 변화",evidenceGroup:"DAEUN_OVERVIEW"}
   ]},
   {partNumber:"14",title:"총정리",pages:[
     {id:"book-145",pageNumber:145,title:"총정리",evidenceGroup:"SYNTHESIS"},
@@ -213,7 +213,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-151",pageNumber:151,title:"건강운 핵심",evidenceGroup:"SYNTHESIS"},
     {id:"book-152",pageNumber:152,title:"나에게 도움이 되는 선택",evidenceGroup:"SYNTHESIS"},
     {id:"book-153",pageNumber:153,title:"평생 기억할 다섯 가지",evidenceGroup:"SYNTHESIS"},
-    {id:"book-154",pageNumber:154,title:"전문 분석",evidenceGroup:"PROFESSIONAL"}
+    {id:"book-154",pageNumber:154,title:"사주 근거 · 전문 분석",evidenceGroup:"PROFESSIONAL"}
   ]}
   ] as LifetimeBookPart[],
   relationship:{
