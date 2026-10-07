@@ -59,7 +59,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-021",pageNumber:21,title:"나를 대표하는 기운",evidenceGroup:"IDENTITY"},
     {id:"book-022",pageNumber:22,title:"나를 대표하는 두 글자",evidenceGroup:"PILLARS"},
     {id:"book-023",pageNumber:23,title:"겉으로 보이는 나와 속마음",evidenceGroup:"IDENTITY"},
-    {id:"book-024",pageNumber:24,title:"오행은 어느 쪽이 강하고 약할까",evidenceGroup:"ELEMENTS"},
+    {id:"book-024",pageNumber:24,title:"오행이 행동에 만드는 차이",evidenceGroup:"ELEMENTS"},
     {id:"book-025",pageNumber:25,title:"부족한 부분을 생활에서 채우는 방법",evidenceGroup:"STRUCTURE_USEFUL"},
     {id:"book-026",pageNumber:26,title:"잘하는 방식이 과해질 때",evidenceGroup:"IDENTITY"}
   ]},
