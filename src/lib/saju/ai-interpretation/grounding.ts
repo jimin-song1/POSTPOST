@@ -110,7 +110,10 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL"){for(const phrase of [...LIFETIME_BOOK_V1.prohibitedChildrenClaims,...LIFETIME_BOOK_V1.prohibitedWellnessClaims,...LIFETIME_BOOK_V1.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);validateLifetimeVoice(report);}
-  if(input.reportType==="LIFETIME_GENERAL")try{validateKoreanEditorial(report.sections.filter(row=>row.contentKind!=="PROFESSIONAL").flatMap(row=>row.paragraphs??[row.body]).join("\n"));}catch(error){throw new GroundingValidationError(error instanceof Error?error.message:"한국어 편집 검증 실패");}
+  if(input.reportType==="LIFETIME_GENERAL")for(const row of report.sections.filter(row=>row.contentKind!=="PROFESSIONAL")){
+    try{validateKoreanEditorial((row.paragraphs??[row.body]).join("\n"));}
+    catch(error){throw new GroundingValidationError(row.id+": "+(error instanceof Error?error.message:"한국어 편집 검증 실패"));}
+  }
   validateLockedText(combined,[...input.evidence.map(row=>row.value),...(input.reportPlan??[])],input.minimalContext.requestedYear);
   return true;
 }
