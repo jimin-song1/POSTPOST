@@ -430,12 +430,34 @@ function studyExamples(facts:ConsultationFacts){
   return studies.slice(0,6);
 }
 function familyPresence(facts:ConsultationFacts,family:string){
-  const count=familyCount(facts,family),meaning=familyMeaning(family);
-  if(count>=3)return `${meaning}이 평소에도 자연스럽게 나오는 편입니다. 익숙한 만큼 너무 앞세우지만 않으면 장점으로 오래 쓸 수 있습니다.`;
-  if(count>=1)return `평소 주된 모습은 아니어도 ${meaning}이 필요한 상황에서는 자연스럽게 나오는 편입니다.`;
-  return `${meaning}은 저절로 나오기보다 실제 경험을 쌓을수록 점점 편해지는 쪽입니다.`;
+  const count=familyCount(facts,family);
+  if(family==="비겁"){
+    if(count>=3)return "남이 정한 방식보다 직접 판단하고 움직이려는 모습이 자주 나옵니다. 의견이 갈리거나 경쟁이 붙을수록 자기 판단을 더 쉽게 놓지 않는 편입니다.";
+    if(count>=1)return "평소에는 상황을 맞춰가더라도 중요한 순간에는 결국 본인이 납득한 방식대로 결정하려는 편입니다.";
+    return "처음부터 주도권을 잡기보다 경험이 쌓인 뒤 자기 판단이 생길수록 훨씬 편해지는 쪽입니다.";
+  }
+  if(family==="식상"){
+    if(count>=3)return "생각을 말이나 결과물로 밖에 꺼낼 때 장점이 잘 살아납니다. 만들고 설명하고 보여주는 일을 오래 할수록 실력이 더 분명해지는 편입니다.";
+    if(count>=1)return "필요한 순간에는 생각을 말이나 결과물로 꺼낼 수 있지만, 준비가 충분해야 마음이 놓이는 편입니다.";
+    return "생각은 많아도 바로 말하거나 보여주는 건 늦을 수 있습니다. 실제로 해보고 보여주는 경험이 쌓일수록 훨씬 편해집니다.";
+  }
+  if(family==="재성"){
+    if(count>=3)return "돈·시간·성과처럼 실제로 남는 결과를 빠르게 확인하는 편입니다. 무엇을 해야 현실적인 이득이 생기는지 판단하는 감각도 비교적 분명합니다.";
+    if(count>=1)return "평소 모든 일을 돈으로 따지지는 않지만, 중요한 선택에서는 시간과 비용에 비해 무엇이 남는지를 꽤 현실적으로 보는 편입니다.";
+    return "돈과 결과를 바로 연결해서 판단하기보다 경험을 통해 어떤 선택이 실제 이득으로 남는지 배우는 쪽에 가깝습니다.";
+  }
+  if(family==="관성"){
+    if(count>=3)return "맡은 일과 약속을 가볍게 넘기지 않습니다. 책임질 일이 생기면 오히려 집중력이 올라가고 마무리까지 확인하려는 편입니다.";
+    if(count>=1)return "평소 늘 규칙을 앞세우는 타입은 아니지만, 책임질 일이 생기면 약속과 마무리를 꽤 중요하게 챙기는 편입니다.";
+    return "책임과 규칙을 처음부터 편하게 느끼기보다 실제 역할을 맡아보면서 자기 방식의 기준을 만들어가는 편입니다.";
+  }
+  if(family==="인성"){
+    if(count>=3)return "새로운 걸 접하면 바로 결론내리기보다 충분히 이해하고 자기 말로 다시 정리하려 합니다. 배우고 파고드는 일에 강점이 있습니다.";
+    if(count>=1)return "필요한 정보는 그냥 넘기지 않고 이해한 뒤 움직이려는 편입니다. 낯선 일일수록 먼저 알아보고 정리해야 마음이 놓일 수 있습니다.";
+    return "처음부터 오래 공부하기보다 실제 필요가 생겼을 때 집중해서 배우는 방식이 더 잘 맞습니다.";
+  }
+  return "상황에 따라 필요한 모습을 꺼내 쓰는 편입니다.";
 }
-
 function tenGodTone(role:string){
   if(["정관","편관"].includes(role))return{front:"단정하고 책임감 있는 인상",gift:"약속과 기준을 지키려는 힘",shadow:"통제받는 느낌에 예민해지거나 스스로에게 엄격해지는 면"};
   if(["정인","편인"].includes(role))return{front:"차분하게 듣고 관찰하는 인상",gift:"배우고 이해한 뒤 판단하는 힘",shadow:"생각이 길어져 행동이 늦어질 수 있는 면"};
