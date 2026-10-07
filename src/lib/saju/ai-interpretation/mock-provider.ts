@@ -524,7 +524,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
   if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
-  if(group==="SYNTHESIS")return "여기서는 앞의 내용을 다시 나열하지 않습니다. "+(facts.dayPillarReading?facts.dayPillarReading+" 일주의 성향, ":"")+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"원국의 균형")+"을 한데 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
+  if(group==="SYNTHESIS")return "앞의 내용을 다시 나열하기보다, "+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"전체적인 균형")+"을 함께 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
 
@@ -1597,7 +1597,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
       id==="book-016"?"오행표에서 중요한 것은 숫자 하나가 아니라 어느 기운이 앞에 서고 어느 기운이 뒤로 물러나는지입니다. 이 차이가 성격과 생활의 우선순위를 만듭니다.":"오행의 강약은 좋고 나쁨을 매기는 점수가 아닙니다. 어떤 힘은 자연스럽게 쓰고, 어떤 힘은 일부러 꺼내 써야 하는지를 보여주는 지도에 가깝습니다.",
       first,
       second,
-      facts.missing.length?`특히 ${facts.missing.map(elementPro).join("·")}이 원국에서 비어 있다는 점은 중요합니다. 능력이 없다는 뜻이 아니라 그 역할이 저절로 켜지기보다 환경과 습관을 통해 작동시키는 편이 좋다는 뜻입니다.`:"다섯 기운이 모두 있어도 비율 차이가 크면 생활에서 체감되는 강약은 분명하게 생깁니다.",
+      facts.missing.length?`특히 ${facts.missing.map(elementPro).join("·")}이 사주 안에서 비어 있다는 점은 중요합니다. 능력이 없다는 뜻이 아니라 그 역할이 저절로 나오기보다 환경과 습관으로 채워갈 영역이라는 뜻입니다.`:"다섯 기운이 모두 있어도 비율 차이가 크면 생활에서 체감되는 강약은 생깁니다.",
       "그래서 오행은 '많아서 좋다, 적어서 나쁘다'로 읽지 않습니다. 강한 힘은 과해지는 순간을 조절하고, 약한 힘은 필요한 장면에서 의식적으로 보완하는 것이 핵심입니다."
     ];
   }
@@ -1605,7 +1605,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(id==="book-017")return[
     `전체 기운의 균형을 계산하면 ${strengthMeaning(facts.strength)}입니다.`,
     "이 값은 의지가 세다 약하다는 성격평가가 아닙니다. 혼자 밀어붙이는 힘과 주변의 도움을 받아 안정되는 힘 가운데 어느 쪽을 더 많이 쓰는지를 보는 기준입니다.",
-    dominantFamilySentence(facts)||"원국에서 반복되는 역할을 함께 보면 실제로 힘을 쓰는 방식이 더 선명해집니다.",
+    dominantFamilySentence(facts)||"반복해서 나타나는 성향을 함께 보면 실제로 힘을 쓰는 방식이 더 선명해집니다.",
     "힘이 충분한 사람도 환경이 맞지 않으면 지칠 수 있고, 도움을 많이 쓰는 구조도 좋은 사람과 자원을 잘 연결하면 훨씬 큰 결과를 만들 수 있습니다.",
     "결국 중요한 것은 강약의 이름보다 내 힘을 어디까지 직접 쓰고, 어느 지점부터 사람·시간·환경의 도움을 받아야 오래 갈 수 있는지를 아는 것입니다."
   ];
@@ -1659,7 +1659,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   ];
 
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
-    consultationOpening(row,facts)||`${title}은 원국의 여러 계산값을 한데 묶어서 읽는 장입니다.`,
+    consultationOpening(row,facts)||"여러 성향이 실제 생활에서 어떻게 섞여 나타나는지를 함께 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
     rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 작동하는지 보는 것이 핵심입니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
     "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
@@ -2164,10 +2164,10 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(/^신살$/.test(title)||/눈에 띄는 신살|강하게 보이는 신살/.test(title))return[
     starSentence(facts),
-    facts.starLabels.length?`현재 원국에서 먼저 볼 신살은 ${facts.starLabels.slice(0,5).join(" · ")}입니다.`:"특정 신살 이름보다 원국의 오행과 십성, 관계를 먼저 보는 것이 중요합니다.",
+    starSentence(facts),
     "신살은 성격과 사건을 단독으로 결정하는 힘이 아닙니다. 다른 계산 결과와 같은 방향을 가리킬 때 의미가 더 선명해집니다.",
     "예를 들어 대중성 신호가 있어도 표현하는 힘이 실제로 작동해야 사람 앞에 드러나고, 이동 신호가 있어도 실제 운에서 변화가 들어와야 체감이 커질 수 있습니다.",
-    "그래서 이 장에서는 신살을 무섭게 나열하기보다 어디에서 장점으로 쓰이고 어디에서 과해질 수 있는지 중심으로 봅니다."
+    "중요한 건 이름을 외우는 게 아니라, 이 성향이 어디에서 장점이 되고 언제 피로로 바뀌는지를 아는 것입니다."
   ];
 
   if(/사람의 시선을 끄는 힘/.test(title))return[
@@ -2195,7 +2195,7 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   ];
 
   if(/가까울수록 꼬이기 쉬운 관계/.test(title))return[
-    relations.length?`원국의 관계에서는 ${relations.join(", ")}이 확인됩니다.`:"원국에 가까운 관계를 크게 흔드는 관계 신호가 여러 겹으로 잡힌 편은 아닙니다.",
+    relations.length?`가까운 관계에서는 ${relations.join(", ")}이 나타날 수 있습니다.`:"가까운 관계에서는 큰 충돌보다 작은 오해를 제때 풀어가는 일이 더 중요합니다.",
     "가까운 관계에서 생기는 문제는 사랑의 크기보다 '말하지 않아도 알겠지'라는 기대에서 시작되는 경우가 많습니다.",
     "특히 신뢰와 약속에 민감한 사람은 작은 어긋남을 단순한 실수보다 관계 전체의 문제로 받아들이기 쉽습니다.",
     "이럴수록 상대의 의도를 추측하기보다 실제 행동과 말을 한번 확인하는 것이 중요합니다.",
@@ -2213,7 +2213,7 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(/부딪힘|흔들림|압박/.test(title))return[
     relationSentence(facts),
     "사람이나 환경이 부딪히는 흐름이 있다고 해서 나쁜 일이 생긴다는 뜻은 아닙니다. 익숙한 방식이 흔들리면서 새로운 선택이 필요해지는 때가 있다는 뜻에 가깝습니다.",
-    "원국에 이미 있는 관계는 평생의 성격처럼 고정된 사건이 아니라 비슷한 상황에서 반복해서 신경 쓰이는 패턴에 가깝습니다.",
+    "이런 관계 패턴은 평생 같은 사건이 반복된다는 뜻이 아니라, 비슷한 상황에서 자꾸 신경 쓰이는 지점을 보여주는 힌트에 가깝습니다.",
     "운에서 같은 관계가 다시 들어올 때는 생활환경, 역할, 사람 관계의 변화가 더 크게 체감될 수 있습니다.",
     "중요한 건 겁내는 것이 아니라 어떤 부분이 움직이기 쉬운지 알고 계약·이동·관계의 기준을 미리 세우는 것입니다."
   ];
@@ -2815,8 +2815,8 @@ function report(input:InterpretationInput):StructuredInterpretation{
   return {
     status:"completed",
     reportType:input.reportType,
-    headline:facts.dayPillarReading?facts.dayPillarReading+" 일주에서 시작하는 평생사주":"원국에서 시작하는 평생사주",
-    summary:facts.structure?structureMeaning(facts.structure)+"과 오행의 강약, 대운과 연운을 한 사람의 이야기로 이어서 풀었습니다.":"원국의 오행과 시간 흐름을 한 사람의 이야기로 이어서 풀었습니다.",
+    headline:"나를 중심으로 읽는 평생사주",
+    summary:facts.structure?structureMeaning(facts.structure)+"과 오행의 강약, 대운과 연운을 한 사람의 이야기로 이어서 풀었습니다.":"오행의 강약과 시간의 흐름을 한 사람의 이야기로 이어서 풀었습니다.",
     sections,
     highlights:["같은 성향도 일, 돈, 관계에서는 서로 다른 행동으로 나타납니다."],
     cautions:["움직임이 크다는 말과 유리하다는 말은 같은 뜻이 아닙니다."],
