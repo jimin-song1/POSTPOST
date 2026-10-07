@@ -71,10 +71,18 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     else if(id==="book-008")personalized=first.replace(/^한 문장으로 줄이면,\s*/,`한 문장으로 줄이면, ${label}은 `);
     else if(["book-009","book-010","book-011","book-012","book-013","book-014","book-017","book-024"].includes(id)&&!first.startsWith(label))
       personalized=`${label}은 ${first}`;
+    else if(id==="book-027")personalized=first.replace(/^일에서는\s*/,`${label}은 일에서 `);
     else if(id==="book-032")personalized=first.replace(/^직장에서는\s*/,`${label}은 직장에서 `);
     else if(id==="book-033")personalized=first.replace(/^사업을 할 때는\s*/,`${label}은 사업을 할 때 `);
-    else if(id==="book-035"&&first.startsWith("돈은 "))personalized=first.replace(/^돈은\s*/,`${label}에게 돈은 `);
+    else if(id==="book-035"){
+      if(first.startsWith("돈을 대할 때 "))personalized=first.replace(/^돈을 대할 때\s*/,`${label}은 돈을 대할 때 `);
+      else if(first.startsWith("돈은 "))personalized=first.replace(/^돈은\s*/,`${label}에게 돈은 `);
+    }
     else if(id==="book-036"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
+    else if(id==="book-043")personalized=first.replace(/^사람을 좋아할 때\s*/,`${label}은 사람을 좋아할 때 `);
+    else if(id==="book-051")personalized=first.replace(/^자녀운에서는\s*/,`${label}은 부모 역할이 생겼을 때 `);
+    else if(id==="book-053")personalized=first.replace(/^바쁠수록\s*/,`${label}은 바쁠수록 `);
+    else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     if(personalized===first)return section;
     const paragraphs=[personalized,...source.slice(1)];
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
