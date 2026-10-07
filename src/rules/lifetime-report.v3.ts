@@ -76,12 +76,12 @@ export const LIFETIME_BOOK_V1={
   {partNumber:"04",title:"재물운",pages:[
     {id:"book-035",pageNumber:35,title:"재물운",evidenceGroup:"WEALTH"},
     {id:"book-036",pageNumber:36,title:"돈을 대하는 방식",evidenceGroup:"WEALTH"},
-    {id:"book-037",pageNumber:37,title:"돈의 흐름",evidenceGroup:"WEALTH"},
-    {id:"book-038",pageNumber:38,title:"돈을 버는 힘",evidenceGroup:"WEALTH"},
-    {id:"book-039",pageNumber:39,title:"돈을 모으고 지키는 힘",evidenceGroup:"WEALTH"},
-    {id:"book-040",pageNumber:40,title:"돈과 인간관계",evidenceGroup:"WEALTH"},
+    {id:"book-037",pageNumber:37,title:"돈은 어디로 흘러갈까",evidenceGroup:"WEALTH"},
+    {id:"book-038",pageNumber:38,title:"돈이 들어오는 방식",evidenceGroup:"WEALTH"},
+    {id:"book-039",pageNumber:39,title:"돈이 남는 방식",evidenceGroup:"WEALTH"},
+    {id:"book-040",pageNumber:40,title:"사람과 돈이 얽힐 때",evidenceGroup:"WEALTH"},
     {id:"book-041",pageNumber:41,title:"큰 기회 앞에서 조심할 점",evidenceGroup:"WEALTH"},
-    {id:"book-042",pageNumber:42,title:"평생 재물운에서 기억할 점",evidenceGroup:"WEALTH"}
+    {id:"book-042",pageNumber:42,title:"평생 재물운에서 중요한 것",evidenceGroup:"WEALTH"}
   ]},
   {partNumber:"05",title:"연애운·결혼운·자녀운",pages:[
     {id:"book-043",pageNumber:43,title:"연애운·결혼운·자녀운",evidenceGroup:"RELATIONSHIP"},
