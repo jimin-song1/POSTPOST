@@ -224,17 +224,6 @@ function koreanCount(value:number){
 function familyMeaning(family:string){
   return family==="비겁"?"독립심과 경쟁력":family==="식상"?"표현과 생산력":family==="재성"?"돈과 현실 결과를 다루는 힘":family==="관성"?"책임감과 사회적 기준":family==="인성"?"학습력과 이해력":"자기 기준";
 }
-function relationSummary(facts:ConsultationFacts){
-  const rows:string[]=[];
-  if(facts.relationCounts.clash)rows.push("사람이나 상황이 강하게 부딪히며 변화가 생기기 쉬운 면");
-  if(facts.relationCounts.break)rows.push("가까운 사이에서 작은 어긋남이 오래 남기 쉬운 면");
-  if(facts.relationCounts.harm)rows.push("겉으로 넘겨도 속으로 불편함이 남기 쉬운 면");
-  if(facts.relationCounts.wonjin)rows.push("가까울수록 서로에게 예민해지기 쉬운 면");
-  if(facts.relationCounts.combination)rows.push("마음이나 일이 맞으면 관계가 빠르게 깊어지는 면");
-  if(facts.relationCounts.punishment)rows.push("같은 문제를 반복해서 신경 쓰기 쉬운 면");
-  return rows;
-}
-
 const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
   甲:{image:"큰 나무",core:"방향이 정해지면 곧게 밀고 가며 스스로 키워가는 힘",shadow:"의미를 찾지 못하면 움직임이 둔해지고 자기 기준을 쉽게 굽히지 않는 면"},
   乙:{image:"유연하게 뻗는 풀과 덩굴",core:"상황을 읽고 사람과 자원을 연결하며 꾸준히 자라는 힘",shadow:"주변을 너무 많이 살피면 결정이 늦어지거나 마음을 숨기는 면"},
