@@ -1736,7 +1736,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
       usefulSentence(facts),
       ...facts.useful.slice(0,3).map((element,index)=>{
         const guide=usefulElementGuide(element);
-        return `${index+1}순위 ${elementPro(element)}은 ${guide.why} ${guide.where}`;
+        return `${index+1}순위 ${withParticle(elementPro(element),"은","는")} ${guide.why} ${guide.where}`;
       }),
       "순서가 앞선 기운일수록 지금 생활에서 우선적으로 보완할 가치가 크다는 뜻입니다. 색이나 물건을 찾기보다 실제 행동으로 연결하는 편이 훨씬 현실적입니다."
     ];
@@ -1751,7 +1751,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
       "도움이 되는 기운을 생활에 쓰는 방법은 생각보다 단순합니다. 어려운 이름보다 실제 행동으로 바꾸면 됩니다.",
       ...facts.useful.slice(0,3).map((element,index)=>{
         const guide=usefulElementGuide(element);
-        return `${index+1}순위 ${elementPro(element)}은 이렇게 써보세요. ${guide.practice}`;
+        return `${index+1}순위 ${withParticle(elementPro(element),"은","는")} 이렇게 써보세요. ${guide.practice}`;
       }),
       "한꺼번에 다 바꾸기보다 지금 가장 자주 막히는 장면과 연결된 한 가지부터 먼저 해보는 편이 좋습니다."
     ];
