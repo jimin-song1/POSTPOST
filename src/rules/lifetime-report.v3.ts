@@ -51,7 +51,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-015",pageNumber:15,title:"십성이 보여주는 내 역할",evidenceGroup:"TEN_GODS"},
     {id:"book-016",pageNumber:16,title:"내 오행은 어디에 몰려 있을까",evidenceGroup:"ELEMENTS"},
     {id:"book-017",pageNumber:17,title:"혼자 버티는 힘과 도움받는 방식",evidenceGroup:"STRENGTH"},
-    {id:"book-018",pageNumber:18,title:"나에게 필요한 기운은 무엇일까",evidenceGroup:"STRUCTURE_USEFUL"},
+    {id:"book-018",pageNumber:18,title:"나에게 도움이 되는 기운",evidenceGroup:"STRUCTURE_USEFUL"},
     {id:"book-019",pageNumber:19,title:"대운·연운·월운은 무엇이 다를까",evidenceGroup:"FORTUNE_EXPLAIN"}
   ]},
   {partNumber:"02",title:"일주와 오행",pages:[
@@ -60,8 +60,8 @@ export const LIFETIME_BOOK_V1={
     {id:"book-022",pageNumber:22,title:"나를 대표하는 두 글자",evidenceGroup:"PILLARS"},
     {id:"book-023",pageNumber:23,title:"겉으로 보이는 나와 속마음",evidenceGroup:"IDENTITY"},
     {id:"book-024",pageNumber:24,title:"오행은 어느 쪽이 강하고 약할까",evidenceGroup:"ELEMENTS"},
-    {id:"book-025",pageNumber:25,title:"나에게 도움이 되는 기운",evidenceGroup:"STRUCTURE_USEFUL"},
-    {id:"book-026",pageNumber:26,title:"오행이 생활에서 드러나는 모습",evidenceGroup:"IDENTITY"}
+    {id:"book-025",pageNumber:25,title:"부족한 부분을 생활에서 채우는 방법",evidenceGroup:"STRUCTURE_USEFUL"},
+    {id:"book-026",pageNumber:26,title:"잘하는 방식이 과해질 때",evidenceGroup:"IDENTITY"}
   ]},
   {partNumber:"03",title:"직업운·학업운",pages:[
     {id:"book-027",pageNumber:27,title:"직업운·학업운",evidenceGroup:"WORK"},
