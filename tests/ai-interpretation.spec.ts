@@ -156,6 +156,13 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(interpretationHashes(changed,"BUSINESS").analysisHash).not.toBe(same.analysisHash);
   });
 
+  it("accepts dynamic lifetime sections without report-style keyPoints",()=>{
+    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
+    const output=validOutput(input);
+    for(const section of output.sections)section.keyPoints=[];
+    expect(validateGrounding(output,input)).toBe(true);
+  });
+
   it("audits the full deterministic lifetime mock narrative and all Core 9 domains",async()=>{
     const result=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
     expect(result.status).toBe("completed");
