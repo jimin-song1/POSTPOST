@@ -226,12 +226,12 @@ function familyMeaning(family:string){
 }
 function relationSummary(facts:ConsultationFacts){
   const rows:string[]=[];
-  if(facts.relationCounts.clash)rows.push("충(서로 부딪히며 변화를 만드는 관계)");
-  if(facts.relationCounts.break)rows.push("파(가까운 관계에서 균열이 생기기 쉬운 관계)");
-  if(facts.relationCounts.harm)rows.push("해(겉으로 드러나지 않는 불편)");
-  if(facts.relationCounts.wonjin)rows.push("원진(가까울수록 예민해지기 쉬운 관계)");
-  if(facts.relationCounts.combination)rows.push("합(서로 끌어당기며 힘이 모이는 관계)");
-  if(facts.relationCounts.punishment)rows.push("형(반복해서 신경 쓰이는 압박)");
+  if(facts.relationCounts.clash)rows.push("사람이나 상황이 강하게 부딪히며 변화가 생기기 쉬운 면");
+  if(facts.relationCounts.break)rows.push("가까운 사이에서 작은 어긋남이 오래 남기 쉬운 면");
+  if(facts.relationCounts.harm)rows.push("겉으로 넘겨도 속으로 불편함이 남기 쉬운 면");
+  if(facts.relationCounts.wonjin)rows.push("가까울수록 서로에게 예민해지기 쉬운 면");
+  if(facts.relationCounts.combination)rows.push("마음이나 일이 맞으면 관계가 빠르게 깊어지는 면");
+  if(facts.relationCounts.punishment)rows.push("같은 문제를 반복해서 신경 쓰기 쉬운 면");
   return rows;
 }
 
@@ -281,7 +281,16 @@ function usefulSentence(facts:ConsultationFacts){
   return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
 }
 function relationSentence(facts:ConsultationFacts){
-  const rows=relationSummary(facts);return rows.length?`원국의 관계를 보면 ${rows.join(", ")}이 확인됩니다. 이 관계들은 성격 자체보다 사람·일·환경이 부딪히는 순간에 더 선명하게 작동합니다.`:"원국 자체에 큰 충돌 관계가 많이 겹쳐 있는 편은 아닙니다. 변화는 주로 운에서 새로운 관계가 들어올 때 더 크게 체감될 수 있습니다.";
+  const tension=facts.relationCounts.break||facts.relationCounts.harm||facts.relationCounts.wonjin||facts.relationCounts.punishment;
+  const clash=facts.relationCounts.clash;
+  const bond=facts.relationCounts.combination;
+  const rows:string[]=[];
+  if(tension)rows.push("가까워질수록 작은 어긋남을 오래 생각하거나 서로에게 예민해지는 순간이 생길 수 있습니다.");
+  if(clash)rows.push("사람이나 일이 강하게 부딪히는 때에는 감정부터 키우기보다 무엇이 실제 문제인지 먼저 확인하는 편이 좋습니다.");
+  if(bond)rows.push("반대로 마음이 맞는 사람과는 관계가 빠르게 깊어지고, 함께하는 일에도 힘이 잘 실리는 편입니다.");
+  if(!rows.length)return "사람 관계에서는 큰 충돌보다 평소의 말과 행동이 얼마나 꾸준한지가 더 중요하게 작용합니다.";
+  rows.push("그래서 사람을 많이 만나는 것보다 누구와 얼마나 깊이 엮이는지가 더 중요합니다.");
+  return rows.join(" ");
 }
 function starSentence(facts:ConsultationFacts){
   return facts.starLabels.length?`신살에서는 ${facts.starLabels.slice(0,4).join(" · ")}이 눈에 들어옵니다. 신살 하나로 운명을 정하지 않고, 원국의 성향을 보조해서 설명하는 정도로 보는 것이 맞습니다.`:"신살은 원국 전체를 보조하는 참고표로 읽는 편이 맞습니다. 눈에 띄는 신살이 적더라도 그것이 운의 강약을 뜻하지는 않습니다.";
