@@ -613,13 +613,13 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   }
   if(group==="WORK"){
     if(/잘 맞는 일/.test(title))return "직업에서는 직함보다 하루 동안 어떤 판단을 하고 어떤 결과를 만드는지가 더 중요합니다. "+workVerdict(facts);
-    if(/직장운/.test(title))return "직장운은 있습니다. "+workVerdict(facts);
+    if(/직장운|직장에서 잘 풀리는 방식/.test(title))return "직장에서는 맡은 범위와 판단권이 분명할수록 강점이 더 잘 살아납니다. "+workVerdict(facts);
     if(/사업운/.test(title))return facts.structure.includes("재")
       ?"사업운은 눈여겨볼 만합니다. 돈과 시장, 운영 결과를 직접 다루는 구조와 연결될수록 장점이 크게 살아납니다."
       :"사업은 무조건 독립하는 것보다 내가 결정권을 갖고 결과를 직접 확인할 수 있는 구조일 때 잘 맞습니다.";
     if(/책임/.test(title))return "책임이 커지면 오히려 집중력이 살아나는 편입니다. 다만 모든 일을 직접 확인하려 들면 강점이 과부하로 바뀌기 쉽습니다.";
     if(/인간관계/.test(title))return "직장 인간관계에서는 친밀감보다 역할과 약속이 분명한지가 더 중요합니다. 누가 어디까지 맡는지가 선명할수록 불필요한 감정 소모가 줄어듭니다.";
-    if(/학업운/.test(title))return "학업운은 단순 암기보다 배워서 어디에 쓸지가 분명할수록 강합니다. "+(facts.dayStemName||"자기 중심")+"의 성향상 이해한 것을 자기 기준으로 다시 정리할 때 실력이 빨리 붙습니다.";
+    if(/학업운|어떤 공부가 잘 맞을까/.test(title))return "공부는 단순 암기보다 배워서 어디에 쓸지가 분명할수록 잘 맞습니다. 이해한 내용을 자기 말로 다시 정리할 때 실력이 빨리 붙는 편입니다.";
     return"";
   }
   if(group==="WEALTH"){
@@ -651,7 +651,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
   if(group==="TEN_GODS"){
-    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 평소 선택에서 자주 드러납니다.":"");
+    if(/한눈에|분포|10가지/.test(title))return "일·돈·관계에서 어떤 역할이 먼저 나오는지 보면 평소 선택 방식이 더 쉽게 보입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 평소 선택에서 자주 드러납니다.":"");
     if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
     if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
     if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
@@ -659,7 +659,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(/인성/.test(title))return "인성은 배우고 이해하고 받아들이는 힘입니다. 정보를 자기 것으로 만들고 전문성을 쌓는 과정과 연결됩니다.";
   }
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 특정 사건을 맞히기보다 그 시기에 일·돈·관계 중 어디가 더 바빠지는지를 살펴봅니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
-  if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
+  if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 몇 년 동안 반복되는 큰 생활 배경을 봅니다. 같은 사람이라도 시기가 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
   if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 평소 모습과 그 시기의 변화를 함께 보면서 어디에서 선택할 일이 많아지는지를 살펴봅니다.";
   if(group==="SYNTHESIS")return "앞의 내용을 다시 나열하기보다, "+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"전체적인 균형")+"을 함께 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
@@ -2600,7 +2600,7 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     dominantFamilySentence(facts),
     "평소 가장 자주 쓰는 성향은 익숙해서 장점이 되기 쉽지만, 너무 많이 쓰면 같은 이유로 피로가 생길 수도 있습니다.",
     "반대로 덜 익숙한 성향은 능력이 없다는 뜻이 아니라 경험이 적어서 바로 나오지 않는 쪽에 가깝습니다.",
-    "이 장에서는 어려운 이름보다 어떤 상황에서 어떤 모습이 먼저 나오는지를 중심으로 보면 됩니다."
+    "어려운 이름보다 어떤 상황에서 어떤 모습이 먼저 나오는지만 보면 충분합니다."
   ];
 
   if(/내 안의 여러 역할은 어떻게 다를까|십성 10가지 뜻/.test(title))return[
