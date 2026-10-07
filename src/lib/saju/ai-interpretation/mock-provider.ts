@@ -2647,8 +2647,8 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   const title=row.topic??row.title,stem=stemStory(facts),dominant=dominantFamily(facts);
 
   if(/^총정리$/.test(title))return[
-    `전체 사주를 다시 묶으면 ${facts.dayStemName||"중심 기운"}의 '${stem.core}'과 ${dominant}의 '${familyMeaning(dominant)}'이 가장 오래 남는 축입니다.`,
-    facts.structure?`${structureMeaning(facts.structure)}이 이 힘에 사회적 역할과 결과의 방향을 붙여줍니다.`:"원국의 여러 기운이 이 중심축을 서로 밀어주고 조절합니다.",
+    `전체 흐름을 다시 묶으면 '${stem.core}'과 '${familyMeaning(dominant)}'이 가장 오래 남는 강점입니다.`,
+    facts.structure?`${structureMeaning(facts.structure)}이 이 강점을 실제 일과 결과로 연결해주는 역할을 합니다.`:"여러 성향이 서로 균형을 잡아주면서 이 강점을 생활 속에서 쓰게 합니다.",
     elementFact(facts)||"오행의 강약이 잘하는 힘과 의식적으로 보완할 힘을 나눠줍니다.",
     "일·돈·관계는 서로 다른 장이지만 결국 같은 사람이 선택하기 때문에 반복되는 기준이 있습니다.",
     "이제부터는 앞의 내용을 다시 나열하기보다 평생 선택에서 실제로 기억할 몇 가지 기준만 남겨보겠습니다."
@@ -2687,7 +2687,7 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/연애·가족운 핵심/.test(title))return[
-    `관계의 중심은 ${facts.dayPillarReading||facts.dayPillar} 일주에서 보이는 신뢰의 기준입니다.`,
+    "관계에서는 처음의 끌림보다 시간이 지나도 믿을 수 있는지가 가장 중요한 기준입니다.",
     "가까워질수록 오래 챙기려는 힘이 커지지만, 상대의 몫까지 대신 책임지는 순간 관계가 무거워질 수 있습니다.",
     relationSentence(facts),
     "좋은 관계는 서로의 독립성을 지키면서도 중요한 감정과 약속은 설명할 수 있는 관계에 가깝습니다.",
@@ -2719,10 +2719,10 @@ function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(row.evidenceGroup==="SYNTHESIS")return[
-    consultationOpening(row,facts)||`${title}에서는 앞의 해설을 실제 선택 기준으로 압축합니다.`,
+    consultationOpening(row,facts)||"앞에서 나온 내용을 다시 반복하기보다 앞으로 선택할 때 실제로 기억할 기준만 남깁니다.",
     dominantFamilySentence(facts),
     usefulSentence(facts)||elementFact(facts),
-    "총정리는 같은 말을 반복하기보다 앞으로 선택할 때 실제로 기억할 기준만 남기는 장입니다."
+    "잘하는 힘은 결과로 연결하고, 과해지는 순간에는 속도를 줄이는 것이 가장 중요한 기준입니다."
   ].filter(Boolean);
 
   return null;
@@ -2762,10 +2762,10 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
   ];
   const selected=candidates.find((paragraphs):paragraphs is string[]=>Array.isArray(paragraphs)&&paragraphs.length>0);
   const fallback=[
-    consultationOpening(row,facts)||`${row.topic??row.title}은 원국의 계산 결과를 바탕으로 읽습니다.`,
+    consultationOpening(row,facts)||"이 부분에서는 실제 생활에서 반복되는 선택과 반응을 중심으로 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
-    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 이 주제에서 어떻게 작동하는지 함께 봅니다.`:"한 가지 값만 떼어 판단하지 않고, 이 장에 배정된 근거 안에서 같은 방향을 가리키는 흐름을 함께 봅니다.",
-    "이 장에서는 앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 선택과 결과만 남깁니다."
+    rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}이 실제 선택에서 어떻게 드러나는지가 중요합니다.`:"한 가지 특징만 떼어 판단하지 않고 여러 모습이 같은 방향을 가리키는지 함께 봅니다.",
+    "앞에서 한 말을 되풀이하기보다 이 주제에서 새롭게 드러나는 모습만 남깁니다."
   ].filter(Boolean);
   return (selected??fallback)
     .map(paragraph=>naturalizeNarration(paragraph))
