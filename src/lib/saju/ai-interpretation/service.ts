@@ -68,6 +68,16 @@ function sanitizeCustomerWording(text:string){
     .replaceAll("일책임감","일관성")
     .replaceAll("습책임감","습관성")
     .replaceAll("관계까지키기","관계까지 지키기")
+    .replaceAll("십성과 십이운성","상황별 성향과 시기별 모습")
+    .replaceAll("십이운성","시기별 모습")
+    .replaceAll("십성","상황별 성향")
+    .replaceAll("신살","특별한 특징")
+    .replaceAll("대운","10년 흐름")
+    .replaceAll("연운","해마다 흐름")
+    .replaceAll("월운","달별 흐름")
+    .replaceAll("귀인운","도움운")
+    .replaceAll("귀인복","좋은 인연의 도움")
+    .replaceAll("귀인","좋은 인연")
     .replaceAll("자기준","본인 기준")
     .replaceAll("자기기준","본인 기준");
 }
