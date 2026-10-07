@@ -27,47 +27,47 @@ const slug=(value:string)=>value.toLowerCase().replace(/[^a-z0-9가-힣]+/g,"-")
 const extra=(id:string,title:string,partNumber:string,partTitle:string,evidenceGroup:LifetimeEvidenceGroup,densityValue:ContentDensity,topic=title)=>
   ({id,title,partNumber,partTitle,evidenceGroup,density:densityValue,topic,contentKind:"CONTENT" as const});
 
-const childTopics=["부모가 되었을 때 먼저 나오는 모습","아이에게 안정감을 주는 방식","걱정이 많아질 때 생기는 변화","아이를 챙기는 방식","가족 안에서 내가 맡기 쉬운 역할","부모가 되었을 때 더 강해지는 모습","가족 관계에서 조심할 점","아이와 가까워지는 법","부모로서 잘하는 점","부모 역할이 버겁게 느껴질 때","가족 일이 많아지는 시기","앞으로 가족 관계에서 달라질 수 있는 점"];
-const samjaeTopics=["변화가 많은 시기를 너무 무섭게 볼 필요 없는 이유","내게 변화가 크게 느껴지는 주기","변화가 시작되는 때","변화가 한가운데 들어오는 때","변화가 정리되는 때","나는 변화를 얼마나 크게 느끼는 편일까","원래 성향과 변화 시기가 만날 때","10년 흐름과 변화 시기가 겹칠 때","지나온 변화와 다음 변화","변화가 큰 때 기억할 점"];
-const yearTopics=["그해의 전체 분위기","10년 흐름과 함께 보는 그해","일·돈·관계 중 어디가 많이 움직일까"];
-const daeunTopics=["이 10년의 앞부분과 뒷부분"];
 
 const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
   "01":"성격과 기본 성향",
-  "02":"나를 이루는 기본 성향",
+  "02":"일주와 오행",
   "03":"직업운·학업운",
   "04":"재물운",
   "05":"연애운·결혼운·자녀운",
   "06":"건강운",
-  "07":"좋은 인연과 도움운",
-  "08":"눈에 띄는 특별한 성향",
-  "09":"나이에 따라 달라지는 모습",
-  "10":"내가 일·돈·사람을 다루는 방식",
+  "07":"귀인운",
+  "08":"신살 · 특별하게 드러나는 성향",
+  "09":"십이운성 · 시기마다 달라지는 모습",
+  "10":"십성 · 내가 일·돈·사람을 다루는 방식",
   "11":"앞으로 5년",
   "12S":"변화가 커지는 시기",
-  "13":"10년 단위 큰 흐름",
+  "13":"대운 · 10년 단위 큰 흐름",
   "14":"총정리"
 };
 const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
 
 export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number;relationshipStatus?:"SINGLE"|"DATING"|"MARRIED"}):DynamicLifetimeBook{
-  const base=LIFETIME_BOOK_PAGES.map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
+  const omittedBaseIds=new Set(["book-046","book-060","book-061","book-065","book-066","book-070","book-075","book-076","book-086","book-087","book-088","book-097","book-098","book-099","book-110","book-111","book-133"]);
+  const base=LIFETIME_BOOK_PAGES.filter(page=>!omittedBaseIds.has(page.id)).map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
     const remappedPartNumber=page.id==="book-015"?"10":
       ["book-016","book-017","book-018"].includes(page.id)?"02":
       page.id==="book-019"?"11":
       legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
     const part=customerPart(remappedPartNumber,legacyPart.title);
-    return{id:`legacy-${page.id}`,title:page.title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:page.title,
+    let title=page.title;
+    if(page.id==="book-047"){
+      if(options.relationshipStatus==="SINGLE")title="미래 배우자는 어떤 사람일까";
+      else if(options.relationshipStatus==="DATING")title="현재 연인에게 끌리는 이유";
+      else if(options.relationshipStatus==="MARRIED")title="배우자에게 중요하게 보는 것";
+    }
+    if(page.id==="book-112")title=`${options.year}년 · 가장 크게 움직이는 것`;
+    if(page.id==="book-113")title=`${options.year+1}년 · 달라지는 것`;
+    if(page.id==="book-114")title=`${options.year+2}년 · 중요한 선택`;
+    if(page.id==="book-115")title=`${options.year+3}년 · 커지는 변화`;
+    if(page.id==="book-116")title=`${options.year+4}년 · 남겨야 할 것`;
+    return{id:`legacy-${page.id}`,title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:title,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
-  if(options.relationshipStatus==="SINGLE"){
-    const spouseTopics=["미래 배우자는 어떤 사람일까","어디에서 인연이 시작되기 쉬울까","결혼하면 잘 맞는 생활 방식"];
-    spouseTopics.forEach((title,index)=>additions.push(extra(`relationship-single-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"05",YINYANGWAN_STYLE_PART_TITLES["05"],"RELATIONSHIP","CORE")));
-  }
-  childTopics.forEach((title,index)=>additions.push(extra(`children-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")));
-  if(options.includeSamjae)samjaeTopics.forEach((title,index)=>additions.push(extra(`samjae-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE")));
-  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>{const yearlyTitle=`${options.year+offset}년 · ${title}`;additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}`,yearlyTitle,"11",YINYANGWAN_STYLE_PART_TITLES["11"],(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",yearlyTitle));});
-  for(let daeun=1;daeun<=10;daeun++)daeunTopics.forEach((title,index)=>{const daeunTitle=`${daeun}번째 10년 · ${title}`;additions.push(extra(`daeun-${daeun}-${String(index+1).padStart(2,"0")}`,daeunTitle,"13",YINYANGWAN_STYLE_PART_TITLES["13"],(`DAEUN_${daeun}` as LifetimeEvidenceGroup),"TIMING_CORE",daeunTitle));});
   const all=[...base,...additions].sort((a,b)=>{
     const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
     return order.indexOf(a.partNumber)-order.indexOf(b.partNumber);});
