@@ -2164,7 +2164,6 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(/^신살$/.test(title)||/눈에 띄는 신살|강하게 보이는 신살/.test(title))return[
     starSentence(facts),
-    starSentence(facts),
     "신살은 성격과 사건을 단독으로 결정하는 힘이 아닙니다. 다른 계산 결과와 같은 방향을 가리킬 때 의미가 더 선명해집니다.",
     "예를 들어 대중성 신호가 있어도 표현하는 힘이 실제로 작동해야 사람 앞에 드러나고, 이동 신호가 있어도 실제 운에서 변화가 들어와야 체감이 커질 수 있습니다.",
     "중요한 건 이름을 외우는 게 아니라, 이 성향이 어디에서 장점이 되고 언제 피로로 바뀌는지를 아는 것입니다."
