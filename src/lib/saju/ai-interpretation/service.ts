@@ -94,7 +94,6 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     else if(id==="book-053")personalized=first.replace(/^바쁠수록\s*/,`${label}은 바쁠수록 `);
     else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     const paragraphs=[sanitizeCustomerWording(personalized),...source.slice(1).map(sanitizeCustomerWording)];
-    if(personalized===first&&paragraphs.every((paragraph,index)=>paragraph===source[index]))return section;
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
   });
   return{...report,sections};
