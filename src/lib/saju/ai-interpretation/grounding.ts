@@ -111,8 +111,13 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL"){for(const phrase of [...LIFETIME_BOOK_V1.prohibitedChildrenClaims,...LIFETIME_BOOK_V1.prohibitedWellnessClaims,...LIFETIME_BOOK_V1.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);validateLifetimeVoice(report);}
   if(input.reportType==="LIFETIME_GENERAL")for(const row of report.sections.filter(row=>row.contentKind!=="PROFESSIONAL")){
-    try{validateKoreanEditorial((row.paragraphs??[row.body]).join("\n"));}
+    const customerText=(row.paragraphs??[row.body]).join("\n");
+    try{validateKoreanEditorial(customerText);}
     catch(error){throw new GroundingValidationError(row.id+": "+(error instanceof Error?error.message:"한국어 편집 검증 실패"));}
+    for(const phrase of ["원국에","원국에서","원국의 관계","계산상","POSTPOST에서는","이 장에서는"])
+      if(customerText.includes(phrase))throw new GroundingValidationError(row.id+": 고객에게 불필요한 보고서식 표현: "+phrase);
+    if(!["02","09"].includes(row.partNumber??"")&&/(?:년주|월주|일주|시주)/.test(customerText))
+      throw new GroundingValidationError(row.id+": 고객 본문에 불필요한 기둥 용어가 남아 있습니다.");
   }
   validateLockedText(combined,[...input.evidence.map(row=>row.value),...(input.reportPlan??[])],input.minimalContext.requestedYear);
   return true;
