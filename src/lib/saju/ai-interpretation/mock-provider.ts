@@ -239,7 +239,13 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  return count?`중요한 선택에서 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서도 이 힘이 반복해서 기준이 됩니다.`:"";
+  if(!count)return"";
+  if(family==="비겁")return"중요한 선택에서는 남이 정해준 답보다 내가 납득한 방식대로 움직이려는 편입니다. 경쟁이 붙거나 의견이 갈릴수록 자기 판단을 쉽게 놓지 않습니다.";
+  if(family==="식상")return"생각만 오래 품기보다 말하거나 만들어서 밖으로 보여줄 때 장점이 잘 살아납니다. 일에서도 결과물이 눈에 보일수록 속도가 붙는 편입니다.";
+  if(family==="재성")return"현실적인 결과를 중요하게 보는 편입니다. 돈, 시간, 성과처럼 실제로 남는 것이 분명할수록 판단도 빨라집니다.";
+  if(family==="관성")return"맡은 일과 약속을 가볍게 넘기지 않는 편입니다. 주변에서는 책임감 있고 믿을 만한 사람으로 보기 쉽습니다.";
+  if(family==="인성")return"바로 결론을 내리기보다 충분히 이해하고 자기 방식으로 정리한 뒤 움직이는 편입니다. 배우고 파고드는 일에도 강점이 있습니다.";
+  return"중요한 선택에서는 남의 말보다 스스로 납득할 수 있는지를 중요하게 봅니다.";
 }
 const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
   비견:"내 생각과 기준을 세우는 힘",
@@ -267,7 +273,7 @@ function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day
 }
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
-  return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
+  return `이 사주는 이미 잘하는 쪽을 더 밀어붙이기보다 ${facts.useful.map(elementPro).join(" · ")}에 해당하는 부분을 생활에서 보완할 때 균형이 좋아집니다.`;
 }
 function relationSentence(facts:ConsultationFacts){
   const tension=facts.relationCounts.break||facts.relationCounts.harm||facts.relationCounts.wonjin||facts.relationCounts.punishment;
@@ -336,9 +342,9 @@ function tenGodTone(role:string){
 }
 
 function stageSentence(facts:ConsultationFacts,position:string,_label:string){
-  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그때 필요한 힘을 쓰는 고유한 리듬";
+  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"상황에 맞춰 속도를 조절하는 모습";
   const context=position==="year"?"인생 초반에는":position==="month"?"사회생활에서는":position==="day"?"가까운 관계와 중요한 선택에서는":"인생 후반으로 갈수록";
-  return stage?`${context} ${stage}의 흐름이 들어옵니다. 쉽게 말하면 ${meaning}이 중요한 시기와 장면에서 더 잘 드러납니다.`:"";
+  return stage?`${context} ${meaning}이 더 자주 드러나는 편입니다.`:"";
 }
 function pillarElementSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
@@ -503,7 +509,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
   if(group==="TEN_GODS"){
-    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 이 사주의 중심축으로 작동합니다.":"");
+    if(/한눈에|분포|10가지/.test(title))return "사람은 상황에 따라 경쟁할 때, 표현할 때, 돈을 다룰 때, 책임질 때, 배울 때의 모습이 조금씩 다릅니다. "+(facts.structure?structureMeaning(facts.structure)+"이 그중에서도 자주 드러나는 편입니다.":"");
     if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
     if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
     if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
@@ -512,7 +518,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   }
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
-  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
+  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 평소 모습과 그 시기의 변화를 함께 보면서, 일·돈·관계 가운데 어디에서 움직임이 커지기 쉬운지를 살펴보는 장입니다.";
   if(group==="SYNTHESIS")return "앞의 내용을 다시 나열하기보다, "+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"전체적인 균형")+"을 함께 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
@@ -1516,18 +1522,18 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   const strongStory=strongest?elementStory(strongest):null,weakStory=weakest?elementStory(weakest):null;
 
   if(id==="book-007")return[
-    `사주의 중심부터 보면 ${facts.dayStemName||"나를 대표하는 기운"}이 자리합니다. ${stem.image}에 비유하는 기운으로, ${stem.core}이 기본 성향의 뼈대를 만듭니다.`,
-    elementFact(facts)||"오행은 한쪽만 보고 판단하지 않고 다섯 기운의 강약을 함께 봅니다.",
-    dominantFamilySentence(facts)||"십성에서는 한 가지 역할만 앞세우기보다 여러 역할이 어떻게 섞이는지를 함께 봅니다.",
-    facts.structure?`타고난 흐름의 중심에는 ${structureMeaning(facts.structure)}이 있습니다. 이 힘이 실제 생활에서 어떻게 쓰이는지를 보는 게 중요합니다.`:"타고난 구조는 한 가지 이름보다 여러 계산 근거가 같은 방향을 가리키는지 함께 봅니다.",
-    `그래서 이 사주는 단순히 '신중한 사람'처럼 한 단어로 끝내기 어렵습니다. ${stem.core}이 강점으로 작동하고, 반대로 ${stem.shadow}이 부담으로 바뀌는 순간을 함께 보는 편이 정확합니다.`
+    `기본 성향을 보면 ${stem.image}처럼 자기 방향이 한번 잡히면 쉽게 흔들리지 않는 편입니다. ${stem.core}이 평소 선택과 행동에서 자주 드러납니다.`,
+    facts.strongest&&facts.weakest?`잘 쓰는 부분과 덜 쓰는 부분의 차이가 꽤 분명한 편입니다. 그래서 모든 상황에서 같은 모습이 나오기보다, 익숙한 일에서는 빠르고 낯선 일에서는 한 번 더 살피는 식으로 차이가 생길 수 있습니다.`:"한 가지 성격으로 딱 잘라 말하기보다 상황에 따라 달라지는 모습을 함께 보는 편이 맞습니다.",
+    dominantFamilySentence(facts)||"중요한 선택에서는 남이 정한 답보다 내가 납득할 수 있는지를 더 중요하게 봅니다.",
+    facts.structure?`${structureMeaning(facts.structure)}이 강하게 드러나는 편이라, 맡은 일이나 약속을 가볍게 넘기기보다 끝까지 책임지려는 모습이 자주 보입니다.`:"한번 마음을 정하면 생각에서 끝내지 않고 실제 행동으로 옮기려는 편입니다.",
+    `목표가 분명할 때는 추진력이 좋습니다. 반대로 왜 해야 하는지 스스로 납득되지 않으면 속도가 확 느려질 수 있고, ${stem.shadow}이 고집이나 피로로 보일 때도 있습니다. 그래서 무조건 열심히 하는 사람이라기보다, 의미 있다고 느끼는 일에 힘을 제대로 쓰는 사람에 가깝습니다.`
   ];
 
   if(id==="book-008")return[
-    `이 사주를 한 문장으로 줄이면, '${stem.core}을 가진 사람'에 가깝습니다.`,
-    dominantFamilySentence(facts)||`${facts.dayStemName||"중심 기운"}의 성향이 판단과 선택에서 반복해서 나타납니다.`,
-    facts.structure?`${structureMeaning(facts.structure)}이 함께 작동하기 때문에, 잘하고 싶은 마음만 있는 것이 아니라 실제 역할과 결과까지 책임지려는 힘이 같이 붙습니다.`:"자기 기준이 선 뒤에는 생각을 행동으로 옮기고 결과를 끝까지 확인하려는 힘이 있습니다.",
-    `장점은 한번 방향을 정하면 쉽게 흐트러지지 않는다는 점입니다. 다만 ${stem.shadow}이 강해지면 스스로 만든 기준 때문에 오히려 시작이 늦거나 피로가 커질 수 있습니다.`
+    "한 문장으로 줄이면, 남이 정해준 방향보다 스스로 납득한 방향에서 훨씬 오래 힘을 쓰는 사람에 가깝습니다.",
+    dominantFamilySentence(facts)||"생각이 정리되기 전에는 신중하지만, 마음이 정해진 뒤에는 행동이 빨라지는 편입니다.",
+    facts.structure?`${structureMeaning(facts.structure)}이 두드러져서, 잘하고 싶다는 마음이 실제 책임과 마무리까지 이어지는 편입니다.`:"자기 기준이 선 뒤에는 말보다 행동으로 보여주려는 편입니다.",
+    `한번 정한 일을 꾸준히 가져가는 건 큰 장점입니다. 다만 ${stem.shadow}이 강해지면 스스로 만든 기준 때문에 시작이 늦거나 혼자 지치는 일이 생길 수 있습니다.`
   ];
 
   if(id==="book-009")return[
@@ -2488,11 +2494,11 @@ function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     ];
 
     if(/기운이 실제로 옮겨 가는 관계/.test(title))return[
-      "합이 있다고 모든 기운이 바로 다른 오행으로 바뀌는 것은 아닙니다. 계절, 뿌리, 드러난 기운, 방해 관계를 함께 봐야 실제 변화가 생기는지 판단할 수 있습니다.",
-      "POSTPOST 계산에서는 단순히 '합이 있다'에서 끝내지 않고 실제로 얼마만큼 기운이 이동했는지를 별도로 계산합니다.",
-      "고객 해설에서는 그 내부 계산 과정을 그대로 늘어놓지 않고, 최종적으로 어떤 오행이 강해지고 약해졌는지만 반영합니다.",
-      "그래서 원국표의 오행 비율과 해설에서 말하는 강약은 관계가 반영된 최종값을 기준으로 읽습니다.",
-      "이 장의 핵심은 겉으로 보이는 글자 수보다 실제로 남은 힘의 분포가 더 중요하다는 점입니다."
+      "사람이나 일이 서로 강하게 엮이면, 원래 있던 성향도 조금 다른 방식으로 드러날 수 있습니다.",
+      "예를 들어 혼자 할 때보다 누군가와 함께할 때 추진력이 더 세지거나, 반대로 한쪽에 너무 몰입해 다른 일을 놓칠 수도 있습니다.",
+      "이런 관계는 단순히 '잘 맞는다'로 끝내지 않고 실제로 어떤 부분이 더 강해지고 어떤 부분이 줄어드는지를 함께 봅니다.",
+      "그래서 겉으로 보이는 특징보다 관계 속에서 실제 행동이 어떻게 달라지는지가 더 중요합니다.",
+      "이 장에서는 어려운 명리 용어보다, 사람·일·환경이 엮였을 때 내 선택과 행동이 어떻게 바뀌는지를 중심으로 읽습니다."
     ];
 
     if(/변화가 큰 시기/.test(title))return[
@@ -2522,7 +2528,7 @@ function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(group==="SAMJAE"){
     if(/삼재란/.test(title))return[
       "삼재는 띠를 기준으로 세 해의 변화 주기를 보는 전통적인 시간표입니다.",
-      "삼재에 들어갔다고 모든 나쁜 일이 생긴다는 뜻은 아닙니다. 실제 사주 원국과 그해의 관계가 어떻게 맞물리는지를 함께 봐야 합니다.",
+      "삼재에 들어갔다고 모든 나쁜 일이 생긴다는 뜻은 아닙니다. 평소 성향과 그해의 변화가 어떻게 겹치는지를 함께 봐야 합니다.",
       "삼재라는 이름보다 실제로 일·관계·이동의 변화가 얼마나 겹치는지를 더 중요하게 보는 편이 현실적입니다.",
       "그래서 삼재인데도 비교적 편하게 지나갈 수 있고, 삼재가 아니어도 큰 변화가 생길 수 있습니다.",
       "삼재는 공포의 기준보다 평소보다 확인을 조금 더 늘리는 변화 주기로 이해하는 편이 맞습니다."
