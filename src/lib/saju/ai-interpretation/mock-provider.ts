@@ -553,7 +553,7 @@ function periodContext(input:InterpretationInput,row:Row){
   };
 }
 type FortuneSnapshot={
-  synthesisId:string;year:number|null;daeunIndex:number|null;daeunPillar:string;ageRange:string;startAge:number|null;endAge:number|null;
+  synthesisId:string;year:number|null;daeunIndex:number|null;daeunPillar:string;ageRange:string;startAge:number|null;endAge:number|null;startYear:number|null;endYear:number|null;
   favorabilityScore:number;favorabilityLevel:string;activationScore:number;activationLevel:string;
   categories:Array<{key:string;label:string;support:number;activity:number}>;
 };
@@ -578,6 +578,8 @@ function fortuneSnapshots(input:InterpretationInput,row:Row){
     if(!context)continue;
     const favor=asRecord(evidenceValue(input,`FORTUNE:${synthesisId}:FAVORABILITY`));
     const activation=asRecord(evidenceValue(input,`FORTUNE:${synthesisId}:ACTIVATION`));
+    const period=asRecord(context.period),startInstant=asText(period?.startInstant),endInstant=asText(period?.endInstant);
+    const startYear=/^\d{4}/.test(startInstant)?Number(startInstant.slice(0,4)):null,endYear=/^\d{4}/.test(endInstant)?Number(endInstant.slice(0,4)):null;
     snapshots.push({
       synthesisId,
       year:asNumber(context.seunYear),
@@ -586,6 +588,8 @@ function fortuneSnapshots(input:InterpretationInput,row:Row){
       ageRange:asText(context.daeunAgeRange),
       startAge:asNumber(context.startAgeYears),
       endAge:asNumber(context.endAgeYears),
+      startYear,
+      endYear,
       favorabilityScore:asNumber(favor?.score)??0,
       favorabilityLevel:asText(favor?.level),
       activationScore:asNumber(activation?.score)??0,
