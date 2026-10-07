@@ -3046,61 +3046,71 @@ function changeConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
-  const title=row.topic??row.title,group=row.evidenceGroup??"",axis=fortuneAxis(input,row);
-  const favor=FAVORABILITY_LABELS[axis.favorabilityLevel]??"",activation=ACTIVATION_LABELS[axis.activationLevel]??"";
+  const title=row.topic??row.title,group=row.evidenceGroup??"";
+  const snapshots=fortuneSnapshots(input,row).filter(snapshot=>snapshot.daeunIndex!=null).sort((a,b)=>(a.daeunIndex??0)-(b.daeunIndex??0));
+  const requestedYear=typeof input.minimalContext.requestedYear==="number"?input.minimalContext.requestedYear:null;
+  const current=requestedYear!=null?snapshots.find(snapshot=>snapshot.startYear!=null&&snapshot.endYear!=null&&snapshot.startYear<=requestedYear&&requestedYear<snapshot.endYear)??null:null;
 
-  if(group==="DAEUN_OVERVIEW"){
-    if(/10년 단위 큰 흐름|^대운$/.test(title))return[
-      "인생을 길게 보면 몇 년 동안 비슷한 역할과 환경이 반복되는 구간이 있습니다. 어떤 시기에는 공부와 준비가 길어지고, 어떤 시기에는 돈과 책임이 커지는 식입니다.",
-      "이 흐름이 바뀐다고 하루아침에 사람이 달라지는 건 아닙니다. 보통 앞 시기의 일과 다음 시기의 역할이 겹치면서 관심사와 생활이 서서히 바뀝니다.",
-      "편한 시기에도 준비가 없으면 지나갈 수 있고, 부담이 큰 시기에도 책임과 권한이 함께 커지면 오히려 크게 성장할 수 있습니다.",
-      "중요한 건 언제 운이 좋은지를 기다리는 게 아니라 지금 몇 년 동안 무엇을 쌓아야 다음 시기가 편해지는지 보는 것입니다."
-    ];
+  if(group==="DAEUN_OVERVIEW"&&/대운 · 평생 10년 흐름|10년 단위 큰 흐름|^대운$/.test(title))return[
+    "대운은 약 10년씩 이어지는 큰 생활 배경입니다. 같은 사람이라도 어느 대운을 지나느냐에 따라 일·돈·관계 가운데 자주 부딪히는 분야가 달라질 수 있습니다.",
+    current?("현재는 "+current.ageRange+"의 "+current.daeunPillar+" 대운을 지나고 있습니다. "+(topSnapshotCategory(current,"activity")?topSnapshotCategory(current,"activity")?.label+" 쪽 움직임이 가장 크게 잡힙니다.":"여러 분야가 비슷하게 움직이는 구간입니다.")):"현재 대운은 기준연도의 세운과 함께 확인합니다.",
+    "대운이 좋다는 말은 10년 내내 좋은 일만 생긴다는 뜻이 아니고, 어떤 선택에 결과가 붙기 쉬운지와 어떤 분야가 바빠지는지를 보는 의미에 가깝습니다.",
+    "평생 흐름에서는 과거 대운을 기억하려 하기보다 지금까지 어떤 성향이 만들어졌고 앞으로 어느 분야가 커지는지를 보는 게 더 유용합니다."
+  ];
 
-    if(/지금 지나고 있는 10년|현재 대운/.test(title))return[
-      "지금 몇 년 동안 반복해서 부딪히는 일·돈·관계 문제가 있다면 현재 생활의 큰 배경과 연결해서 볼 수 있습니다.",
-      "예전에는 잘 맞던 방식이 요즘 유독 답답하게 느껴지거나, 반대로 전에는 관심 없던 일이 중요해졌다면 맡고 있는 역할이 달라졌기 때문일 수 있습니다.",
-      topCategorySentence(input,row)||"지금은 어느 분야의 책임과 선택이 가장 많이 커지는지 보는 게 중요합니다.",
-      "이 시기에 익힌 방식과 경험은 다음 흐름으로 넘어갈 때 그대로 자산이 될 수 있습니다.",
-      "미래를 기다리기보다 요즘 자꾸 요구받는 역할이 무엇인지 알아차리는 게 먼저입니다."
-    ];
+  if(group==="DAEUN_OVERVIEW"&&/지금 지나고 있는 10년|현재 대운/.test(title))return current?[
+    "지금 지나고 있는 대운은 "+current.ageRange+" · "+current.daeunPillar+" 대운입니다.",
+    (topSnapshotCategory(current,"activity")?("이 구간에서 가장 많이 움직이는 분야는 "+topSnapshotCategory(current,"activity")?.label+"입니다. "+categoryLifeSentence(topSnapshotCategory(current,"activity")?.label??"")):"한 분야에만 변화가 몰리기보다 여러 선택이 섞여 들어오는 구간입니다."),
+    topSnapshotCategory(current,"support")?("상대적으로 도움을 받기 쉬운 쪽은 "+topSnapshotCategory(current,"support")?.label+"입니다. 바쁜 분야와 유리한 분야가 다르면 무조건 바쁜 쪽에만 힘을 쓰지 않는 게 중요합니다."):"도움을 받는 정도와 활동량을 따로 보는 편이 좋습니다.",
+    current.daeunPillar?fortunePillarSentence(current.daeunPillar):"대운의 글자는 원래 사주와 만나 어떤 역할이 커지는지 함께 봅니다.",
+    categoryActionSentence(topSnapshotCategory(current,"activity")?.label??"")
+  ]:[
+    "현재 대운은 기준연도에 해당하는 대운 구간을 먼저 찾아서 봅니다.",
+    "현재 구간에서 일·돈·관계 중 어느 쪽이 가장 많이 움직이는지를 세운과 함께 확인하는 게 중요합니다.",
+    "지금 반복해서 생기는 선택이 무엇인지 보면 현재 대운의 성격을 체감하기 쉽습니다."
+  ];
 
-    if(/평생 10년 흐름 한눈에 보기|내 평생 10년 흐름표|평생 대운|대운표/.test(title))return[
-      "평생 흐름표는 어느 시기가 제일 좋고 나쁜지를 줄 세우는 표가 아닙니다. 시기마다 무엇을 배우고, 무엇을 현실로 만들고, 무엇을 정리하는지가 달라지는 걸 보는 지도에 가깝습니다.",
-      "초반에는 경험을 넓히는 일이 중요하고, 중반에는 그 경험을 직업과 돈으로 굳히는 일이 커지며, 후반에는 직접 다 하기보다 경험을 골라 쓰는 역할이 중요해질 수 있습니다.",
-      "앞 시기에 배운 것이 다음 시기에 돈이 되고, 한때의 책임이 나중에는 결정권으로 바뀌는 식으로 흐름이 이어질 수 있습니다.",
-      "언제가 제일 좋은가보다 각 시기에 무엇을 해야 다음 단계가 편해지는지를 보는 편이 훨씬 유용합니다."
-    ];
+  if(group==="DAEUN_OVERVIEW"&&/평생 10년 흐름 한눈에 보기|평생 대운/.test(title))return snapshots.length?[
+    "대운을 한눈에 보면 시기마다 중심 분야가 어디로 옮겨가는지 볼 수 있습니다.",
+    ...snapshots.map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity");return snapshot.ageRange+" · "+snapshot.daeunPillar+": "+(active?active.label+" 쪽 움직임이 상대적으로 큼":"여러 분야가 비슷하게 움직임");}),
+    "어린 시절 구간은 사건을 기억하는 장이 아니라 가족·학교 환경 속에서 어떤 적응 습관이 만들어졌는지 보는 배경이고, 성인 이후부터는 직업·재물·관계의 실제 선택과 더 직접적으로 연결해서 봅니다."
+  ]:[
+    "대운은 각 나이 구간마다 일·돈·관계의 중심이 어떻게 바뀌는지를 보는 흐름표입니다.",
+    "과거를 맞히는 용도보다 앞으로 어느 역할이 커질지를 준비하는 데 쓰는 게 좋습니다."
+  ];
 
-    if(/10년 흐름이 바뀔 때 느껴지는 변화|어떻게 바뀔까/.test(title))return[
-      "큰 흐름은 어느 날 갑자기 끊기듯 바뀌기보다 앞의 생활과 다음 역할이 한동안 겹치면서 달라지는 경우가 많습니다.",
-      "처음에는 관심사와 사람 관계가 달라지고, 그다음에 실제 직업·돈·생활 방식이 따라 바뀌는 식으로 느낄 수 있습니다.",
-      "예전 방식이 갑자기 덜 맞는 것 같아도 능력이 떨어진 게 아니라 지금 환경이 다른 역할을 요구하기 시작한 것일 수 있습니다.",
-      "이 시기에는 모든 걸 새로 만들기보다 계속 가져갈 것, 수정할 것, 끝낼 것을 나눠보는 편이 좋습니다."
-    ];
+  if(group==="DAEUN_OVERVIEW"&&/10년 흐름이 바뀔 때 느껴지는 변화/.test(title))return[
+    "대운은 생일 하루를 기준으로 성격이 갑자기 바뀌듯 넘어가는 게 아니라 앞 구간과 다음 구간이 겹치면서 생활의 우선순위가 서서히 달라지는 식으로 체감되는 경우가 많습니다.",
+    "처음에는 만나는 사람이나 관심사가 달라지고, 이후 직업·돈·생활 방식이 따라 움직이는 식으로 나타날 수 있습니다.",
+    current?("현재 "+current.ageRange+" 구간에서는 "+(topSnapshotCategory(current,"activity")?.label??"생활 전반")+" 쪽 변화가 중심이라, 다음 구간으로 갈수록 이 경험이 무엇으로 남는지를 보는 게 중요합니다."):"현재 구간에서 반복되는 선택이 다음 대운의 준비가 될 수 있습니다.",
+    "대운 전환기에는 모든 걸 새로 시작하기보다 계속 가져갈 것, 수정할 것, 끝낼 것을 먼저 나눠보는 편이 좋습니다."
+  ];
 
-    if(/인생 초반·중반·후반의 큰 변화|초·중·후반/.test(title))return[
-      "인생 초반·중반·후반에는 잘해야 하는 일이 조금씩 달라집니다.",
-      "초반에는 나에게 맞는 일을 찾고 경험을 쌓는 시간이 길 수 있고, 중반에는 그 경험을 직업·돈·가족의 현실로 굳히는 일이 중요해질 수 있습니다.",
-      "후반으로 갈수록 직접 모든 걸 처리하기보다 경험을 바탕으로 사람과 자원을 고르고 배치하는 역할이 커질 수 있습니다.",
-      "어느 구간이 무조건 좋은 게 아니라 그 시기에 필요한 역할을 잘 쓸 때 만족도와 결과가 더 좋아질 수 있습니다."
-    ];
-
-    return[
-      "이 시기는 몇 년 동안 반복해서 느껴지는 큰 생활 배경을 보는 부분입니다.",
-      topCategorySentence(input,row)||"일·돈·관계 가운데 어디에서 역할이 커지는지 함께 봅니다.",
-      "앞 시기에 만든 경험이 다음 시기에 다른 결과로 이어질 수 있습니다.",
-      "좋고 나쁨 하나로 줄이기보다 지금 무엇을 쌓아야 하는지를 보는 편이 현실적입니다."
-    ];
-  }
+  if(group==="DAEUN_OVERVIEW"&&/인생 초반·중반·후반의 큰 변화/.test(title))return snapshots.length?[
+    "초반 대운은 어떤 환경에서 적응했고 무엇을 빨리 배우게 되었는지가 중요합니다. 기억나는 사건의 수보다 성향과 습관이 만들어진 배경으로 보는 게 맞습니다.",
+    "중반 대운은 직업·재물·가족이 실제 선택으로 굳어지는 시기라, 움직임이 큰 분야와 도움을 받기 쉬운 분야의 차이가 훨씬 중요해집니다.",
+    "후반 대운은 직접 모든 걸 하는 것보다 쌓아온 경험·자산·관계를 어떻게 남기고 배치하는지가 중요해질 수 있습니다.",
+    "같은 사주라도 초·중·후반의 역할이 달라지는 이유가 대운 흐름에 있습니다."
+  ]:["초반은 경험, 중반은 현실화, 후반은 정리와 배치의 의미가 더 커질 수 있습니다.","대운마다 같은 방식으로 살기보다 그 시기에 맞는 역할을 쓰는 편이 좋습니다."];
 
   if(/^DAEUN_[1-9]$/.test(group)||group==="DAEUN_10"){
+    const snapshot=snapshots[0]??null;
+    if(!snapshot)return["이 대운은 해당 구간의 계산 결과를 기준으로 봅니다.","같은 10년이라도 실제 활동량과 도움 정도를 따로 확인하는 편이 좋습니다."];
+    const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");
+    const childhood=snapshot.endAge!=null&&snapshot.endAge<=15;
+    const youth=!childhood&&snapshot.startAge!=null&&snapshot.startAge<30;
+    const lifeContext=childhood
+      ?"이 구간은 본인이 사건을 세세하게 기억하는지보다 가족·학교·생활환경 속에서 어떤 적응 방식이 만들어졌는지를 보는 시기입니다."
+      :youth
+        ?"이 구간은 공부·첫 직장·독립처럼 내가 어떤 일을 선택하고 사회에서 어떤 역할을 맡을지 만들어가는 의미가 큽니다."
+        :"이 구간은 이미 쌓은 경험을 직업·재물·관계에서 실제 결과로 굳히는 선택이 더 중요해지는 시기입니다.";
     return[
-      "이 몇 년 동안은 평소보다 어떤 역할과 선택이 반복해서 커지는지가 중요합니다.",
-      topCategorySentence(input,row)||"일·돈·관계 가운데 어느 분야가 더 많이 움직이는지 확인합니다.",
-      favor&&activation?`도움을 받기 쉬운 정도는 ${favor} 쪽에 가깝고, 실제 변화의 크기는 ${activation} 쪽으로 보입니다.`:favor?`도움을 받기 쉬운 정도는 ${favor} 쪽에 가깝습니다.`:activation?`실제 변화의 크기는 ${activation} 쪽으로 보입니다.`:"도움을 받는 정도와 실제로 일이 많아지는 정도는 따로 보는 편이 좋습니다.",
-      "앞부분에는 새 역할에 적응하고, 가운데에는 결과를 만들고, 뒤쪽에는 다음 시기로 가져갈 것을 정리하는 식으로 생각하면 좋습니다.",
-      "몇 년 전체를 좋다 나쁘다로 묶기보다 이 기간에 어떤 경험을 남길지를 보는 게 더 중요합니다."
+      snapshot.ageRange+"의 "+snapshot.daeunPillar+" 대운입니다. "+lifeContext,
+      snapshot.daeunPillar?fortunePillarSentence(snapshot.daeunPillar):"대운의 글자는 원래 사주와 만나 어느 성향이 커지는지 봅니다.",
+      active?("이 대운에서 가장 많이 움직이는 분야는 "+active.label+"입니다. "+categoryLifeSentence(active.label)):"이 대운은 한 분야에 변화가 몰리기보다 여러 역할이 함께 움직이는 편입니다.",
+      support?("상대적으로 도움을 받기 쉬운 분야는 "+support.label+" 쪽입니다. "+(active&&support.key===active.key?"움직임과 지원이 같은 곳에 겹쳐 결과를 만들기 좋은 편입니다.":"바쁜 분야와 유리한 분야가 다르므로 힘을 쓰는 순서를 나눠보는 게 좋습니다.")):"도움을 받는 정도는 다른 대운 근거와 함께 봅니다.",
+      (FAVORABILITY_LABELS[snapshot.favorabilityLevel]&&ACTIVATION_LABELS[snapshot.activationLevel])?("전체적으로는 "+FAVORABILITY_LABELS[snapshot.favorabilityLevel]+", 활동량은 "+ACTIVATION_LABELS[snapshot.activationLevel]+"에 가깝습니다."):"지원 정도와 활동량은 별개로 봅니다.",
+      childhood?"이 시기를 잘 기억하려고 애쓰기보다 지금도 남아 있는 습관과 가족·학교에서 배운 대응 방식이 무엇인지 돌아보는 정도면 충분합니다.":categoryActionSentence(active?.label??"")
     ];
   }
 
