@@ -54,6 +54,27 @@ function sumUsage(...values:Array<{input:number;output:number}|undefined>){
   if(!present.length)return undefined;
   return present.reduce((total,value)=>({input:total.input+value.input,output:total.output+value.output}),{input:0,output:0});
 }
+function customerHonorific(name:string){
+  const trimmed=name.trim();
+  if(!trimmed)return"고객님";
+  return trimmed.endsWith("님")?trimmed:`${trimmed}님`;
+}
+function personalizeCustomerReport(report:StructuredInterpretation,name:string):StructuredInterpretation{
+  const label=customerHonorific(name);
+  const sections=report.sections.map(section=>{
+    if(section.id.replace(/^legacy-/,"")!=="book-007")return section;
+    const source=section.paragraphs??(section.body?[section.body]:[]);
+    if(!source.length)return section;
+    const paragraphs=source.map((paragraph,index)=>index===0
+      ?paragraph.replace(/^이 사주는 기본적으로\s*/,`${label}은 기본적으로 `)
+      :paragraph);
+    return{...section,paragraphs,body:paragraphs.join("\n\n")};
+  });
+  return{...report,sections};
+}
+function personalizeCompletedResult(result:InterpretationResult,name:string):InterpretationResult{
+  return result.status==="completed"?{...result,report:personalizeCustomerReport(result.report,name)}:result;
+}
 
 export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:InterpretationProvider,options:InterpretationServiceOptions):Promise<InterpretationResult>{
   let input:ReturnType<typeof buildInterpretationInput>;
@@ -61,7 +82,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
     if(error instanceof AnalysisNotCompletedError)return failure(error.code,error.message);
     if(error instanceof InterpretationInputError)return failure(error.code,error.message);throw error;}
   const {analysisHash,cacheKey}=interpretationHashes(input,options.reportType,options.modelConfigVersion);
-  const cached=await options.cache?.get(cacheKey);if(cached)return cached;
+  const cached=await options.cache?.get(cacheKey);if(cached)return personalizeCompletedResult(cached,analysis.person.name);
 
   let plan:LifetimeInterpretationPlan|undefined,planUsage:{input:number;output:number}|undefined;
   if(options.reportType==="LIFETIME_GENERAL"){
@@ -92,7 +113,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
   const tokenUsage=sumUsage(planUsage,initialNarrativeUsage,repairUsage);
   const result={status:"completed" as const,ruleVersion:RULE.ruleVersion,promptVersion:RULE.promptVersion,groundingVersion:RULE.groundingVersion,
     analysisHash,cacheKey,report:checked.report,metadata:{provider:response.provider,model:response.model,repaired,...(tokenUsage?{tokenUsage}: {})}};
-  await options.cache?.set(cacheKey,result);return result;
+  await options.cache?.set(cacheKey,result);return personalizeCompletedResult(result,analysis.person.name);
 }
 function providerFailure(error:unknown):InterpretationResult{
   if(error instanceof InterpretationProviderTimeoutError)return failure(error.code,error.message);
