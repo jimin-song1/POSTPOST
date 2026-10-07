@@ -28,11 +28,11 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     if(analysis.fortune.status!=="partial")return;const fortune=analysis.fortune as FortuneResult;
     expect(fortune.samjae.status).toBe("implemented");
     const characterCore=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:"SINGLE",year:YEAR});
-    const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
+    const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR,relationshipStatus:"SINGLE"}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "성격과 기본 성향","일주와 오행","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","귀인운",
-      "신살","십이운성","십성","연운 · 앞으로 5년","삼재·변화운","대운","총정리"
+      "성격과 기본 성향","나를 이루는 기본 성향","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","좋은 인연과 도움운",
+      "눈에 띄는 특별한 성향","나이에 따라 달라지는 모습","내가 일·돈·사람을 다루는 방식","앞으로 5년","변화가 커지는 시기","10년 단위 큰 흐름","총정리"
     ]);
     expect(book.sections.find(section=>section.id==="legacy-book-015")?.partNumber).toBe("10");
     for(const id of ["legacy-book-016","legacy-book-017","legacy-book-018"]) expect(book.sections.find(section=>section.id===id)?.partNumber,id).toBe("02");
