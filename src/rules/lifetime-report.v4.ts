@@ -68,6 +68,7 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
     return{id:`legacy-${page.id}`,title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:title,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
+  if(options.includeSamjae)additions.push(extra("samjae-summary","삼재 · 실제 연도와 변화 포인트","12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
     const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
     return order.indexOf(a.partNumber)-order.indexOf(b.partNumber);});
