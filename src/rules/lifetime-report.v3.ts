@@ -54,7 +54,7 @@ export const LIFETIME_BOOK_V1={
     {id:"book-018",pageNumber:18,title:"나에게 도움이 되는 기운",evidenceGroup:"STRUCTURE_USEFUL"},
     {id:"book-019",pageNumber:19,title:"앞으로의 시기는 어떻게 나눠서 볼까",evidenceGroup:"FORTUNE_EXPLAIN"}
   ]},
-  {partNumber:"02",title:"나를 이루는 기본 성향",pages:[
+  {partNumber:"02",title:"일주와 오행",pages:[
     {id:"book-020",pageNumber:20,title:"나를 이루는 기본 성향",evidenceGroup:"IDENTITY"},
     {id:"book-021",pageNumber:21,title:"나를 대표하는 기운",evidenceGroup:"IDENTITY"},
     {id:"book-022",pageNumber:22,title:"나를 대표하는 두 글자",evidenceGroup:"PILLARS"},
@@ -96,58 +96,58 @@ export const LIFETIME_BOOK_V1={
     {id:"book-052",pageNumber:52,title:"가족 안에서 맡게 되는 역할",evidenceGroup:"CHILDREN"}
   ]},
   {partNumber:"06",title:"건강운",pages:[
-    {id:"book-053",pageNumber:53,title:"내가 무리하는 방식",evidenceGroup:"WELLNESS"},
-    {id:"book-054",pageNumber:54,title:"피로가 쌓일 때 먼저 달라지는 것",evidenceGroup:"WELLNESS"},
-    {id:"book-055",pageNumber:55,title:"나에게 맞는 생활 리듬",evidenceGroup:"WELLNESS"},
+    {id:"book-053",pageNumber:53,title:"명리로 보는 건강 균형",evidenceGroup:"WELLNESS"},
+    {id:"book-054",pageNumber:54,title:"약하게 보이는 부분과 주의할 점",evidenceGroup:"WELLNESS"},
+    {id:"book-055",pageNumber:55,title:"생활에서 보완하는 방법",evidenceGroup:"WELLNESS"},
     {id:"book-056",pageNumber:56,title:"어떻게 쉬어야 회복이 빠를까",evidenceGroup:"WELLNESS"},
     {id:"book-057",pageNumber:57,title:"스트레스가 쌓이는 방식",evidenceGroup:"WELLNESS"},
-    {id:"book-058",pageNumber:58,title:"기운이 떨어질 때 필요한 것",evidenceGroup:"WELLNESS"},
-    {id:"book-059",pageNumber:59,title:"바쁠수록 놓치기 쉬운 생활 습관",evidenceGroup:"WELLNESS"},
+    {id:"book-058",pageNumber:58,title:"활력이 떨어질 때 회복하는 법",evidenceGroup:"WELLNESS"},
+    {id:"book-059",pageNumber:59,title:"식사·수면·움직임에서 챙길 것",evidenceGroup:"WELLNESS"},
     {id:"book-060",pageNumber:60,title:"몸과 마음이 메말라가는 느낌이 들 때",evidenceGroup:"WELLNESS"},
     {id:"book-061",pageNumber:61,title:"회복이 더디게 느껴질 때",evidenceGroup:"WELLNESS"},
-    {id:"book-062",pageNumber:62,title:"잘 지키는 것과 자꾸 놓치는 것",evidenceGroup:"WELLNESS"},
+    {id:"book-062",pageNumber:62,title:"잘하는 관리와 놓치기 쉬운 관리",evidenceGroup:"WELLNESS"},
     {id:"book-063",pageNumber:63,title:"생활 리듬이 크게 흔들리는 시기",evidenceGroup:"WELLNESS"}
   ]},
-  {partNumber:"07",title:"좋은 인연과 도움운",pages:[
-    {id:"book-064",pageNumber:64,title:"내게 도움이 되는 사람은 어떤 사람일까",evidenceGroup:"NOBLE"},
+  {partNumber:"07",title:"귀인운",pages:[
+    {id:"book-064",pageNumber:64,title:"내 사주의 귀인운",evidenceGroup:"NOBLE"},
     {id:"book-065",pageNumber:65,title:"도움을 받을 복은 어떻게 들어올까",evidenceGroup:"NOBLE"},
     {id:"book-066",pageNumber:66,title:"나를 도와주는 인연의 모습",evidenceGroup:"NOBLE"},
-    {id:"book-067",pageNumber:67,title:"내게 실제로 도움이 되기 쉬운 사람",evidenceGroup:"NOBLE"},
+    {id:"book-067",pageNumber:67,title:"어떤 사람이 귀인으로 들어올까",evidenceGroup:"NOBLE"},
     {id:"book-068",pageNumber:68,title:"배우는 과정에서 만나는 좋은 인연",evidenceGroup:"NOBLE"},
     {id:"book-069",pageNumber:69,title:"기회를 연결해주는 사람",evidenceGroup:"NOBLE"},
     {id:"book-070",pageNumber:70,title:"사람 말고도 도움이 되는 것들",evidenceGroup:"NOBLE"},
     {id:"book-071",pageNumber:71,title:"좋은 인연은 어디에서 만나기 쉬울까",evidenceGroup:"NOBLE"},
-    {id:"book-072",pageNumber:72,title:"도움을 받기 쉬운 시기",evidenceGroup:"NOBLE"},
+    {id:"book-072",pageNumber:72,title:"귀인운이 강해지는 시기",evidenceGroup:"NOBLE"},
     {id:"book-073",pageNumber:73,title:"좋은 인연을 알아보는 법",evidenceGroup:"NOBLE"}
   ]},
-  {partNumber:"08",title:"눈에 띄는 특별한 성향",pages:[
-    {id:"book-074",pageNumber:74,title:"눈에 띄는 특별한 성향",evidenceGroup:"STARS_RELATIONS"},
+  {partNumber:"08",title:"신살 · 특별하게 드러나는 성향",pages:[
+    {id:"book-074",pageNumber:74,title:"내 사주에 들어온 신살",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-075",pageNumber:75,title:"유독 강하게 드러나는 특징",evidenceGroup:"STARS_RELATIONS"},
     {id:"book-076",pageNumber:76,title:"반복해서 눈에 띄는 성향",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-077",pageNumber:77,title:"사람의 시선을 끄는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-078",pageNumber:78,title:"혼자 깊이 파고드는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-079",pageNumber:79,title:"예민하게 감지하는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-080",pageNumber:80,title:"가까울수록 꼬이기 쉬운 관계",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-081",pageNumber:81,title:"날카롭게 몰입하는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-082",pageNumber:82,title:"부딪힘·흔들림·신경 쓰임",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-083",pageNumber:83,title:"서로 끌어당기고 커지는 힘",evidenceGroup:"STARS_RELATIONS"},
-    {id:"book-084",pageNumber:84,title:"이런 특징은 어떻게 받아들이면 될까",evidenceGroup:"STARS_RELATIONS"}
+    {id:"book-077",pageNumber:77,title:"도화살 · 사람에게 기억되는 방식",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-078",pageNumber:78,title:"화개살 · 혼자 깊이 파고드는 성향",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-079",pageNumber:79,title:"귀문·원진 · 예민하게 감지하는 면",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-080",pageNumber:80,title:"원진 · 가까운 관계에서 예민해지는 이유",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-081",pageNumber:81,title:"현침살 · 세밀하고 날카로운 집중력",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-082",pageNumber:82,title:"충·형·파·해 · 부딪힘과 변화",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-083",pageNumber:83,title:"합 · 사람과 일이 모이는 방식",evidenceGroup:"STARS_RELATIONS"},
+    {id:"book-084",pageNumber:84,title:"신살을 어떻게 활용하면 좋을까",evidenceGroup:"STARS_RELATIONS"}
   ]},
-  {partNumber:"09",title:"나이에 따라 달라지는 모습",pages:[
-    {id:"book-085",pageNumber:85,title:"나이에 따라 달라지는 모습",evidenceGroup:"TWELVE_STAGES"},
+  {partNumber:"09",title:"십이운성 · 시기마다 달라지는 모습",pages:[
+    {id:"book-085",pageNumber:85,title:"내 십이운성 한눈에 보기",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-086",pageNumber:86,title:"내 삶에서 힘을 쓰는 방식 한눈에 보기",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-087",pageNumber:87,title:"삶의 단계마다 달라지는 역할",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-088",pageNumber:88,title:"같은 사람도 시기마다 달라지는 이유",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-089",pageNumber:89,title:"어릴 때 익힌 모습",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-090",pageNumber:90,title:"사회생활에서 강해지는 모습",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-091",pageNumber:91,title:"가까운 관계에서 드러나는 모습",evidenceGroup:"TWELVE_STAGES"},
-    {id:"book-092",pageNumber:92,title:"부모가 되었을 때 더 강해지는 모습",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-089",pageNumber:89,title:"년주 십이운성 · 어린 시절",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-090",pageNumber:90,title:"월주 십이운성 · 사회생활",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-091",pageNumber:91,title:"일주 십이운성 · 가까운 관계",evidenceGroup:"TWELVE_STAGES"},
+    {id:"book-092",pageNumber:92,title:"시주 십이운성 · 후반과 부모 역할",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-093",pageNumber:93,title:"인생 초반의 흐름",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-094",pageNumber:94,title:"인생 중반의 흐름",evidenceGroup:"TWELVE_STAGES"},
     {id:"book-095",pageNumber:95,title:"인생 후반의 흐름",evidenceGroup:"TWELVE_STAGES"}
   ]},
-  {partNumber:"10",title:"내가 일·돈·사람을 다루는 방식",pages:[
-    {id:"book-096",pageNumber:96,title:"내가 일·돈·사람을 다루는 방식",evidenceGroup:"TEN_GODS"},
+  {partNumber:"10",title:"십성 · 내가 일·돈·사람을 다루는 방식",pages:[
+    {id:"book-096",pageNumber:96,title:"내 십성 한눈에 보기",evidenceGroup:"TEN_GODS"},
     {id:"book-097",pageNumber:97,title:"내가 자주 쓰는 성향 한눈에 보기",evidenceGroup:"TEN_GODS"},
     {id:"book-098",pageNumber:98,title:"어떤 성향을 자주 쓰는 편일까",evidenceGroup:"TEN_GODS"},
     {id:"book-099",pageNumber:99,title:"내 안의 여러 역할은 어떻게 다를까",evidenceGroup:"TEN_GODS"},
@@ -185,8 +185,8 @@ export const LIFETIME_BOOK_V1={
     {id:"book-127",pageNumber:127,title:"큰 변화가 들어오는 때",evidenceGroup:"CHANGE"},
     {id:"book-128",pageNumber:128,title:"변화가 클수록 기억할 점",evidenceGroup:"CHANGE"}
   ]},
-  {partNumber:"13",title:"10년 단위 큰 흐름",pages:[
-    {id:"book-129",pageNumber:129,title:"10년 단위 큰 흐름",evidenceGroup:"DAEUN_OVERVIEW"},
+  {partNumber:"13",title:"대운 · 10년 단위 큰 흐름",pages:[
+    {id:"book-129",pageNumber:129,title:"대운 · 평생 10년 흐름",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-130",pageNumber:130,title:"지금 지나고 있는 10년",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-131",pageNumber:131,title:"평생 10년 흐름 한눈에 보기",evidenceGroup:"DAEUN_OVERVIEW"},
     {id:"book-132",pageNumber:132,title:"10년 흐름이 바뀔 때 느껴지는 변화",evidenceGroup:"DAEUN_OVERVIEW"},
