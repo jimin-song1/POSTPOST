@@ -1908,7 +1908,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     ];
   }
 
-  if(/^직장운$/.test(title))return[
+  if(/^(직장운|직장에서 잘 풀리는 방식)$/.test(title))return[
     "직장에서는 처음부터 눈에 띄는 사람이라기보다, 맡은 일을 제대로 끝내면서 신뢰를 쌓을수록 자리가 커지는 쪽에 가깝습니다.",
     "업무 범위와 평가 기준이 분명하고, 내 판단을 어느 정도 쓸 수 있을 때 가장 편합니다. 반대로 이유 없이 지시가 바뀌거나 책임만 넘겨받는 구조에서는 스트레스가 빨리 쌓일 수 있습니다.",
     structure?`${structureMeaning(structure)}이라 시간이 갈수록 단순 실무보다 프로젝트를 맡거나 사람과 일정, 품질을 조율하는 역할에서 강점이 더 잘 드러납니다.`:"경력이 쌓일수록 단순 실행보다 판단과 조율이 필요한 역할이 더 잘 맞습니다.",
@@ -1939,7 +1939,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "가장 조심할 건 아이디어가 생길 때마다 판을 넓히는 것입니다. 하나가 자리 잡아 반복해서 굴러가는 걸 확인한 뒤 다음 확장으로 넘어가는 편이 돈과 체력을 같이 지키기 좋습니다."
   ];
 
-  if(/^학업운$/.test(title)){
+  if(/^(학업운|어떤 공부가 잘 맞을까)$/.test(title)){
     const studies=studyExamples(facts);
     return[
       "공부는 오래 앉아 있는 것 자체보다 '이걸 배우면 어디에 써먹을 수 있는가'가 분명할 때 훨씬 잘 붙는 편입니다.",
