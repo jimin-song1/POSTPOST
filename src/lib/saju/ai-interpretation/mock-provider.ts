@@ -465,7 +465,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   }
   if(group==="WORK"){
     if(/잘 맞는 일/.test(title))return "직업에서는 직함보다 하루 동안 어떤 판단을 하고 어떤 결과를 만드는지가 더 중요합니다. "+workVerdict(facts);
-    if(/직장운/.test(title))return "직장운은 분명히 있습니다. "+workVerdict(facts);
+    if(/직장운/.test(title))return "직장운은 있습니다. "+workVerdict(facts);
     if(/사업운/.test(title))return facts.structure.includes("재")
       ?"사업운은 눈여겨볼 만합니다. 돈과 시장, 운영 결과를 직접 다루는 구조와 연결될수록 장점이 크게 살아납니다."
       :"사업은 무조건 독립하는 것보다 내가 결정권을 갖고 결과를 직접 확인할 수 있는 구조일 때 잘 맞습니다.";
@@ -706,6 +706,7 @@ function customerizeNarration(text:string){
 function naturalizeNarration(text:string){
   return customerizeNarration(text)
     .replaceAll("자기준","자기 기준")
+    .replaceAll("분명히 ","")
     .replace(/\s+/g," ")
     .trim();
 }
@@ -1678,16 +1679,29 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "직업 이름보다 '내가 판단할 수 있는 범위가 있는가, 만든 결과가 남는가'를 기준으로 고르는 편이 훨씬 정확합니다."
   ];
 
-  if(/직장과 사업/.test(title))return[
-    "직장과 사업 중 하나만 무조건 맞는 사주로 볼 필요는 없습니다. 두 환경에서 쓰는 힘이 다르기 때문입니다.",
-    officer>0?"관성이 원국에 있어 조직의 규칙과 역할을 이해하고 책임을 맡는 힘은 갖고 있습니다.":"조직 안에서는 정해진 역할보다 자율성과 결과 책임이 있는 자리가 더 편할 수 있습니다.",
-    wealth>0?"재성도 원국에 자리해 시장·돈·운영처럼 현실 결과를 직접 다루는 힘이 있습니다. 이 부분은 독립수입이나 사업을 생각할 때 중요한 근거가 됩니다.":"사업은 단순히 독립하고 싶다는 마음보다 실제 매출과 운영을 다룰 구조를 만들 수 있는지가 더 중요합니다.",
-    structure?`${structureMeaning(structure)}이 중심에 있기 때문에, 완전히 자유로운 환경보다 기준과 시스템이 있는 상태에서 결정권을 넓혀가는 방식이 더 안정적입니다.`:"처음부터 모든 것을 혼자 만드는 것보다 역할과 시스템을 확보한 뒤 결정권을 넓히는 편이 안정적입니다.",
-    "그래서 선택 기준은 '직장이냐 사업이냐'보다 '내가 판단하고 책임질 수 있는 범위가 얼마나 있는가'에 두는 편이 맞습니다."
-  ];
+  if(/직장과 사업/.test(title)){
+    const monthWork=facts.branchMainTenGodByPosition.month||facts.stemTenGodByPosition.month;
+    const laterWork=facts.stemTenGodByPosition.hour||facts.branchMainTenGodByPosition.hour;
+    const organizationFirst=["정관","편관"].includes(monthWork);
+    const independentLater=["정재","편재"].includes(laterWork);
+    const verdict=organizationFirst&&independentLater
+      ?"둘 중 하나를 고르면 장기적으로는 사업이나 독립수입 쪽에 조금 더 무게가 있습니다. 다만 처음부터 맨땅에서 시작하기보다 직장이나 조직에서 시스템과 운영을 익힌 뒤 결정권을 넓혀가는 흐름이 더 잘 맞습니다."
+      :wealth>officer
+        ?"둘 중 하나를 고르면 사업이나 독립수입 쪽이 조금 더 잘 맞습니다. 시장 반응과 돈의 흐름을 직접 보고 결정할 수 있을 때 강점이 더 살아납니다."
+        :officer>wealth
+          ?"둘 중 하나를 고르면 직장 쪽이 조금 더 잘 맞습니다. 다만 단순 지시를 받는 자리보다 책임과 판단권이 함께 커지는 직장이 더 잘 맞습니다."
+          :"직장과 사업의 차이보다 결정권이 있는지가 더 중요하지만, 굳이 고르면 안정적인 조직 안에서 경험을 쌓고 이후 독립성을 넓히는 흐름이 잘 맞습니다.";
+    return[
+      verdict,
+      officer>0?"조직 안에서도 맡은 역할과 책임을 이해하고 신뢰를 쌓는 힘이 있습니다.":"직장에서는 단순 지시보다 자율성과 결과 책임이 있는 자리가 더 편합니다.",
+      wealth>0?"돈과 운영, 시장 반응을 직접 다루는 감각도 있어 독립수입이나 사업으로 확장할 여지가 있습니다.":"사업을 한다면 실제 매출과 운영을 다룰 구조부터 만드는 것이 중요합니다.",
+      structure?`${structureMeaning(structure)}이 중심에 있어 아무 기준도 없는 자유보다, 시스템을 갖춘 뒤 내 결정권을 넓혀가는 방식이 안정적입니다.`:"처음부터 모든 것을 혼자 만들기보다 역할과 시스템을 확보한 뒤 결정권을 넓히는 편이 안정적입니다.",
+      "결국 가장 피해야 할 환경은 직장이냐 사업이냐와 상관없이 책임만 크고 내 판단을 쓸 수 없는 구조입니다."
+    ];
+  }
 
   if(/^직장운$/.test(title))return[
-    "직장운은 분명히 있습니다. 조직 안에서 맡은 역할을 이해하고 결과 기준을 지키는 힘을 실제로 쓸 수 있습니다.",
+    "직장운은 있습니다. 조직 안에서 맡은 역할을 이해하고 결과 기준을 지키는 힘을 실제로 쓸 수 있습니다.",
     familyPresence(facts,"관성"),
     structure?`${structureMeaning(structure)}이 중심에 있어 단순 실무보다 시간이 갈수록 책임과 판단권이 커지는 자리에서 강점이 더 선명해집니다.`:"경력이 쌓일수록 단순 실행보다 판단과 조율이 필요한 역할이 더 잘 맞습니다.",
     "다만 이유를 설명하지 않는 지시나 권한 없이 책임만 커지는 구조에는 스트레스가 크게 쌓일 수 있습니다.",
@@ -1703,7 +1717,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/^사업운$/.test(title))return[
-    wealth>0?"사업운은 분명히 눈여겨볼 만합니다. 재성이 원국에 있어 시장과 돈, 운영 결과를 직접 다루는 힘이 있습니다.":"사업운은 '사업가 기질' 한마디보다 결과를 밖에 내놓고 시장 반응을 확인하는 힘을 얼마나 키우느냐가 중요합니다.",
+    wealth>0?"사업운은 눈여겨볼 만합니다. 재성이 원국에 있어 시장과 돈, 운영 결과를 직접 다루는 힘이 있습니다.":"사업운은 '사업가 기질' 한마디보다 결과를 밖에 내놓고 시장 반응을 확인하는 힘을 얼마나 키우느냐가 중요합니다.",
     familyPresence(facts,"재성"),
     output>0?"식상도 함께 작동하기 때문에 만들고 표현한 것을 판매와 결과로 연결하는 흐름을 쓰기 좋습니다.":"표현과 생산을 맡는 식상은 의식적으로 키워야 합니다. 좋은 아이디어를 갖고 있는 것과 상품·콘텐츠·서비스로 내놓는 것은 다른 단계입니다.",
     "사업에서 강점은 방향을 잡고 구조를 만드는 힘입니다. 반대로 아이디어가 늘어날수록 하나가 자리 잡기 전에 다음 판을 벌리는 것은 조심해야 합니다.",
