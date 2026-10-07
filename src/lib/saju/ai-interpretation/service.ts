@@ -107,8 +107,9 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     }
     else if(id==="book-036"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     else if(id==="book-043")personalized=first.replace(/^사람을 좋아할 때\s*/,`${label}은 사람을 좋아할 때 `);
-    else if(id==="book-051")personalized=first.replace(/^자녀운에서는\s*/,`${label}은 부모 역할이 생겼을 때 `);
-    else if(id==="book-053")personalized=first.replace(/^바쁠수록\s*/,`${label}은 바쁠수록 `);
+    else if(id.startsWith("relationship-single-01"))personalized=first.replace(/^잘 맞는 미래 배우자는\s*/,`${label}에게 잘 맞는 미래 배우자는 `);
+    else if(id==="book-051")personalized=first.replace(/^부모가 되면\s*/,`${label}은 부모가 되면 `);
+    else if(id==="book-053")personalized=first.replace(/^해야 할 일이 남아 있으면\s*/,`${label}은 해야 할 일이 남아 있으면 `);
     else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     const paragraphs=[sanitizeCustomerWording(personalized),...source.slice(1).map(sanitizeCustomerWording)];
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
