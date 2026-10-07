@@ -2159,7 +2159,6 @@ function nobleConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   const title=row.topic??row.title;
   const has=(token:string)=>facts.starLabels.some(label=>label.includes(token));
-  const relations=relationSummary(facts);
 
   if(/^신살$/.test(title)||/눈에 띄는 신살|강하게 보이는 신살/.test(title))return[
     starSentence(facts),
@@ -2193,11 +2192,11 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   ];
 
   if(/가까울수록 꼬이기 쉬운 관계/.test(title))return[
-    relations.length?`가까운 관계에서는 ${relations.join(", ")}이 나타날 수 있습니다.`:"가까운 관계에서는 큰 충돌보다 작은 오해를 제때 풀어가는 일이 더 중요합니다.",
-    "가까운 관계에서 생기는 문제는 사랑의 크기보다 '말하지 않아도 알겠지'라는 기대에서 시작되는 경우가 많습니다.",
-    "특히 신뢰와 약속에 민감한 사람은 작은 어긋남을 단순한 실수보다 관계 전체의 문제로 받아들이기 쉽습니다.",
-    "이럴수록 상대의 의도를 추측하기보다 실제 행동과 말을 한번 확인하는 것이 중요합니다.",
-    "가까운 사이일수록 설명을 줄이지 않는 것이 관계가 꼬이는 힘을 가장 현실적으로 줄이는 방법입니다."
+    "가까운 사람일수록 작은 변화도 크게 느끼는 편입니다. 평소와 다른 말투나 약속 하나가 마음에 오래 남을 수 있어요.",
+    "좋아하고 믿는 마음이 큰 만큼 상대에게 기대하는 것도 자연스럽게 커집니다. 문제는 그 기대를 말하지 않은 채 혼자 해석하기 시작할 때 생깁니다.",
+    "한번 마음에 걸리면 '왜 그랬을까'를 계속 생각하면서 실제 일보다 걱정이 더 커질 수 있습니다.",
+    "이럴 때는 상대의 마음을 미리 결론내리기보다, 내가 불편했던 지점을 짧게 확인하는 편이 훨씬 좋습니다.",
+    "가까운 관계를 오래 편하게 가져가는 핵심은 많이 참는 것이 아니라, 작은 오해를 작을 때 풀어두는 데 있습니다."
   ];
 
   if(/날카롭게 몰입하는 힘/.test(title))return[
