@@ -1740,21 +1740,22 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(id==="book-024"){
     const strongBehavior=strongest?elementBehavior(strongest):null,weakBehavior=weakest?elementBehavior(weakest):null;
     const missingLabel=facts.missing.length===1?elementPro(facts.missing[0]):"";
+    const metalFire=strongest==="metal"&&weakest==="fire";
     return[
-      "오행의 차이는 숫자보다 실제 생활에서 더 쉽게 느껴집니다. 어떤 일은 별생각 없이 잘하는데, 어떤 일은 알고 있어도 시작이 늦어지는 식입니다.",
+      metalFire?"생활에서는 정리하고 확인하는 속도와, 밖으로 보여주는 속도에 차이가 생기기 쉽습니다. 틀린 부분을 찾고 완성도를 높이는 건 빠른데, 아직 부족한 것 같아 공개나 시작을 미루는 식입니다.":"오행의 차이는 숫자보다 실제 행동의 속도 차이로 느껴지는 경우가 많습니다. 어떤 일은 별생각 없이 바로 하는데, 어떤 일은 필요하다는 걸 알아도 시작이 늦어질 수 있습니다.",
       strongBehavior?strongBehavior.natural:"익숙한 방식은 특별히 애쓰지 않아도 자연스럽게 나오는 편입니다.",
       weakBehavior?weakBehavior.weak:"덜 익숙한 방식은 필요해도 바로 나오지 않고 준비 시간이 더 필요할 수 있습니다.",
-      facts.missing.length===1?`${withParticle(missingLabel,"이","가")} 비어 있다면 특히 그쪽 행동은 마음먹으면 바로 되는 것보다 일부러 기회를 만들고 반복해야 익숙해지는 쪽에 가깝습니다.`:"비중이 낮은 부분은 바쁠수록 더 쉽게 빠질 수 있습니다.",
-      weakBehavior?weakBehavior.practice:"덜 익숙한 부분은 생활 속 작은 행동으로 반복할수록 훨씬 편해집니다."
+      facts.missing.length===1?`${withParticle(missingLabel,"이","가")} 비어 있다면 그 행동은 마음먹는다고 바로 익숙해지기보다, 실제로 말하고 보여주고 반복하는 경험이 쌓일수록 편해지는 쪽에 가깝습니다.`:"비중이 낮은 부분은 바쁠수록 더 쉽게 뒤로 밀릴 수 있습니다.",
+      metalFire?"그래서 완성도를 더 높이는 것보다 '이 정도면 한번 보여줘도 된다'고 판단하는 시점을 조금 앞당기는 게 더 중요합니다. 준비한 것을 밖에 꺼내는 순간부터 새로운 경험이 붙습니다.":weakBehavior?weakBehavior.practice:"덜 익숙한 부분은 실제 행동으로 반복할수록 훨씬 편해집니다."
     ];
   }
 
   if(id==="book-017")return[
-    strengthCounseling(facts.strength),
-    "도움을 못 받는 사람이 아니라, 도움을 받아야 할 시점까지 혼자 버티는 시간이 길어질 수 있습니다.",
-    dominantFamilySentence(facts)||"일단 스스로 방법을 찾아본 뒤에야 주변에 손을 내미는 편입니다.",
-    "잘 맞는 사람이나 환경이 받쳐주면 오히려 더 안정적으로 오래 갈 수 있습니다. 혼자 하는 것 자체가 장점인 게 아니라, 필요한 순간에 누구의 도움을 쓸지 아는 게 중요합니다.",
-    "일이 커질수록 직접 해야 할 일과 맡겨도 되는 일을 나눠두면 지치지 않고 훨씬 오래 갈 수 있습니다."
+    "웬만한 일은 남에게 기대기 전에 먼저 혼자 해결해보려는 편입니다. 실제로 스스로 해낼 수 있는 일도 많아서, 주변에서는 독립적이고 버티는 힘이 좋은 사람으로 보기 쉽습니다.",
+    "다만 문제는 힘든 일을 못 견디는 게 아니라, 힘들다는 걸 인정하는 시점이 늦다는 데 있습니다. 처음에는 괜찮다고 넘기다가 일정과 책임이 한꺼번에 겹치면 그때서야 피로가 크게 느껴질 수 있습니다.",
+    dominantFamilySentence(facts)||"일단 내 방식으로 해본 뒤에야 다른 사람의 방법을 받아들이는 편입니다.",
+    "그래서 도움은 누군가에게 기대는 문제가 아니라 역할을 나누는 문제에 가깝습니다. 잘 맞는 사람에게 일을 맡기거나, 필요한 정보만 먼저 받는 것만으로도 훨씬 오래 안정적으로 갈 수 있습니다.",
+    "중요한 건 더 오래 혼자 버티는 게 아닙니다. 내가 직접 해야 결과가 좋아지는 일과, 다른 사람에게 맡겨도 되는 일을 구분하는 순간부터 훨씬 편해집니다."
   ];
 
   if(id==="book-018"){
@@ -1775,15 +1776,17 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(id==="book-025"){
     if(!facts.useful.length)return[
       "부족한 부분은 거창하게 바꾸기보다 실제 생활에서 자주 막히는 장면 하나부터 바꾸는 게 좋습니다.",
-      "작은 행동을 반복해서 익숙하게 만드는 편이 가장 오래 갑니다."
+      "잘 안 되는 행동을 의지로 밀어붙이기보다, 그 행동이 자연스럽게 나올 환경을 만들어두는 편이 오래 갑니다."
     ];
     return[
-      "도움이 되는 기운을 생활에 쓰는 방법은 생각보다 단순합니다. 어려운 이름보다 실제 행동으로 바꾸면 됩니다.",
+      "도움이 되는 기운은 결국 생활 방식으로 바뀌어야 의미가 있습니다. 색이나 물건보다 평소 행동을 조금 바꾸는 쪽이 훨씬 직접적입니다.",
       ...facts.useful.slice(0,3).map((element,index)=>{
-        const guide=usefulElementGuide(element);
-        return `${index===0?"가장 먼저":index===1?"그다음":"이어서"} ${withParticle(elementPro(element),"은","는")} 이렇게 써보세요. ${guide.practice}`;
+        const guide=usefulElementGuide(element),label=withParticle(elementPro(element),"은","는");
+        if(index===0)return `가장 먼저 ${label} ${guide.practice}`;
+        if(index===1)return `그다음 ${label} 평소 잘 안 되는 순간에 ${guide.practice}`;
+        return `이어서 ${label} 생활에 오래 남기려면 ${guide.practice}`;
       }),
-      "한꺼번에 다 바꾸기보다 지금 가장 자주 막히는 장면과 연결된 한 가지부터 먼저 해보는 편이 좋습니다."
+      "셋을 한꺼번에 바꾸려 하기보다 지금 가장 자주 막히는 장면 하나와 연결해서 시작하는 편이 좋습니다. 몸에 익기 시작하면 그다음 행동을 붙여도 늦지 않습니다."
     ];
   }
 
@@ -1793,20 +1796,20 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     const missingWeak=Boolean(weakest&&facts.missing.includes(weakest));
     return[
       `나를 대표하는 기운을 쉽게 풀면 ${stem.image}에 가깝습니다. ${counseling.opening}`,
-      strongest?`${withParticle(elementPro(strongest),"이","가")} 가장 강해서 ${elementBehavior(strongest).natural}`:"평소 자연스럽게 자주 쓰는 방식이 성격의 겉모습을 더 선명하게 만듭니다.",
-      missingWeak?`${withParticle(elementPro(weakest!),"이","가")} 비어 있기 때문에 ${weakBehavior?.weak??"그쪽 행동은 저절로 익숙하게 나오지 않을 수 있습니다."} 필요할 때 바로 꺼내 쓰는 능력이라기보다, 환경과 반복 경험을 통해 만들어가는 쪽에 가깝습니다.`:weakBehavior?`${withParticle(elementPro(weakest!),"은","는")} 상대적으로 약해 ${weakBehavior.weak}`:"덜 익숙한 방식은 생활 습관으로 보완할 수 있습니다.",
-      "결국 한 가지 성향으로만 설명되는 사람은 아닙니다. 원래 가진 기본 성향 위에 어떤 행동은 더 자연스럽게 나오고, 어떤 행동은 시간이 더 필요한 식으로 차이가 생깁니다."
+      strongest?`${withParticle(elementPro(strongest),"이","가")} 강해서 ${elementBehavior(strongest).natural}`:"평소 자연스럽게 자주 쓰는 방식이 겉으로 보이는 성향을 더 선명하게 만듭니다.",
+      missingWeak?`${withParticle(elementPro(weakest!),"이","가")} 비어 있다는 건 그 능력이 없다는 뜻은 아닙니다. 다만 ${weakBehavior?.weak??"그쪽 행동이 저절로 나오지 않을 수 있습니다."} 머리로는 필요하다는 걸 알아도 실제 행동으로 옮길 때 한 박자 늦을 수 있습니다.`:weakBehavior?`${withParticle(elementPro(weakest!),"은","는")} 상대적으로 약해서 ${weakBehavior.weak}`:"덜 익숙한 행동은 생각보다 시작이 늦어질 수 있습니다.",
+      "그래서 이미 잘하는 부분을 더 강하게 만들기보다, 늘 한 박자 늦어지는 행동을 조금 앞당기는 게 더 중요합니다. 그 차이가 줄어들수록 성격도 일도 훨씬 부드럽게 풀립니다."
     ];
   }
 
   if(id==="book-021"){
     const counseling=stemCounseling(facts);
     return[
-      `나를 대표하는 기운은 ${facts.dayStemName||"중심 기운"}입니다. 쉽게 비유하면 ${stem.image}처럼 움직이는 성향에 가깝습니다.`,
+      `나를 대표하는 기운은 ${facts.dayStemName||"중심 기운"}입니다. ${stem.image}에 비유하는 이유는 한번 방향을 잡으면 쉽게 꺾이지 않고, 시간을 들여 자기 것을 키워가는 모습과 닮았기 때문입니다.`,
       counseling.opening,
-      dominantFamilySentence(facts)||"스스로 납득한 뒤 움직일 때 가장 오래 힘을 쓸 수 있습니다.",
-      `이 장점도 과해지면 부담이 될 수 있습니다. ${counseling.shadow}`,
-      "그래서 이 기운은 성격을 고정하는 별명이라기보다, 중요한 선택 앞에서 가장 먼저 나오는 기본 반응으로 이해하면 됩니다."
+      "그래서 중요한 일을 결정할 때는 남들이 좋다고 하는 답보다 스스로 납득할 수 있는 이유가 있어야 합니다. 마음이 정해지기 전에는 오래 생각하지만, 한번 결론이 나면 오히려 주변보다 오래 밀고 갈 수 있습니다.",
+      `다만 장점이 가장 부담이 되는 순간도 비슷합니다. ${counseling.shadow} 방향을 바꿔야 할 때도 '조금만 더 하면 된다'고 버티면 피로가 길어질 수 있습니다.`,
+      "이 성향에서 중요한 건 고집을 없애는 게 아니라, 끝까지 지켜야 할 일과 중간에 방향을 바꿔도 되는 일을 구분하는 것입니다. 그 구분이 잘 될수록 끈기가 훨씬 큰 장점이 됩니다."
     ];
   }
 
@@ -1822,10 +1825,10 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     };
     return[
       `나를 가장 가까이 보여주는 두 글자는 ${facts.dayPillarReading||facts.dayPillar}입니다.`,
-      pillarElementSentence(facts.dayPillar)||"두 가지 성향이 한 자리에서 함께 나타나는 조합입니다.",
-      stemElement&&branchElement&&stemElement!==branchElement?`쉽게 말하면 ${traits[stemElement]??"한쪽 성향"}과 ${traits[branchElement]??"다른 성향"}이 같이 있습니다.`:stemElement?"같은 성향이 위아래에서 겹쳐 평소 반응이 더 분명하게 나타날 수 있습니다.":"가까운 관계와 중요한 선택에서 평소보다 본래 성향이 더 또렷하게 드러납니다.",
+      pillarElementSentence(facts.dayPillar)||"서로 다른 두 성향이 한 자리에서 같이 움직이는 조합입니다.",
+      stemElement&&branchElement&&stemElement!==branchElement?`이 조합은 중요한 선택을 앞두면 먼저 ${traits[branchElement]??"여러 가능성을 살피는 성향"}이 움직이고, 마음이 정해진 뒤에는 ${traits[stemElement]??"자기 방향을 오래 밀고 가는 성향"}이 강해지는 식으로 나타날 수 있습니다.`:stemElement?"같은 성향이 안팎에서 겹쳐 좋아하는 것과 싫어하는 것이 비교적 분명하게 드러날 수 있습니다.":"가까운 관계와 중요한 선택에서 평소보다 본래 성향이 더 또렷하게 드러납니다.",
       closeRoleBehavior(dayRole),
-      "그래서 가까운 사람 앞에서는 겉으로 보일 때보다 내 생각과 감정이 더 분명해질 수 있습니다. 중요한 건 한자 이름을 외우는 게 아니라, 이 조합이 실제 관계와 선택에서 어떻게 반복되는지를 보는 것입니다."
+      "그래서 가까운 사람에게는 충분히 이해해주려고 오래 생각하다가도, 마음속에서 결론이 나면 생각보다 단호해질 수 있습니다. 상대는 갑자기 마음이 바뀐 것처럼 느낄 수 있으니, 결론을 내리기 전에 내가 무엇을 고민하고 있는지 조금씩 말해두는 편이 관계에는 더 좋습니다."
     ];
   }
 
@@ -1833,20 +1836,21 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
     "밖에서 보이는 모습과 가까운 사람 앞의 모습이 조금 다른 편입니다. 사회에서는 해야 할 일을 먼저 챙기느라 감정을 뒤로 미루지만, 편한 사람 앞에서는 그동안 참았던 마음이 더 솔직하게 나올 수 있습니다.",
     roleBehavior(monthRole),
     closeRoleBehavior(dayRole),
-    "그래서 밖에서는 단단하고 괜찮아 보이는데, 가까운 사람에게는 생각보다 예민하거나 지친 모습을 보일 때가 있습니다. 가식이라서가 아니라 밖에서 참고 정리한 게 안전한 관계에서 풀리는 쪽에 가깝습니다.",
-    "문제는 너무 오래 참다가 한꺼번에 풀 때 생깁니다. 힘들다는 말을 완전히 지칠 때까지 미루기보다, 아직 괜찮을 때 조금씩 설명해두면 가까운 관계도 훨씬 편해집니다."
+    "그래서 밖에서는 웬만한 일을 잘 버티고 정리하는 사람처럼 보이는데, 정작 가까운 사람에게는 피곤하다거나 서운하다는 말을 더 많이 할 수 있습니다. 밖에서 감정을 숨겼다기보다 안전하다고 느끼는 관계에서 뒤늦게 풀리는 쪽에 가깝습니다.",
+    "가까운 사람에게 한꺼번에 피로를 쏟고 나서 후회하지 않으려면, 힘들다는 말을 완전히 지친 뒤에 꺼내지 않는 게 중요합니다. 아직 괜찮을 때 '요즘 이게 좀 버겁다' 정도만 말해두어도 관계의 온도차가 훨씬 줄어듭니다."
   ];
 
   if(id==="book-026"){
     const overuse=strongest?elementOveruse(strongest):null;
     return[
-      strongest?`${withParticle(elementPro(strongest),"이","가")} 강하다는 건 관련된 행동이 익숙하다는 뜻이지만, 익숙한 방식일수록 필요 이상으로 오래 쓰기 쉽습니다.`:"잘하는 방식도 너무 오래 쓰면 장점이 피로로 바뀔 수 있습니다.",
+      strongest?`${withParticle(elementPro(strongest),"이","가")} 강하다는 건 그 방식이 익숙하다는 뜻입니다. 문제는 잘하는 방식일수록 필요 이상으로 오래 붙잡기 쉽다는 데 있습니다.`:"잘하는 방식도 너무 오래 쓰면 장점이 피로로 바뀔 수 있습니다.",
       strongest?elementBehavior(strongest).natural:"평소 잘하는 방식은 특별히 의식하지 않아도 자연스럽게 나옵니다.",
-      overuse?`이 장점이 과해지면 ${overuse.sign}`:"잘하는 방식 하나로 모든 문제를 풀려고 하면 오히려 선택이 좁아질 수 있습니다.",
-      overuse?overuse.reset:"무엇을 더 할지보다 어디에서 멈출지를 먼저 정해두는 편이 좋습니다.",
-      "잘하는 걸 줄이라는 뜻은 아닙니다. 내 장점이 다른 사람과 나를 지치게 만들기 시작하는 순간만 알아두면 훨씬 오래 쓸 수 있습니다."
+      overuse?`처음에는 장점으로 보이지만 과해지면 ${overuse.sign}`:"익숙한 방식 하나로 모든 문제를 풀려고 하면 오히려 선택이 좁아질 수 있습니다.",
+      overuse?overuse.reset:"무엇을 더 잘할지보다 어디에서 멈출지를 정해두는 편이 좋습니다.",
+      "잘하는 걸 줄이라는 뜻은 아닙니다. 오히려 내가 잘하는 방식이 언제부터 고집이나 피로로 바뀌는지만 알아두면, 같은 장점을 훨씬 오래 편하게 쓸 수 있습니다."
     ];
   }
+
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
     consultationOpening(row,facts)||"여러 성향이 실제 생활에서 어떻게 섞여 나타나는지를 함께 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
