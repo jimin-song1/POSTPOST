@@ -608,6 +608,15 @@ function categoryLifeSentence(label:string){
   if(label==="변화")return"이동·환경 변화·새로운 선택처럼 익숙한 생활 틀을 바꿀 일이 많아질 수 있습니다.";
   return`${label} 쪽에서 평소보다 선택할 일이 늘기 쉽습니다.`;
 }
+function categoryActionSentence(label:string){
+  if(label==="재물")return"큰돈을 움직일 때는 수입만 보지 말고 회수 시점과 남길 금액을 먼저 정해두는 편이 좋습니다.";
+  if(label==="사업")return"새 아이디어를 한꺼번에 넓히기보다 고객 반응이 확인되는 한 가지를 먼저 밀어붙이는 편이 좋습니다.";
+  if(label==="직업")return"역할이 커질수록 책임만 늘어나는지, 결정권도 같이 커지는지를 확인하는 게 중요합니다.";
+  if(label==="관계")return"새로운 만남이나 관계 변화가 있으면 감정만 보지 말고 생활 방식과 약속이 실제로 맞는지 같이 보세요.";
+  if(label==="학업")return"자격·전문 공부처럼 끝난 뒤 바로 쓸 수 있는 결과가 남는 공부를 잡는 편이 좋습니다.";
+  if(label==="변화")return"여러 변화를 동시에 만들기보다 반드시 바꿀 것 하나와 지킬 것 하나를 먼저 정해두는 편이 좋습니다.";
+  return"움직임이 큰 분야에 시간을 먼저 배분하고 다른 일은 과하게 벌리지 않는 편이 좋습니다.";
+}
 function partnerAppearanceSentence(facts:ConsultationFacts){
   const element=BRANCH_ELEMENT[facts.dayBranch]??"";
   const byElement:Record<string,string>={
@@ -2840,72 +2849,71 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 function timingConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   const title=row.topic??row.title,group=row.evidenceGroup??"",context=periodContext(input,row),axis=fortuneAxis(input,row);
   const favor=FAVORABILITY_LABELS[axis.favorabilityLevel]??"",activation=ACTIVATION_LABELS[axis.activationLevel]??"";
+  const snapshots=fortuneSnapshots(input,row).filter(snapshot=>snapshot.year!=null).sort((a,b)=>(a.year??0)-(b.year??0));
 
   if(group==="FORTUNE_EXPLAIN")return[
-    "앞으로의 흐름은 미래 사건을 맞히기보다 언제 일이 많아지고, 언제 돈이나 관계 쪽 선택이 늘어나는지를 미리 살펴보는 데 의미가 있습니다.",
-    "큰 흐름은 몇 년 동안 반복되는 배경을 보고, 해마다 달라지는 부분은 그 안에서 어느 분야가 더 바빠지는지를 봅니다.",
-    "달 단위 변화는 실제 일정이 몰리거나 이동·계약·관계 변화가 체감되는 시기를 조금 더 좁혀보는 정도로 생각하면 됩니다.",
-    "바쁘다고 무조건 좋은 시기인 것도 아니고, 조용하다고 나쁜 시기인 것도 아닙니다.",
-    "결국 시기 해설은 언제 무엇을 준비하고, 어떤 선택에는 확인을 더 해야 하는지를 알려주는 일정표처럼 쓰는 편이 가장 현실적입니다."
+    "운의 흐름은 미래 사건을 맞히는 표라기보다 언제 일·돈·관계의 선택이 몰리는지를 보는 시간표에 가깝습니다.",
+    "대운은 몇 년 동안 반복되는 큰 배경, 세운은 그 안에서 해마다 어디가 움직이는지, 월운은 실제 일정이 어느 달에 몰리는지를 봅니다.",
+    "도움이 되는 정도와 변화가 큰 정도는 따로 봅니다. 아주 바쁜 해가 반드시 좋은 해는 아니고, 조용한 해가 나쁜 해도 아닙니다.",
+    "그래서 시기 해설은 좋은 날을 기다리는 용도보다 언제 무엇을 준비하고 무엇을 확인할지 정하는 데 쓰는 게 가장 현실적입니다."
   ];
 
-  if(group==="YEARLY_OVERVIEW"){
-    if(/앞으로 5년, 무엇이 달라질까|앞으로 5년 한눈에 보기/.test(title))return[
-      "앞으로 몇 해는 한꺼번에 좋다 나쁘다로 묶기보다 해마다 무엇이 먼저 움직이는지를 이어서 보는 게 좋습니다.",
-      "어떤 해는 일과 사업이 먼저 커지고, 어떤 해는 돈이나 관계 변화가 더 크게 느껴질 수 있습니다.",
-      topCategorySentence(input,row)||"해마다 가장 바빠지는 분야가 달라질 수 있습니다.",
-      "앞의 선택이 다음 해 결과로 이어질 수 있기 때문에 한 해만 따로 보기보다 시작되는 일, 커지는 일, 정리되는 일을 연결해서 보는 편이 좋습니다.",
-      "중요한 건 좋은 해를 기다리는 게 아니라 그해 가장 많이 움직이는 분야에 맞춰 준비의 순서를 바꾸는 것입니다."
-    ];
+  if(group==="YEARLY_OVERVIEW"&&/^앞으로 5년$/.test(title))return snapshots.length?[
+    "앞으로 5년은 한 덩어리로 좋다 나쁘다를 말하기보다 해마다 중심이 어디로 옮겨가는지를 보는 게 중요합니다.",
+    ...snapshots.slice(0,5).map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");return (snapshot.year+"년은 "+(active?active.label+" 쪽 움직임이 가장 크고":"여러 분야가 비슷하게 움직이고")+(support&&(!active||support.key!==active.key)?", "+support.label+" 쪽은 상대적으로 도움을 받기 쉽습니다.":". ")+(active?categoryLifeSentence(active.label):"실제 선택이 어느 분야에 몰리는지 확인하는 해입니다."));}),
+    "이 다섯 해를 이어서 보면 먼저 벌어지는 일, 그다음에 돈이나 자리로 굳어지는 일, 마지막에 남길 것을 정하는 순서가 보일 수 있습니다."
+  ]:[
+    "앞으로 5년은 해마다 움직이는 분야가 다를 수 있으므로 한 해씩 따로 보는 편이 좋습니다.",
+    "각 해의 일·돈·관계·학업·변화 점수를 비교해 중심 분야를 정합니다.",
+    "좋은 해를 기다리기보다 움직임이 큰 분야에 맞춰 준비 순서를 바꾸는 게 중요합니다."
+  ];
 
-    if(/앞으로 5년의 큰 방향|5년 전체 흐름/.test(title))return[
-      "앞으로 몇 해를 보면 무엇을 새로 시작할지보다 어떤 일이 점점 커지고 자리 잡는지가 더 중요합니다.",
-      topCategorySentence(input,row)||"일·돈·관계 가운데 먼저 움직이는 분야를 비교해보는 편이 좋습니다.",
-      "초반에 새 역할이나 기회가 생기고, 뒤쪽에서 그 경험이 수입이나 자리로 굳어지는 식으로 이어질 수 있습니다.",
-      "변화가 겹치는 때에는 모든 걸 동시에 바꾸기보다 이후에도 가져갈 한두 가지를 남기는 편이 좋습니다.",
-      "해마다 목표를 새로 만드는 것보다 같은 큰 방향을 시기에 맞게 조금씩 다르게 쓰는 편이 더 오래 갑니다."
-    ];
+  if(group==="YEARLY_OVERVIEW"&&/5년 동안 일·돈·관계는 어떻게 달라질까/.test(title))return snapshots.length?[
+    "일·돈·관계가 동시에 좋아지거나 동시에 흔들리는 식으로 움직이지는 않습니다. 해마다 중심 분야가 바뀌는지 보는 게 핵심입니다.",
+    ...snapshots.slice(0,5).map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity");const support=topSnapshotCategory(snapshot,"support");return snapshot.year+"년: "+(active?active.label+"의 변화가 가장 큼":"변화가 분산됨")+(support?(", 도움은 "+support.label+" 쪽이 상대적으로 받기 쉬움"):"")+". ";}),
+    "일이 먼저 움직이는 해에 역할을 만들고, 돈이 움직이는 해에 그 결과를 수입으로 굳히고, 관계가 움직이는 해에는 사람의 수보다 남길 관계를 고르는 식으로 연결해서 보면 좋습니다.",
+    "한 해에 세 분야를 모두 잡으려 하기보다 그해 가장 크게 움직이는 한쪽에 시간을 먼저 쓰는 편이 결과가 더 선명합니다."
+  ]:[
+    "일·돈·관계는 같은 속도로 움직이지 않기 때문에 해마다 중심을 따로 봅니다.",
+    "움직임이 큰 분야와 도움을 받기 쉬운 분야를 구분하는 게 중요합니다.",
+    "그해 가장 크게 움직이는 한쪽을 중심에 두는 편이 현실적입니다."
+  ];
 
-    if(/5년 동안 일·돈·관계는 어떻게 달라질까|직업·재물·관계 변화/.test(title))return[
-      "일·돈·관계는 같은 속도로 움직이지 않습니다. 일이 커지는 동안 관계에 쓸 시간이 줄거나, 돈이 움직이는 동안 새로운 책임이 같이 생길 수 있습니다.",
-      topCategorySentence(input,row)||"각 분야 가운데 어디에 선택이 몰리는지 먼저 보는 편이 좋습니다.",
-      "일이 커지는 해에는 수입보다 역할이 먼저 늘 수 있고, 돈이 좋아지는 해에는 이전에 만든 결과를 실제 수입이나 자산으로 굳히는 일이 중요해질 수 있습니다.",
-      "관계 변화가 큰 해에는 사람을 많이 만나는 것보다 어떤 관계를 남기고 어떤 관계와 거리를 둘지가 더 중요할 수 있습니다.",
-      "세 가지를 동시에 완벽하게 가져가려 하기보다 그해 가장 크게 움직이는 한쪽을 중심에 두는 편이 현실적입니다."
-    ];
+  if(group==="YEARLY_OVERVIEW"&&/앞으로 5년에서 가장 중요한 것/.test(title))return snapshots.length?[
+    "앞으로 5년에서 중요한 건 해마다 같은 목표를 반복하는 게 아니라 그해 강하게 움직이는 분야에 맞춰 역할을 바꾸는 것입니다.",
+    "초반 해에는 새로 벌이는 일이 많다면 검증을 우선하고, 중간 해에는 실제 수입·자리·관계로 굳힐 것을 고르고, 뒤쪽 해에는 다음 흐름으로 가져갈 것을 남기는 식으로 보면 좋습니다.",
+    "특히 "+(snapshots[0]?.year??"초반")+"년부터 "+(snapshots.at(-1)?.year??"후반")+"년까지 무엇이 반복해서 상위에 올라오는지 보면 앞으로 몇 년의 핵심 과제가 더 선명해집니다.",
+    "해마다 결과를 새로 만들기보다 앞 해에 만든 것을 다음 해에 이어 쓰는 구조를 만드는 게 가장 중요합니다."
+  ]:[
+    "앞으로 몇 해는 해마다 다른 분야가 움직일 수 있습니다.",
+    "기회가 많은 해에는 결과를 남기고 변화가 큰 해에는 선택지를 줄이는 편이 좋습니다.",
+    "앞 해의 경험을 다음 해에 이어 쓰는 구조를 만드는 게 중요합니다."
+  ];
 
-    if(/앞으로 5년에서 가장 중요한 것|기억할 점/.test(title))return[
-      "앞으로 몇 해에서 가장 중요한 건 좋은 때를 기다리는 게 아니라 해마다 다른 역할을 제대로 쓰는 것입니다.",
-      "기회가 많은 해에는 결과를 남기고, 변화가 큰 해에는 선택지를 줄이며, 부담이 큰 해에는 무리한 확장보다 정리와 준비에 힘을 쓰는 편이 좋습니다.",
-      "한 해가 끝났을 때 돈이나 성과만 보지 말고 새로 생긴 사람·기술·역할이 다음 해에 무엇으로 이어지는지도 같이 보세요.",
-      "시기가 달라져도 본래 강점이 사라지는 건 아닙니다. 다만 같은 강점을 쓰는 방법이 달라질 뿐입니다."
-    ];
-
-    return[
-      "앞으로 몇 해는 해마다 가장 많이 움직이는 분야가 조금씩 달라질 수 있습니다.",
-      topCategorySentence(input,row)||"일·돈·관계 가운데 어디에 선택이 몰리는지 살펴봅니다.",
-      "바쁜 시기와 편한 시기를 같은 뜻으로 보지 않고, 무엇을 준비해야 하는지에 초점을 맞추는 편이 좋습니다.",
-      "한 해의 결과보다 여러 해가 어떤 순서로 이어지는지를 보는 게 더 중요합니다."
-    ];
-  }
+  if(group==="YEARLY_OVERVIEW")return snapshots.length?[
+    "앞으로의 해를 비교하면 중심이 어디로 옮겨가는지가 보입니다.",
+    ...snapshots.slice(0,5).map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity");return snapshot.year+"년은 "+(active?active.label+" 쪽이 가장 바쁘게 움직입니다.":"여러 분야가 비슷하게 움직입니다.");}),
+    "같은 계획을 매년 반복하기보다 그해 가장 많이 움직이는 분야에 맞춰 순서를 조정하는 편이 좋습니다."
+  ]:["앞으로 몇 해는 해마다 중심 분야가 달라질 수 있습니다.","움직임이 큰 분야를 먼저 보고 준비 순서를 조정하는 편이 좋습니다."];
 
   if(/^YEAR_[1-5]$/.test(group)){
-    const year=context.seunYear,heading=year?`${year}년`:title;
+    const snapshot=snapshots[0]??null;
+    const year=snapshot?.year??context.seunYear;
+    const active=snapshot?topSnapshotCategory(snapshot,"activity"):null,support=snapshot?topSnapshotCategory(snapshot,"support"):null;
     return[
-      `${heading}에는 평소보다 어떤 분야의 선택이 많아지는지를 먼저 보는 게 좋습니다.`,
-      topCategorySentence(input,row)||"일·돈·관계·학업·변화 가운데 어느 쪽이 더 바빠지는지 확인합니다.",
-      favor&&activation?`도움을 받기 쉬운 정도는 ${favor} 쪽에 가깝고, 실제 움직임은 ${activation} 쪽으로 보입니다.`:favor?`도움을 받기 쉬운 정도는 ${favor} 쪽에 가깝습니다.`:activation?`실제 움직임은 ${activation} 쪽으로 보입니다.`:"도움을 받는 정도와 실제로 일이 많아지는 정도는 따로 보는 편이 좋습니다.",
-      "기회가 많아지는 해라면 전부 잡기보다 다음 해에도 남길 일을 고르는 편이 좋고, 조용한 해라면 기존 일을 정리하고 다음 변화를 준비하는 데 쓰는 편이 좋습니다.",
-      "한 해를 좋다 나쁘다로 끝내기보다 그해 무엇을 시작하고 무엇을 남겼는지를 보는 편이 훨씬 현실적입니다."
+      (year?year+"년은 ":"이 해는 ")+(active?active.label+" 쪽 움직임이 가장 크게 잡힙니다. ":"여러 분야가 비슷하게 움직입니다. ")+(active?categoryLifeSentence(active.label):""),
+      support?("상대적으로 도움을 받기 쉬운 분야는 "+support.label+" 쪽입니다. "+(active&&support.key===active.key?"바쁘면서도 결과를 만들기 좋은 쪽이 같은 분야에 겹치는 해입니다.":"바쁜 분야와 유리한 분야가 다르기 때문에 에너지 배분을 나눠볼 필요가 있습니다.")):"도움을 받는 정도와 실제 움직임은 따로 확인하는 편이 좋습니다.",
+      context.seunPillar?fortunePillarSentence(context.seunPillar):"그해의 세운 글자는 원래 사주와 만나 어느 분야의 움직임을 키우는지 함께 봅니다.",
+      favor&&activation?("전체적으로는 "+favor+", 움직임은 "+activation+"에 가깝습니다. 즉 결과가 잘 붙는지와 실제 일이 많아지는지를 따로 보는 해입니다."):favor?("전체 도움 정도는 "+favor+"에 가깝습니다."):activation?("실제 움직임은 "+activation+"에 가깝습니다."):"지원과 활동량을 따로 봅니다.",
+      categoryActionSentence(active?.label??"")
     ];
   }
 
   if(group==="MONTHLY")return[
-    "달별 흐름은 한 해 안에서도 실제 일정과 선택이 언제 몰리는지 보는 데 의미가 있습니다.",
-    "어떤 달에는 일과 약속이 한꺼번에 들어오고, 어떤 달에는 정리하고 쉬어갈 여유가 생길 수 있습니다.",
-    "변화가 큰 달이라고 나쁜 달은 아닙니다. 해야 할 일과 결정이 많아지는 달에 가깝습니다.",
-    "큰 계약이나 이동처럼 되돌리기 어려운 선택이 겹치면 확인 절차를 하나 더 두고, 수정 가능한 일은 지나치게 겁내지 않는 편이 좋습니다.",
-    "달별 해설은 모든 일을 운에 맞추기보다 바쁜 때 미리 여유를 두는 일정표로 쓰는 게 가장 좋습니다."
+    "월운은 한 해 안에서도 실제 일정과 선택이 어느 달에 몰리는지 보는 부분입니다.",
+    "변화가 큰 달이라고 나쁜 달은 아니고 해야 할 일과 결정이 많아지는 달에 가깝습니다.",
+    "큰 계약·이동처럼 되돌리기 어려운 선택이 겹치면 확인 절차를 하나 더 두고, 수정 가능한 일은 지나치게 겁내지 않는 편이 좋습니다.",
+    "달별 흐름은 운에 맞춰 모든 일을 정하는 용도보다 바쁜 시기를 미리 알아두는 일정표로 쓰는 게 좋습니다."
   ];
 
   return null;
