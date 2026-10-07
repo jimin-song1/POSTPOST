@@ -414,7 +414,8 @@ function careerOccupationExamples(facts:ConsultationFacts){
   if(dominant==="관성")add("프로젝트 매니저","관리자","공공·행정 직군","품질·감사 직군");
   if(dominant==="식상")add("콘텐츠·광고 기획자","마케터","크리에이터","제품·서비스 기획자");
   if(dominant==="인성")add("연구·분석 직군","교육자","컨설턴트","전문자격 기반 직군");
-  return jobs.slice(0,8);
+  if(facts.strongest?.element==="metal")add("펀드매니저·자산운용 직군","리스크관리 직군","회계·감사 직군","금융상품 기획 직군");
+  return jobs.slice(0,9);
 }
 function studyExamples(facts:ConsultationFacts){
   const studies:string[]=[];
@@ -424,6 +425,7 @@ function studyExamples(facts:ConsultationFacts){
   if(structure.includes("재")||dominant==="재성")add("회계·재무","투자·금융","부동산·자산관리","유통·MD·영업 관련 실무 공부");
   if(structure.includes("식")||structure.includes("상관")||dominant==="식상")add("마케팅·브랜딩","콘텐츠 제작","광고·기획","디자인·제품기획 관련 실무 공부");
   if(structure.includes("인")||dominant==="인성")add("데이터·분석","상담·교육","리서치·연구","전문자격 시험");
+  if(facts.strongest?.element==="metal")add("투자분석·금융","회계·재무","품질·감사","리스크관리 관련 공부");
   if(!studies.length)add("업무에 바로 쓰는 자격증","실무기술 과정","전문성을 증명할 수 있는 교육");
   return studies.slice(0,6);
 }
