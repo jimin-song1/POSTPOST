@@ -97,9 +97,16 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     }
     else if(id==="book-036"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     else if(id==="book-043")personalized=first.replace(/^사람을 좋아할 때\s*/,`${label}은 사람을 좋아할 때 `);
-    else if(id.startsWith("relationship-single-01"))personalized=first.replace(/^잘 맞는 미래 배우자는\s*/,`${label}에게 잘 맞는 미래 배우자는 `);
+    else if(id==="book-047"){
+      if(first.startsWith("배우자 자리를 보면 "))personalized=first.replace(/^배우자 자리를 보면\s*/,`${label}의 배우자 자리를 보면 `);
+      else if(first.startsWith("현재 연인에게 "))personalized=first.replace(/^현재 연인에게\s*/,`${label}이 현재 연인에게 `);
+      else if(first.startsWith("배우자에게 "))personalized=first.replace(/^배우자에게\s*/,`${label}이 배우자에게 `);
+    }
     else if(id==="book-051")personalized=first.replace(/^부모가 되면\s*/,`${label}은 부모가 되면 `);
-    else if(id==="book-053")personalized=first.replace(/^해야 할 일이 남아 있으면\s*/,`${label}은 해야 할 일이 남아 있으면 `);
+    else if(id==="book-053"){
+      if(first.startsWith("명리적으로 건강 균형을 볼 때 "))personalized=first.replace(/^명리적으로 건강 균형을 볼 때\s*/,`${label}의 건강 균형을 명리적으로 보면 `);
+      else if(!first.startsWith(label))personalized=`${label}은 ${first}`;
+    }
     else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     const paragraphs=[sanitizeCustomerWording(personalized),...source.slice(1).map(sanitizeCustomerWording)];
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
