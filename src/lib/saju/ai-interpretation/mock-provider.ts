@@ -239,13 +239,7 @@ const STEM_STORY:Record<string,{image:string;core:string;shadow:string}>={
 function stemStory(facts:ConsultationFacts){return STEM_STORY[facts.dayStem]??{image:"자기만의 기운",core:"자기 기준을 세우고 움직이는 힘",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
 function dominantFamilySentence(facts:ConsultationFacts){
   const family=dominantFamily(facts),count=familyCount(facts,family);
-  if(!count)return"";
-  if(family==="비겁")return"중요한 선택에서는 남이 정해준 답보다 내가 납득한 방식대로 움직이려는 편입니다. 경쟁이 붙거나 의견이 갈릴수록 자기 판단을 쉽게 놓지 않습니다.";
-  if(family==="식상")return"생각만 오래 품기보다 말하거나 만들어서 밖으로 보여줄 때 장점이 잘 살아납니다. 일에서도 결과물이 눈에 보일수록 속도가 붙는 편입니다.";
-  if(family==="재성")return"현실적인 결과를 중요하게 보는 편입니다. 돈, 시간, 성과처럼 실제로 남는 것이 분명할수록 판단도 빨라집니다.";
-  if(family==="관성")return"맡은 일과 약속을 가볍게 넘기지 않는 편입니다. 주변에서는 책임감 있고 믿을 만한 사람으로 보기 쉽습니다.";
-  if(family==="인성")return"바로 결론을 내리기보다 충분히 이해하고 자기 방식으로 정리한 뒤 움직이는 편입니다. 배우고 파고드는 일에도 강점이 있습니다.";
-  return"중요한 선택에서는 남의 말보다 스스로 납득할 수 있는지를 중요하게 봅니다.";
+  return count?`중요한 선택에서 가장 자주 앞에 나오는 힘은 ${familyMeaning(family)}입니다. 일·돈·관계에서도 이 힘이 반복해서 기준이 됩니다.`:"";
 }
 const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
   비견:"내 생각과 기준을 세우는 힘",
@@ -273,7 +267,7 @@ function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day
 }
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
-  return `이 사주는 이미 잘하는 쪽을 더 밀어붙이기보다 ${facts.useful.map(elementPro).join(" · ")}에 해당하는 부분을 생활에서 보완할 때 균형이 좋아집니다.`;
+  return `도움이 되는 기운은 ${facts.useful.map(elementPro).join(" · ")} 순으로 잡힙니다. 이미 강한 부분을 더 키우기보다 부족한 쪽을 채울 때 전체 흐름이 매끄러워집니다.`;
 }
 function relationSentence(facts:ConsultationFacts){
   const tension=facts.relationCounts.break||facts.relationCounts.harm||facts.relationCounts.wonjin||facts.relationCounts.punishment;
@@ -342,9 +336,9 @@ function tenGodTone(role:string){
 }
 
 function stageSentence(facts:ConsultationFacts,position:string,_label:string){
-  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"상황에 맞춰 속도를 조절하는 모습";
+  const stage=facts.stageByPosition[position],meaning=STAGE_STORY[stage]??"그때 필요한 힘을 쓰는 고유한 리듬";
   const context=position==="year"?"인생 초반에는":position==="month"?"사회생활에서는":position==="day"?"가까운 관계와 중요한 선택에서는":"인생 후반으로 갈수록";
-  return stage?`${context} ${meaning}이 더 자주 드러나는 편입니다.`:"";
+  return stage?`${context} ${stage}의 흐름이 들어옵니다. 쉽게 말하면 ${meaning}이 중요한 시기와 장면에서 더 잘 드러납니다.`:"";
 }
 function pillarElementSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
@@ -509,7 +503,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(position&&facts.stageByPosition[position])return title+"은 "+facts.stageByPosition[position]+"에 해당합니다. 이름의 좋고 나쁨보다 그 자리에서 에너지를 어떤 방식으로 쓰는지를 보는 게 핵심입니다.";
   }
   if(group==="TEN_GODS"){
-    if(/한눈에|분포|10가지/.test(title))return "사람은 상황에 따라 경쟁할 때, 표현할 때, 돈을 다룰 때, 책임질 때, 배울 때의 모습이 조금씩 다릅니다. "+(facts.structure?structureMeaning(facts.structure)+"이 그중에서도 자주 드러나는 편입니다.":"");
+    if(/한눈에|분포|10가지/.test(title))return "십성은 경쟁·표현·돈·책임·배움 가운데 어떤 역할이 앞에 나오는지를 보는 틀입니다. "+(facts.structure?structureMeaning(facts.structure)+"이 이 사주의 중심축으로 작동합니다.":"");
     if(/비겁/.test(title))return "비겁은 스스로 결정하고 버티는 힘과 연결됩니다. 잘 쓰면 독립성과 경쟁력이 되지만, 모든 일을 직접 하려 들면 협업이 어려워질 수 있습니다.";
     if(/식상/.test(title))return "식상은 생각을 말과 결과물로 밖에 꺼내는 힘입니다. 콘텐츠·표현·생산·판매처럼 눈에 보이는 결과를 만들 때 이 축을 씁니다.";
     if(/재성/.test(title))return "재성은 돈 그 자체보다 현실의 결과와 자원을 다루는 힘입니다. 매출·자산·운영처럼 숫자로 남는 결과와 연결됩니다.";
@@ -518,7 +512,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
   }
   if(group==="YEARLY_OVERVIEW"||group==="MONTHLY"||group.startsWith("YEAR_"))return title+"은 사건 하나를 맞히는 장이 아니라, 그 시기에 어떤 분야의 움직임이 커지는지를 보는 장입니다. 좋은 시기와 바쁜 시기는 같은 말이 아니므로 둘을 나눠서 읽습니다.";
   if(group==="DAEUN_OVERVIEW"||group.startsWith("DAEUN_"))return title+"은 약 십 년 동안 반복되는 큰 환경을 봅니다. 같은 사람이라도 대운이 바뀌면 맡는 역할과 돈·관계의 우선순위가 달라질 수 있습니다.";
-  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 평소 모습과 그 시기의 변화를 함께 보면서, 일·돈·관계 가운데 어디에서 움직임이 커지기 쉬운지를 살펴보는 장입니다.";
+  if(group==="SAMJAE"||group==="CHANGE")return title+"은 나쁜 일이 생긴다는 뜻이 아닙니다. 실제 원국과 그 시기의 충돌·변화를 함께 보고, 무엇이 움직이기 쉬운지를 확인하는 장입니다.";
   if(group==="SYNTHESIS")return "앞의 내용을 다시 나열하기보다, "+(facts.structure?structureMeaning(facts.structure)+", ":"")+(facts.strength?strengthMeaning(facts.strength):"전체적인 균형")+"을 함께 묶어 앞으로 선택할 때 남겨야 할 핵심만 정리합니다.";
   return"";
 }
