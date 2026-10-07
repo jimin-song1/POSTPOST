@@ -31,14 +31,16 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR,relationshipStatus:"SINGLE"}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "성격과 기본 성향","나를 이루는 기본 성향","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","좋은 인연과 도움운",
-      "눈에 띄는 특별한 성향","나이에 따라 달라지는 모습","내가 일·돈·사람을 다루는 방식","앞으로 5년","변화가 커지는 시기","10년 단위 큰 흐름","총정리"
+      "성격과 기본 성향","일주와 오행","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","귀인운",
+      "신살 · 특별하게 드러나는 성향","십이운성 · 시기마다 달라지는 모습","십성 · 내가 일·돈·사람을 다루는 방식","앞으로 5년","변화가 커지는 시기","대운 · 10년 단위 큰 흐름","총정리"
     ]);
     expect(book.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(true);
-    expect(book.sections.some(section=>section.title==="어디에서 인연이 시작되기 쉬울까")).toBe(true);
-    expect(book.sections.some(section=>section.title==="결혼하면 잘 맞는 생활 방식")).toBe(true);
+    expect(book.sections.some(section=>section.title==="어디에서 인연이 시작되기 쉬울까")).toBe(false);
+    expect(book.sections.some(section=>section.title==="결혼하면 잘 맞는 생활 방식")).toBe(false);
+    expect(book.sections.some(section=>section.title==="삼재 · 실제 연도와 변화 포인트")).toBe(true);
     const datingBook=buildDynamicLifetimeBook({includeSamjae:false,year:YEAR,relationshipStatus:"DATING"});
     expect(datingBook.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(false);
+    expect(datingBook.sections.some(section=>section.title==="현재 연인에게 끌리는 이유")).toBe(true);
     expect(book.sections.find(section=>section.id==="legacy-book-015")?.partNumber).toBe("10");
     for(const id of ["legacy-book-016","legacy-book-017","legacy-book-018"]) expect(book.sections.find(section=>section.id===id)?.partNumber,id).toBe("02");
     expect(book.sections.find(section=>section.id==="legacy-book-019")?.partNumber).toBe("11");
