@@ -93,6 +93,12 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       if(sectionCopy.includes(structureLabel))expect(section.evidenceIds.some(id=>id.startsWith("NATAL:STRUCTURE")),section.id).toBe(true);
     }
     const customerCopy=customerSections.flatMap(section=>section.paragraphs??[section.body]).join("\n");
+    for(const section of customerSections.filter(section=>!["02","09"].includes(section.partNumber??""))){
+      const copy=(section.paragraphs??[section.body]).join(" ");
+      expect(copy,section.id).not.toMatch(/(?:년주|월주|일주|시주)/);
+    }
+    const workVsBusiness=customerSections.find(section=>section.title.includes("직장과 사업"));
+    expect((workVsBusiness?.paragraphs??[])[0]??"").toContain("둘 중 하나를 고르면");
     for(const label of [
       "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
@@ -102,7 +108,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       "처음에는 한 번 더 살피는 편이지만, 마음이 정해지면 오래 끌지 않고 움직여요",
       "자기 기준을 지키면서도 다른 사람의 속도를 받아들일 여지가 생기면",
       "사람은 자리마다 같은 모습으로 살지 않아요","끈기가장",
-      "종합적으로 보면","경향성이 보입니다","해당 항목","본 항목"
+      "종합적으로 보면","경향성이 보입니다","해당 항목","본 항목",
+      "분명히 ","원국에","원국에서","원국의 관계","계산상","POSTPOST에서는","이 장에서는"
     ]) expect(customerCopy).not.toContain(label);
     expect(customerCopy).not.toMatch(/(?:^|\n)(?:에서도|에서는|에서|에선|에는)\s/);
 
