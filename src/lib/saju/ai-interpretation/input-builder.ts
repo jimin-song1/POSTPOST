@@ -183,7 +183,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear});
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus});
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
