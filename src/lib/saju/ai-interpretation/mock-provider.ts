@@ -389,17 +389,43 @@ function careerExamples(facts:ConsultationFacts){
   const roles:string[]=[];
   const add=(...items:string[])=>{for(const item of items)if(!roles.includes(item))roles.push(item);};
   const structure=facts.structure;
-  if(structure.includes("관"))add("프로젝트 매니저","운영관리","품질관리·감사","인사·조직관리","공공·행정 직무");
-  if(structure.includes("재"))add("사업운영","영업관리","MD·상품기획","재무·회계","구매·유통");
-  if(structure.includes("식")||structure.includes("상관"))add("콘텐츠 기획","마케팅","브랜드 기획","제품·서비스 기획","크리에이터·제작");
+  if(structure.includes("관"))add("프로젝트 관리","운영관리","품질·감사","인사·조직관리","공공·행정");
+  if(structure.includes("재"))add("사업운영","영업관리","상품기획","재무·회계","구매·유통");
+  if(structure.includes("식")||structure.includes("상관"))add("콘텐츠 기획","마케팅","브랜드 기획","제품·서비스 기획","제작");
   if(structure.includes("인"))add("리서치·분석","교육·강의","컨설팅","전문직","데이터·기획");
   const dominant=dominantFamily(facts);
-  if(dominant==="비겁")add("팀 리더","사업·창업","프리랜서","영업","프로젝트 책임자");
-  if(dominant==="재성")add("사업운영","영업·판매","MD·상품기획","재무관리","고객·거래 관리");
-  if(dominant==="관성")add("운영관리","프로젝트 매니저","품질·컴플라이언스","조직관리","행정");
+  if(dominant==="비겁")add("팀 리딩","사업·창업","프리랜서","영업","프로젝트 책임");
+  if(dominant==="재성")add("사업운영","영업·판매","상품기획","재무관리","고객·거래 관리");
+  if(dominant==="관성")add("운영관리","프로젝트 관리","품질·컴플라이언스","조직관리","행정");
   if(dominant==="식상")add("콘텐츠 기획","마케팅","기획·제작","제품개발","교육·발표");
   if(dominant==="인성")add("분석·리서치","교육","컨설팅","전문직","기획");
   return roles.slice(0,7);
+}
+function careerOccupationExamples(facts:ConsultationFacts){
+  const jobs:string[]=[];
+  const add=(...items:string[])=>{for(const item of items)if(!jobs.includes(item))jobs.push(item);};
+  const structure=facts.structure,dominant=dominantFamily(facts);
+  if(structure.includes("관"))add("프로젝트 매니저","인사·노무 담당자","품질관리자","감사·컴플라이언스 담당자","공무원·공기업 직군");
+  if(structure.includes("재"))add("펀드매니저·자산운용 직군","재무·회계 담당자","MD·상품기획자","영업관리자","구매·유통 담당자");
+  if(structure.includes("식")||structure.includes("상관"))add("마케터","브랜드 매니저","콘텐츠 기획자","PD·제작자","서비스·제품 기획자");
+  if(structure.includes("인"))add("리서처·분석가","컨설턴트","교사·강사","연구원","데이터 분석가");
+  if(dominant==="비겁")add("창업가","프리랜서 전문가","영업직","팀장·조직 리더");
+  if(dominant==="재성")add("자산운용·금융 직군","사업개발 담당자","세일즈·영업관리","MD·유통 직군");
+  if(dominant==="관성")add("프로젝트 매니저","관리자","공공·행정 직군","품질·감사 직군");
+  if(dominant==="식상")add("콘텐츠·광고 기획자","마케터","크리에이터","제품·서비스 기획자");
+  if(dominant==="인성")add("연구·분석 직군","교육자","컨설턴트","전문자격 기반 직군");
+  return jobs.slice(0,8);
+}
+function studyExamples(facts:ConsultationFacts){
+  const studies:string[]=[];
+  const add=(...items:string[])=>{for(const item of items)if(!studies.includes(item))studies.push(item);};
+  const structure=facts.structure,dominant=dominantFamily(facts);
+  if(structure.includes("관")||dominant==="관성")add("프로젝트관리·품질관리","인사·노무","행정·공공 분야","컴플라이언스·감사 관련 공부");
+  if(structure.includes("재")||dominant==="재성")add("회계·재무","투자·금융","부동산·자산관리","유통·MD·영업 관련 실무 공부");
+  if(structure.includes("식")||structure.includes("상관")||dominant==="식상")add("마케팅·브랜딩","콘텐츠 제작","광고·기획","디자인·제품기획 관련 실무 공부");
+  if(structure.includes("인")||dominant==="인성")add("데이터·분석","상담·교육","리서치·연구","전문자격 시험");
+  if(!studies.length)add("업무에 바로 쓰는 자격증","실무기술 과정","전문성을 증명할 수 있는 교육");
+  return studies.slice(0,6);
 }
 function familyPresence(facts:ConsultationFacts,family:string){
   const count=familyCount(facts,family),meaning=familyMeaning(family);
@@ -795,11 +821,15 @@ const CUSTOMER_NARRATION_TERM_MAP:Record<string,string>={
   "인성":"학습력"
 };
 function customerizeNarration(text:string){
-  let result=text;
+  let result=text
+    .replaceAll("일관성","__POSTPOST_CONSISTENCY__")
+    .replaceAll("습관성","__POSTPOST_HABITUAL__");
   for(const [term,meaning] of Object.entries(CUSTOMER_NARRATION_TERM_MAP).sort(([left],[right])=>right.length-left.length)){
     result=result.split(term).join(meaning);
   }
-  return result;
+  return result
+    .replaceAll("__POSTPOST_CONSISTENCY__","일관성")
+    .replaceAll("__POSTPOST_HABITUAL__","습관성");
 }
 function naturalizeNarration(text:string){
   return customerizeNarration(text)
