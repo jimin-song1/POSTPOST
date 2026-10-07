@@ -2062,8 +2062,33 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   return null;
 }
 
-function relationshipConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+function relationshipConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   const title=row.topic??row.title,dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day,dayTone=tenGodTone(dayRole);
+  const relationshipStatus=input.minimalContext.relationshipStatus;
+
+  if(/미래 배우자는 어떤 사람일까/.test(title)&&relationshipStatus==="SINGLE")return[
+    "배우자 자리는 화려하게 끌리는 사람보다 시간이 지나도 믿을 수 있는 사람에게 더 마음이 가는 쪽으로 읽힙니다.",
+    "말을 잘하는 것보다 자기 일을 꾸준히 하고, 약속한 걸 실제 행동으로 보여주며, 감정이 생겨도 대화를 피하지 않는 사람이 잘 맞는 편입니다.",
+    "본인도 자기 판단이 분명한 만큼 상대까지 지나치게 강한 사람보다는, 자기 생각은 있으면서도 서로 설명하고 조율할 수 있는 사람이 관계를 오래 편하게 만들어줍니다.",
+    "가까워질수록 챙김과 책임이 커지는 편이라, 미래 배우자는 받기만 하는 사람보다 자기 몫을 스스로 해내는 사람이 잘 맞습니다.",
+    "외모나 직업 하나를 정답처럼 찍기보다, 생활 태도와 책임감이 꾸준하고 서로의 일을 존중할 수 있는 사람이 배우자상에 더 가깝습니다."
+  ];
+
+  if(/어디에서 인연이 시작되기 쉬울까/.test(title)&&relationshipStatus==="SINGLE")return[
+    "인연은 처음부터 연애를 목적으로 만나는 자리보다, 일·배움·소개처럼 서로 무엇을 하는 사람인지 알 수 있는 환경에서 더 자연스럽게 시작될 가능성이 있습니다.",
+    "짧게 강하게 끌리는 만남보다 몇 번 마주치며 태도와 신뢰를 확인할 수 있는 관계가 본인에게 더 잘 맞습니다.",
+    "업무로 연결된 사람, 공부나 자격 과정에서 만난 사람, 지인의 소개처럼 기본적인 신뢰가 있는 연결도 잘 맞는 편입니다.",
+    "처음부터 마음을 빨리 정하려 하기보다 대화가 계속 이어지는지, 약속을 지키는지, 서로의 생활을 존중하는지를 천천히 보는 편이 좋습니다.",
+    "본인에게 좋은 만남은 설렘만 강한 사람보다 만난 뒤 생활이 더 편안해지는 사람에 가깝습니다."
+  ];
+
+  if(/결혼하면 잘 맞는 생활 방식/.test(title)&&relationshipStatus==="SINGLE")return[
+    "결혼을 하더라도 모든 시간을 붙어 보내는 방식보다 함께할 것과 각자 할 것을 자연스럽게 나눌 수 있는 생활이 더 잘 맞습니다.",
+    "돈, 집안일, 가족 문제처럼 현실적인 일은 누가 알아서 하겠지 하고 넘기기보다 처음부터 역할을 말로 정해두는 편이 좋습니다.",
+    "서로의 일과 혼자 있는 시간을 인정해주면서도 중요한 결정은 함께 이야기하는 관계에서 답답함이 덜합니다.",
+    "본인이 책임을 많이 가져오는 편이라 상대까지 수동적이면 시간이 갈수록 부담이 커질 수 있습니다. 자기 몫을 스스로 해내는 배우자가 더 잘 맞습니다.",
+    "결혼생활에서 중요한 건 늘 같이 있는 게 아니라 서로 믿고 각자의 생활을 유지하면서 필요한 순간에는 확실히 같은 편이 되어주는 것입니다."
+  ];
 
   if(/연애운·결혼운·자녀운/.test(title))return[
     "사람을 좋아할 때 처음의 설렘보다 '이 사람을 계속 믿어도 되는가'를 더 오래 보는 편입니다.",
@@ -2121,12 +2146,24 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts):string[]|null
     "갈등의 핵심은 누가 맞는지가 아니라 서로 다른 속도로 감정을 처리한다는 점을 이해하고 대화의 시간을 맞추는 데 있습니다."
   ];
 
-  if(/결혼운/.test(title))return[
-    "결혼운은 함께 사는 것 자체보다 역할과 독립성을 어떻게 나누느냐가 중요합니다.",
-    "가족이 중요해도 자기 일과 자기 공간이 완전히 사라지면 답답함이 커질 수 있습니다.",
-    "서로의 영역을 인정하면서도 중요한 약속은 함께 정하는 결혼이 더 잘 맞습니다.",
+  if(/결혼운|연애의 다음 단계와 결혼/.test(title))return relationshipStatus==="SINGLE"?[
+    "결혼은 빨리 정하는 것보다 '이 사람과 실제 생활을 같이 해도 편한가'를 충분히 확인한 뒤 결정하는 쪽이 잘 맞습니다.",
+    "연애할 때는 감정이 중요해도 결혼을 생각하기 시작하면 약속, 돈 쓰는 방식, 일에 대한 태도처럼 현실적인 부분을 더 꼼꼼히 보게 될 수 있습니다.",
+    "미래 배우자는 본인의 일을 존중하면서도 자기 몫을 스스로 책임지는 사람이 잘 맞습니다. 한 사람이 계속 챙기고 다른 사람이 기대는 구조는 시간이 갈수록 피로가 커질 수 있습니다.",
     relationSentence(facts),
-    "좋은 결혼은 모든 것을 함께하는 상태보다, 함께 책임질 것과 각자 책임질 것을 나눈 상태에 가깝습니다."
+    "좋은 결혼은 모든 것을 함께하는 관계보다 서로의 생활은 지키면서 중요한 순간에는 확실히 한 팀이 되는 관계에 가깝습니다."
+  ]:relationshipStatus==="DATING"?[
+    "현재 관계가 결혼으로 이어질 수 있는지는 좋아하는 마음만큼 실제 생활의 합이 맞는지를 보는 게 중요합니다.",
+    "돈 쓰는 방식, 일과 휴식, 가족과의 거리, 갈등을 풀어내는 속도가 맞을수록 함께 살 때의 부담이 줄어듭니다.",
+    "상대를 바꾸려 하기보다 서로 꼭 지켜야 하는 것과 양보할 수 있는 것을 미리 이야기해보는 편이 좋습니다.",
+    relationSentence(facts),
+    "결혼을 생각한다면 더 오래 만나는 것보다 현실적인 문제를 함께 결정해봤을 때 어떤 팀이 되는지를 보는 게 더 중요합니다."
+  ]:[
+    "결혼생활에서는 사랑의 크기보다 역할과 생활의 균형이 더 중요하게 느껴질 수 있습니다.",
+    "가족을 챙기면서도 자기 일과 혼자 쓸 시간이 완전히 사라지면 답답함이 커질 수 있습니다.",
+    "돈, 집안일, 가족 문제를 한 사람이 알아서 책임지는 구조보다 서로 맡을 것을 나누고 필요할 때 연결되는 방식이 잘 맞습니다.",
+    relationSentence(facts),
+    "오래 함께할수록 말하지 않아도 알겠지보다 작은 불편과 고마움을 자주 말해주는 게 관계를 훨씬 편하게 만듭니다."
   ];
 
   if(row.evidenceGroup==="RELATIONSHIP")return[
@@ -2966,7 +3003,7 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
     coreIdentityConsultation(row,facts),
     workConsultation(row,facts),
     wealthConsultation(row,facts),
-    relationshipConsultation(row,facts),
+    relationshipConsultation(row,facts,input),
     childrenConsultation(row,facts),
     wellnessConsultation(row,facts),
     nobleConsultation(row,facts),
