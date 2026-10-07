@@ -34,7 +34,7 @@ const daeunTopics=["이 10년의 앞부분과 뒷부분"];
 
 const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
   "01":"성격과 기본 성향",
-  "02":"일주와 오행",
+  "02":"나를 이루는 기본 성향",
   "03":"직업운·학업운",
   "04":"재물운",
   "05":"연애운·결혼운·자녀운",
