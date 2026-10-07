@@ -67,14 +67,14 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     const id=section.id.replace(/^legacy-/,"");
     const first=source[0];
     let personalized=first;
-    if(id==="book-007")personalized=first.replace(/^이 사주는 기본적으로\s*/,\`${label}은 기본적으로 \`);
-    else if(id==="book-008")personalized=first.replace(/^한 문장으로 줄이면,\s*/,\`한 문장으로 줄이면, ${label}은 \`);
+    if(id==="book-007")personalized=first.replace(/^이 사주는 기본적으로\s*/,`${label}은 기본적으로 `);
+    else if(id==="book-008")personalized=first.replace(/^한 문장으로 줄이면,\s*/,`한 문장으로 줄이면, ${label}은 `);
     else if(["book-009","book-010","book-011","book-012","book-013","book-014","book-017","book-024"].includes(id)&&!first.startsWith(label))
-      personalized=\`${label}은 ${first}\`;
-    else if(id==="book-032")personalized=first.replace(/^직장에서는\s*/,\`${label}은 직장에서 \`);
-    else if(id==="book-033")personalized=first.replace(/^사업을 할 때는\s*/,\`${label}은 사업을 할 때 \`);
-    else if(id==="book-035"&&first.startsWith("돈은 "))personalized=first.replace(/^돈은\s*/,\`${label}에게 돈은 \`);
-    else if(id==="book-036"&&!first.startsWith(label))personalized=\`${label}은 ${first}\`;
+      personalized=`${label}은 ${first}`;
+    else if(id==="book-032")personalized=first.replace(/^직장에서는\s*/,`${label}은 직장에서 `);
+    else if(id==="book-033")personalized=first.replace(/^사업을 할 때는\s*/,`${label}은 사업을 할 때 `);
+    else if(id==="book-035"&&first.startsWith("돈은 "))personalized=first.replace(/^돈은\s*/,`${label}에게 돈은 `);
+    else if(id==="book-036"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
     if(personalized===first)return section;
     const paragraphs=[personalized,...source.slice(1)];
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
