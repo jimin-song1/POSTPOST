@@ -59,10 +59,15 @@ function customerHonorific(name:string){
   if(!trimmed)return"고객님";
   return trimmed.endsWith("님")?trimmed:`${trimmed}님`;
 }
+function sanitizeCustomerWording(text:string){
+  return text
+    .replaceAll("자기준","본인 기준")
+    .replaceAll("자기기준","본인 기준");
+}
 function personalizeCustomerReport(report:StructuredInterpretation,name:string):StructuredInterpretation{
   const label=customerHonorific(name);
   const sections=report.sections.map(section=>{
-    const source=section.paragraphs??(section.body?[section.body]:[]);
+    const source=(section.paragraphs??(section.body?[section.body]:[])).map(sanitizeCustomerWording);
     if(!source.length)return section;
     const id=section.id.replace(/^legacy-/,"");
     const first=source[0];
@@ -88,8 +93,8 @@ function personalizeCustomerReport(report:StructuredInterpretation,name:string):
     else if(id==="book-051")personalized=first.replace(/^자녀운에서는\s*/,`${label}은 부모 역할이 생겼을 때 `);
     else if(id==="book-053")personalized=first.replace(/^바쁠수록\s*/,`${label}은 바쁠수록 `);
     else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
-    if(personalized===first)return section;
-    const paragraphs=[personalized,...source.slice(1)];
+    const paragraphs=[sanitizeCustomerWording(personalized),...source.slice(1).map(sanitizeCustomerWording)];
+    if(personalized===first&&paragraphs.every((paragraph,index)=>paragraph===source[index]))return section;
     return{...section,paragraphs,body:paragraphs.join("\n\n")};
   });
   return{...report,sections};
