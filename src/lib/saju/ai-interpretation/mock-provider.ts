@@ -212,6 +212,13 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
   };
 }
 function elementPro(element:string){return ELEMENT_PRO[element]??element;}
+function hasKoreanBatchim(text:string){
+  const chars=Array.from(text).reverse();
+  const hangul=chars.find(char=>{const code=char.charCodeAt(0);return code>=0xac00&&code<=0xd7a3;});
+  if(!hangul)return false;
+  return (hangul.charCodeAt(0)-0xac00)%28!==0;
+}
+function withParticle(text:string,batchim:string,noBatchim:string){return text+(hasKoreanBatchim(text)?batchim:noBatchim);}
 const TEN_GOD_FAMILIES:Record<string,string[]>={비겁:["비견","겁재"],식상:["식신","상관"],재성:["정재","편재"],관성:["정관","편관"],인성:["정인","편인"]};
 function familyCount(facts:ConsultationFacts,family:string){return(TEN_GOD_FAMILIES[family]??[]).reduce((sum,name)=>sum+(facts.tenGodCounts[name]??0),0);}
 function dominantFamily(facts:ConsultationFacts){
@@ -338,11 +345,19 @@ const STAGE_STORY:Record<string,string>={
   양:"작은 가능성을 보호하고 천천히 키우는 힘"
 };
 function elementStory(element:string){return ELEMENT_STORY[element]??{gift:"균형",life:"필요한 힘을 상황에 맞게 쓰는 능력",shadow:"한쪽으로 힘이 몰릴 때 피로가 커지는 면"};}
+const ELEMENT_BEHAVIOR:Record<string,{natural:string;weak:string;practice:string}>={
+  wood:{natural:"새로운 일을 시작하면 다음 단계까지 키워가고 방향을 넓혀가는 건 비교적 자연스러운 편입니다.",weak:"새로운 일을 먼저 시작하거나 방향을 넓히는 데 시간이 걸릴 수 있습니다.",practice:"완벽한 계획을 세운 뒤 움직이기보다 작은 시작을 먼저 만들어보는 습관이 도움이 됩니다."},
+  fire:{natural:"머릿속에 있는 생각을 말·콘텐츠·행동으로 밖에 꺼내 보여주는 건 비교적 자연스러운 편입니다.",weak:"생각은 충분한데 말이나 공개가 늦어질 수 있습니다. 준비는 많이 했는데 시작을 미루는 식으로 나타날 수 있습니다.",practice:"완벽하게 준비될 때까지 기다리기보다 중간 단계에서도 한번 말해보고 보여주는 습관이 도움이 됩니다."},
+  earth:{natural:"아이디어를 실제 일정·돈·운영처럼 손에 잡히는 결과로 정리하는 건 비교적 자연스러운 편입니다.",weak:"좋은 생각이 있어도 일정이나 돈, 운영처럼 현실적인 형태로 굳히는 데 시간이 걸릴 수 있습니다.",practice:"해야 할 일을 숫자·기한·담당자처럼 눈에 보이는 형태로 바꿔두면 훨씬 편해집니다."},
+  metal:{natural:"무엇이 맞고 틀린지 구분하고, 흐트러진 일을 정리하거나 약속과 품질을 지키는 건 비교적 자연스러운 편입니다.",weak:"무엇을 기준으로 정리할지 결정하거나 선을 분명하게 긋는 일이 늦어질 수 있습니다.",practice:"결정 전에 꼭 지킬 기준 두세 가지만 정해두면 선택이 훨씬 선명해집니다."},
+  water:{natural:"상황을 읽고 정보를 모으고 여러 가능성을 연결하는 건 비교적 자연스러운 편입니다.",weak:"새로운 정보를 받아들이거나 상황을 넓게 비교하는 데 시간이 더 필요할 수 있습니다.",practice:"혼자 생각만 이어가기보다 필요한 정보를 정해 짧게 찾아보고 바로 다음 행동으로 넘기는 습관이 도움이 됩니다."}
+};
+function elementBehavior(element:string){return ELEMENT_BEHAVIOR[element]??{natural:"익숙한 방식은 비교적 자연스럽게 나오는 편입니다.",weak:"덜 익숙한 방식은 필요한 순간에 조금 늦게 나올 수 있습니다.",practice:"생활 속에서 작은 행동으로 반복해보면 훨씬 편해집니다."};}
 function familyPresence(facts:ConsultationFacts,family:string){
   const count=familyCount(facts,family),meaning=familyMeaning(family);
-  if(count>=3)return `${meaning}이 평소 선택에서 자주 앞에 나옵니다. 익숙하게 쓰는 장점인 만큼 과해지는 순간만 조절하면 좋습니다.`;
-  if(count>=1)return `${meaning}도 갖고 있습니다. 필요한 장면에서는 자연스럽게 꺼내 쓸 수 있는 힘입니다.`;
-  return `${meaning}은 자동으로 나오기보다 경험을 쌓을수록 편해지는 영역입니다.`;
+  if(count>=3)return `${meaning}이 평소에도 자연스럽게 나오는 편입니다. 익숙한 만큼 너무 앞세우지만 않으면 장점으로 오래 쓸 수 있습니다.`;
+  if(count>=1)return `평소 주된 모습은 아니어도 ${meaning}이 필요한 상황에서는 자연스럽게 나오는 편입니다.`;
+  return `${meaning}은 저절로 나오기보다 실제 경험을 쌓을수록 점점 편해지는 쪽입니다.`;
 }
 
 function tenGodTone(role:string){
@@ -435,8 +450,14 @@ function fortunePillarSentence(pillar:string){
 
 function elementFact(facts:ConsultationFacts){
   if(!facts.strongest||!facts.weakest)return"";
-  if(facts.missing.length)return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고, "+facts.missing.map(elementPro).join("·")+"은 사주 안에서 비어 있습니다.";
-  return "오행에서는 "+elementPro(facts.strongest.element)+"이 가장 강하고 "+elementPro(facts.weakest.element)+"이 가장 약합니다.";
+  const strongest=elementPro(facts.strongest.element);
+  if(facts.missing.length){
+    const missing=facts.missing.map(elementPro);
+    const missingText=missing.length===1?withParticle(missing[0],"은","는"):missing.join("·")+"은";
+    return "오행에서는 "+withParticle(strongest,"이","가")+" 가장 강하고, "+missingText+" 사주 안에서 비어 있습니다.";
+  }
+  const weakest=elementPro(facts.weakest.element);
+  return "오행에서는 "+withParticle(strongest,"이","가")+" 가장 강하고 "+withParticle(weakest,"이","가")+" 가장 약합니다.";
 }
 function strengthMeaning(level:string){
   const labels:Record<string,string>={
@@ -450,6 +471,15 @@ function strengthMeaning(level:string){
     "극왕":"한 방향으로 힘이 강하게 몰려 조절과 분산이 중요한 편"
   };
   return labels[level]??"전체적으로 균형을 보며 힘을 쓰는 편";
+}
+function strengthCounseling(level:string){
+  if(["극약","태약"].includes(level))return"혼자 끝까지 버티는 것보다 사람·정보·환경의 도움을 일찍 받아들일 때 훨씬 안정적으로 오래 가는 편입니다.";
+  if(level==="신약")return"웬만한 일은 스스로 해내려 하지만, 일이 커질수록 혼자 버티기보다 필요한 도움을 잘 쓰는 쪽에서 본래 실력이 더 잘 살아납니다.";
+  if(level==="중화신약")return"웬만한 일은 스스로 판단하고 해낼 수 있지만, 모든 걸 혼자 끌고 가기보다 필요한 순간에 주변 도움을 받을 때 훨씬 안정적으로 오래 가는 편입니다.";
+  if(level==="중화신강")return"스스로 방향을 잡고 밀어붙일 힘이 충분한 편입니다. 다만 일이 커질수록 혼자 다 챙기기보다 사람과 역할을 나누는 쪽이 더 오래 갑니다.";
+  if(level==="신강")return"스스로 판단하고 끝까지 끌고 가는 힘이 분명한 편입니다. 그래서 도움을 받아야 할 시점까지 혼자 버티는 시간이 길어질 수 있습니다.";
+  if(["태강","극왕"].includes(level))return"혼자 밀고 가는 힘이 강한 편이라 시작과 추진은 빠를 수 있습니다. 대신 속도를 늦추고 다른 사람에게 맡기는 순간을 의식적으로 만들어야 지치지 않습니다.";
+  return"혼자 할 일과 도움받을 일을 적당히 나눌 때 가장 안정적으로 오래 가는 편입니다.";
 }
 function structureMeaning(structure:string){
   if(structure.includes("정관"))return"책임과 약속을 중요하게 여기고 신뢰를 쌓는 성향";
@@ -1604,31 +1634,31 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   ];
 
   if(id==="book-014")return[
-    "겉으로 바로 말하지 않은 생각이 안쪽에 오래 남는 편입니다. 그 자리에서는 지나간 일도 시간이 지난 뒤 다시 떠올리며 의미를 정리할 수 있습니다.",
-    dominantFamilySentence(facts)||"속에서 반복되는 생각은 눈에 보이는 행동보다 더 큰 비중을 차지할 수 있습니다.",
-    "특히 말의 앞뒤가 맞지 않거나 신뢰가 흔들린 일은 단순히 기분이 나빴다는 수준보다 '이 사람을 계속 믿어도 되는가'의 문제로 남기 쉽습니다.",
-    "그래서 겉으로 조용하다고 마음까지 금방 정리된 것은 아닙니다. 반대로 한번 납득하고 마음이 풀리면 같은 일을 오래 붙잡지 않을 수도 있습니다.",
-    "속마음을 이해하려면 감정의 크기보다 무엇을 신뢰의 기준으로 삼는지를 보는 편이 더 정확합니다."
+    "그 자리에서는 괜찮다고 넘겼던 일도 혼자 있을 때 다시 떠올리는 편입니다. 특히 가까운 사람의 말과 행동이 다르거나 믿었던 사람에게 서운한 일이 생기면 생각보다 오래 마음에 남을 수 있습니다.",
+    "바로 크게 화를 내기보다는 먼저 혼자 정리하려는 편이라 주변에서는 별일 아닌 줄 알 수도 있습니다.",
+    "하지만 마음속에서는 이미 여러 번 생각하고, 이 관계를 계속 믿어도 되는지까지 판단하고 있을 때가 많습니다.",
+    "한번 납득하고 마음이 풀리면 같은 일을 계속 붙잡지는 않지만, 설명 없이 덮어둔 일은 나중에 다시 떠오르기 쉽습니다.",
+    "서운한 일이 생겼을 때 너무 오래 혼자 정리하기보다 감정이 커지기 전에 작은 불편부터 말해두는 편이 관계에는 더 좋습니다."
   ];
 
   if(id==="book-016"||id==="book-024"){
-    const first=strongest&&strongStory?`가장 강한 ${elementPro(strongest)}은 ${strongStory.gift}과 연결됩니다. 생활에서는 ${strongStory.life}으로 나타나기 쉽습니다.`:"오행의 강약은 다섯 기운을 비교해서 읽습니다.";
-    const second=weakest&&weakStory?`반대로 ${elementPro(weakest)}은 상대적으로 약합니다. 이 기운이 맡는 '${weakStory.life}'은 자동으로 나오기보다 의식적으로 보완할수록 좋아지는 영역입니다.`:"약한 기운은 부족하다는 판정보다 의식적으로 보완할 영역을 보여줍니다.";
+    const strongBehavior=strongest?elementBehavior(strongest):null,weakBehavior=weakest?elementBehavior(weakest):null;
+    const missingLabel=facts.missing.length===1?elementPro(facts.missing[0]):"";
     return[
-      id==="book-016"?"오행표에서 중요한 것은 숫자 하나가 아니라 어느 기운이 앞에 서고 어느 기운이 뒤로 물러나는지입니다. 이 차이가 성격과 생활의 우선순위를 만듭니다.":"오행의 강약은 좋고 나쁨을 매기는 점수가 아닙니다. 어떤 힘은 자연스럽게 쓰고, 어떤 힘은 일부러 꺼내 써야 하는지를 보여주는 지도에 가깝습니다.",
-      first,
-      second,
-      facts.missing.length?`특히 ${facts.missing.map(elementPro).join("·")}이 사주 안에서 비어 있다는 점은 중요합니다. 능력이 없다는 뜻이 아니라 그 역할이 저절로 나오기보다 환경과 습관으로 채워갈 영역이라는 뜻입니다.`:"다섯 기운이 모두 있어도 비율 차이가 크면 생활에서 체감되는 강약은 생깁니다.",
-      "그래서 오행은 '많아서 좋다, 적어서 나쁘다'로 읽지 않습니다. 강한 힘은 과해지는 순간을 조절하고, 약한 힘은 필요한 장면에서 의식적으로 보완하는 것이 핵심입니다."
+      id==="book-016"?"다섯 기운을 보면 평소 자연스럽게 잘 쓰는 방식과, 필요할 때 일부러 꺼내야 하는 방식이 나뉩니다.":"잘하는 쪽과 덜 익숙한 쪽의 차이를 보면 평소 왜 어떤 일은 쉽게 하고, 어떤 일은 시작이 늦어지는지 이해하기 쉬워집니다.",
+      strongBehavior?strongBehavior.natural:"익숙한 방식은 생활에서 비교적 자연스럽게 나오는 편입니다.",
+      weakBehavior?weakBehavior.weak:"덜 익숙한 방식은 필요한 순간에 조금 늦게 나올 수 있습니다.",
+      facts.missing.length===1?`특히 ${withParticle(missingLabel,"이","가")} 사주 안에서 비어 있다는 건 그 능력이 없다는 뜻이 아닙니다. 그 방식이 저절로 나오기보다 의식적으로 연습해야 더 편해진다는 뜻에 가깝습니다.`:facts.missing.length>1?"비어 있는 기운이 여러 개라면 모든 걸 한꺼번에 채우려 하기보다 실제 생활에서 자주 막히는 행동부터 하나씩 보완하는 편이 좋습니다.":"다섯 기운이 모두 있어도 어떤 방식은 익숙하고 어떤 방식은 덜 익숙할 수 있습니다.",
+      weakBehavior?weakBehavior.practice:"덜 익숙한 부분은 생활 속 작은 행동으로 반복해보면 훨씬 편해집니다."
     ];
   }
 
   if(id==="book-017")return[
-    `전체 기운의 균형을 계산하면 ${strengthMeaning(facts.strength)}입니다.`,
-    "이 값은 의지가 세다 약하다는 성격평가가 아닙니다. 혼자 밀어붙이는 힘과 주변의 도움을 받아 안정되는 힘 가운데 어느 쪽을 더 많이 쓰는지를 보는 기준입니다.",
-    dominantFamilySentence(facts)||"반복해서 나타나는 성향을 함께 보면 실제로 힘을 쓰는 방식이 더 선명해집니다.",
-    "힘이 충분한 사람도 환경이 맞지 않으면 지칠 수 있고, 도움을 많이 쓰는 구조도 좋은 사람과 자원을 잘 연결하면 훨씬 큰 결과를 만들 수 있습니다.",
-    "결국 중요한 것은 강약의 이름보다 내 힘을 어디까지 직접 쓰고, 어느 지점부터 사람·시간·환경의 도움을 받아야 오래 갈 수 있는지를 아는 것입니다."
+    strengthCounseling(facts.strength),
+    "도움을 못 받는 사람이 아니라, 도움을 받아야 할 시점까지 혼자 버티는 시간이 길어질 수 있습니다.",
+    dominantFamilySentence(facts)||"일단 스스로 방법을 찾아본 뒤에야 주변에 손을 내미는 편입니다.",
+    "잘 맞는 사람이나 환경이 받쳐주면 오히려 더 안정적으로 오래 갈 수 있습니다. 혼자 하는 것 자체가 장점인 게 아니라, 필요한 순간에 누구의 도움을 쓸지 아는 게 중요합니다.",
+    "일이 커질수록 직접 해야 할 일과 맡겨도 되는 일을 나눠두면 지치지 않고 훨씬 오래 갈 수 있습니다."
   ];
 
   if(id==="book-018"||id==="book-025")return[
@@ -1749,19 +1779,19 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/^사업운$/.test(title))return[
-    wealth>0?"사업운은 눈여겨볼 만합니다. 시장과 돈, 운영 결과를 직접 다루는 감각이 있어 결과가 눈에 보이는 일에서 강점이 살아납니다.":"사업운은 '사업가 기질' 한마디보다 결과를 밖에 내놓고 시장 반응을 확인하는 힘을 얼마나 키우느냐가 중요합니다.",
+    wealth>0?"사업을 할 때는 아이디어 자체보다 실제 매출·운영·고객 반응처럼 결과가 눈에 보일수록 판단이 빨라지는 편입니다.":"사업은 타고난 '사업가 기질'보다 내가 만든 것을 실제 고객에게 내놓고 반응을 보면서 고치는 방식이 잘 맞는지가 더 중요합니다.",
     familyPresence(facts,"재성"),
-    output>0?"표현하고 만들어내는 성향도 함께 있어서 만들고 표현한 것을 판매와 결과로 연결하는 흐름을 쓰기 좋습니다.":"표현과 생산을 맡는 식상은 의식적으로 키워야 합니다. 좋은 아이디어를 갖고 있는 것과 상품·콘텐츠·서비스로 내놓는 것은 다른 단계입니다.",
-    "사업에서 강점은 방향을 잡고 구조를 만드는 힘입니다. 반대로 아이디어가 늘어날수록 하나가 자리 잡기 전에 다음 판을 벌리는 것은 조심해야 합니다.",
-    "가장 좋은 방식은 하나를 만들어 반응을 확인하고, 반복 가능하게 정리한 뒤 다음 확장으로 넘어가는 것입니다."
+    output>0?"만들고 표현하는 성향도 있어서 생각한 것을 상품·콘텐츠·서비스로 꺼낸 뒤 돈과 연결하는 쪽에서 장점이 살아날 수 있습니다.":"좋은 생각을 오래 다듬는 것보다 작은 형태라도 실제로 내놓고 반응을 보는 연습이 중요합니다.",
+    "다만 새로운 아이디어가 생길 때마다 판을 넓히면 돈과 시간이 분산될 수 있습니다. 하나가 자리를 잡기 전에는 다음 확장을 조금 늦추는 편이 좋습니다.",
+    "하나를 내놓고 반응을 확인한 뒤, 반복해서 팔거나 운영할 수 있게 만든 다음 확장하는 방식이 가장 안정적입니다."
   ];
 
   if(/직장 인간관계/.test(title))return[
-    "직장 인간관계에서는 친해지는 속도보다 역할과 약속이 분명한지가 더 중요합니다.",
-    peer>0?"동료와 서로 자극을 주고받으며 성장하는 힘이 있습니다. 경쟁이 적당히 있는 환경에서는 오히려 집중력이 살아날 수 있습니다.":"동료와의 관계에서는 감정적 친밀감보다 업무 기준과 책임 분담이 더 중요한 편입니다.",
+    "직장에서는 사람과 빨리 친해지는 것보다 서로 맡은 일과 약속이 분명할 때 훨씬 편한 편입니다.",
+    peer>0?"적당한 경쟁이 있는 환경에서는 오히려 집중력이 올라갈 수 있지만, 역할이 겹치거나 책임이 애매하면 불편함도 빨리 커질 수 있습니다.":"동료와 꼭 사적으로 가까워지지 않아도 업무 기준과 책임 분담이 잘 맞으면 편하게 오래 일할 수 있습니다.",
     relationSentence(facts),
-    "문제는 내가 원하는 기준을 상대도 당연히 알고 있을 것이라고 생각할 때 생깁니다. 업무에서는 마음보다 완료 기준을 말로 공유하는 편이 훨씬 편합니다.",
-    "좋은 동료는 모든 일을 대신해주는 사람이 아니라 서로 맡은 몫을 나누고 필요한 순간에 연결되는 사람에 가깝습니다."
+    "특히 내가 중요하게 보는 기준을 상대도 당연히 알 거라고 생각하면 답답함이 생기기 쉽습니다. 원하는 결과와 마감 기준을 처음부터 말로 맞춰두는 편이 좋습니다.",
+    "잘 맞는 동료는 모든 일을 대신해주는 사람보다 각자 맡은 몫을 해내고 필요할 때 서로 연결될 수 있는 사람에 가깝습니다."
   ];
 
   if(/^학업운$/.test(title))return[
@@ -1795,12 +1825,12 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "결국 재물운은 한 번의 큰 기회보다 벌고, 남기고, 다시 굴리는 구조를 만드는 쪽에서 더 크게 살아납니다."
   ];
 
-  if(/돈에 대한 기본 성향/.test(title))return[
-    "돈은 무조건 아껴야 마음이 놓이는 대상이라기보다, 필요하다고 판단한 곳에 써서 원하는 결과를 만드는 도구에 가깝습니다.",
-    familyPresence(facts,"재성"),
-    peer>0?"사람과 경쟁, 새로운 기회가 돈의 움직임에 영향을 주기 쉬워 '좋은 관계니까 괜찮겠지'보다 숫자와 약속을 먼저 보는 습관이 중요합니다.":"목적이 분명한 지출과 습관적인 지출을 나누면 재물 관리가 훨씬 단순해집니다.",
-    "필요하다고 확신하면 과감해질 수 있지만, 확신이 서기 전에는 비교와 검토가 길어질 수 있습니다.",
-    "이 성향에는 예산을 아주 촘촘하게 짜는 것보다, 큰돈을 쓸 때 반드시 확인할 기준 몇 가지를 정해두는 방식이 더 잘 맞습니다."
+  if(/돈을 대하는 방식|돈에 대한 기본 성향/.test(title))return[
+    "돈을 무조건 아껴야 마음이 놓이는 타입이라기보다, 쓸 이유가 분명하면 필요한 곳에는 쓰는 편입니다.",
+    wealth>0?"다만 쓰고 난 뒤 무엇이 남는지는 꽤 중요하게 생각합니다. 가격이 싸냐 비싸냐보다 그 돈으로 원하는 결과를 얻을 수 있는지를 더 따지는 편입니다.":"돈을 쓸 때는 순간적인 기분보다 왜 쓰는지 이유가 분명할수록 후회가 적은 편입니다.",
+    peer>0?"특히 사람과 함께 움직이는 돈은 친분이나 분위기로 결정하지 않는 게 좋습니다. 공동비용·투자·정산처럼 돈과 관계가 섞이면 금액과 약속을 먼저 정해두는 편이 훨씬 편합니다.":"목적이 분명한 지출과 습관처럼 나가는 지출을 나눠두면 돈 관리가 훨씬 단순해집니다.",
+    "필요하다고 확신하면 결정을 빠르게 내릴 수 있지만, 납득되지 않으면 비교하고 확인하는 시간이 길어질 수 있습니다.",
+    "세세한 예산표를 매번 만드는 것보다 큰돈 앞에서 '왜 쓰는지, 무엇이 남는지, 언제까지 결과를 확인할지' 세 가지만 정해두는 방식이 더 잘 맞습니다."
   ];
 
   if(/^돈의 흐름$/.test(title))return[
