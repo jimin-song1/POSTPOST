@@ -2623,7 +2623,7 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
     ];
 
     return[
-      `${title}은 십 년 단위의 큰 흐름을 읽는 장입니다.`,
+      "이 시기는 약 십 년 동안 반복되는 큰 배경을 보여줍니다.",
       "대운은 사건 하나보다 역할·환경·관심사가 오래 반복되는 방향을 봅니다.",
       "앞 대운에서 만든 경험이 다음 대운에서 다른 결과로 이어질 수 있습니다.",
       "좋고 나쁨 하나로 줄이지 않고 직업·재물·관계의 변화를 따로 봅니다."
@@ -2632,9 +2632,9 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
 
   if(/^DAEUN_[1-9]$/.test(group)||group==="DAEUN_10"){
     return[
-      pillar?`이 대운은 ${pillarReading(pillar[0],pillar[1])}의 기운으로 흘러갑니다.`:`${title}에서는 이 십 년의 중심 기운을 봅니다.`,
-      pillar?fortunePillarSentence(pillar):"대운의 간지와 원국의 관계를 함께 읽습니다.",
-      favor&&activation?`계산상 ${favor}이면서 ${activation}입니다. 편한 십 년인지보다 도움과 변화가 어떤 비율로 들어오는지가 중요합니다.`:favor?`전체적인 지원은 ${favor}으로 읽습니다.`:activation?`이 십 년은 ${activation}입니다.`:"대운의 도움 정도와 활동량을 따로 봅니다.",
+      pillar?`이 십 년은 ${pillarReading(pillar[0],pillar[1])}의 기운이 들어오는 시기입니다.`:"이 십 년에는 어떤 역할과 선택이 반복해서 커지는지가 중요합니다.",
+      pillar?fortunePillarSentence(pillar):"앞 시기와 비교해 어떤 역할과 관심사가 달라지는지를 봅니다.",
+      favor&&activation?`이 십 년은 ${favor}에 가깝고, ${activation}입니다. 편한 시기인지보다 기회와 변화가 어디에 몰리는지가 더 중요합니다.`:favor?`이 십 년은 ${favor}에 가깝습니다.`:activation?`이 십 년은 ${activation}입니다.`:"이 시기는 도움을 받는 정도와 실제 움직임을 나눠서 봅니다.",
       topCategorySentence(input,row)||"이 대운에서 직업·재물·관계 중 어느 분야의 역할이 커지는지를 함께 봅니다.",
       "십 년 전체를 한 번에 판단하지 말고 앞부분에는 적응하고, 중간에는 결과를 만들고, 뒷부분에는 다음 대운으로 가져갈 것을 정리하는 식으로 쓰는 편이 좋습니다."
     ];
