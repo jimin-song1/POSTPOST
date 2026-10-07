@@ -61,6 +61,10 @@ function customerHonorific(name:string){
 }
 function sanitizeCustomerWording(text:string){
   return text
+    .replaceAll("속에는 꽤 분명한 자기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 자기기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 자기 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 본인 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
     .replaceAll("자기준","본인 기준")
     .replaceAll("자기기준","본인 기준");
 }
