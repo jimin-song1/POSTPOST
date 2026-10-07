@@ -267,14 +267,14 @@ const TEN_GOD_CUSTOMER_MEANING:Record<string,string>={
 function tenGodCustomerMeaning(role:string){
   return TEN_GOD_CUSTOMER_MEANING[role]??"상황에 맞춰 자기 역할을 찾아가는 힘";
 }
-function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day"|"hour",label:string){
-  const pillar=facts.pillarReadings[position],stemGod=facts.stemTenGodByPosition[position],branchGod=facts.branchMainTenGodByPosition[position];
+function pillarRoleSentence(facts:ConsultationFacts,position:"year"|"month"|"day"|"hour",_label:string){
+  const stemGod=facts.stemTenGodByPosition[position],branchGod=facts.branchMainTenGodByPosition[position];
   const roles=[stemGod,branchGod].filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i);
-  if(!pillar)return"";
-  if(!roles.length)return `${label}에서는 사람과 상황을 대하는 기본 태도가 드러납니다.`;
   const meanings=roles.map(tenGodCustomerMeaning);
-  if(meanings.length===1)return `${label}에서는 ${meanings[0]}이 자연스럽게 드러납니다.`;
-  return `${label}에서는 ${meanings[0]}과 ${meanings[1]}이 함께 움직입니다.`;
+  const subject=position==="month"?"사회생활에서는":position==="day"?"가까운 사람 앞에서는":position==="hour"?"혼자 생각하거나 앞으로를 준비할 때는":"낯선 환경에서는";
+  if(!meanings.length)return `${subject} 평소보다 어떤 태도가 먼저 나오는지가 더 분명해집니다.`;
+  if(meanings.length===1)return `${subject} ${meanings[0]}이 자연스럽게 드러납니다.`;
+  return `${subject} ${meanings[0]}과 ${meanings[1]}이 함께 나타납니다.`;
 }
 function usefulSentence(facts:ConsultationFacts){
   if(!facts.useful.length)return"";
@@ -1522,43 +1522,43 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   ];
 
   if(id==="book-009")return[
-    "이 사주는 한 가지 얼굴로만 설명되는 사람이 아닙니다. 낯선 자리에서는 먼저 분위기와 상대를 읽고, 일에서는 맡은 역할과 기준이 앞에 나오며, 가까운 관계에서는 신뢰와 감정의 무게가 더 커집니다.",
-    pillarRoleSentence(facts,"month","사회생활을 보는 월주"),
-    pillarRoleSentence(facts,"day","나와 가까운 관계를 보는 일주"),
-    "겉에서 보이는 모습과 가까운 사람에게 보이는 모습이 다르다고 해서 모순은 아닙니다. 같은 성향이 관계의 거리와 책임의 크기에 따라 다른 얼굴로 나타나는 것입니다.",
-    "그래서 이 사주는 성격을 한 줄로 고정하기보다, 어떤 자리에서 어떤 힘이 먼저 나오는지를 나눠 읽을 때 훨씬 정확해집니다."
+    "한 가지 모습으로만 설명되는 사람은 아닙니다. 낯선 사람 앞에서는 먼저 분위기를 읽고, 일을 할 때는 책임과 기준이 앞에 서며, 가까운 사람 앞에서는 감정과 신뢰가 훨씬 솔직하게 드러납니다.",
+    "사회에서는 맡은 역할을 가볍게 넘기지 않고, 한번 책임진 일은 끝까지 정리하려는 힘이 강합니다.",
+    "반대로 가까운 관계에서는 옳고 그름보다 '이 사람을 믿어도 되는가'가 더 중요해집니다. 한번 마음을 준 사람에게는 생각보다 오래 정을 쓰는 편입니다.",
+    "자리마다 보이는 모습이 조금씩 다른 건 모순이 아닙니다. 상황에 따라 가장 필요한 힘을 먼저 꺼내 쓰는 것입니다.",
+    "그래서 이 사람을 제대로 읽으려면 일할 때와 사랑할 때, 혼자 있을 때의 모습까지 함께 봐야 합니다."
   ];
 
   if(id==="book-010")return[
-    `처음 만났을 때는 ${monthTone.front}이 먼저 남기 쉽습니다. 말을 많이 하기보다 상대의 태도와 분위기를 읽고, 어느 정도 파악된 뒤 자기 색을 보여주는 쪽에 가깝습니다.`,
-    pillarRoleSentence(facts,"month","월주"),
-    `이 자리에서 ${monthRole||"사회적 역할"}의 성격이 잡히기 때문에, 첫인상에서도 ${monthTone.gift}이 자연스럽게 드러납니다.`,
-    "처음부터 친근함을 크게 보여주기보다 선을 지키면서 상대를 보는 편이라, 낯선 사람에게는 차분하거나 기준이 분명한 사람으로 기억되기 쉽습니다.",
-    `다만 ${monthTone.shadow}이 강해지면 상대를 충분히 알기 전까지 거리를 오래 둘 수 있습니다. 편해진 뒤에는 처음의 인상보다 훨씬 분명하고 솔직한 면이 나옵니다.`
+    "처음 만난 자리에서는 말보다 분위기를 먼저 읽는 편입니다. 상대가 어떤 사람인지, 어느 정도까지 편하게 대해도 되는지를 자연스럽게 살핍니다.",
+    "그래서 첫인상은 차분하고 단정한 쪽에 가깝습니다. 처음부터 많은 이야기를 꺼내기보다 필요한 말부터 정확하게 하는 편입니다.",
+    "사람을 가볍게 판단하는 건 아니지만, 말과 행동이 다른 사람에게는 금방 마음을 열지 않습니다.",
+    "반대로 신뢰가 생기고 편해지면 처음보다 훨씬 솔직하고 분명한 모습이 나옵니다.",
+    "첫인상과 친해진 뒤의 모습에 차이가 있는 편이지만, 그 차이는 사람을 천천히 알아가는 성향에서 나옵니다."
   ];
 
   if(id==="book-011")return[
-    `사회생활에서는 ${monthTone.gift}이 가장 실용적으로 쓰입니다. 맡은 일의 기준과 책임이 분명할수록 실력이 안정적으로 나오는 편입니다.`,
-    pillarRoleSentence(facts,"month","사회생활의 중심이 되는 월주"),
-    `사회생활에서는 ${monthRole||"월주의 역할"}이 앞에 서기 때문에, 단순히 시키는 일을 처리하기보다 맡은 역할의 기준과 끝을 분명히 하려는 힘이 나타납니다.`,
-    "반대로 역할이 계속 바뀌거나 책임만 있고 결정권은 없는 환경에서는 피로가 빠르게 쌓일 수 있습니다.",
-    "사회에서 가장 강한 모습은 모든 일을 혼자 하는 사람이 아니라, 기준을 세우고 책임질 범위를 분명히 한 뒤 결과를 만들어내는 사람에 가깝습니다."
+    "사회생활에서는 책임감이 꽤 강한 편입니다. 맡은 일이 생기면 대충 넘기기보다 어디까지 해야 끝난 건지 스스로 기준을 세웁니다.",
+    "누가 시키지 않아도 빠진 부분이 보이면 그냥 지나치기 어렵고, 한번 맡은 일은 마무리까지 확인해야 마음이 놓이는 편입니다.",
+    "이런 성향은 시간이 갈수록 큰 장점이 됩니다. 단순히 일을 잘하는 사람보다 '맡겨도 되는 사람'으로 신뢰를 얻기 쉽습니다.",
+    "다만 책임만 주어지고 결정할 권한은 없는 환경에서는 답답함이 빨리 쌓일 수 있습니다.",
+    "가장 잘 맞는 자리는 모든 일을 혼자 하는 곳이 아니라, 내 판단을 쓸 수 있으면서 책임의 범위도 분명한 자리입니다."
   ];
 
   if(id==="book-012")return[
-    `가까운 사람 앞에서는 ${dayTone.front}보다 감정과 신뢰의 기준이 더 솔직하게 드러납니다. 한번 내 사람이라고 느끼면 쉽게 관계를 가볍게 여기지 않습니다.`,
-    pillarRoleSentence(facts,"day","가까운 관계를 보는 일주"),
-    `${dayRole||"일주의 역할"}의 성격이 이 자리에 놓여 있어, 가까운 관계에서는 ${dayTone.gift}이 중요한 애정 방식이 됩니다.`,
-    "밖에서는 넘길 수 있는 일도 가까운 사람이 약속을 어기거나 말과 행동이 다르면 마음에 오래 남을 수 있습니다.",
-    `그래서 가까운 관계에서는 참는 힘보다 설명하는 힘이 중요합니다. ${dayTone.shadow}이 커지기 전에 서운한 지점을 작게라도 말해두는 편이 관계를 오래 지키는 데 더 유리합니다.`
+    "가까운 사람 앞에서는 내 생각이 더 분명해집니다. 그렇다고 내 주장만 앞세우는 사람은 아닙니다.",
+    "상대가 왜 그런 말을 했는지, 어떤 마음이었는지를 오래 생각하는 편이라 한번 믿은 사람에게는 쉽게 마음을 거두지 않습니다.",
+    "그래서 가까운 사이일수록 약속과 태도의 일관성을 중요하게 봅니다. 밖에서는 넘길 수 있는 일도 가까운 사람의 말과 행동이 다르면 오래 마음에 남을 수 있습니다.",
+    "서운함이 생겼을 때 바로 크게 부딪히기보다 혼자 정리하는 시간이 필요한 편입니다.",
+    "다만 마음속에서 결론이 다 난 뒤에 말하면 상대에게는 갑작스럽게 느껴질 수 있으니, 작은 불편은 작을 때 꺼내는 편이 관계를 오래 지키는 데 좋습니다."
   ];
 
   if(id==="book-013")return[
-    `혼자 있을 때는 밖에서 보이는 모습보다 생각의 양이 훨씬 많아질 수 있습니다. 특히 ${hourRole||"시주의 기운"}이 안쪽에서 작동하면서 앞으로의 계획과 지나간 일을 다시 정리하는 시간이 길어집니다.`,
-    pillarRoleSentence(facts,"hour","속생각과 후반 흐름을 보는 시주"),
-    `이 자리의 장점은 ${hourTone.gift}입니다. 남들이 지나친 부분을 다시 보고 다음 선택을 준비하는 힘으로 연결됩니다.`,
-    "다만 쉬는 시간에도 머릿속에서 계속 다음 일을 계산하면 몸은 쉬어도 생각은 쉬지 못하는 상태가 될 수 있습니다.",
-    `혼자 있는 시간은 생각을 더 늘리는 시간보다 생각을 끝내는 시간으로 써야 합니다. ${hourTone.shadow}이 커질수록 일부러 결론을 내리고 멈추는 습관이 중요합니다.`
+    "혼자 있을 때는 밖에서 보이는 것보다 생각이 훨씬 많아지는 편입니다. 지나간 일을 다시 정리하고, 앞으로 어떻게 할지 머릿속에서 여러 번 그려봅니다.",
+    "이 덕분에 남들이 지나친 부분을 다시 보고 다음 선택을 준비하는 힘이 있습니다.",
+    "문제가 생겨도 바로 감정에 끌려가기보다 이유와 순서를 정리한 뒤 움직이려는 편이라, 복잡한 일을 차분하게 풀어내는 데 강합니다.",
+    "다만 쉬는 시간에도 계속 다음 일을 생각하면 몸은 쉬어도 머리는 쉬지 못할 수 있습니다.",
+    "혼자 있는 시간에는 생각을 더 늘리기보다 어느 지점에서 멈출지 정해주는 습관이 필요합니다."
   ];
 
   if(id==="book-014")return[
