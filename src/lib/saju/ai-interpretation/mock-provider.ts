@@ -2679,6 +2679,7 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
 }
 
 function twelveStageConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="TWELVE_STAGES")return null;
   const title=row.topic??row.title;
   const stage=(position:string)=>facts.stageByPosition[position]||"";
   const meaning=(position:string)=>STAGE_STORY[stage(position)]??"상황에 따라 역할을 조절하는 모습";
