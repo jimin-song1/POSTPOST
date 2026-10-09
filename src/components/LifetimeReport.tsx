@@ -61,7 +61,7 @@ export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }:
     return <LifetimeGenerationScreen name={analysis.person.name} stage={interpretation.status==="pending"?interpretation.stage:undefined} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:1} onRestart={onRestart} />;
   }
   if (interpretation.status === "failed") {
-    return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
+    return <LifetimeGenerationFailed onRetry={onRetry} onRestart={onRestart} />;
   }
   const report = interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
   if (!report || !report.sections.length) {
@@ -258,14 +258,14 @@ function LifetimeGenerationScreen({ name, stage="CHARACTER_CORE", completedParts
   </main>;
 }
 
-function LifetimeGenerationFailed({ message, onRetry, onRestart }: { message:string; onRetry:()=>void; onRestart:()=>void }) {
+function LifetimeGenerationFailed({ onRetry, onRestart }: { onRetry:()=>void; onRestart:()=>void }) {
   return <main className="lifetimeGeneration">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel generationFailed">
       <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>해설을 끝까지 만들지 못했어요</h1>
       <p className="generationLead">계산 결과는 그대로 남아 있습니다. 해설 생성만 다시 시도하면 됩니다.</p>
-      <p className="generationError">{message}</p>
+      <p className="generationError">해설을 정리하는 과정에서 문제가 생겼어요. 계산된 사주 정보는 그대로 보관되어 있습니다.</p>
       <button className="generationRetry" onClick={onRetry}>평생사주 해설 다시 만들기</button>
     </section>
   </main>;
