@@ -23,7 +23,7 @@ export interface InterpretationProviderRequest {systemPrompt:string;input:Interp
   repair?:{validationError:InterpretationErrorCode;previousOutput:unknown};}
 export interface InterpretationProviderResponse {output:unknown;provider:string;model:string;tokenUsage?:{input:number;output:number};}
 export interface InterpretationProvider {generate(request:InterpretationProviderRequest):Promise<InterpretationProviderResponse>;}
-export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v3";
+export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v4";
   groundingVersion:"interpretation-grounding-v3";analysisHash:string;cacheKey:string;report:StructuredInterpretation;
   metadata:{provider:string;model:string;repaired:boolean;tokenUsage?:{input:number;output:number}};}
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
