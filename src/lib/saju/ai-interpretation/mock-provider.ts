@@ -3395,8 +3395,28 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
     .filter((paragraph,paragraphIndex,rows)=>rows.indexOf(paragraph)===paragraphIndex);
 }
 
+function paragraphDedupKey(text:string){
+  return text
+    .replace(/^00님(?:은|이|의)?\s*/,"")
+    .replace(/\s+/g," ")
+    .replace(/[“”"'‘’]/g,"")
+    .trim();
+}
+function keepNovelParagraphs(paragraphs:string[],seen:Set<string>,minimum=3){
+  const rows=paragraphs.map((text,index)=>({text,index,key:paragraphDedupKey(text),fresh:!seen.has(paragraphDedupKey(text))}));
+  const chosen=new Set(rows.filter(row=>row.fresh).map(row=>row.index));
+  if(chosen.size<Math.min(minimum,rows.length)){
+    for(const row of rows){
+      chosen.add(row.index);
+      if(chosen.size>=Math.min(minimum,rows.length))break;
+    }
+  }
+  for(const row of rows)seen.add(row.key);
+  return rows.filter(row=>chosen.has(row.index)).map(row=>row.text);
+}
+
 function report(input:InterpretationInput):StructuredInterpretation{
-  const rows=input.reportPlan??[],facts=consultationFacts(input);
+  const rows=input.reportPlan??[],facts=consultationFacts(input),seenByPart=new Map<string,Set<string>>();
   const sections=rows.map((row,index)=>{
     const ids=input.reportVersion==="dynamic-lifetime-book-v4"?[...row.evidenceIds]:evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
     const fullParagraphs=buildParagraphs(row,index,facts,input);
@@ -3405,11 +3425,15 @@ function report(input:InterpretationInput):StructuredInterpretation{
       fullParagraphs[1],
       fullParagraphs[3]??fullParagraphs[2]
     ].filter((paragraph):paragraph is string=>typeof paragraph==="string"&&paragraph.length>0);
-    const paragraphs=row.contentKind==="FRONT_MATTER"
+    const baseParagraphs=row.contentKind==="FRONT_MATTER"
       ?frontMatterParagraphs
       :row.contentKind==="PROFESSIONAL"
         ?[value.scene,value.consequence,value.action]
         :fullParagraphs;
+    const partKey=String(row.partNumber??row.partTitle??"GENERAL");
+    const seen=seenByPart.get(partKey)??new Set<string>();
+    if(!seenByPart.has(partKey))seenByPart.set(partKey,seen);
+    const paragraphs=row.contentKind==="CONTENT"?keepNovelParagraphs(baseParagraphs,seen,3):baseParagraphs;
     const pageNo=row.pageNumber??index+1;
     const lead=undefined;
     return {
