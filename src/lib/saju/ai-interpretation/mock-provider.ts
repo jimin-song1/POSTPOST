@@ -147,7 +147,10 @@ function consultationFacts(input:InterpretationInput):ConsultationFacts{
   const stagesRoot=asRecord(evidenceValue(input,"NATAL:TWELVE_STAGES"));
   const stages=asRecord(stagesRoot?.stages);
   const stageByPosition:Record<string,string>={};
-  for(const position of ["year","month","day","hour"])stageByPosition[position]=asText(stages?.[position]);
+  for(const position of ["year","month","day","hour"]){
+    const value=stages?.[position],row=asRecord(value);
+    stageByPosition[position]=asText(row?.korean)||asText(value);
+  }
 
   const pillarReadings:Record<string,string>={};
   for(const position of ["year","month","day","hour"]){
@@ -694,6 +697,22 @@ function topSnapshotCategory(snapshot:FortuneSnapshot,mode:"activity"|"support")
   if(!snapshot.categories.length)return null;
   return [...snapshot.categories].sort((a,b)=>mode==="activity"?b.activity-a.activity:b.support-a.support)[0]??null;
 }
+function uniqueYearSnapshots(rows:FortuneSnapshot[]){
+  const grouped=new Map<number,FortuneSnapshot[]>();
+  for(const row of rows){
+    if(row.year==null)continue;
+    const bucket=grouped.get(row.year)??[];
+    bucket.push(row);grouped.set(row.year,bucket);
+  }
+  const duration=(row:FortuneSnapshot)=>{
+    const start=row.startYear!=null?Date.parse(String(row.startYear)+"-01-01"):NaN;
+    const end=row.endYear!=null?Date.parse(String(row.endYear)+"-01-01"):NaN;
+    return Number.isFinite(start)&&Number.isFinite(end)?Math.max(1,end-start):1;
+  };
+  return [...grouped.entries()]
+    .sort(([a],[b])=>a-b)
+    .map(([,bucket])=>[...bucket].sort((a,b)=>duration(b)-duration(a)||a.synthesisId.localeCompare(b.synthesisId))[0]);
+}
 function categoryLifeSentence(label:string){
   if(label==="재물")return"돈의 출입·수입 구조·큰 지출처럼 재물 선택이 많아지기 쉽습니다.";
   if(label==="사업")return"사업·부수입·고객·판매처럼 시장 반응을 직접 확인할 일이 늘기 쉽습니다.";
@@ -765,8 +784,9 @@ function topCategorySentence(input:InterpretationInput,row:Row){
 function fortunePillarSentence(pillar:string){
   if(!pillar||pillar.length<2)return"";
   const reading=pillarReading(pillar[0],pillar[1]),stemElement=STEM_ELEMENT[pillar[0]],branchElement=BRANCH_ELEMENT[pillar[1]];
-  if(stemElement&&branchElement&&stemElement===branchElement)return `${reading}은 ${elementPro(stemElement)}이 위아래에서 함께 강조되는 시기입니다. 이 기운이 맡는 역할이 평소보다 전면에 나옵니다.`;
-  if(stemElement&&branchElement)return `${reading}은 ${elementPro(stemElement)}와 ${elementPro(branchElement)}가 함께 들어오는 시기입니다. 평소 가진 성향과 만나면서 어느 분야의 움직임이 커지는지가 중요합니다.`;
+  const readingTopic=withParticle(reading,"은","는");
+  if(stemElement&&branchElement&&stemElement===branchElement)return `${readingTopic} ${withParticle(elementPro(stemElement),"이","가")} 위아래에서 함께 강조되는 시기입니다. 이 기운이 맡는 역할이 평소보다 전면에 나옵니다.`;
+  if(stemElement&&branchElement)return `${readingTopic} ${withParticle(elementPro(stemElement),"과","와")} ${withParticle(elementPro(branchElement),"이","가")} 함께 들어오는 시기입니다. 평소 가진 성향과 만나면서 어느 분야의 움직임이 커지는지가 중요합니다.`;
   return `${reading}의 기운이 들어오는 시기입니다.`;
 }
 
@@ -2542,13 +2562,35 @@ function childrenConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   return null;
 }
 
+function wellnessHabitSentence(guidance:string){
+  const mapped:Record<string,string>={
+    "낮 시간 활동":"낮에는 햇빛을 보고 가볍게 몸을 움직이는 시간을 일정하게 만들어두는 게 좋아요.",
+    "적당한 유산소 운동":"무리하지 않는 범위에서 숨이 조금 차는 정도의 유산소 활동을 꾸준히 이어가는 게 좋아요.",
+    "일정한 수면 리듬":"자는 시간과 일어나는 시간을 크게 흔들리지 않게 유지하는 게 좋아요.",
+    "가벼운 스트레칭":"오래 같은 자세로 있지 말고 중간중간 가볍게 몸을 풀어주는 게 좋아요.",
+    "규칙적인 움직임":"한 번에 많이 움직이기보다 매일 조금씩이라도 몸을 움직이는 시간을 만드는 게 좋아요.",
+    "같은 자세 오래 유지하지 않기":"오래 앉아 있거나 같은 자세가 이어지면 중간에 자세를 바꾸고 몸을 풀어주세요.",
+    "규칙적인 식사":"바쁜 날에도 식사 시간을 지나치게 미루지 않고 기본 리듬을 지키는 게 좋아요.",
+    "과식 피하기":"한 번에 몰아서 먹기보다 배가 지나치게 부르기 전 멈추는 습관이 도움이 됩니다.",
+    "급하게 먹지 않기":"식사 속도를 조금 늦추고 급하게 먹는 날이 반복되지 않게 하는 게 좋아요.",
+    "환기":"실내에 오래 있다면 중간중간 환기하고 답답한 환경을 오래 끌지 않는 게 좋아요.",
+    "편안한 호흡":"긴장이 올라올 때는 어깨에 힘을 빼고 호흡을 천천히 돌리는 시간을 잠깐이라도 가져보세요.",
+    "지나치게 건조한 환경 피하기":"건조한 환경에 오래 있지 않도록 실내 습도와 환기를 함께 챙기는 게 좋아요.",
+    "충분한 수면":"잠을 줄여서 버티기보다 회복할 수 있는 수면 시간을 먼저 확보하는 게 좋아요.",
+    "과도한 피로 누적 피하기":"며칠씩 피로를 몰아두지 말고 바쁜 일정 사이에도 짧은 회복 시간을 넣어두는 게 좋아요.",
+    "몸을 지나치게 차갑게 두지 않기":"몸이 오래 차가운 상태로 있지 않도록 생활 환경과 활동량을 무리 없는 범위에서 조절해보세요."
+  };
+  if(!guidance)return"";
+  return mapped[guidance]??(/[.!?요다]$/.test(guidance)?guidance:`${guidance}을 생활 속에서 꾸준히 챙겨보세요.`);
+}
+
 function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(row.evidenceGroup!=="WELLNESS")return null;
   const title=row.topic??row.title;
   const first=facts.wellnessAttention[0]??null,second=facts.wellnessAttention[1]??null;
   const firstLabel=first?elementPro(first.element):"",secondLabel=second?elementPro(second.element):"";
   const firstAreas=first?.traditionalAreas.slice(0,3).join(" · ")??"",secondAreas=second?.traditionalAreas.slice(0,2).join(" · ")??"";
-  const firstHabit=first?facts.wellnessHabits[first.element]??"":"",secondHabit=second?facts.wellnessHabits[second.element]??"":"";
+  const firstHabit=first?wellnessHabitSentence(facts.wellnessHabits[first.element]??""):"",secondHabit=second?wellnessHabitSentence(facts.wellnessHabits[second.element]??""):"";
   const strongest=facts.strongest?elementPro(facts.strongest.element):"";
 
   if(/명리로 보는 건강 균형|^건강운$/.test(title))return[
@@ -2561,8 +2603,8 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
   if(/약하게 보이는 부분과 주의할 점/.test(title))return[
     first?(firstLabel+" 쪽이 가장 먼저 주의해서 볼 부분입니다. "+(first.theme||first.customerStatus||"생활 리듬이 무너지면 이쪽의 부담을 더 크게 느낄 수 있습니다.")):"오행 가운데 상대적으로 약하거나 주의도가 높은 부분부터 봅니다.",
-    firstAreas?("전통적으로는 "+firstAreas+"와 연결해 살피기 때문에, 이와 관련된 불편을 사주만으로 판단하기보다 평소 생활 습관과 실제 몸 상태를 같이 확인하는 편이 좋습니다."):"전통 신체 대응은 증상을 예언하는 용도가 아닙니다.",
-    second?(("그다음으로는 "+secondLabel+"도 같이 봅니다. "+(second.theme||second.customerStatus||""))+(secondAreas?(" 전통적으로는 "+secondAreas+"와 연결해 봅니다."):"")):"한 부분만 떼어 보기보다 전체 균형을 같이 확인하는 게 중요합니다.",
+    firstAreas?("전통적으로는 "+withParticle(firstAreas,"과","와")+" 연결해 살피기 때문에, 이와 관련된 불편을 사주만으로 판단하기보다 평소 생활 습관과 실제 몸 상태를 같이 확인하는 편이 좋습니다."):"전통 신체 대응은 증상을 예언하는 용도가 아닙니다.",
+    second?(("그다음으로는 "+secondLabel+"도 같이 봅니다. "+(second.theme||second.customerStatus||""))+(secondAreas?(" 전통적으로는 "+withParticle(secondAreas,"과","와")+" 연결해 봅니다."):"")):"한 부분만 떼어 보기보다 전체 균형을 같이 확인하는 게 중요합니다.",
     "특히 바쁠 때 잠·식사·활동량 가운데 무엇부터 무너지는지를 기록해보면 사주에서 말하는 약한 부분이 실제 생활에서 어떻게 나타나는지 훨씬 쉽게 확인할 수 있습니다.",
     "명리에서 약하게 보인다고 실제 장기나 기능이 약하다고 단정할 수는 없습니다. 반복되는 증상이 있다면 의료 평가가 우선입니다."
   ];
@@ -2977,7 +3019,7 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 function timingConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   const title=row.topic??row.title,group=row.evidenceGroup??"",context=periodContext(input,row),axis=fortuneAxis(input,row);
   const favor=FAVORABILITY_LABELS[axis.favorabilityLevel]??"",activation=ACTIVATION_LABELS[axis.activationLevel]??"";
-  const snapshots=fortuneSnapshots(input,row).filter(snapshot=>snapshot.year!=null).sort((a,b)=>(a.year??0)-(b.year??0));
+  const snapshots=uniqueYearSnapshots(fortuneSnapshots(input,row).filter(snapshot=>snapshot.year!=null));
 
   if(group==="FORTUNE_EXPLAIN")return[
     "운의 흐름은 미래 사건을 맞히는 표라기보다 언제 일·돈·관계의 선택이 몰리는지를 보는 시간표에 가깝습니다.",
