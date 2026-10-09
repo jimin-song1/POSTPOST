@@ -191,6 +191,33 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(audit.coreNine.every(row=>row.pass)).toBe(true);
   });
 
+  it("keeps lifetime periods, twelve stages and wellness copy coherent after the full review fixes",async()=>{
+    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
+    const firstDaeun=input.reportPlan!.find(row=>row.evidenceGroup==="DAEUN_1");
+    expect(firstDaeun).toBeTruthy();
+    expect(firstDaeun!.evidenceIds.length).toBeGreaterThan(0);
+    expect(firstDaeun!.evidenceIds.every(id=>id.startsWith("FORTUNE:DAEUN-01:")||id.startsWith("CATEGORY:DAEUN-01:"))).toBe(true);
+
+    const result=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
+    expect(result.status).toBe("completed");
+    if(result.status!=="completed")return;
+    const allText=result.report.sections.map(section=>section.body).join("\n\n");
+    expect(allText).not.toContain("계산된 단계 없음");
+    expect(allText).not.toMatch(/(?:^|\n\n)낮 시간 활동(?:$|\n\n)/);
+    expect(allText).not.toMatch(/(?:^|\n\n)편안한 호흡(?:$|\n\n)/);
+
+    const overview=result.report.sections.find(section=>section.evidenceGroup==="YEARLY_OVERVIEW"&&section.title==="앞으로 5년");
+    expect(overview).toBeTruthy();
+    for(let offset=0;offset<5;offset++){
+      const target=String(year+offset),count=(overview!.body.match(new RegExp(target+"년","g"))??[]).length;
+      expect(count).toBe(1);
+    }
+
+    const firstDaeunSection=result.report.sections.find(section=>section.evidenceGroup==="DAEUN_1");
+    expect(firstDaeunSection).toBeTruthy();
+    expect(firstDaeunSection!.body).not.toContain("92세 11개월~102세 11개월");
+  });
+
   it.each(RULE.supportedReports)("Z-AF: mock %s report completes with grounded structured JSON",async reportType=>{
     const provider=new MockProvider(),result=await interpretSajuAnalysis(analysis,provider,options(reportType));
     expect(result.status).toBe("completed");if(result.status==="completed"){expect(result.report.reportType).toBe(reportType);expect(result.metadata.provider).toBe("mock");}
