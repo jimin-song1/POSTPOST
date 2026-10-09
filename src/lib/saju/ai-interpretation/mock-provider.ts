@@ -35,17 +35,18 @@ function claim(id:string,row:{id:string;evidenceIds:string[];title?:string;evide
 function plan(input:InterpretationInput){
   const rows=input.reportPlan??[],first=rows[0];
   if(!first)throw new Error("mock 해설에 reportPlan이 필요합니다.");
+  const facts=consultationFacts(input),spine=personalitySpine(facts);
   const pick=(name:string)=>[claim(name,first,0)];
   return {
     planVersion:"interpretation-plan-v1",
     characterCore:{
-      corePatterns:["확인할 것은 확인한 뒤 움직이고 정한 일은 끝까지 챙깁니다."],
-      contradictions:["처음에는 신중하지만 기준이 서면 움직임이 빨라집니다."],
-      dominantStrengths:["기준을 세우고 마무리하는 힘"],
-      shadowPatterns:["혼자 다시 확인하느라 부담을 떠안을 수 있습니다."],
-      relationshipPattern:"가까워지기 전에는 오래 보고, 가까워진 뒤에는 행동으로 챙깁니다.",
-      workPattern:"내가 어디까지 맡아야 하는지 분명하면 순서를 정해 끝까지 마무리하는 편이에요.",
-      decisionPattern:"필요한 걸 확인하고 마음이 정해지면 행동은 빠른 편이에요."
+      corePatterns:[spine.core],
+      contradictions:[spine.conflict],
+      dominantStrengths:[spine.decision],
+      shadowPatterns:[spine.shadow],
+      relationshipPattern:spine.close,
+      workPattern:spine.work,
+      decisionPattern:spine.decision
     },
     coreIdentity:pick("CORE"),
     outerVsInner:pick("OUTER"),
@@ -2135,12 +2136,12 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
 function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   if(row.evidenceGroup!=="WORK")return null;
-  const title=row.topic??row.title,structure=facts.structure,dominant=dominantFamily(facts);
+  const title=row.topic??row.title,structure=facts.structure,dominant=dominantFamily(facts),spine=personalitySpine(facts);
   const officer=familyCount(facts,"관성"),wealth=familyCount(facts,"재성"),peer=familyCount(facts,"비겁"),resource=familyCount(facts,"인성"),output=familyCount(facts,"식상");
 
   if(/직업운·학업운/.test(title))return[
-    "일과 공부는 따로 움직이기보다 서로 연결될 때 강점이 더 잘 살아나는 편입니다. 그냥 많이 배우는 것보다 배운 것을 실제 일에 써보고, 그 경험을 다시 실력으로 쌓는 방식이 잘 맞습니다.",
-    dominantFamilySentence(facts),
+    spine.work,
+    spine.decision,
     structure?`${structureMeaning(structure)}이라 맡은 범위와 결과가 분명할수록 실력이 안정적으로 나오는 편입니다.`:"내가 어디까지 판단하고 책임지는지가 분명한 자리에서 실력이 더 오래 유지됩니다.",
     "시키는 일을 빨리 처리하는 것보다 왜 하는지 이해하고, 내 판단을 섞어 결과를 만들어낼 수 있을 때 만족도가 높아집니다.",
     "그래서 직업을 고를 때도 이름보다 실제로 어떤 결정을 맡게 되는지, 공부를 고를 때도 배운 뒤 어디에 써먹을 수 있는지를 먼저 보는 편이 잘 맞습니다."
@@ -2221,7 +2222,8 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   }
   if(row.evidenceGroup==="WORK")return[
     consultationOpening(row,facts)||"일에서는 직업 이름보다 어떤 책임을 맡고 얼마나 판단할 수 있는지가 더 중요합니다.",
-    dominantFamilySentence(facts),
+    spine.work,
+    spine.decision,
     structure?`${structureMeaning(structure)}이 일의 기준이 됩니다.`:"일의 기준과 책임 구조가 맞을수록 강점이 오래 유지됩니다.",
     "잘하는 일을 많이 맡는 것보다, 어떤 역할에서 실력이 안정적으로 반복되는지를 아는 것이 중요합니다."
   ].filter(Boolean);
@@ -2321,7 +2323,7 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
 function relationshipConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   if(row.evidenceGroup!=="RELATIONSHIP")return null;
-  const title=row.topic??row.title,dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day,dayTone=tenGodTone(dayRole);
+  const title=row.topic??row.title,dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day,dayTone=tenGodTone(dayRole),spine=personalitySpine(facts);
   const relationshipStatus=input.minimalContext.relationshipStatus;
 
   if(/미래 배우자는 어떤 사람일까/.test(title)&&relationshipStatus==="SINGLE")return[
@@ -2350,27 +2352,27 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
   ];
 
   if(/연애운·결혼운·자녀운/.test(title))return[
-    "사람을 좋아할 때 처음의 설렘보다 '이 사람을 계속 믿어도 되는가'를 더 오래 보는 편입니다.",
-    "마음이 열리면 생각보다 오래 챙기고 쉽게 관계를 놓지 않습니다. 그래서 가벼운 만남보다 시간이 지나며 신뢰가 쌓이는 관계에서 본모습이 더 잘 나옵니다.",
+    spine.close,
     relationSentence(facts),
-    "문제는 가까워질수록 기대도 같이 커진다는 점입니다. 내가 해준 만큼 상대도 알아주길 바라거나, 말하지 않아도 마음을 알아주길 기대하면 서운함이 쌓일 수 있습니다.",
-    "그래서 관계에서는 더 많이 참는 것보다 작은 불편을 작을 때 말하는 게 중요합니다. 사랑하는 마음과 상대의 몫까지 대신 책임지는 건 다른 일입니다."
+    spine.conflict,
+    "관계가 깊어질수록 처음에 보던 기준이 사라지는 게 아니라 오히려 더 중요해집니다. 결국 오래 가는 관계는 말과 행동, 각자의 몫이 시간이 지나도 크게 어긋나지 않는 관계예요.",
+    "연애에서도 기본 성향과 다른 사람이 되는 건 아닙니다. 낯선 사람을 천천히 보던 기준이 가까운 관계에서는 신뢰와 서운함의 기준으로 이어져요."
   ];
 
   if(/^연애 성향$/.test(title))return[
-    "연애는 빠르게 달아오르기보다 신뢰가 쌓이면서 깊어지는 쪽에 가깝습니다.",
-    "마음이 열리면 관계를 가볍게 소비하기보다 오래 이어갈 방법을 생각합니다. 말보다 반복되는 행동과 약속을 더 크게 보는 편입니다.",
-    "상대가 믿을 만한 사람이라는 확신이 생기면 생각보다 오래 챙기고 쉽게 마음을 거두지 않습니다.",
-    "반대로 신뢰가 한번 흔들리면 작은 일도 이전과 다르게 보이기 시작할 수 있습니다.",
-    "연애에서는 상대를 고르는 눈만큼 마음이 달라진 이유를 제때 말하는 힘이 중요합니다."
+    spine.close,
+    "처음 가까워지는 속도보다 시간이 지나도 같은 기준으로 상대를 대할 수 있는지가 더 중요합니다.",
+    relationSentence(facts),
+    spine.conflict,
+    "그래서 연애에서도 첫인상, 가까운 관계, 갈등 때의 모습이 따로 놀지 않아요. 처음 사람을 볼 때 중요하게 여긴 기준이 관계가 깊어진 뒤에도 그대로 이어집니다."
   ];
 
   if(/반복되는 패턴/.test(title))return[
-    "관계에서 반복되는 패턴은 가까워질수록 기대가 커진다는 데서 시작합니다.",
+    spine.close,
+    spine.conflict,
     relationSentence(facts),
-    "처음에는 상대의 속도를 존중하다가도 관계가 깊어지면 말하지 않아도 알아주길 기대하거나, 내가 챙긴 만큼 상대도 비슷하게 움직이길 바랄 수 있습니다.",
-    "이 기대가 맞지 않을 때 바로 싸우기보다 속으로 정리하는 시간이 길어지면, 상대에게는 문제가 갑자기 커진 것처럼 보일 수 있습니다.",
-    "가까운 관계일수록 추측보다 설명이 필요합니다. 작은 불편을 작을 때 말하는 것이 가장 큰 반복을 끊는 방법입니다."
+    "반복되는 문제는 새로운 성격이 튀어나와서 생기기보다, 원래 중요하게 보던 기준이 가까운 관계에서 더 민감해질 때 생깁니다.",
+    "그래서 해결도 성격을 바꾸는 쪽보다, 내가 중요하게 보는 기준과 불편해진 이유를 상대가 알 수 있게 말하는 쪽이 더 잘 맞습니다."
   ];
 
   if(/가까운 관계에서/.test(title))return[
@@ -2412,11 +2414,11 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
   ];
 
   if(/다툴 때/.test(title))return[
-    "다툴 때는 바로 폭발하기보다 속으로 정리한 뒤 말하는 쪽에 가깝습니다.",
+    spine.conflict,
     relationSentence(facts),
-    "생각이 정리되는 동안 상대는 문제가 끝난 줄 알 수 있고, 본인은 이미 여러 장면을 연결해 결론을 내릴 수 있습니다. 그래서 나중에 말하면 상대에게는 갑자기 커진 문제처럼 들릴 수 있습니다.",
-    "논리가 다 정리될 때까지 기다리기보다 '지금 조금 서운하다, 생각하고 다시 말하겠다' 정도만 먼저 알려주는 게 좋습니다.",
-    "갈등의 핵심은 누가 맞는지가 아니라 서로 다른 속도로 감정을 처리한다는 점을 이해하고 대화의 시간을 맞추는 데 있습니다."
+    "갈등이 생겼을 때도 평소 사람을 보는 기준이 그대로 이어집니다. 무엇 때문에 마음이 달라졌는지 스스로 납득되어야 다음 태도도 정해져요.",
+    "그래서 다툼을 푸는 핵심은 무조건 빨리 화해하는 데 있지 않습니다. 어떤 약속이나 기준이 어긋났는지를 서로 같은 말로 확인하는 게 먼저예요.",
+    "이 부분이 확인되면 관계를 계속 가져갈지, 어디에서 거리를 둘지도 훨씬 분명해집니다."
   ];
 
   if(/결혼운|연애의 다음 단계와 결혼/.test(title))return relationshipStatus==="SINGLE"?[
@@ -2441,9 +2443,10 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
 
   if(row.evidenceGroup==="RELATIONSHIP")return[
     consultationOpening(row,facts)||"관계에서는 누구를 만나느냐만큼 가까워진 뒤 내가 어떻게 달라지는지가 중요합니다.",
+    spine.close,
+    spine.conflict,
     relationSentence(facts),
-    "마음이 깊어질수록 챙김과 기대가 같이 커질 수 있습니다. 상대를 아끼는 마음과 상대의 몫까지 대신 책임지는 건 구분할 필요가 있습니다.",
-    "좋은 관계를 오래 가져가려면 참는 양을 늘리기보다 작은 불편을 일찍 설명하는 편이 낫습니다."
+    "관계에서도 다른 장과 같은 성격 기준이 이어집니다. 처음 사람을 볼 때 중요하게 여긴 것이 가까워진 뒤에는 신뢰와 갈등의 기준이 돼요."
   ].filter(Boolean);
 
   return null;
