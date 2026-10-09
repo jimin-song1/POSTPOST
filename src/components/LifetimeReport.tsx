@@ -65,7 +65,7 @@ export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }:
   }
   const report = interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
   if (!report || !report.sections.length) {
-    return <LifetimeGenerationFailed message="평생사주 본문 검증이 완료되지 않았습니다. 다시 생성해 주세요." onRetry={onRetry} onRestart={onRestart} />;
+    return <LifetimeGenerationFailed onRetry={onRetry} onRestart={onRestart} />;
   }
   return <DynamicLifetimeBook analysis={analysis} report={report} interpretation={interpretation} onRetry={onRetry} onRestart={onRestart} />;
 }
