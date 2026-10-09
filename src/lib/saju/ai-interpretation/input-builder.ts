@@ -119,13 +119,19 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"TWELVE_STAGES":return idsByPrefix(evidence,"NATAL:TWELVE_STAGES","NATAL:PILLARS");
     case"YEARLY_OVERVIEW":return Array.from(new Set([...idsByPrefix(evidence,"FORTUNE:SEUN-","CATEGORY:SEUN-"),...idsByContains(evidence,"REQUEST:LIFETIME_YEAR_RANGE")]));
     case"YEAR_1":case"YEAR_2":case"YEAR_3":case"YEAR_4":case"YEAR_5":{
-      const offset=Number(group.slice(-1))-1,year=currentYear+offset;return idsByContains(evidence,`SEUN-${year}`);
+      const offset=Number(group.slice(-1))-1,year=currentYear+offset;
+      return Array.from(new Set([
+        ...idsByPrefix(evidence,`FORTUNE:SEUN-${year}:`,`CATEGORY:SEUN-${year}:`)
+      ]));
     }
     case"MONTHLY":return idsByContains(evidence,`WOLUN-${currentYear}`);
     case"CHANGE":return idsByPrefix(evidence,"NATAL:RELATIONS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
     case"DAEUN_OVERVIEW":return idsByPrefix(evidence,"FORTUNE:DAEUN-");
     case"DAEUN_1":case"DAEUN_2":case"DAEUN_3":case"DAEUN_4":case"DAEUN_5":case"DAEUN_6":case"DAEUN_7":case"DAEUN_8":case"DAEUN_9":case"DAEUN_10":{
-      const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${index}`);
+      const index=Number(group.split("_")[1]),token=`DAEUN-${String(index).padStart(2,"0")}`;
+      return Array.from(new Set([
+        ...idsByPrefix(evidence,`FORTUNE:${token}:`,`CATEGORY:${token}:`)
+      ]));
     }
     case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE","NATAL:SAMJAE","NATAL:RELATIONS");
     case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-","FORTUNE:SAMJAE")]));
