@@ -137,7 +137,9 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const id of ["CHILD:TEN_GOD_SIGNALS","CHILD:HOUR_PILLAR","CHILD:HOUR_STAGE","CHILD:RELATION_CONTEXT","CHILD:LIFETIME_CONTEXT"])expect(childCitations.has(id),id).toBe(true);
     const yearlyCitations=report.sections.filter(row=>row.evidenceGroup?.startsWith("YEAR_")).flatMap(row=>row.evidenceIds);
     expect(yearlyCitations.some(id=>id.includes("FAVORABILITY"))).toBe(true);expect(yearlyCitations.some(id=>id.includes("ACTIVATION"))).toBe(true);expect(yearlyCitations.some(id=>id.includes("PERIOD_CONTEXT"))).toBe(true);
-    expect(book.sections.filter(row=>row.evidenceGroup.startsWith("DAEUN_")&&row.topic.includes("전반부와 후반부"))).toHaveLength(10);
+    expect(book.sections.filter(row=>/^DAEUN_(?:[1-9]|10)$/.test(row.evidenceGroup))).toHaveLength(10);
+    const lifePhases=report.sections.find(row=>row.id==="legacy-book-144");
+    expect((lifePhases?.paragraphs??[lifePhases?.body??""]).join(" ")).not.toMatch(/(?:년주|월주|일주|시주)/);
 
     const density={
       "기본설계":aggregate(report,["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"]),"성향":aggregate(report,["IDENTITY","ELEMENTS","STRENGTH"]),"직업":aggregate(report,["WORK"]),"재물":aggregate(report,["WEALTH"]),
