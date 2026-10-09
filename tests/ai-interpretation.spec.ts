@@ -64,10 +64,11 @@ describe("AI_INTERPRETATION_V1",()=>{
   it("E-F: prompt prohibits calculation and evidence IDs are stable",()=>{
     expect(INTERPRETATION_SYSTEM_PROMPT).toContain("재계산하거나 수정하거나 대체하지 마라");
     expect(INTERPRETATION_SYSTEM_PROMPT).toContain("입력에 없는 숫자 점수");
+    expect(LIFETIME_INTERPRETATION_PLANNER_PROMPT).toContain("각 장에서 사람의 성격을 새로 정의하지 마라");
     const a=buildInterpretationInput(analysis,{reportType:"WEALTH",referenceInstant}),b=buildInterpretationInput(analysis,{reportType:"WEALTH",referenceInstant});
     expect(a).toEqual(b);expect(a.evidence.map(row=>row.id)).toEqual(b.evidence.map(row=>row.id));
     expect(a.evidence.some(row=>row.id.startsWith("CATEGORY:"))).toBe(true);
-    expect(RULE.promptVersion).toBe("interpretation-prompt-v3");
+    expect(RULE.promptVersion).toBe("interpretation-prompt-v4");
   });
 
   it("plans LIFETIME_GENERAL claims before writing the customer narrative",async()=>{
