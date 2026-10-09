@@ -1843,7 +1843,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(id==="book-007"){
     const counseling=stemCounseling(facts);
     return[
-      `00님은 기본적으로 ${counseling.opening}`,
+      `기본적으로 ${counseling.opening}`,
       "겉에서는 차분하게 상황을 맞춰가는 것처럼 보여도 속에는 자기 생각이 꽤 분명합니다. 남들이 좋다고 하거나 다들 그렇게 한다는 이유만으로 움직이기보다, 본인이 직접 납득해야 마음이 움직여요.",
       facts.structure?`${structureMeaning(facts.structure)}이라 일에서도 한번 맡은 건 흐지부지 놓기보다 끝을 확인하려 합니다. 그래서 주변에서는 믿고 맡기기 쉬운 사람으로 보일 수 있어요. 다만 책임을 오래 붙들면 '내가 하는 게 빠르다'는 생각으로 다른 사람 몫까지 가져오기도 합니다.`:"일에서도 한번 맡은 건 흐지부지 놓기보다 끝을 확인해야 마음이 편합니다.",
       `아무 일에나 똑같이 힘을 쓰는 사람은 아니에요. 왜 해야 하는지, 이 일이 나에게 어떤 의미가 있는지가 분명할 때 훨씬 강해집니다. 반대로 ${counseling.shadow}`,
