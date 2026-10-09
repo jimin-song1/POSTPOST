@@ -2022,6 +2022,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
 
 function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="WORK")return null;
   const title=row.topic??row.title,structure=facts.structure,dominant=dominantFamily(facts);
   const officer=familyCount(facts,"관성"),wealth=familyCount(facts,"재성"),peer=familyCount(facts,"비겁"),resource=familyCount(facts,"인성"),output=familyCount(facts,"식상");
 
@@ -2119,6 +2120,7 @@ function workConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 
 
 function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="WEALTH")return null;
   const title=row.topic??row.title,wealth=familyCount(facts,"재성"),peer=familyCount(facts,"비겁"),output=familyCount(facts,"식상");
   const fireMissing=facts.missing.includes("fire");
 
@@ -2206,6 +2208,7 @@ function wealthConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 function relationshipConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
+  if(row.evidenceGroup!=="RELATIONSHIP")return null;
   const title=row.topic??row.title,dayRole=facts.branchMainTenGodByPosition.day||facts.stemTenGodByPosition.day,dayTone=tenGodTone(dayRole);
   const relationshipStatus=input.minimalContext.relationshipStatus;
 
@@ -2337,6 +2340,7 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
 
 
 function childrenConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="CHILDREN")return null;
   const title=row.topic??row.title,hourRole=facts.branchMainTenGodByPosition.hour||facts.stemTenGodByPosition.hour,hourTone=tenGodTone(hourRole);
 
   if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습/.test(title))return[
@@ -2424,6 +2428,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="WELLNESS")return null;
   const title=row.topic??row.title;
   const first=facts.wellnessAttention[0]??null,second=facts.wellnessAttention[1]??null;
   const firstLabel=first?elementPro(first.element):"",secondLabel=second?elementPro(second.element):"";
@@ -2510,6 +2515,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 function nobleConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
+  if(row.evidenceGroup!=="NOBLE")return null;
   const title=row.topic??row.title;
   const noble=facts.starLabels.filter(label=>/귀인/.test(label));
   const years=fortuneSnapshots(input,row).filter(snapshot=>snapshot.year!=null)
@@ -2579,6 +2585,7 @@ function nobleConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
 }
 
 function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="STARS_RELATIONS")return null;
   const title=row.topic??row.title;
   const has=(token:string)=>facts.starLabels.some(label=>label.includes(token));
   const present=facts.starLabels.filter(label=>["도화","화개","역마","천을귀인","귀문","원진","현침","양인","괴강","백호"].some(token=>label.includes(token)));
@@ -2752,6 +2759,7 @@ function twelveStageConsultation(row:Row,facts:ConsultationFacts):string[]|null{
 }
 
 function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="TEN_GODS")return null;
   const title=row.topic??row.title,dominant=dominantFamily(facts);
   const visible=Object.values(facts.stemTenGodByPosition).filter(Boolean);
   const hidden=Object.values(facts.branchMainTenGodByPosition).filter(Boolean);
@@ -3093,6 +3101,7 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
 }
 
 function synthesisConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+  if(row.evidenceGroup!=="SYNTHESIS")return null;
   const title=row.topic??row.title,stem=stemStory(facts),dominant=dominantFamily(facts);
 
   if(/내 사주를 한 번에 정리하면|^총정리$/.test(title))return[
