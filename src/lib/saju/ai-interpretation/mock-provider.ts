@@ -3004,7 +3004,7 @@ function changeConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
       return[
         years.length===3?("다음 삼재 흐름은 "+start+"년 들삼재 · "+middle+"년 눌삼재 · "+end+"년 날삼재로 이어집니다."):"삼재는 세 해가 이어지는 변화 구간으로 봅니다.",
         "삼재라고 세 해 모두 나쁜 일이 생긴다는 뜻은 아닙니다. 원래 사주의 합·충·형·파·해와 그해 활동량이 같이 커질 때 체감이 더 커질 수 있습니다.",
-        facts.relationCounts.clash+facts.relationCounts.punishment+facts.relationCounts.break+facts.relationCounts.harm>0?"원국에도 부딪힘이나 반복 압박의 관계가 있어 삼재 기간에는 일정·계약·관계 변화를 한꺼번에 몰지 않는 편이 좋습니다.":"원국에서 충돌 관계가 과하게 겹치는 편은 아니라 삼재 자체를 크게 겁내기보다 실제로 바빠지는 분야를 보는 게 더 중요합니다.",
+        facts.relationCounts.clash+facts.relationCounts.punishment+facts.relationCounts.break+facts.relationCounts.harm>0?"평소에도 사람이나 일에서 같은 문제가 반복되거나 부딪힘을 오래 붙드는 면이 있어, 삼재 기간에는 일정·계약·관계 변화를 한꺼번에 몰지 않는 편이 좋습니다.":"평소에는 큰 충돌이 여러 겹으로 이어지는 편은 아니라, 삼재 자체를 크게 겁내기보다 실제로 바빠지는 분야를 보는 게 더 중요합니다.",
         "들삼재에는 새 변화가 시작되는지, 눌삼재에는 벌인 일을 어떻게 유지·정리할지, 날삼재에는 무엇을 남기고 끝낼지를 보는 식으로 쓰면 됩니다.",
         "즉 삼재는 공포의 시기표가 아니라 변화가 몰릴 수 있는 세 해를 미리 알고 중요한 결정의 확인 절차를 조금 늘리는 참고에 가깝습니다."
       ];
