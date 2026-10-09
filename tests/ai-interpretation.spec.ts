@@ -3,6 +3,7 @@ import { calculateSaju } from "@/lib/saju/engine";
 import { AI_INTERPRETATION_V1 as RULE } from "@/rules/ai-interpretation.v1";
 import { buildInterpretationInput,AnalysisNotCompletedError,InterpretationInputError } from "@/lib/saju/ai-interpretation/input-builder";
 import { validateGrounding,GroundingValidationError } from "@/lib/saju/ai-interpretation/grounding";
+import {assertCopyEditPreservesFacts,copyEditKoreanText,validateKoreanEditorial} from "@/lib/saju/ai-interpretation/copy-edit";
 import { INTERPRETATION_SYSTEM_PROMPT,LIFETIME_INTERPRETATION_PLANNER_PROMPT } from "@/lib/saju/ai-interpretation/prompt";
 import { lifetimeInterpretationPlanSchema,structuredInterpretationSchema } from "@/lib/saju/ai-interpretation/schema";
 import { interpretationHashes,MemoryInterpretationCache } from "@/lib/saju/ai-interpretation/cache";
@@ -103,6 +104,16 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(()=>validateGrounding(aiTone,input)).toThrow(GroundingValidationError);
     const technical=validOutput(input);technical.sections[0].body="용신을 먼저 설명합니다.";
     expect(()=>validateGrounding(technical,input)).toThrow(GroundingValidationError);
+  });
+
+  it("splits overlong customer sentences before editorial validation without changing facts",()=>{
+    const source="가까운 사람과 일을 함께 볼 때는 처음부터 결론을 서두르기보다 상대가 어떤 기준으로 움직이는지 충분히 확인하고, 내 쪽에서도 맡을 일과 넘길 일을 나눈 뒤에야 마음이 편해지는 편입니다, 하지만 책임이 커질수록 혼자 모든 것을 정리하려는 습관이 강해질 수 있어서 중요한 선택에서는 58.26이라는 계산값과 甲子 같은 근거는 그대로 두고 설명만 짧게 나누는 편이 읽기 쉽습니다.";
+    expect(source.length).toBeGreaterThan(170);
+    const edited=copyEditKoreanText(source);
+    expect(edited).not.toBe(source);
+    expect(()=>validateKoreanEditorial(edited)).not.toThrow();
+    expect(()=>assertCopyEditPreservesFacts(source,edited)).not.toThrow();
+    expect(edited).toContain("58.26");expect(edited).toContain("甲子");
   });
 
   it("locks numbers and labels to each section's cited evidence and each timeline period",()=>{
