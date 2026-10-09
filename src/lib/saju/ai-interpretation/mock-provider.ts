@@ -709,7 +709,7 @@ function uniqueYearSnapshots(rows:FortuneSnapshot[]){
     const end=row.endYear!=null?Date.parse(String(row.endYear)+"-01-01"):NaN;
     return Number.isFinite(start)&&Number.isFinite(end)?Math.max(1,end-start):1;
   };
-  return [...grouped.entries()]
+  return Array.from(grouped.entries())
     .sort(([a],[b])=>a-b)
     .map(([,bucket])=>[...bucket].sort((a,b)=>duration(b)-duration(a)||a.synthesisId.localeCompare(b.synthesisId))[0]);
 }
