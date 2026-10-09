@@ -24,6 +24,9 @@ export const LIFETIME_INTERPRETATION_PLANNER_PROMPT=`당신은 글을 쓰기 전
 
 목표는 "사주 계산값 요약"이 아니라 "이 사람에게 반복해서 나타나는 생활 패턴"을 찾는 것이다.
 먼저 characterCore를 만든다. corePatterns, contradictions, dominantStrengths, shadowPatterns, relationshipPattern, workPattern, decisionPattern은 책 전체에서 같은 사람을 유지하는 내부 기준이다. 고객 문장으로 그대로 복사하지 마라.
+characterCore가 확정된 뒤에는 각 장에서 사람의 성격을 새로 정의하지 마라. 처음 만남·가까운 관계·일·돈·혼자 있을 때는 같은 중심 성향이 상황에 따라 어떻게 달라지는지만 설명한다.
+겉보기에는 반대처럼 보이는 특징을 쓸 수 있는 경우는 characterCore.contradictions에 이미 그 조건 차이가 잡혀 있을 때뿐이다. 예를 들어 "쉽게 마음이 식는다"와 "한번 믿으면 오래 간다"를 함께 쓴다면 "처음에는 천천히 믿고, 믿은 뒤에는 오래 가지만, 같은 신뢰 위반이 반복되면 거리를 둔다"처럼 하나의 순서로 연결하라.
+어떤 chapter의 문장이 characterCore와 충돌하면 새로운 성격을 추가하지 말고 해당 장면의 표현을 characterCore에 맞게 다시 써라.
 깊이 있는 풀이를 위해 가능한 경우 서로 다른 deterministic evidence 2~4개를 묶어 하나의 claim을 만든다.
 근거가 하나뿐이면 억지로 늘리지 마라. 일간 하나, 오행 하나, 신살 하나만 보고 사람 전체를 단정하지 마라.
 
@@ -51,6 +54,8 @@ ${LIFETIME_BRIDGE_CONTEXT}`;
 
 export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 dynamic-lifetime-book-v4의 현재 reportPlan 순서와 제목을 그대로 지켜라.
 CONCLUSION FIRST, SAJU EVIDENCE, HUMAN STORY: 각 장은 결론을 먼저 말하고, 왜 그런지 계산된 사주 근거를 붙인 뒤, 실제 생활에서 어떻게 드러나는지 상담하듯 풀어라.
+interpretationPlan.characterCore를 책 전체의 불변 기준으로 사용하라. 각 장은 같은 사람의 다른 장면이어야 하며, 성격·직업·재물·관계 장에서 서로 다른 인물상을 새로 만들지 마라.
+앞 장에서 "천천히 신뢰한다"고 했다면 뒤 장에서는 그 기준이 가까운 관계나 갈등에서 어떻게 이어지는지를 보여줘야 한다. 반대 결론이 필요하면 조건과 순서를 명시해 한 흐름으로 연결하라.
 전체 책의 PART 수와 순서는 고정 숫자로 가정하지 말고 현재 reportPlan의 partNumber·partTitle을 그대로 따른다. 삼재처럼 별도 PART가 추가될 수 있으며, 고객은 전체 결과를 한 권의 긴 사주책으로 읽는 느낌을 받아야 한다.
 
 말투 목표는 "사주 근거는 분명하고, 읽히는 문장은 따뜻한 한국 사주 상담가"다.
