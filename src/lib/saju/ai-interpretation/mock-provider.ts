@@ -884,7 +884,7 @@ function consultationOpening(row:Row,facts:ConsultationFacts){
     if(/가까운 관계/.test(title))return "가까워질수록 챙김이 커지는 편입니다. 다만 잘해주려는 마음이 상대의 선택까지 대신하는 관리로 바뀌지 않도록 선을 두는 게 중요합니다.";
   }
   if(group==="WELLNESS"&&facts.strongest&&facts.weakest){
-    if(/몸이 보내는 신호/.test(title))return "건강운에서는 질병 이름보다 생활 균형을 먼저 봅니다. "+elementPro(facts.strongest.element)+"과 "+elementPro(facts.weakest.element)+"의 차이가 크기 때문에 무리한 뒤 회복하는 패턴을 특히 살펴야 합니다.";
+    if(/몸이 보내는 신호/.test(title))return "건강운에서는 질병 이름보다 생활 균형을 먼저 봅니다. "+withParticle(elementPro(facts.strongest.element),"과","와")+" "+elementPro(facts.weakest.element)+"의 차이가 크기 때문에 무리한 뒤 회복하는 패턴을 특히 살펴야 합니다.";
     if(/생활 리듬/.test(title))return "생활 리듬은 몰아서 버티는 것보다 일정한 수면·식사·활동 시간을 유지할 때 안정적입니다.";
     if(/휴식과 회복/.test(title))return "회복은 아무것도 하지 않는 시간만으로 끝나지 않습니다. 머릿속 흐름을 끊어주는 가벼운 움직임과 장소 전환이 도움이 됩니다.";
     if(/긴장과 스트레스/.test(title))return "스트레스가 커지면 생각이 많아지고, 생각이 많아질수록 다시 피로가 쌓이는 순환을 만들기 쉽습니다. 머리를 쉬게 하는 시간이 실제 휴식만큼 중요합니다.";
@@ -2592,9 +2592,9 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   const strongest=facts.strongest?elementPro(facts.strongest.element):"";
 
   if(/명리로 보는 건강 균형|^건강운$/.test(title))return[
-    first?("명리적으로 건강 균형을 볼 때 가장 먼저 체크할 쪽은 "+firstLabel+"입니다. "+(facts.missing.includes(first.element)?firstLabel+"가 사주 안에서 비어 있어 저절로 채워지는 쪽보다 생활에서 의식적으로 보완해야 하는 편입니다.":(first.customerStatus||"균형을 조금 더 챙겨볼 필요가 있는 쪽으로 잡힙니다."))):"건강운은 오행의 많고 적음과 생활 리듬을 함께 봅니다.",
-    facts.strongest?("반대로 "+strongest+"은 비중이 가장 커서 관련 성향을 오래 쓰기 쉽습니다. 강한 쪽은 장점이지만 과하게 쓰면 긴장과 피로가 한쪽에 몰릴 수 있어, 부족한 곳은 채우고 강한 곳은 과하지 않게 쓰는 게 중요합니다."):"강한 부분과 약한 부분의 균형을 같이 보는 편이 좋습니다.",
-    firstAreas?("전통 명리에서는 "+firstLabel+"를 "+firstAreas+" 같은 영역과 연결해 살핍니다. 이건 질병이 있다는 뜻이 아니라 생활 관리에서 어느 쪽을 먼저 챙길지 보는 참고입니다."):"전통 명리의 신체 대응은 진단이 아니라 생활 관리의 참고로만 봅니다.",
+    first?("명리적으로 건강 균형을 볼 때 가장 먼저 체크할 쪽은 "+firstLabel+"입니다. "+(facts.missing.includes(first.element)?withParticle(firstLabel,"이","가")+" 사주 안에서 비어 있어 저절로 채워지는 쪽보다 생활에서 의식적으로 보완해야 하는 편입니다.":(first.customerStatus||"균형을 조금 더 챙겨볼 필요가 있는 쪽으로 잡힙니다."))):"건강운은 오행의 많고 적음과 생활 리듬을 함께 봅니다.",
+    facts.strongest?("반대로 "+withParticle(strongest,"은","는")+" 비중이 가장 커서 관련 성향을 오래 쓰기 쉽습니다. 강한 쪽은 장점이지만 과하게 쓰면 긴장과 피로가 한쪽에 몰릴 수 있어, 부족한 곳은 채우고 강한 곳은 과하지 않게 쓰는 게 중요합니다."):"강한 부분과 약한 부분의 균형을 같이 보는 편이 좋습니다.",
+    firstAreas?("전통 명리에서는 "+withParticle(firstLabel,"을","를")+" "+firstAreas+" 같은 영역과 연결해 살핍니다. 이건 질병이 있다는 뜻이 아니라 생활 관리에서 어느 쪽을 먼저 챙길지 보는 참고입니다."):"전통 명리의 신체 대응은 진단이 아니라 생활 관리의 참고로만 봅니다.",
     firstHabit||"바쁜 날에도 수면·식사·움직임 가운데 최소 한 가지는 무너지지 않게 지키는 게 좋습니다.",
     "실제 통증이나 증상은 반드시 검진과 의료 판단을 우선하고, 사주 건강운은 체질을 단정하기보다 평소 취약해지기 쉬운 생활 패턴을 미리 관리하는 데 쓰는 게 맞습니다."
   ];
@@ -2608,7 +2608,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/생활에서 보완하는 방법/.test(title))return[
-    first?(firstLabel+"를 보완하는 가장 현실적인 방법은 물건이나 색을 찾는 것보다 생활 행동을 바꾸는 것입니다."):"보완은 상징물보다 실제 생활 습관으로 연결하는 편이 효과적입니다.",
+    first?(withParticle(firstLabel,"을","를")+" 보완하는 가장 현실적인 방법은 물건이나 색을 찾는 것보다 생활 행동을 바꾸는 것입니다."):"보완은 상징물보다 실제 생활 습관으로 연결하는 편이 효과적입니다.",
     firstHabit||"가장 자주 무너지는 수면·식사·활동 패턴 하나를 먼저 고정해보세요.",
     secondHabit?(secondLabel+" 쪽은 "+secondHabit):"두 번째로 약한 부분은 한꺼번에 바꾸지 말고 첫 습관이 자리 잡은 뒤 붙이는 편이 좋습니다.",
     facts.missing.includes("fire")?"특히 화(火)가 비어 있다면 몸을 계속 정지 상태로 두기보다 햇빛을 보고 움직이는 시간, 사람과 대화하고 밖으로 표현하는 시간을 일정 안에 넣어두는 방식이 잘 맞습니다.":"부족한 부분은 의지로 버티기보다 일정과 환경 속에 자동으로 들어가게 만드는 게 오래 갑니다.",
