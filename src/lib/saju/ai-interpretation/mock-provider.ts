@@ -3397,18 +3397,19 @@ function report(input:InterpretationInput):StructuredInterpretation{
 
 export class MockInterpretationProvider implements InterpretationProvider{
   async generate(request:InterpretationProviderRequest):Promise<InterpretationProviderResponse>{
+    const facts=consultationFacts(request.input),spine=personalitySpine(facts);
     const fixedCore={
-      corePatterns:["확인할 것은 확인한 뒤 움직이고 정한 일은 끝까지 챙깁니다."],
-      contradictions:["처음에는 신중하지만 기준이 서면 움직임이 빨라집니다."],
-      dominantStrengths:["기준을 세우고 마무리하는 힘"],
-      shadowPatterns:["혼자 다시 확인하느라 부담을 떠안을 수 있습니다."],
-      relationshipPattern:"가까워지기 전에는 오래 보고, 가까워진 뒤에는 행동으로 챙깁니다.",
-      workPattern:"내가 어디까지 맡아야 하는지 분명하면 순서를 정해 끝까지 마무리하는 편이에요.",
-      decisionPattern:"필요한 걸 확인하고 마음이 정해지면 행동은 빠른 편이에요."
+      corePatterns:[spine.core],
+      contradictions:[spine.conflict],
+      dominantStrengths:[spine.decision],
+      shadowPatterns:[spine.shadow],
+      relationshipPattern:spine.close,
+      workPattern:spine.work,
+      decisionPattern:spine.decision
     };
     if("corePatterns" in ((request.schema.properties??{}) as Record<string,unknown>))
-      return {output:fixedCore,provider:"mock",model:"deterministic-fixture-v4",tokenUsage:{input:0,output:0}};
+      return {output:fixedCore,provider:"mock",model:"deterministic-fixture-v5",tokenUsage:{input:0,output:0}};
     const wantsPlan="planVersion" in ((request.schema.properties??{}) as Record<string,unknown>);
-    return {output:wantsPlan?plan(request.input):report(request.input),provider:"mock",model:"deterministic-fixture-v4",tokenUsage:{input:0,output:0}};
+    return {output:wantsPlan?plan(request.input):report(request.input),provider:"mock",model:"deterministic-fixture-v5",tokenUsage:{input:0,output:0}};
   }
 }
