@@ -1,8 +1,9 @@
 import type { InterpretationReportType } from "@/types/ai-interpretation";
 
+// v6 invalidates stale lifetime output after period-scoping, stage parsing, and dedupe fixes.
 export const AI_INTERPRETATION_V1={
   ruleVersion:"ai-interpretation-v1",inputVersion:"interpretation-input-v1",schemaVersion:"interpretation-schema-v1",
-  promptVersion:"interpretation-prompt-v3",groundingVersion:"interpretation-grounding-v3",modelConfigVersion:"openai-model-config-v3",
+  promptVersion:"interpretation-prompt-v4",groundingVersion:"interpretation-grounding-v3",modelConfigVersion:"openai-model-config-v17",
   supportedReports:["COMPREHENSIVE","LIFETIME_GENERAL","WEALTH","BUSINESS","CAREER","RELATIONSHIP","STUDY","YEARLY"] as InterpretationReportType[],
   maxRepairAttempts:1,
   prohibitedCertainty:["돈 번다","매출 오른다","승진한다","합격한다","연애 시작한다","결혼한다","임신한다","헤어진다","퇴사한다","사고난다","사업 망한다"],

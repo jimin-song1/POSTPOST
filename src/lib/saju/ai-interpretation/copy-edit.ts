@@ -6,8 +6,59 @@ const replacements:ReadonlyArray<readonly [RegExp,string]>=[
   [/(?:종합적으로 보면|전체적으로 보면)[,.]?\s*/g,""],[/이를 통해\s*/g,"그래서 "],[/따라서[,.]?\s*/g,"그래서 "],
   [/([가-힣]+)(?:\s+\1){1,}/g,"$1"]
 ];
+
+function sentenceChunks(line:string){
+  const chunks:string[]=[];let start=0;
+  const isDigit=(character:string|undefined)=>Boolean(character&&/[0-9]/.test(character));
+  for(let index=0;index<line.length;index+=1){
+    const character=line[index],decimalPoint=character==="."&&isDigit(line[index-1])&&isDigit(line[index+1]);
+    if((character==="."&&!decimalPoint)||character==="!"||character==="?"){
+      const chunk=line.slice(start,index+1).trim();if(chunk)chunks.push(chunk);start=index+1;
+    }
+  }
+  const tail=line.slice(start).trim();if(tail)chunks.push(tail);
+  return chunks;
+}
+
+function splitLongSentence(sentence:string){
+  const max=EDITORIAL_RULE.maxSentenceLength;
+  if(sentence.trim().length<=max)return sentence.trim();
+  const terminal=/[.!?]$/.test(sentence.trim())?sentence.trim().slice(-1):".";
+  let remaining=sentence.trim().replace(/[.!?]$/,"").trim();
+  const parts:string[]=[];
+  while(remaining.length>max){
+    const minimum=Math.max(48,Math.floor(max*0.45)),window=remaining.slice(0,max+1);
+    let splitIndex=-1,rightOffset=0;
+    for(const marker of [", ","; ",": "]){
+      const index=window.lastIndexOf(marker);
+      if(index>=minimum&&index>splitIndex){splitIndex=index;rightOffset=marker.length;}
+    }
+    if(splitIndex<minimum)for(const word of ["하지만","다만","그리고","그래서","반면","대신","특히","이때","또한"]){
+      const marker=" "+word+" ",index=window.lastIndexOf(marker);
+      if(index>=minimum&&index>splitIndex){splitIndex=index;rightOffset=1;}
+    }
+    if(splitIndex<minimum){
+      const whitespace=window.lastIndexOf(" ");
+      splitIndex=whitespace>=minimum?whitespace:max;
+      rightOffset=whitespace>=minimum?1:0;
+    }
+    const left=remaining.slice(0,splitIndex).replace(/[\s,:;]+$/,"").trim();
+    const right=remaining.slice(splitIndex+rightOffset).trim();
+    if(!left||!right)break;
+    parts.push(/[.!?]$/.test(left)?left:left+".");
+    remaining=right;
+  }
+  if(remaining)parts.push(remaining+terminal);
+  return parts.join(" ");
+}
+
+function splitLongKoreanSentences(value:string){
+  return value.split("\n").map(line=>sentenceChunks(line).map(splitLongSentence).join(" ")).join("\n");
+}
+
 export function copyEditKoreanText(value:string){
-  return replacements.reduce((text,[pattern,next])=>text.replace(pattern,next),value).trim();
+  const normalized=replacements.reduce((text,[pattern,next])=>text.replace(pattern,next),value).trim();
+  return splitLongKoreanSentences(normalized).trim();
 }
 const facts=(value:string)=>({numbers:Array.from(value.matchAll(/-?\d+(?:\.\d+)?/g),match=>match[0]),pillars:Array.from(value.matchAll(/[甲乙丙丁戊己庚辛壬癸][子丑寅卯辰巳午未申酉戌亥]/g),match=>match[0])});
 export function assertCopyEditPreservesFacts(before:string,after:string){const left=facts(before),right=facts(after);

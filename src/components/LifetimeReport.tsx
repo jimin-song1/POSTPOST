@@ -32,6 +32,19 @@ const CHILD_BOND: Record<string, string> = { LOW: "천천히 가까워지는 편
 const PILLAR_LABEL: Record<PillarPosition, string> = { year: "년주", month: "월주", day: "일주", hour: "시주" };
 const STEM_HANGUL: Record<string, string> = { 甲:"갑", 乙:"을", 丙:"병", 丁:"정", 戊:"무", 己:"기", 庚:"경", 辛:"신", 壬:"임", 癸:"계" };
 const BRANCH_HANGUL: Record<string, string> = { 子:"자", 丑:"축", 寅:"인", 卯:"묘", 辰:"진", 巳:"사", 午:"오", 未:"미", 申:"신", 酉:"유", 戌:"술", 亥:"해" };
+const STEM_PERSONALITY: Record<string,string[]> = {
+  甲:["곧음","주도성"],乙:["섬세함","유연함"],丙:["밝음","추진력"],丁:["따뜻함","집중력"],戊:["든든함","책임감"],
+  己:["차분함","세심함"],庚:["결단력","단단함"],辛:["정교함","기준이 분명함"],壬:["포용력","큰 흐름을 보는 힘"],癸:["감수성","관찰력"]
+};
+const BRANCH_PERSONALITY: Record<string,string[]> = {
+  子:["신중함"],丑:["꾸준함"],寅:["도전성"],卯:["부드러움"],辰:["현실감"],巳:["민첩함"],
+  午:["활기"],未:["배려심"],申:["재치"],酉:["정리력"],戌:["의리"],亥:["깊이 생각함"]
+};
+const pillarKeywords=(stem:string|null,branch:string|null)=>Array.from(new Set([
+  ...(stem?STEM_PERSONALITY[stem]??[]:[]),
+  ...(branch?BRANCH_PERSONALITY[branch]??[]:[])
+])).slice(0,3);
+const pillarReading=(stem:string|null,branch:string|null)=>stem&&branch?`${STEM_HANGUL[stem]??""}${BRANCH_HANGUL[branch]??""}`:"";
 const pct = (value: number | null | undefined) => value == null ? "—" : `${value.toFixed(1)}%`;
 const score = (value: number | null | undefined) => value == null ? "—" : `${Math.round(value)}%`;
 const chapterSection = (report: StructuredInterpretation | null, id: string) => report?.sections.find((section) => section.id === id);
@@ -40,7 +53,7 @@ function Chapter({ number, id, title, headline, lead, children, tone = "paper" }
 function AiCopy({ report, id, fallback }: { report: StructuredInterpretation | null; id: string; fallback: string[] }) { const section = chapterSection(report, id); const paragraphs = section?.paragraphs?.length ? section.paragraphs : section?.body ? [section.body] : fallback; return <div className="longCopy">{paragraphs.map((paragraph, index) => <p key={`${id}-${index}`}>{paragraph}</p>)}</div>; }
 function Metric({ label, value, note, tone = "support" }: { label: string; value: string; note?: string; tone?: "support" | "activity" | "neutral" }) { return <div className={`lifetimeMetric ${tone}`}><span>{label}</span><strong>{value}</strong>{note && <small>{note}</small>}</div>; }
 function CrowNote({ children }: { children: React.ReactNode }) { return <aside className="crowNote"><span aria-hidden="true">●</span><p><b>삼족오 한마디</b>{children}</p></aside>; }
-function EvidenceDetails({ children }: { children: React.ReactNode }) { return <details className="chapterEvidence"><summary>왜 이렇게 보나요?</summary><div>{children}</div></details>; }
+function EvidenceDetails({ children, label="조금 더 깊이 보기" }: { children: React.ReactNode; label?:string }) { return <details className="chapterEvidence"><summary>{label}</summary><div>{children}</div></details>; }
 function EvidenceRows({ rows }: { rows: Array<[string,string]> }) { return <dl className="evidenceRows">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>; }
 
 export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }: { analysis: SajuAnalysis; current: CurrentPeriodSelection; relationshipStatus: RelationshipStatus; interpretation: InterpretationUiState; onRetry: () => void; onRestart: () => void }) {
@@ -48,11 +61,11 @@ export function LifetimeReport({ analysis, interpretation, onRetry, onRestart }:
     return <LifetimeGenerationScreen name={analysis.person.name} stage={interpretation.status==="pending"?interpretation.stage:undefined} completedParts={interpretation.status==="pending"?interpretation.completedParts:0} totalParts={interpretation.status==="pending"?interpretation.totalParts:1} onRestart={onRestart} />;
   }
   if (interpretation.status === "failed") {
-    return <LifetimeGenerationFailed message={interpretation.error.message} onRetry={onRetry} onRestart={onRestart} />;
+    return <LifetimeGenerationFailed onRetry={onRetry} onRestart={onRestart} />;
   }
   const report = interpretation.report.reportType === "LIFETIME_GENERAL" ? interpretation.report : null;
   if (!report || !report.sections.length) {
-    return <LifetimeGenerationFailed message="평생사주 본문 검증이 완료되지 않았습니다. 다시 생성해 주세요." onRetry={onRetry} onRestart={onRestart} />;
+    return <LifetimeGenerationFailed onRetry={onRetry} onRestart={onRestart} />;
   }
   return <DynamicLifetimeBook analysis={analysis} report={report} interpretation={interpretation} onRetry={onRetry} onRestart={onRestart} />;
 }
@@ -65,48 +78,160 @@ function ChildrenChapter({ report, children }: { report: StructuredInterpretatio
 
 function WellnessChapter({ report, wellness }: { report: StructuredInterpretation | null; wellness: WellnessResult | null }) { if (!wellness) return null; return <Chapter number="10" id="chapter-10" title="내 몸이 힘을 쓰는 방식" headline={chapterSection(report,"wellness")?.headline ?? "일이 바빠도 잠과 식사 시간을 지켜야 덜 지칩니다"}><AiCopy report={report} id="wellness" fallback={[`평소 잘 유지되는 쪽은 ${wellness.strengths.map((element)=>customerElement(element)).join("·") || "전체"}이고, 조금 더 챙겨야 하는 쪽은 ${wellness.attentionAreas.map((element)=>customerElement(element)).join("·") || "생활 습관"}입니다.`, ...wellness.habits.slice(0,3).map(row=>row.guidance)]}/><EvidenceDetails><div className="wellnessBalance"><span>생활 습관이 고르게 잡힌 정도</span><strong>{score(wellness.constitutionalBalanceScore)}</strong></div><p className="metricIntro">건강 점수가 아닙니다. 잠, 식사, 움직임 같은 생활 습관을 돌아볼 때 참고하는 숫자입니다.</p><div className="wellnessElements">{ELEMENTS.map(element=><article key={element}><span>{customerElement(element)} 기운 <strong>{pct(wellness.elements[element].percentage)}</strong></span><b>{wellness.elements[element].theme}과 이어서 살펴보는 기운</b></article>)}</div></EvidenceDetails><p className="softDisclaimer">병을 알아보는 검사가 아닙니다. 전통 사주 방식으로 생활 습관을 돌아보는 참고 내용입니다.</p></Chapter>; }
 
-function DaeunChapter({ report, fortune }: { report: StructuredInterpretation | null; fortune: FortuneResult }) { const periods=fortune.daeun.status==="implemented"?fortune.daeun.periods:[]; const [selected,setSelected]=useState(0); const active=periods[selected]??periods[0]; return <Chapter number="15" id="chapter-15" title="10년마다 바뀌는 나" headline="10년마다 도움받기 쉬운 정도와 바빠지는 정도가 달라집니다"><AiCopy report={report} id="daeun" fallback={["앞 시기에 쌓은 경험은 다음 시기에 선택할 때 도움이 됩니다. 한 시기만 보고 좋다거나 나쁘다고 판단하지 마세요."]}/><div className="periodIndicator" aria-live="polite"><b>{selected+1}</b><span>/ {periods.length}</span><i><span style={{width:`${periods.length ? ((selected+1)/periods.length)*100 : 0}%`}}/></i></div><div className="daeunRail" role="list" aria-label="10년 큰 흐름">{periods.map((period,index)=><button role="listitem" aria-pressed={index===selected} key={period.index} onClick={()=>setSelected(index)}><b>{STEM_HANGUL[period.pillar.stem]}{BRANCH_HANGUL[period.pillar.branch]}</b><span>{period.sourcePeriod.ageRange}</span><span>{period.sourcePeriod.startInstant?.slice(0,4)}~{period.sourcePeriod.endInstant?.slice(0,4)}</span><small>{period.pillar.stem}{period.pillar.branch}</small></button>)}</div>{active&&<div className="daeunFocus"><h3>{STEM_HANGUL[active.pillar.stem]}{BRANCH_HANGUL[active.pillar.branch]} · {active.sourcePeriod.ageRange}</h3><small className="hanjaSecondary">{active.pillar.stem}{active.pillar.branch}</small><p>{active.activation.level==="HIGH"||active.activation.level==="VERY_HIGH"?"맡은 일이나 생활 환경이 자주 바뀔 수 있는 시기입니다.":"큰 변화보다 지금 하는 일을 정리하기 쉬운 시기입니다."}</p><EvidenceDetails><div className="metricPair"><Metric label="도움받기 쉬운 정도" value={score(active.preference.baseFavorabilityScore)} note={SUPPORT[active.preference.role]??active.preference.role}/><Metric label="바빠지거나 바뀌는 정도" value={score(active.activation.score)} note={ACTIVITY[active.activation.level]??active.activation.level} tone="activity"/></div><EvidenceRows rows={[["전문가용 한자",`${active.pillar.stem}${active.pillar.branch}`]]}/><p>도움을 받는 것과 변화가 많은 것은 서로 다릅니다. 두 숫자를 합쳐 좋다거나 나쁘다고 말하지 않습니다.</p></EvidenceDetails></div>}</Chapter>; }
+function DaeunChapter({ report, fortune }: { report: StructuredInterpretation | null; fortune: FortuneResult }) { const periods=fortune.daeun.status==="implemented"?fortune.daeun.periods:[]; const [selected,setSelected]=useState(0); const active=periods[selected]??periods[0]; const ageLabel=(period:typeof active)=>period?`${Math.max(0,Math.floor(period.sourcePeriod.startAgeYears))}~${Math.max(0,Math.floor(period.sourcePeriod.endAgeYears))}세`:""; return <Chapter number="15" id="chapter-15" title="대운" headline="10년마다 달라지는 큰 흐름"><AiCopy report={report} id="daeun" fallback={["앞 시기에 쌓은 경험은 다음 시기에도 이어져요. 한 시기만 보고 좋다거나 나쁘다고 단정하지는 않아요."]}/><div className="periodIndicator" aria-live="polite"><b>{selected+1}</b><span>/ {periods.length}</span><i><span style={{width:`${periods.length ? ((selected+1)/periods.length)*100 : 0}%`}}/></i></div><div className="daeunRail" role="list" aria-label="대운">{periods.map((period,index)=><button role="listitem" aria-pressed={index===selected} key={period.index} onClick={()=>setSelected(index)}><b>{ordinalDaeun(index)} 대운</b><span>{ageLabel(period)}</span><span>{period.sourcePeriod.startInstant?.slice(0,4)}~{period.sourcePeriod.endInstant?.slice(0,4)}</span><small>{period.pillar.stem}{period.pillar.branch}</small></button>)}</div>{active&&<div className="daeunFocus"><h3>{ordinalDaeun(selected)} 대운 · {ageLabel(active)}</h3><small className="hanjaSecondary">{active.pillar.stem}{active.pillar.branch}</small><p>{active.activation.level==="HIGH"||active.activation.level==="VERY_HIGH"?"맡은 일이나 생활 환경이 자주 바뀔 수 있는 시기예요.":"큰 변화보다 지금 하는 일을 정리하기 쉬운 시기예요."}</p><EvidenceDetails><div className="metricPair"><Metric label="도움받기 쉬운 정도" value={score(active.preference.baseFavorabilityScore)} note={SUPPORT[active.preference.role]??active.preference.role}/><Metric label="바빠지거나 바뀌는 정도" value={score(active.activation.score)} note={ACTIVITY[active.activation.level]??active.activation.level} tone="activity"/></div><p>도움을 받는 것과 변화가 많은 것은 서로 달라요. 두 숫자를 합쳐 좋다거나 나쁘다고 말하지 않아요.</p></EvidenceDetails></div>}</Chapter>; }
 
-function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; report:StructuredInterpretation|null }) { const native=analysis.fiveElements.nativeStrength, adjusted=analysis.fiveElements.adjustedStrength.elements; return <section id="chapter-18" className="professionalRoom"><details><summary><span><small>18 · 전문 분석실</small><b>계산 근거와 전문 용어를 확인합니다</b></span><em>펼쳐 보기</em></summary><div className="professionalInner"><AiCopy report={report} id="professional" fallback={["기본 결과와 같은 원국, 규칙 버전, evidence를 사용합니다."]}/><h3>사주 원국</h3><div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=><article key={position}><span>{PILLAR_LABEL[position]}</span><b>{analysis.pillars[position].stem}{analysis.pillars[position].branch}</b><small>천간 십성: {analysis.tenGods.value?.heavenlyStems[position].korean}</small></article>)}</div><h3>오행 기본값과 관계 반영값</h3><div className="professionalElements">{ELEMENTS.map(element=><p key={element}><b>{customerElement(element,true)}</b><span>기본 {pct(native?.[element].percentage)}</span><span>관계 반영 {pct(adjusted?.[element].percentage)}</span></p>)}</div><h3>전문 분류</h3><p>{customerTerm("격국")}: {analysis.structure.primary?.type} · {customerTerm("용신")}: {analysis.usefulGods.synthesis.status==="implemented"?analysis.usefulGods.synthesis.elements.slice(0,3).map(row=>customerElement(row.element,true)).join(" · "):"판단 유보"}</p><details><summary>버전과 evidence IDs</summary><pre>{JSON.stringify({rulesetVersion:analysis.rulesetVersion,engineVersion:analysis.engineMetadata.engineVersion,evidence:analysis.daeun.evidence},null,2)}</pre></details></div></details></section>; }
+function ProfessionalChapter({ analysis, report }: { analysis:SajuAnalysis; report:StructuredInterpretation|null }) {
+  const native=analysis.fiveElements.nativeStrength,finalElements=analysis.fiveElements.adjustedStrength.elements;
+  return <section id="chapter-18" className="professionalRoom"><details><summary><span><small>마지막 장 · 사주 원국</small><b>내 사주 원국 한눈에 보기</b></span><em>펼쳐 보기</em></summary><div className="professionalInner">
+    <AiCopy report={report} id="professional" fallback={["앞에서 읽은 내용을 한눈에 확인할 수 있도록 원국과 오행을 모아두었어요."]}/>
+    <h3>사주 원국</h3>
+    <div className="professionalPillars">{(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position}><span>{PILLAR_LABEL[position]}</span><b>{pillar.stem??"—"}{pillar.branch??""}</b><small>{pillarReading(pillar.stem,pillar.branch)|| (position==="hour"?"태어난 시각 모름":"")}</small></article>;})}</div>
+    <h3>오행</h3>
+    <div className="professionalElements">{ELEMENTS.map(element=><p key={element}><b>{customerElement(element,true)}</b><span>{pct(finalElements?.[element].percentage??native?.[element].percentage)}</span></p>)}</div>
+    <h3>전통 명리 분류</h3>
+    <p>{customerTerm("격국")}: {analysis.structure.primary?.type} · {customerTerm("용신")}: {analysis.usefulGods.synthesis.status==="implemented"?analysis.usefulGods.synthesis.elements.slice(0,3).map(row=>customerElement(row.element,true)).join(" · "):"판단 유보"}</p>
+  </div></details></section>;
+}
 
+const BOOK_PART_TITLES:Record<string,string>={
+  "01":"성격과 기본 성향",
+  "02":"일주와 오행",
+  "03":"직업운·학업운",
+  "04":"재물운",
+  "05":"연애운·결혼운·자녀운",
+  "06":"건강운",
+  "07":"귀인운",
+  "08":"신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운 · 앞으로 5년",
+  "12S":"삼재·변화운",
+  "13":"대운",
+  "14":"총정리"
+};
+const customerSectionTitle=(_id:string,fallback:string)=>fallback;
+const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
+const ordinalDaeun=(index:number)=>["첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째","여덟 번째","아홉 번째","열 번째"][index]??`${index+1}번째`;
+const daeunAgeLabel=(analysis:SajuAnalysis,index:number)=>{
+  const period=analysis.daeun.periods[index];
+  if(!period)return null;
+  const start=Math.max(0,Math.floor(period.startAgeYears));
+  const end=Math.max(start,Math.floor(period.endAgeYears));
+  return `${start}~${end}세`;
+};
+const PERSONAL_PART_LINES:Record<string,(name:string)=>string>={
+  "01":name=>`${name}님의 기본 성향부터 천천히 읽어볼게요.`,
+  "03":name=>`${name}님에게 잘 맞는 일과 배움의 방향을 봅니다.`,
+  "04":name=>`${name}님의 재물운은 어떻게 움직이는지 살펴봅니다.`,
+  "05":name=>`${name}님의 연애·결혼·가족 관계에서 중요한 흐름을 봅니다.`,
+  "07":name=>`${name}님에게 도움을 주는 사람과 인연의 흐름을 봅니다.`,
+  "11":name=>`${name}님의 앞으로 5년은 어디에서 변화가 커지는지 봅니다.`,
+  "13":name=>`${name}님의 삶을 10년 단위로 나누어 큰 흐름을 봅니다.`,
+  "14":name=>`${name}님의 사주에서 끝까지 남는 핵심을 정리합니다.`
+};
+const personalPartLine=(partNumber:string,name:string)=>PERSONAL_PART_LINES[partNumber]?.(name)??null;
+
+const displaySectionTitle=(section:{id:string;title:string;evidenceGroup?:string},analysis:SajuAnalysis)=>{
+  const group=section.evidenceGroup??"";
+  const match=group.match(/^DAEUN_(\d+)$/);
+  if(!match)return section.title;
+  const index=Number(match[1])-1;
+  const age=daeunAgeLabel(analysis,index);
+  if(!age)return section.title;
+  if(section.id.startsWith("daeun-"))return `${age} · 이 대운의 전반부와 후반부`;
+  return `${ordinalDaeun(index)} 대운 · ${age}`;
+};
+
+function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
+  const dayElement=analysis.strength.dayMaster?.element;
+  return <section className="sajuAtGlance" aria-label="사주 원국과 오행">
+    <header>
+      <span>四柱原局 · FIVE ELEMENTS</span>
+      <h3>사주 원국</h3>
+      {dayElement?<p>나를 대표하는 기운 <b>{customerElement(dayElement,true)}</b></p>:null}
+    </header>
+    <div className="sajuPillarTable" role="table" aria-label="사주 원국표">
+      {(["year","month","day","hour"] as PillarPosition[]).map(position=>{const pillar=analysis.pillars[position];return <article key={position} className={position==="day"?"isDayPillar":undefined}>
+        <span>{PILLAR_LABEL[position]}</span>
+        <b>{pillar.stem??"—"}{pillar.branch??""}</b>
+        <small>{pillarReading(pillar.stem,pillar.branch)|| (position==="hour"?"태어난 시각 모름":"")}</small>
+        {position==="day"?<em>나를 대표하는 일주</em>:null}
+      </article>;})}
+    </div>
+    <FiveElementSpread analysis={analysis}/>
+  </section>;
+}
+
+function DayPillarFocus({analysis}:{analysis:SajuAnalysis}){
+  const pillar=analysis.pillars.day,keywords=pillarKeywords(pillar.stem,pillar.branch);
+  return <div className="dayPillarFocus" aria-label="나를 대표하는 일주">
+    <span>나를 대표하는 두 글자</span>
+    <strong>{pillar.stem??"—"}{pillar.branch??""}</strong>
+    {keywords.length?<b>{keywords.join(" · ")}</b>:null}
+    <p>이 두 글자는 나를 가장 가까이 보여주는 일주예요. 어려운 한자 뜻보다, 실제 성격에서 자주 보이는 모습부터 쉽게 풀어볼게요.</p>
+  </div>;
+}
+
+function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
+  const adjusted=analysis.fiveElements.adjustedStrength.elements;
+  const native=analysis.fiveElements.nativeStrength;
+  const rows=ELEMENTS.map(element=>({element,percentage:adjusted?.[element].percentage??native?.[element].percentage??0})).sort((a,b)=>b.percentage-a.percentage);
+  const strongest=rows[0],weakest=rows[rows.length-1];
+  const dayElement=analysis.strength.dayMaster?.element;
+  return <figure className="fiveElementSpread" aria-label="오행 분포표">
+    <figcaption><span>五行 · 오행 분포</span><strong>{dayElement?`나를 대표하는 기운 · ${customerElement(dayElement,true)}`:"오행 분포"}</strong><small>목 · 화 · 토 · 금 · 수의 최종 비율</small></figcaption>
+    <div className="fiveElementRows">
+      {ELEMENTS.map(element=>{const value=adjusted?.[element].percentage??native?.[element].percentage??0;return <div className="fiveElementRow" data-element={element} key={element}>
+        <b>{customerElement(element,true)}</b><i><span style={{width:(Math.max(2,Math.min(100,value)))+"%"}}/></i><strong>{pct(value)}</strong><small>{ELEMENT_THEME[element]}</small>
+      </div>;})}
+    </div>
+
+  </figure>;
+}
 
 function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
-  const parts=Array.from(new Map(report.sections.map(section=>[section.partNumber??"00",{partNumber:section.partNumber??"00",title:section.partTitle??"평생사주"}])).values());
-  const contentSectionCount=report.sections.filter(section=>section.contentKind==="CONTENT").length;
+  const visibleSections=report.sections.filter(section=>section.contentKind==="CONTENT");
+  const parts=Array.from(new Map(visibleSections.map(section=>{const partNumber=section.partNumber??"00",rawTitle=section.partTitle??"평생사주";return[partNumber,{partNumber,title:customerPartTitle(partNumber,rawTitle)}];})).values());
   return <div className="lifetimeReport lifetimeBook154">
     <header className="lifetimeCover book154Cover">
       <div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
       <div className="coverOrnament" aria-hidden="true"><i/><i/><i/></div>
-      <p>평생사주 · {contentSectionCount}개의 풀이</p>
+      <p>평생사주 · 한 권으로 읽는 내 이야기</p>
       <h1>{analysis.person.name}님의<br/>한 권의 사주책</h1>
       <h2>{report.headline}</h2>
-      <span>깊은 풀이를 쉬운 한국어로, 계산 근거는 그대로</span>
+      <span>어려운 말은 줄이고, 내 사주 이야기는 더 쉽게</span>
     </header>
     <nav className="book154Toc" aria-label="평생사주 목차">
-      {parts.map(part=>{const count=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count}개 주제</small></a>;})}
+      {parts.map(part=>{const count=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count}개 주제</small></a>;})}
     </nav>
     <main className="book154Main">
-      {parts.map(part=>{const sections=report.sections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
-        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2><p>{sections.length}개의 주제로 천천히 이어집니다.</p></header>
+      {parts.map(part=>{const sections=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
+        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2>{personalPartLine(part.partNumber,analysis.person.name)?<p>{personalPartLine(part.partNumber,analysis.person.name)}</p>:null}</header>
+        {part.partNumber==="01"?<SajuAtGlance analysis={analysis}/>:null}
         {sections.map((section,index)=>{
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
-          return <article key={section.id} id={section.id} className="book154Page">
-            <div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div>
-            <p className="book154Eyebrow">{part.title}</p>
-            <h3>{section.headline||section.title}</h3>
+          const title=displaySectionTitle(section,analysis);
+          const duplicatePartOpening=index===0&&title.replace(/\s+/g,"")===part.title.replace(/\s+/g,"");
+          const showFiveElements=false;
+          const showDayPillar=section.id==="legacy-book-022";
+          const showEvidence=Boolean(section.professionalDetails||section.metrics?.length)||["ELEMENTS","STRENGTH","STRUCTURE_USEFUL"].includes(section.evidenceGroup??"");
+          return <article key={section.id} id={section.id} className={`book154Page${duplicatePartOpening?" isPartOpening":""}`}>
+            {!duplicatePartOpening&&<><div className="book154PageNumber"><span>{String(index+1).padStart(2,"0")}</span><i/></div><p className="book154Eyebrow">{part.title}</p><h3>{title}</h3></>}
             {section.lead&&<p className="book154Lead">{section.lead}</p>}
+            {showDayPillar?<DayPillarFocus analysis={analysis}/>:null}
+            {showFiveElements?<FiveElementSpread analysis={analysis}/>:null}
             <div className="longCopy">{paragraphs.map((paragraph,paragraphIndex)=><p key={`${section.id}-${paragraphIndex}`}>{paragraph}</p>)}</div>
-            {section.keyPoints?.length?<blockquote className="book154Key">{section.keyPoints.slice(0,3).map((point,pointIndex)=><p key={pointIndex}>{point}</p>)}</blockquote>:null}
             {section.metrics?.length?<div className="book154Metrics">{section.metrics.map(metric=><Metric key={metric.id} label={metric.label} value={metric.unit==="PERCENT"?`${metric.value.toFixed(1)}%`:`${metric.value.toFixed(1)}`} tone="neutral"/>)}</div>:null}
             {section.mascotComment?<CrowNote>{section.mascotComment}</CrowNote>:null}
-            <EvidenceDetails>
-              {section.professionalDetails?<><p>{section.professionalDetails.summary}</p><p className="book154EvidenceIds">{section.professionalDetails.evidenceIds.join(" · ")}</p></>:<p>서로 관련된 계산 근거를 함께 확인했습니다. 원본 근거 ID는 마지막 전문 분석실에서만 보여드립니다.</p>}
-            </EvidenceDetails>
+            {showEvidence?<EvidenceDetails>
+              {section.professionalDetails?<p>{section.professionalDetails.summary}</p>:<p>이 부분은 오행의 분포와 기운의 세기를 함께 봤어요. 자세한 비율은 책 마지막에서 확인할 수 있어요.</p>}
+            </EvidenceDetails>:null}
           </article>;
         })}
       </section>})}
       {interpretation.status==="failed"&&<div className="interpretationFallback" role="alert"><p>상세 해석을 불러오지 못했습니다. 계산된 평생사주 결과는 정상적으로 표시됩니다.</p><button onClick={onRetry}>평생사주 해석 다시 시도</button></div>}
-      <footer className="reportNotice">이 결과는 전통 명리의 계산 근거를 생활 언어로 풀어낸 참고 콘텐츠입니다. 특정 사건을 확정하거나 중요한 현실 판단을 대신하지 않습니다.</footer>
+      <ProfessionalChapter analysis={analysis} report={report}/>
+      <footer className="reportNotice">이 사주책은 전통 명리 계산을 바탕으로 삶의 모습을 쉽게 풀어낸 참고 내용이에요. 중요한 결정은 실제 상황과 함께 판단해 주세요.</footer>
     </main>
   </div>;
 }
@@ -120,27 +245,27 @@ function LifetimeGenerationScreen({ name, stage="CHARACTER_CORE", completedParts
       <div className="generationSeal" aria-hidden="true"><i/><i/><i/></div>
       <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>{name}님의<br/>사주책을 만들고 있어요</h1>
-      <p className="generationLead">계산은 끝났습니다. 지금은 타고난 성향부터 일·돈·관계·귀인·앞으로의 흐름까지, 서로 다른 근거를 묶어 한 권의 이야기로 풀고 있습니다.</p>
+      <p className="generationLead">사주 계산은 끝났어요. 지금은 타고난 성향부터 일·돈·관계·앞으로의 흐름까지 한 권의 이야기로 정리하고 있어요.</p>
       <p className="generationStage">{stageCopy}</p><div className="generationProgress" aria-hidden="true"><span style={{width:`${stage==="MERGE"?100:Math.max(6,Math.min(96,totalParts?completedParts/totalParts*100:6))}%`}}/></div><p className="generationCount">{completedParts} / {totalParts} 묶음 완료</p>
       <div className="generationSteps">
         <p><b>1</b><span>사주 원국과 숨은 기운을 다시 연결하고 있어요</span></p>
         <p><b>2</b><span>일·돈·관계에서 반복되는 생활 패턴을 정리하고 있어요</span></p>
         <p><b>3</b><span>10년 흐름과 앞으로 5년의 변화를 따로 읽고 있어요</span></p>
-        <p><b>4</b><span>필요한 모든 풀이가 검증되면 한 번에 보여드릴게요</span></p>
+        <p><b>4</b><span>내용을 다 정리하면 한 번에 보여드릴게요</span></p>
       </div>
       <p className="generationNotice">페이지를 이동하지 않아도 됩니다. 해설이 완성되면 자동으로 결과가 열립니다.</p>
     </section>
   </main>;
 }
 
-function LifetimeGenerationFailed({ message, onRetry, onRestart }: { message:string; onRetry:()=>void; onRestart:()=>void }) {
+function LifetimeGenerationFailed({ onRetry, onRestart }: { onRetry:()=>void; onRestart:()=>void }) {
   return <main className="lifetimeGeneration">
     <div className="generationTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
     <section className="generationPanel generationFailed">
       <p className="generationKicker">평생사주 · 맞춤형 구성</p>
       <h1>해설을 끝까지 만들지 못했어요</h1>
       <p className="generationLead">계산 결과는 그대로 남아 있습니다. 해설 생성만 다시 시도하면 됩니다.</p>
-      <p className="generationError">{message}</p>
+      <p className="generationError">해설을 정리하는 과정에서 문제가 생겼어요. 계산된 사주 정보는 그대로 보관되어 있습니다.</p>
       <button className="generationRetry" onClick={onRetry}>평생사주 해설 다시 만들기</button>
     </section>
   </main>;

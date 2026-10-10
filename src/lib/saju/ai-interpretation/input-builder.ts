@@ -54,6 +54,7 @@ function addPillarContext(row:FortuneSynthesisPeriod,fortune:FortuneResult,evide
     item.period.startInstant===row.period.startInstant&&item.period.endInstant===row.period.endInstant):undefined;
   evidence.push(fact(`FORTUNE:${row.synthesisId}:PERIOD_CONTEXT`,"FORTUNE",{
     daeunIndex:row.context.daeunIndex,daeunPillar:daeun?`${daeun.pillar.stem}${daeun.pillar.branch}`:null,
+    daeunAgeRange:daeun?.sourcePeriod.ageRange??null,startAgeYears:daeun?.sourcePeriod.startAgeYears??null,endAgeYears:daeun?.sourcePeriod.endAgeYears??null,
     seunYear:row.context.seunYear??null,seunPillar:seun?`${seun.pillar.stem}${seun.pillar.branch}`:null,
     wolunPillar:wolun?`${wolun.pillar.stem}${wolun.pillar.branch}`:null,period:row.period}));
 }
@@ -110,21 +111,27 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"IDENTITY":return idsByPrefix(evidence,"NATAL:DAY_MASTER","NATAL:PILLARS","NATAL:STRENGTH","NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:RELATIONS","NATAL:FIVE_ELEMENTS:");
     case"WORK":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:STRENGTH","NATAL:RELATIONS","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"WEALTH":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:PILLARS","NATAL:FIVE_ELEMENTS:","NATAL:STRUCTURE","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
-    case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
+    case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS","NATAL:STRUCTURE"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"CHILDREN":return idsByPrefix(evidence,"CHILD:","CONTEXT:CHILD_REALITY_UNKNOWN");
-    case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:");
-    case"NOBLE":return idsByPrefix(evidence,"NATAL:STARS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
+    case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:","NATAL:FIVE_ELEMENTS:");
+    case"NOBLE":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:STARS","FORTUNE:DAEUN-","FORTUNE:SEUN-"),...idsByContains(evidence,"CATEGORY:SEUN-","CATEGORY:DAEUN-")]));
     case"STARS_RELATIONS":return idsByPrefix(evidence,"NATAL:STARS","NATAL:RELATIONS","NATAL:SAMJAE");
     case"TWELVE_STAGES":return idsByPrefix(evidence,"NATAL:TWELVE_STAGES","NATAL:PILLARS");
     case"YEARLY_OVERVIEW":return Array.from(new Set([...idsByPrefix(evidence,"FORTUNE:SEUN-","CATEGORY:SEUN-"),...idsByContains(evidence,"REQUEST:LIFETIME_YEAR_RANGE")]));
     case"YEAR_1":case"YEAR_2":case"YEAR_3":case"YEAR_4":case"YEAR_5":{
-      const offset=Number(group.slice(-1))-1,year=currentYear+offset;return idsByContains(evidence,`SEUN-${year}`);
+      const offset=Number(group.slice(-1))-1,year=currentYear+offset;
+      return Array.from(new Set([
+        ...idsByPrefix(evidence,`FORTUNE:SEUN-${year}:`,`CATEGORY:SEUN-${year}:`)
+      ]));
     }
     case"MONTHLY":return idsByContains(evidence,`WOLUN-${currentYear}`);
     case"CHANGE":return idsByPrefix(evidence,"NATAL:RELATIONS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
     case"DAEUN_OVERVIEW":return idsByPrefix(evidence,"FORTUNE:DAEUN-");
     case"DAEUN_1":case"DAEUN_2":case"DAEUN_3":case"DAEUN_4":case"DAEUN_5":case"DAEUN_6":case"DAEUN_7":case"DAEUN_8":case"DAEUN_9":case"DAEUN_10":{
-      const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${index}`);
+      const index=Number(group.split("_")[1]),token=`DAEUN-${String(index).padStart(2,"0")}`;
+      return Array.from(new Set([
+        ...idsByPrefix(evidence,`FORTUNE:${token}:`,`CATEGORY:${token}:`)
+      ]));
     }
     case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE","NATAL:SAMJAE","NATAL:RELATIONS");
     case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-","FORTUNE:SAMJAE")]));
@@ -164,7 +171,9 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
     fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
   if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
-  for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
+  const daeunCategoryById=new Map(categories.daeun.map(row=>[row.synthesisId,row]));
+  for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
+    const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
   const selectedSeun=synthesis.seun.filter(row=>row.context.seunYear!=null&&row.context.seunYear>=currentYear&&row.context.seunYear<=currentYear+4);
   const seunCategoryById=new Map(categories.seun.map(row=>[row.synthesisId,row]));
@@ -178,17 +187,19 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const row of selectedWolun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=wolunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
-  const activeDaeunIndexes=new Set(selectedSeun.map(row=>row.context.daeunIndex));
-  const daeunCategoryById=new Map(categories.daeun.map(row=>[row.synthesisId,row]));
-  for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
-
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear});
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus});
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
-    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
-      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
+    let title=section.title,topic=section.topic;
+    const daeunMatch=section.evidenceGroup.match(/^DAEUN_(\d+)$/);
+    if(daeunMatch&&fortune.daeun.status==="implemented"){
+      const period=fortune.daeun.periods.find(item=>item.index===Number(daeunMatch[1]));
+      if(period){title=`${period.sourcePeriod.ageRange} · ${period.pillar.stem}${period.pillar.branch} 대운`;topic=title;}
+    }
+    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
+      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic};
   });
   const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
   if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);

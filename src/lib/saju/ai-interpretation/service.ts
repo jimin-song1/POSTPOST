@@ -54,6 +54,68 @@ function sumUsage(...values:Array<{input:number;output:number}|undefined>){
   if(!present.length)return undefined;
   return present.reduce((total,value)=>({input:total.input+value.input,output:total.output+value.output}),{input:0,output:0});
 }
+function customerHonorific(name:string){
+  const trimmed=name.trim();
+  if(!trimmed)return"고객님";
+  return trimmed.endsWith("님")?trimmed:`${trimmed}님`;
+}
+function sanitizeCustomerWording(text:string){
+  return text
+    .replaceAll("속에는 꽤 분명한 자기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 자기기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 자기 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("속에는 꽤 분명한 본인 기준이 있습니다","속에는 꽤 분명한 생각이 있습니다")
+    .replaceAll("일책임감","일관성")
+    .replaceAll("습책임감","습관성")
+    .replaceAll("관계까지키기","관계까지 지키기")
+    .replaceAll("자기준","본인 기준")
+    .replaceAll("자기기준","본인 기준");
+}
+function personalizeCustomerReport(report:StructuredInterpretation,name:string):StructuredInterpretation{
+  const label=customerHonorific(name);
+  const sections=report.sections.map(section=>{
+    const source=(section.paragraphs??(section.body?[section.body]:[])).map(sanitizeCustomerWording);
+    if(!source.length)return section;
+    const id=section.id.replace(/^legacy-/,"");
+    const first=source[0];
+    let personalized=first;
+    if(id==="book-007")personalized=first.replace(/^이 사주는 기본적으로\s*/,`${label}은 기본적으로 `);
+    else if(id==="book-008")personalized=first.replace(/^한 문장으로 줄이면,\s*/,`한 문장으로 줄이면, ${label}은 `);
+    else if(["book-009","book-010","book-011","book-012","book-013","book-014","book-017"].includes(id)&&!first.startsWith(label))
+      personalized=`${label}은 ${first}`;
+    else if(id==="book-020")personalized=first.replace(/^나를 대표하는 기운을 쉽게 풀면\s*/,`${label}을 대표하는 기운을 쉽게 풀면 `);
+    else if(id==="book-021")personalized=first.replace(/^나를 대표하는 기운은\s*/,`${label}을 대표하는 기운은 `);
+    else if(id==="book-022")personalized=first.replace(/^나를 가장 가까이 보여주는 두 글자는\s*/,`${label}을 가장 가까이 보여주는 두 글자는 `);
+    else if(id==="book-023"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
+    else if(id==="book-027")personalized=first.replace(/^일에서는\s*/,`${label}은 일에서 `);
+    else if(id==="book-028")personalized=first.replace(/^잘 맞는 일은\s*/,`${label}에게 잘 맞는 일은 `);
+    else if(id==="book-032")personalized=first.replace(/^직장에서는\s*/,`${label}은 직장에서 `);
+    else if(id==="book-033")personalized=first.replace(/^사업을 할 때는\s*/,`${label}은 사업을 할 때 `);
+    else if(id==="book-035"){
+      if(first.startsWith("돈을 대할 때 "))personalized=first.replace(/^돈을 대할 때\s*/,`${label}은 돈을 대할 때 `);
+      else if(first.startsWith("돈은 "))personalized=first.replace(/^돈은\s*/,`${label}에게 돈은 `);
+    }
+    else if(id==="book-036"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
+    else if(id==="book-043")personalized=first.replace(/^사람을 좋아할 때\s*/,`${label}은 사람을 좋아할 때 `);
+    else if(id==="book-047"){
+      if(first.startsWith("배우자 자리를 보면 "))personalized=first.replace(/^배우자 자리를 보면\s*/,`${label}의 배우자 자리를 보면 `);
+      else if(first.startsWith("현재 연인에게 "))personalized=first.replace(/^현재 연인에게\s*/,`${label}이 현재 연인에게 `);
+      else if(first.startsWith("배우자에게 "))personalized=first.replace(/^배우자에게\s*/,`${label}이 배우자에게 `);
+    }
+    else if(id==="book-051")personalized=first.replace(/^부모가 되면\s*/,`${label}은 부모가 되면 `);
+    else if(id==="book-053"){
+      if(first.startsWith("명리적으로 건강 균형을 볼 때 "))personalized=first.replace(/^명리적으로 건강 균형을 볼 때\s*/,`${label}의 건강 균형을 명리적으로 보면 `);
+      else if(!first.startsWith(label))personalized=`${label}은 ${first}`;
+    }
+    else if(id==="book-064"&&!first.startsWith(label))personalized=`${label}은 ${first}`;
+    const paragraphs=[sanitizeCustomerWording(personalized),...source.slice(1).map(sanitizeCustomerWording)];
+    return{...section,paragraphs,body:paragraphs.join("\n\n")};
+  });
+  return{...report,sections};
+}
+function personalizeCompletedResult(result:InterpretationResult,name:string):InterpretationResult{
+  return result.status==="completed"?{...result,report:personalizeCustomerReport(result.report,name)}:result;
+}
 
 export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:InterpretationProvider,options:InterpretationServiceOptions):Promise<InterpretationResult>{
   let input:ReturnType<typeof buildInterpretationInput>;
@@ -61,7 +123,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
     if(error instanceof AnalysisNotCompletedError)return failure(error.code,error.message);
     if(error instanceof InterpretationInputError)return failure(error.code,error.message);throw error;}
   const {analysisHash,cacheKey}=interpretationHashes(input,options.reportType,options.modelConfigVersion);
-  const cached=await options.cache?.get(cacheKey);if(cached)return cached;
+  const cached=await options.cache?.get(cacheKey);if(cached)return personalizeCompletedResult(cached,analysis.person.name);
 
   let plan:LifetimeInterpretationPlan|undefined,planUsage:{input:number;output:number}|undefined;
   if(options.reportType==="LIFETIME_GENERAL"){
@@ -92,7 +154,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
   const tokenUsage=sumUsage(planUsage,initialNarrativeUsage,repairUsage);
   const result={status:"completed" as const,ruleVersion:RULE.ruleVersion,promptVersion:RULE.promptVersion,groundingVersion:RULE.groundingVersion,
     analysisHash,cacheKey,report:checked.report,metadata:{provider:response.provider,model:response.model,repaired,...(tokenUsage?{tokenUsage}: {})}};
-  await options.cache?.set(cacheKey,result);return result;
+  await options.cache?.set(cacheKey,result);return personalizeCompletedResult(result,analysis.person.name);
 }
 function providerFailure(error:unknown):InterpretationResult{
   if(error instanceof InterpretationProviderTimeoutError)return failure(error.code,error.message);

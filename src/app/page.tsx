@@ -70,7 +70,14 @@ export default function Home() {
       }
       setInterpretation({status:"pending",stage:"MERGE",completedParts:completed.length,totalParts:parts.length});
       const merged=mergeLifetimeParts(completed);
-      validateLifetimeContentContract(merged.report);
+      try{
+        validateLifetimeContentContract(merged.report);
+      }catch(error){
+        console.warn("lifetime_content_contract_warning",{
+          message:error instanceof Error?error.message:"평생사주 콘텐츠 계약 검증 경고",
+          reportVersion:"dynamic-lifetime-book-v4"
+        });
+      }
       setInterpretation(merged);
     }catch(error){
       const code=error instanceof TypeError?"NETWORK_ERROR":error instanceof LifetimeGenerationError?error.code:"PART_GENERATION_FAILED";
@@ -80,5 +87,5 @@ export default function Home() {
   function accept(value:LifetimeFormResult){sessionStorage.setItem("postpost-lifetime-result-active","true");setRefreshNotice(false);setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}
   if(result)return <LifetimeReport analysis={result.analysis} current={result.current} relationshipStatus={relationshipStatus} interpretation={interpretation}
     onRetry={()=>void requestInterpretation(result,relationshipStatus)} onRestart={()=>{sessionStorage.removeItem("postpost-lifetime-result-active");setRefreshNotice(false);setResult(null);setInterpretation({status:"not_requested"});}}/>;
-  return <main className="lifetimeInputPage">{refreshNotice&&<div className="refreshRecoveryNotice" role="status"><b>새로고침되어 이전 결과를 다시 불러올 수 없어요.</b><span>같은 정보를 입력하면 Mock 사주책을 다시 만들 수 있습니다.</span><button onClick={()=>{sessionStorage.removeItem("postpost-lifetime-result-active");setRefreshNotice(false);}}>확인</button></div>}<SajuInputForm onResult={accept}/><a className="sampleReportLink" href="/dev/lifetime-report">API 키 없이 동적 평생사주 편집 샘플 보기</a><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
+  return <main className="lifetimeInputPage">{refreshNotice&&<div className="refreshRecoveryNotice" role="status"><b>새로고침되어 이전 결과를 다시 불러올 수 없어요.</b><span>같은 정보를 입력하면 Mock 사주책을 다시 만들 수 있습니다.</span><button onClick={()=>{sessionStorage.removeItem("postpost-lifetime-result-active");setRefreshNotice(false);}}>확인</button></div>}<SajuInputForm onResult={accept}/><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
 }

@@ -19,15 +19,22 @@ export const CUSTOMER_TERMINOLOGY_V1={
   } satisfies Record<Element,{customer:string;professional:string}>
 } as const;
 
+export const CUSTOMER_SAFE_SAJU_TERMS=[
+  "원국","오행","년주","월주","일주","시주","십성","십이운성","대운","연운","월운","삼재","신살",
+  "비겁","식상","재성","관성","인성",
+  "도화","화개","역마","천을귀인","합","충","형","파","해","원진"
+] as const;
+
 export const CUSTOMER_TECHNICAL_LITERAL_TERMS=[
-  "일간","신강","신약","격국","용신","희신","기신","조후","오행","천간","년주","월주","일주","시주",
-  "지장간","십성","식신","십이운성","자녀궁","원국","대운","월운","득령","득지","득세","투간",
+  "일간","신강","신약","격국","용신","희신","기신","조후","천간",
+  "지장간","자녀궁","득령","득지","득세","투간",
+  "비견","겁재","식신","상관","정재","편재","정관","편관","정인","편인",
+  "정관격","편관격","정재격","편재격","식신격","상관격","정인격","편인격","건록격","양인격",
   "support","activation","favorability","evidence","evidenceIds","section","claim","domainConsequence","claimsUsed","scenesUsed"
 ] as const;
 
 const CUSTOMER_TECHNICAL_CONTEXT_PATTERNS=[
   {label:"지지",pattern:/천간(?:과|와|·|\s)*지지|지지(?:가|는|은|의|를|을|에|에서|끼리)?\s*(?:합|충|형|파|해|오행|관계|기운|강|약)/},
-  {label:"상관",pattern:/식신(?:과|와|·|\s)*상관|상관(?:이|가|은|는|의|을|를)?\s*(?:격|성|운|기운|십성|강|약|많|적|드러|작용)/},
   {label:"세운",pattern:/(?:대운|연운|월운)(?:과|와|·|\s)*세운|세운(?:이|가|은|는|의|을|를|에|에서)?\s*(?:흐름|작용|기운|시기|간지|좋|나쁘|강|약)/},
   {label:"통관",pattern:/통관(?:용신|법|론|기운|작용)/},
   {label:"병약",pattern:/병약(?:용신|법|론|기운|작용)/}
