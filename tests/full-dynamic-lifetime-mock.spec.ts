@@ -71,7 +71,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(oneLine.length).toBeGreaterThanOrEqual(2);
     expect(oneLine.join(" ")).toContain("내 이유가 생기면 오래 가는 사람");
     const firstImpression=report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")??"";
-    expect(firstImpression).toContain("처음 만났을 때");
+    expect(firstImpression).toContain("처음 만난 자리");
     expect(firstImpression).not.toContain("작은 시험");
     const elementChapter=report.sections.find(section=>section.id==="legacy-book-016")?.paragraphs?.join(" ")??"";
     expect(elementChapter).not.toContain("마음이 정해지면 오래 끌지 않고 움직여요");
