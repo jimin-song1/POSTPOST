@@ -2625,17 +2625,30 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
 
 
 
-function childrenConsultation(row:Row,facts:ConsultationFacts):string[]|null{
+function childrenConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   if(row.evidenceGroup!=="CHILDREN")return null;
-  const title=row.topic??row.title,hourRole=facts.branchMainTenGodByPosition.hour||facts.stemTenGodByPosition.hour,hourTone=tenGodTone(hourRole);
+  const title=row.topic??row.title,hourRole=facts.branchMainTenGodByPosition.hour||facts.stemTenGodByPosition.hour,hourTone=tenGodTone(hourRole),childStatus=input.minimalContext.childStatus;
 
-  if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습/.test(title))return[
-    "부모가 되면 아이가 불편해지기 전에 먼저 챙겨주려는 모습이 강하게 나올 수 있습니다. 필요한 걸 미리 준비하고 생활을 안정시키는 데는 강점이 있는 편입니다.",
-    "아이 입장에서는 문제가 생겼을 때 믿고 돌아갈 수 있는 부모로 느끼기 쉽습니다. 약속한 건 지키고, 해야 할 일은 끝까지 챙기는 모습이 안정감을 줄 수 있습니다.",
-    "다만 걱정이 커지면 아이가 직접 해볼 일까지 먼저 해결해주고 싶어질 수 있습니다. 잘해주려는 마음이 커질수록 기다려주는 일이 더 어려워질 수 있습니다.",
-    "아이에게 필요한 건 언제나 정답을 주는 부모보다, 실수해도 다시 돌아올 수 있는 안전한 사람일 때가 많습니다.",
-    "부모 역할에서 중요한 건 더 많이 해주는 게 아니라 언제 도와주고 언제 한발 물러날지를 구분하는 것입니다."
-  ];
+  if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습|부모가 된다면 먼저 나오는 모습|곧 부모가 되는 시기의 나|현재 부모 역할에서의 나/.test(title)){
+    if(childStatus==="HAS_CHILDREN")return[
+      "지금 부모 역할에서는 아이에게 필요한 걸 먼저 알아차리고 생활을 안정시키려는 모습이 자연스럽게 나올 수 있습니다.",
+      "문제가 생기면 감정만 달래기보다 무엇부터 해결할지 정리해주는 쪽이라 아이에게는 믿고 돌아갈 수 있는 사람으로 느껴지기 쉽습니다.",
+      "다만 아이가 직접 해볼 일까지 먼저 가져오면 챙김이 많아질수록 서로 답답해질 수 있습니다.",
+      "현재 부모 역할에서는 더 많이 해주는 것보다 아이가 스스로 해볼 몫과 부모가 책임질 몫을 나누는 게 중요합니다."
+    ];
+    if(childStatus==="EXPECTING")return[
+      "곧 부모 역할이 시작되면 아이에게 필요한 걸 미리 준비하고 생활을 안정시키려는 성향이 강하게 나올 수 있습니다.",
+      "준비를 꼼꼼하게 하는 건 장점이지만 출산과 육아를 머릿속에서 완벽하게 계획하려 하면 오히려 불안이 커질 수 있습니다.",
+      "처음부터 모든 걸 잘하려 하기보다 꼭 필요한 것과 나중에 배워도 되는 것을 나눠두는 편이 더 잘 맞습니다.",
+      "부모가 되는 과정에서도 혼자 책임지기보다 배우자·가족과 역할을 미리 나누는 게 중요합니다."
+    ];
+    return[
+      "부모가 된다면 아이가 불편해지기 전에 먼저 챙겨주고 생활을 안정시키려는 모습이 강하게 나올 수 있습니다.",
+      "약속을 지키고 필요한 걸 꾸준히 챙기는 방식으로 안정감을 주는 부모가 되기 쉽습니다.",
+      "다만 걱정이 커지면 아이가 직접 해볼 일까지 먼저 해결해주고 싶어질 수 있습니다.",
+      "부모 역할에서는 더 많이 해주는 것보다 언제 도와주고 언제 기다릴지를 구분하는 게 중요합니다."
+    ];
+  }
 
   if(/아이에게 안정감을 주는 방식|겉으로 드러나는 자녀운/.test(title))return[
     "아이에게는 말보다 반복되는 행동으로 믿음을 주는 부모가 되기 쉽습니다. 약속한 시간을 지키고, 필요한 걸 챙기고, 생활을 정돈해주는 방식으로 마음을 보여줄 가능성이 큽니다.",
@@ -3538,7 +3551,7 @@ function buildParagraphs(row:Row,index:number,facts:ConsultationFacts,input:Inte
     workConsultation(row,facts),
     wealthConsultation(row,facts),
     relationshipConsultation(row,facts,input),
-    childrenConsultation(row,facts),
+    childrenConsultation(row,facts,input),
     wellnessConsultation(row,facts),
     nobleConsultation(row,facts,input),
     starRelationConsultation(row,facts),
