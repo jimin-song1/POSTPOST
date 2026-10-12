@@ -14,7 +14,7 @@ export const LIFETIME_CONTENT_CONTRACT_V1={
   version:"lifetime-content-contract-v1",minimumContentSections:90,recommendedContentSections:{min:100,max:140},
   totalCharacters:{minimum:30_000,recommendedMin:38_000,recommendedMax:75_000},
   sectionCharacters:{CONCEPT:{min:100,recommendedMax:420},GENERAL:{min:180,recommendedMax:700},CORE:{min:240,recommendedMax:900},TIMING_CORE:{min:240,recommendedMax:950}},
-  chapterMinimumCharacters:{CORE:1600,IDENTITY:1200,WORK:1400,WEALTH:1500,RELATIONSHIP:1400,CHILDREN:500,WELLNESS:1500,
+  chapterMinimumCharacters:{CORE:1600,IDENTITY:1200,WORK:1400,WEALTH:1500,RELATIONSHIP:1400,CHILDREN:1200,WELLNESS:1500,
     NOBLE_STARS:1800,TEN_GODS_STAGES:1900,YEARLY:1700,SAMJAE:350,DAEUN:2500,SYNTHESIS:1400},
   novelty:{minimumNewElements:3,maxReusedCoreClaim:1,maxReusedScene:0,semanticDuplicateThreshold:0.9},
   requiredChapters:["CORE","IDENTITY","WORK","WEALTH","RELATIONSHIP","CHILDREN","WELLNESS","NOBLE_STARS","TEN_GODS_STAGES","YEARLY","SAMJAE","DAEUN","SYNTHESIS"]
@@ -81,6 +81,11 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
     return{id:`legacy-${page.id}`,title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:title,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
+  additions.push(
+    extra("children-overview","자녀운 한눈에 보기","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
+    extra("children-bond","아이와 맺는 관계","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
+    extra("children-timing","자녀운이 크게 움직이는 시기","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")
+  );
   if(options.includeSamjae)additions.push(extra("samjae-summary","삼재 · 실제 연도와 변화 포인트","12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
     const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
