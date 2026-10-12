@@ -17,7 +17,7 @@ function claim(id:string,row:{id:string;evidenceIds:string[];title?:string;evide
     confidence:"HIGH",
     allowedChapters:[row.id],
     avoidRepeatingIn:[],
-    pageQuestion:`${topic}이 실제 생활에서는 어떤 선택과 행동으로 이어지나요?`,
+    pageQuestion:`${topic}이 생활에서는 어떤 선택과 행동으로 이어지나요?`,
     personPattern:"확인할 것은 확인한 뒤 움직이고, 한번 정한 일은 끝까지 챙기는 방식입니다.",
     lifeScene:`${topic}과 관련된 선택이 생기면 먼저 기준을 세우고 필요한 정보를 확인한 뒤 움직입니다.`,
     upside:"잘 쓰이면 급하게 휩쓸리지 않고 필요한 순서를 잡을 수 있습니다.",
@@ -372,7 +372,7 @@ const STAR_CUSTOMER_MEANING:ReadonlyArray<readonly [string,string]>=[
 ];
 function starSentence(facts:ConsultationFacts){
   const meanings=Array.from(new Set(facts.starLabels.flatMap(label=>STAR_CUSTOMER_MEANING.filter(([token])=>label.includes(token)).map(([,meaning])=>meaning))));
-  return meanings.length?`평소 눈에 띄는 특징은 ${meanings.slice(0,4).join(", ")}입니다. 이름을 외우기보다 실제 생활에서 언제 이 모습이 나오는지를 보는 편이 더 중요합니다.`:"특별한 이름을 붙이기보다 실제 생활에서 반복되는 성향을 중심으로 보는 편이 더 정확합니다.";
+  return meanings.length?`평소 눈에 띄는 특징은 ${meanings.slice(0,4).join(", ")}입니다. 이름을 외우기보다 생활 속에서 언제 이 모습이 나오는지를 보는 편이 더 중요합니다.`:"특별한 이름을 붙이기보다 생활 속에서 반복되는 성향을 중심으로 보는 편이 더 정확합니다.";
 }
 
 const ELEMENT_STORY:Record<string,{gift:string;life:string;shadow:string}>={
@@ -855,7 +855,7 @@ function yearlyPhaseSentence(snapshot:FortuneSnapshot,index:number,all:FortuneSn
   if(active.label==="관계"){
     if(pos===0)return"새로운 관계나 기존 관계의 변화가 시작되는 쪽에 가깝습니다.";
     if(pos===length-1)return"이어갈 관계와 거리를 둘 관계가 이전보다 분명해질 수 있습니다.";
-    return"관계를 넓히기보다 실제 생활에서 맞는 사람인지 확인하는 과정이 중요해집니다.";
+    return"관계를 넓히기보다 생활 속에서 맞는 사람인지 확인하는 과정이 중요해집니다.";
   }
   if(active.label==="학업"){
     if(pos===0)return"새로 배울 것을 고르고 공부의 방향을 잡는 해에 가깝습니다.";
@@ -1971,7 +1971,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
     contextB:[
       "그래서 한 장만 따로 떼어 읽기보다 앞뒤 내용을 이어서 볼 때 훨씬 정확한 그림이 나와요.",
       "같은 사람도 일, 돈, 관계에서는 다른 선택을 할 수 있기 때문에 분야를 나눠 보는 이유가 있어요.",
-      "전문용어 자체보다 그 말이 실제 생활에서 어떤 선택으로 이어지는지를 아는 게 훨씬 중요해요.",
+      "전문용어 자체보다 그 말이 생활 속에서 어떤 선택으로 이어지는지를 아는 게 훨씬 중요해요.",
       "한 가지 특징을 좋다 나쁘다 정하기보다 어디에서 강점이 되고 어디에서 부담이 되는지를 같이 보는 게 좋아요.",
       "사주 전체의 방향은 여러 장에서 반복해서 같은 결론이 나올 때 더 분명해집니다."
     ],
@@ -1979,7 +1979,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "읽다가 특히 잘 맞는 부분이 있다면 그 문장이 어떤 장면에서 반복됐는지 떠올려보세요.",
       "한 문장만 기억하기보다 성격·일·돈·관계에서 공통으로 남는 특징을 찾아보는 게 좋아요.",
       "잘 맞지 않는 문장은 억지로 끼워 맞추기보다 어떤 근거에서 나온 말인지 뒤의 설명과 같이 보세요.",
-      "사주에서 말한 강점은 실제 생활에서 써본 경험이 있을 때 가장 의미가 커져요.",
+      "사주에서 말한 강점은 생활 속에서 써본 경험이 있을 때 가장 의미가 커져요.",
       "앞에서 나온 설명과 뒤의 운 흐름이 어떻게 이어지는지 연결해서 읽어보세요."
     ],
     practiceB:[
@@ -1995,7 +1995,7 @@ const DEPTH_BANKS:Record<string,{contextA:readonly string[];contextB:readonly st
       "마지막에는 앞의 내용을 다시 나열하기보다 여러 분야에서 공통으로 반복된 선택 원칙만 남기는 편이 좋습니다.",
       "일, 돈, 관계가 서로 달라 보여도 결정을 내리는 순서와 책임을 다루는 방식에는 같은 축이 나타날 수 있습니다.",
       "강점은 모든 상황에서 똑같이 쓰이는 것이 아니라 환경에 따라 다른 모습으로 바뀌어 나타납니다.",
-      "앞에서 나온 조언 가운데 서로 겹치는 부분을 줄이면 실제 생활에서 기억해야 할 기준이 훨씬 단순해집니다.",
+      "앞에서 나온 조언 가운데 서로 겹치는 부분을 줄이면 생활 속에서 기억해야 할 기준이 훨씬 단순해집니다.",
       "평생 흐름을 한 문장으로 정리하려 하기보다 앞으로 선택할 때 반복해서 확인할 질문을 남기는 편이 현실적입니다."
     ],
     contextB:[
@@ -2238,7 +2238,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(id==="book-025"){
     if(!facts.useful.length)return[
-      "부족한 부분은 거창하게 바꾸기보다 실제 생활에서 자주 막히는 장면 하나부터 바꾸는 게 좋습니다.",
+      "부족한 부분은 거창하게 바꾸기보다 생활 속에서 자주 막히는 장면 하나부터 바꾸는 게 좋습니다.",
       "잘 안 되는 행동을 의지로 밀어붙이기보다, 그 행동이 자연스럽게 나올 환경을 만들어두는 편이 오래 갑니다."
     ];
     return[
@@ -2315,7 +2315,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   }
 
   if(["CORE","PILLARS","HIDDEN_STEMS","ELEMENTS","STRENGTH","STRUCTURE_USEFUL","IDENTITY"].includes(group))return[
-    consultationOpening(row,facts)||"여러 성향이 실제 생활에서 어떻게 섞여 나타나는지를 함께 봅니다.",
+    consultationOpening(row,facts)||"여러 성향이 생활 속에서 어떻게 섞여 나타나는지를 함께 봅니다.",
     elementFact(facts)||dominantFamilySentence(facts),
     rowHasEvidencePrefix(row,"NATAL:STRUCTURE")&&facts.structure?`${structureMeaning(facts.structure)}과 ${facts.dayStemName||"중심 기운"}의 성향이 어떻게 함께 나타나는지를 살펴보는 게 중요합니다.`:`${facts.dayStemName||"중심 기운"}이 다른 오행과 어떻게 섞이는지 보는 것이 핵심입니다.`,
     "한 가지 값만 떼어 좋고 나쁘다고 판단하지 않고, 같은 방향을 가리키는 근거가 겹칠 때 그 특징을 더 중요하게 봅니다."
@@ -2600,7 +2600,7 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
     "현재 연인에게 마음이 가는 이유는 단순한 설렘보다 함께 있을 때 생활의 긴장이 줄어드는지, 말과 행동이 얼마나 비슷한지와 연결되어 있을 가능성이 큽니다.",
     "처음에는 분위기나 대화가 끌림을 만들더라도 관계가 깊어질수록 약속을 지키는지, 자기 일을 책임지는지, 갈등을 피하지 않는지를 더 크게 보게 됩니다.",
     "지금 관계가 편한 이유와 불편한 이유를 따로 보면 앞으로 맞춰야 할 부분도 더 선명해집니다.",
-    "오래 가져가고 싶은 관계라면 돈·시간·일·가족처럼 실제 생활에서 중요한 기준을 얼마나 맞출 수 있는지를 보는 편이 좋습니다."
+    "오래 가져가고 싶은 관계라면 돈·시간·일·가족처럼 생활 속에서 중요한 기준을 얼마나 맞출 수 있는지를 보는 편이 좋습니다."
   ];
 
   if(/배우자에게 중요하게 보는 것/.test(title)&&relationshipStatus==="MARRIED")return[
@@ -2803,7 +2803,7 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     first?(firstLabel+" 쪽이 가장 먼저 주의해서 볼 부분입니다. "+(first.theme||first.customerStatus||"생활 리듬이 무너지면 이쪽의 부담을 더 크게 느낄 수 있습니다.")):"오행 가운데 상대적으로 약하거나 주의도가 높은 부분부터 봅니다.",
     firstAreas?("전통적으로는 "+withParticle(firstAreas,"과","와")+" 연결해 살피기 때문에, 이와 관련된 불편을 사주만으로 판단하기보다 평소 생활 습관과 실제 몸 상태를 같이 확인하는 편이 좋습니다."):"전통 신체 대응은 증상을 예언하는 용도가 아닙니다.",
     second?(("그다음으로는 "+secondLabel+"도 같이 봅니다. "+(second.theme||second.customerStatus||""))+(secondAreas?(" 전통적으로는 "+withParticle(secondAreas,"과","와")+" 연결해 봅니다."):"")):"한 부분만 떼어 보기보다 전체 균형을 같이 확인하는 게 중요합니다.",
-    "특히 바쁠 때 잠·식사·활동량 가운데 무엇부터 무너지는지를 기록해보면 사주에서 말하는 약한 부분이 실제 생활에서 어떻게 나타나는지 훨씬 쉽게 확인할 수 있습니다.",
+    "특히 바쁠 때 잠·식사·활동량 가운데 무엇부터 무너지는지를 기록해보면 사주에서 말하는 약한 부분이 생활 속에서 어떻게 나타나는지 훨씬 쉽게 확인할 수 있습니다.",
     "명리에서 약하게 보인다고 실제 장기나 기능이 약하다고 단정할 수는 없습니다. 반복되는 증상이 있다면 의료 평가가 우선입니다."
   ];
 
@@ -3041,7 +3041,7 @@ function starRelationConsultation(row:Row,facts:ConsultationFacts):string[]|null
   if(row.evidenceGroup==="STARS_RELATIONS")return[
     present.length?("사주에 보이는 신살은 "+named+"입니다."):"특정 신살보다 기본 성향과 관계 구조를 우선해서 봅니다.",
     relationSentence(facts),
-    "이름을 외우는 것보다 실제 생활에서 언제 이 특징이 나오는지를 같이 보는 게 중요합니다."
+    "이름을 외우는 것보다 생활 속에서 언제 이 특징이 나오는지를 같이 보는 게 중요합니다."
   ];
 
   return null;
@@ -3098,7 +3098,7 @@ function twelveStageConsultation(row:Row,facts:ConsultationFacts):string[]|null{
   ];
 
   if(/인생 중반/.test(title))return[
-    "인생 중반은 월주 "+(stage("month")||"")+"와 일주 "+(stage("day")||"")+"의 차이가 실제 생활에서 가장 크게 느껴질 수 있는 시기입니다.",
+    "인생 중반은 월주 "+(stage("month")||"")+"와 일주 "+(stage("day")||"")+"의 차이가 생활 속에서 가장 크게 느껴질 수 있는 시기입니다.",
     "사회에서 맡은 책임과 내가 원하는 생활 방식, 일과 가족의 균형을 동시에 맞춰야 하기 때문입니다.",
     "밖에서 잘하는 역할만 계속 밀어붙이면 가까운 관계나 회복 시간이 줄어들 수 있고, 관계만 챙기면 일의 성취감이 떨어질 수 있습니다.",
     "중반에는 더 많이 하는 것보다 오래 가져갈 일과 관계를 골라내는 선택이 중요해집니다."
@@ -3139,7 +3139,7 @@ function tenGodConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     "같은 돈을 다루는 사람도 한쪽은 안정적으로 관리하려 하고, 다른 쪽은 기회를 빨리 잡으려 할 수 있습니다. 같은 책임감도 원칙을 지키는 방식과 압박 속에서 결단하는 방식이 다를 수 있습니다.",
     "중요한 건 이름을 외우는 게 아니라 어떤 역할을 자주 쓰고, 어떤 역할은 필요한 순간에 늦게 나오는지를 아는 것입니다.",
     dominantFamilySentence(facts),
-    "내가 자주 쓰는 역할을 장점으로 살리고, 덜 쓰는 역할은 실제 생활에서 조금씩 경험해보는 식으로 보면 충분합니다."
+    "내가 자주 쓰는 역할을 장점으로 살리고, 덜 쓰는 역할은 생활 속에서 조금씩 경험해보는 식으로 보면 충분합니다."
   ];
 
   if(/스스로 결정하고 밀고 가는 모습|비겁/.test(title))return[
@@ -3691,7 +3691,7 @@ function report(input:InterpretationInput):StructuredInterpretation{
     status:"completed",
     reportType:input.reportType,
     headline:"나를 중심으로 읽는 평생사주",
-    summary:"성격, 일, 돈, 관계와 앞으로의 변화를 실제 생활에서 어떻게 느끼고 선택하는지 한 사람의 이야기로 이어서 풀었습니다.",
+    summary:"성격, 일, 돈, 관계와 앞으로의 변화를 생활 속에서 어떻게 느끼고 선택하는지 한 사람의 이야기로 이어서 풀었습니다.",
     sections,
     highlights:["같은 성향도 일, 돈, 관계에서는 서로 다른 행동으로 나타납니다."],
     cautions:["움직임이 크다는 말과 유리하다는 말은 같은 뜻이 아닙니다."],
