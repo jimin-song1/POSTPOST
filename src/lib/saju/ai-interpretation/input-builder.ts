@@ -163,7 +163,15 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   evidence.push(fact("CHILD:TEN_GOD_SIGNALS","CHILD",{visibleStems:analysis.tenGods.value?.heavenlyStems,hiddenStems:analysis.tenGods.value?.hiddenStems}),
     fact("CHILD:HOUR_PILLAR","CHILD",analysis.pillars.hour),fact("CHILD:HOUR_STAGE","CHILD",analysis.twelveStages.value?.stages.hour),
     fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
-  const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,3);
+  const birthYear=Number(analysis.birthInput.birthDate.slice(0,4)),currentAge=Number.isFinite(birthYear)?Math.max(0,currentYear-birthYear):0;
+  const ageBounds=(ageRange:string)=>{const values=ageRange.match(/\d+(?:\.\d+)?/g)?.map(Number)??[];return{start:values[0]??0,end:values[1]??values[0]??0};};
+  const childPeriods=[...children.daeunPeriods]
+    .filter(row=>{const ages=ageBounds(row.ageRange);return ages.end>=Math.max(18,currentAge);})
+    .sort((a,b)=>{
+      const aa=ageBounds(a.ageRange),bb=ageBounds(b.ageRange),aCurrent=aa.start<=currentAge&&currentAge<=aa.end,bCurrent=bb.start<=currentAge&&currentAge<=bb.end;
+      if(aCurrent!==bCurrent)return aCurrent?-1:1;
+      return b.activationScore-a.activationScore||a.periodIndex-b.periodIndex;
+    }).slice(0,3);
   evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
   const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus],childStatus=options.childStatus;
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
