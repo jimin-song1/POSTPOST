@@ -45,7 +45,7 @@ const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
 };
 const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
 
-export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number;relationshipStatus?:"SINGLE"|"DATING"|"MARRIED"}):DynamicLifetimeBook{
+export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number;relationshipStatus?:"SINGLE"|"DATING"|"MARRIED";childStatus?:"NONE"|"EXPECTING"|"HAS_CHILDREN"}):DynamicLifetimeBook{
   const omittedBaseIds=new Set(["book-046","book-060","book-061","book-065","book-066","book-070","book-075","book-076","book-086","book-087","book-088","book-097","book-098","book-099","book-110","book-111","book-133"]);
   const base=LIFETIME_BOOK_PAGES.filter(page=>!omittedBaseIds.has(page.id)).map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
     const remappedPartNumber=page.id==="book-015"?"10":
@@ -59,6 +59,11 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
       if(options.relationshipStatus==="SINGLE")title="미래 배우자는 어떤 사람일까";
       else if(options.relationshipStatus==="DATING")title="현재 연인에게 끌리는 이유";
       else if(options.relationshipStatus==="MARRIED")title="배우자에게 중요하게 보는 것";
+    }
+    if(page.id==="book-051"){
+      if(options.childStatus==="HAS_CHILDREN")title="현재 부모 역할에서의 나";
+      else if(options.childStatus==="EXPECTING")title="곧 부모가 되는 시기의 나";
+      else title="부모가 된다면 먼저 나오는 모습";
     }
     if(page.id==="book-112")title=`${options.year}년 · 가장 크게 움직이는 것`;
     if(page.id==="book-113")title=`${options.year+1}년 · 달라지는 것`;
