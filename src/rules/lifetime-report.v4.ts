@@ -89,7 +89,20 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
   if(options.includeSamjae)additions.push(extra("samjae-summary","삼재 · 실제 연도와 변화 포인트","12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
     const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
-    return order.indexOf(a.partNumber)-order.indexOf(b.partNumber);});
+    const partDiff=order.indexOf(a.partNumber)-order.indexOf(b.partNumber);
+    if(partDiff!==0)return partDiff;
+    if(a.partNumber==="05"){
+      const childOrder=(id:string)=>{
+        const legacy=id.match(/^legacy-book-(\d+)$/);
+        if(legacy)return Number(legacy[1])-43;
+        if(id==="children-overview")return 8.5;
+        if(id==="children-bond")return 9.5;
+        if(id==="children-timing")return 9.7;
+        return 99;
+      };
+      return childOrder(a.id)-childOrder(b.id);
+    }
+    return 0;});
   const sections=all.map((row,index)=>({...row,sequence:index+1}));
   const partOrder=Array.from(new Set(sections.map(row=>row.partNumber)));
   const parts=partOrder.map(partNumber=>{const rows=sections.filter(row=>row.partNumber===partNumber);return{partNumber,title:rows[0].partTitle,
