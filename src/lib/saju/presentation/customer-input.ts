@@ -2,6 +2,12 @@ export const RELATIONSHIP_OPTIONS = [
   { value: "SINGLE", label: "솔로" }, { value: "DATING", label: "연애 중" }, { value: "MARRIED", label: "기혼" },
 ] as const;
 
+export const CHILD_STATUS_OPTIONS = [
+  { value: "NONE", label: "자녀 없음" },
+  { value: "EXPECTING", label: "임신·출산 예정" },
+  { value: "HAS_CHILDREN", label: "자녀 있음" },
+] as const;
+
 export const COUNTRY_OPTIONS = [
   { value: "KR", label: "대한민국" }, { value: "JP", label: "일본" }, { value: "US", label: "미국" },
   { value: "CN", label: "중국" }, { value: "CA", label: "캐나다" }, { value: "AU", label: "호주" },
