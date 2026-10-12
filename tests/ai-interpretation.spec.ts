@@ -82,7 +82,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(marriedBook.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
     expect(marriedBook.sections.some(row=>row.title==="자녀운 한눈에 보기")).toBe(true);
     expect(marriedBook.sections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
-    expect(marriedBook.sections.some(row=>row.title==="자녀운이 크게 움직이는 시기")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="자녀운의 현재와 앞으로")).toBe(true);
 
     const expectingBook=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"EXPECTING"});
     expect(expectingBook.sections.some(row=>row.title==="곧 부모가 되는 시기의 나")).toBe(true);
@@ -102,7 +102,7 @@ describe("AI_INTERPRETATION_V1",()=>{
       expect(childSections.length).toBeGreaterThanOrEqual(5);
       expect(childSections.some(row=>row.title==="자녀운 한눈에 보기"&&row.body.includes("출산을 앞둔 현실"))).toBe(true);
       expect(childSections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
-      expect(childSections.some(row=>row.title==="자녀운이 크게 움직이는 시기"&&row.body.includes("출산 시점"))).toBe(true);
+      expect(childSections.some(row=>row.title==="자녀운의 현재와 앞으로"&&row.body.includes("출산 시점"))).toBe(true);
       expect(childSections.map(row=>row.body).join("\n")).not.toContain("태아 성별");
     }
     if(relationship.status==="completed"){
