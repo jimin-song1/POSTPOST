@@ -647,7 +647,7 @@ function periodContext(input:InterpretationInput,row:Row){
   };
 }
 type FortuneSnapshot={
-  synthesisId:string;year:number|null;daeunIndex:number|null;daeunPillar:string;ageRange:string;startAge:number|null;endAge:number|null;startYear:number|null;endYear:number|null;
+  synthesisId:string;year:number|null;month:number|null;daeunIndex:number|null;daeunPillar:string;ageRange:string;startAge:number|null;endAge:number|null;startYear:number|null;endYear:number|null;
   favorabilityScore:number;favorabilityLevel:string;activationScore:number;activationLevel:string;
   categories:Array<{key:string;label:string;support:number;activity:number}>;
 };
@@ -674,9 +674,11 @@ function fortuneSnapshots(input:InterpretationInput,row:Row){
     const activation=asRecord(evidenceValue(input,`FORTUNE:${synthesisId}:ACTIVATION`));
     const period=asRecord(context.period),startInstant=asText(period?.startInstant),endInstant=asText(period?.endInstant);
     const startYear=/^\d{4}/.test(startInstant)?Number(startInstant.slice(0,4)):null,endYear=/^\d{4}/.test(endInstant)?Number(endInstant.slice(0,4)):null;
+    const idMonth=synthesisId.match(/WOLUN-\d{4}-(\d{1,2})/),startMonth=/^\d{4}-\d{2}/.test(startInstant)?Number(startInstant.slice(5,7)):null;
     snapshots.push({
       synthesisId,
       year:asNumber(context.seunYear),
+      month:idMonth?Number(idMonth[1]):startMonth,
       daeunIndex:asNumber(context.daeunIndex),
       daeunPillar:asText(context.daeunPillar),
       ageRange:asText(context.daeunAgeRange),
@@ -730,6 +732,130 @@ function categoryActionSentence(label:string){
   if(label==="학업")return"자격·전문 공부처럼 끝난 뒤 바로 쓸 수 있는 결과가 남는 공부를 잡는 편이 좋습니다.";
   if(label==="변화")return"여러 변화를 동시에 만들기보다 반드시 바꿀 것 하나와 지킬 것 하나를 먼저 정해두는 편이 좋습니다.";
   return"움직임이 큰 분야에 시간을 먼저 배분하고 다른 일은 과하게 벌리지 않는 편이 좋습니다.";
+}
+
+type LifeStage="CHILD"|"TEEN"|"EARLY_ADULT"|"MID_ADULT"|"LATER_ADULT"|"ELDER";
+function lifeStageForSnapshot(snapshot:FortuneSnapshot):LifeStage{
+  const start=snapshot.startAge??0,end=snapshot.endAge??start,mid=(start+end)/2;
+  if(mid<13)return"CHILD";
+  if(mid<22)return"TEEN";
+  if(mid<40)return"EARLY_ADULT";
+  if(mid<60)return"MID_ADULT";
+  if(mid<80)return"LATER_ADULT";
+  return"ELDER";
+}
+function ageAwareCategoryLabel(label:string,stage:LifeStage){
+  if(stage==="CHILD"){
+    if(label==="사업")return"활동·주도성";
+    if(label==="재물")return"생활 자원·소유 감각";
+    if(label==="직업")return"규칙·역할";
+    if(label==="관계")return"가족·친구 관계";
+    if(label==="학업")return"배움·학교생활";
+    if(label==="변화")return"가족·학교 환경 변화";
+  }
+  if(stage==="TEEN"){
+    if(label==="사업")return"활동·도전";
+    if(label==="재물")return"소비·경제 감각";
+    if(label==="직업")return"진로·역할";
+    if(label==="관계")return"친구·연애 관계";
+    if(label==="학업")return"공부·진로 준비";
+    if(label==="변화")return"학교·진로 변화";
+  }
+  if(stage==="LATER_ADULT"){
+    if(label==="사업")return"활동·경험 활용";
+    if(label==="재물")return"자산·생활 안정";
+    if(label==="직업")return"역할·경험 활용";
+    if(label==="관계")return"가족·인연";
+    if(label==="학업")return"배움·취미·새 기술";
+    if(label==="변화")return"생활환경 변화";
+  }
+  if(stage==="ELDER"){
+    if(label==="사업")return"활동·사람과의 연결";
+    if(label==="재물")return"자산·생활 안정";
+    if(label==="직업")return"경험·역할";
+    if(label==="관계")return"가족·인연";
+    if(label==="학업")return"배움·관심사";
+    if(label==="변화")return"생활환경 변화";
+  }
+  return label;
+}
+function ageAwareCategoryLifeSentence(label:string,stage:LifeStage){
+  if(stage==="CHILD"){
+    if(label==="사업")return"새로운 활동에 먼저 손을 대거나 친구들 사이에서 자기 방식대로 해보려는 힘으로 나타날 수 있습니다.";
+    if(label==="재물")return"물건을 갖고 나누는 기준, 필요한 것을 고르는 습관처럼 생활 속 소유 감각이 만들어지기 쉽습니다.";
+    if(label==="직업")return"학교와 가족 안에서 맡은 역할, 규칙을 받아들이는 방식이 성향을 만드는 데 크게 작용할 수 있습니다.";
+    if(label==="관계")return"가족과 친구 사이에서 누구와 편한지, 갈등을 어떻게 풀어가는지가 중요한 경험이 되기 쉽습니다.";
+    if(label==="학업")return"학교생활과 배움의 방식, 새로운 것을 익힐 때의 자신감이 크게 자리 잡는 시기입니다.";
+    if(label==="변화")return"이사·전학·가족 일정처럼 생활환경이 바뀔 때 적응 방식이 두드러질 수 있습니다.";
+  }
+  if(stage==="TEEN"){
+    if(label==="사업")return"동아리·프로젝트·경쟁처럼 직접 해보고 결과를 확인하는 활동에서 주도성이 커질 수 있습니다.";
+    if(label==="재물")return"용돈·소비·아르바이트처럼 돈을 쓰고 관리하는 자기 기준이 만들어지기 쉽습니다.";
+    if(label==="직업")return"진로를 정하고 어떤 역할이 맞는지 시험해보는 경험이 중요해집니다.";
+    if(label==="관계")return"친구·연애·첫 사회관계에서 가까워지는 기준과 거리 조절을 배우는 일이 커질 수 있습니다.";
+    if(label==="학업")return"입시·전공·자격 준비처럼 앞으로의 방향과 연결되는 공부에 힘이 실리기 쉽습니다.";
+    if(label==="변화")return"학교·진로·독립 준비처럼 생활의 다음 단계를 정하는 변화가 커질 수 있습니다.";
+  }
+  if(stage==="LATER_ADULT"||stage==="ELDER"){
+    if(label==="사업")return"새 판을 크게 벌이는 것보다 쌓아온 경험을 활용하거나 사람과 연결되는 활동이 늘어나는 흐름으로 보는 편이 자연스럽습니다.";
+    if(label==="재물")return"수입 확대 하나보다 자산을 어떻게 지키고 쓰며 가족과 나눌지가 더 중요한 재물 흐름이 될 수 있습니다.";
+    if(label==="직업")return"직함을 넓히기보다 경험을 나누고 필요한 역할만 골라 맡는 쪽으로 무게가 옮겨갈 수 있습니다.";
+    if(label==="관계")return"새 인연의 수보다 가족과 가까운 사람의 관계를 어떻게 유지하고 정리할지가 중요해질 수 있습니다.";
+    if(label==="학업")return"자격증 경쟁보다 관심 있던 분야를 배우거나 새 도구·취미를 익히면서 생활의 폭을 넓히는 쪽에 가깝습니다.";
+    if(label==="변화")return"생활환경과 가족 역할을 현재 체력과 생활 리듬에 맞게 다시 배치하는 변화로 나타날 수 있습니다.";
+  }
+  return categoryLifeSentence(label);
+}
+function ageAwareCategoryActionSentence(label:string,stage:LifeStage){
+  if(stage==="CHILD")return"이 시기는 결과를 만들라고 밀기보다 어떤 환경에서 자신감이 붙고 어떤 상황에서 위축되는지를 보는 편이 더 중요합니다.";
+  if(stage==="TEEN")return label==="학업"?"점수만 보기보다 어떤 공부가 실제 진로와 연결되는지 확인해보는 게 중요합니다.":"여러 경험을 해보되 한 번의 결과로 적성이나 가능성을 너무 빨리 단정하지 않는 편이 좋습니다.";
+  if(stage==="LATER_ADULT"||stage==="ELDER")return"무엇을 더 늘릴지보다 지금까지 쌓은 경험·자산·관계 중 무엇을 편하게 이어갈지 정하는 쪽이 더 중요합니다.";
+  return categoryActionSentence(label);
+}
+function activeCategoryKey(snapshot:FortuneSnapshot){return topSnapshotCategory(snapshot,"activity")?.key??"";}
+function yearlyPhaseSentence(snapshot:FortuneSnapshot,index:number,all:FortuneSnapshot[]){
+  const active=topSnapshotCategory(snapshot,"activity");
+  if(!active)return"한 분야를 크게 벌이기보다 실제로 움직이는 일을 보면서 우선순위를 정하는 해입니다.";
+  let start=index,end=index;
+  while(start>0&&activeCategoryKey(all[start-1])===active.key)start--;
+  while(end<all.length-1&&activeCategoryKey(all[end+1])===active.key)end++;
+  const length=end-start+1,pos=index-start;
+  if(length===1)return categoryActionSentence(active.label);
+  if(active.label==="사업"){
+    if(pos===0)return"같은 사업 흐름이 이어지더라도 이 해는 먼저 반응을 확인하고 무엇을 밀지 고르는 시작점에 가깝습니다.";
+    if(pos===length-1)return"앞에서 확인한 반응을 실제 매출·운영 구조로 남길지, 더 키우지 않을 것을 정리할지가 중요해집니다.";
+    return"새로 벌이는 것보다 이미 반응이 온 상품·서비스를 반복 가능한 구조로 만드는 쪽에 무게가 실립니다.";
+  }
+  if(active.label==="재물"){
+    if(pos===0)return"재물 흐름이 이어지는 첫해라 돈의 크기보다 수입·지출 구조에서 무엇을 바꿀지 정하는 선택이 먼저 나올 수 있습니다.";
+    if(pos===length-1)return"앞선 해에 움직인 돈을 회수하고 무엇을 자산이나 현금으로 남길지 정하는 의미가 더 커집니다.";
+    return"돈의 출입이 커지는 가운데 확장할 돈과 남길 돈을 분리하는 판단이 중요해지는 해입니다.";
+  }
+  if(active.label==="관계"){
+    if(pos===0)return"새로운 관계나 기존 관계의 변화가 시작되는 쪽에 가깝습니다.";
+    if(pos===length-1)return"이어갈 관계와 거리를 둘 관계가 이전보다 분명해질 수 있습니다.";
+    return"관계를 넓히기보다 실제 생활에서 맞는 사람인지 확인하는 과정이 중요해집니다.";
+  }
+  if(active.label==="학업"){
+    if(pos===0)return"새로 배울 것을 고르고 공부의 방향을 잡는 해에 가깝습니다.";
+    if(pos===length-1)return"배운 것을 자격·업무·결과물처럼 실제로 써먹을 형태로 남기는 게 중요해집니다.";
+    return"공부 자체보다 익힌 내용을 실제 문제에 적용하면서 실력을 굳히는 흐름이 강해집니다.";
+  }
+  return categoryActionSentence(active.label);
+}
+function yearlyRelativeSentence(snapshot:FortuneSnapshot,all:FortuneSnapshot[]){
+  const active=topSnapshotCategory(snapshot,"activity");
+  if(!active)return"";
+  const peers=all.filter(row=>activeCategoryKey(row)===active.key);
+  if(peers.length<2)return"";
+  const activeScore=(row:FortuneSnapshot)=>row.categories.find(category=>category.key===active.key)?.activity??0;
+  const supportScore=(row:FortuneSnapshot)=>row.categories.find(category=>category.key===active.key)?.support??0;
+  const maxActivity=Math.max(...peers.map(activeScore)),maxSupport=Math.max(...peers.map(supportScore));
+  const activityTop=activeScore(snapshot)===maxActivity,supportTop=supportScore(snapshot)===maxSupport;
+  if(activityTop&&supportTop)return"같은 "+active.label+" 흐름이 이어지는 해들 가운데 실제 움직임과 도움 정도가 함께 높은 편입니다.";
+  if(activityTop)return"같은 "+active.label+" 흐름 가운데 실제 일정과 선택이 가장 많이 몰리기 쉬운 해입니다.";
+  if(supportTop)return"같은 "+active.label+" 흐름 가운데 움직인 일에 결과가 붙기 상대적으로 수월한 해입니다.";
+  return"같은 "+active.label+" 흐름 안에서도 앞뒤 해보다 선택과 정리의 비중이 더 커질 수 있습니다.";
 }
 function partnerAppearanceSentence(facts:ConsultationFacts){
   const element=BRANCH_ELEMENT[facts.dayBranch]??"";
@@ -3095,21 +3221,31 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
     const snapshot=snapshots[0]??null;
     const year=snapshot?.year??context.seunYear;
     const active=snapshot?topSnapshotCategory(snapshot,"activity"):null,support=snapshot?topSnapshotCategory(snapshot,"support"):null;
+    const index=snapshot?snapshots.findIndex(row=>row.year===snapshot.year):0;
     return[
       (year?year+"년은 ":"이 해는 ")+(active?active.label+" 쪽 움직임이 가장 크게 잡힙니다. ":"여러 분야가 비슷하게 움직입니다. ")+(active?categoryLifeSentence(active.label):""),
-      support?("상대적으로 도움을 받기 쉬운 분야는 "+support.label+" 쪽입니다. "+(active&&support.key===active.key?"바쁘면서도 결과를 만들기 좋은 쪽이 같은 분야에 겹치는 해입니다.":"바쁜 분야와 유리한 분야가 다르기 때문에 에너지 배분을 나눠볼 필요가 있습니다.")):"도움을 받는 정도와 실제 움직임은 따로 확인하는 편이 좋습니다.",
+      snapshot?yearlyPhaseSentence(snapshot,Math.max(0,index),snapshots):categoryActionSentence(active?.label??""),
+      snapshot?yearlyRelativeSentence(snapshot,snapshots):"",
+      support?("도움을 받기 쉬운 쪽은 "+support.label+"입니다. "+(active&&support.key===active.key?"움직이는 분야와 결과가 붙기 쉬운 분야가 겹칩니다.":"가장 바쁜 분야와 유리한 분야가 달라 힘을 나눠 쓰는 게 중요합니다.")):"도움 정도는 실제 움직임과 따로 봅니다.",
       context.seunPillar?fortunePillarSentence(context.seunPillar):"그해의 세운 글자는 원래 사주와 만나 어느 분야의 움직임을 키우는지 함께 봅니다.",
-      favor&&activation?("전체적으로는 "+favor+", 움직임은 "+activation+"에 가깝습니다. 즉 결과가 잘 붙는지와 실제 일이 많아지는지를 따로 보는 해입니다."):favor?("전체 도움 정도는 "+favor+"에 가깝습니다."):activation?("실제 움직임은 "+activation+"에 가깝습니다."):"지원과 활동량을 따로 봅니다.",
-      categoryActionSentence(active?.label??"")
-    ];
+      favor&&activation?("해 전체로 보면 "+favor+", 활동량은 "+activation+"에 가깝습니다."):favor?("해 전체 도움 정도는 "+favor+"에 가깝습니다."):activation?("실제 활동량은 "+activation+"에 가깝습니다."):""
+    ].filter(Boolean);
   }
 
-  if(group==="MONTHLY")return[
-    "월운은 한 해 안에서도 실제 일정과 선택이 어느 달에 몰리는지 보는 부분입니다.",
-    "변화가 큰 달이라고 나쁜 달은 아니고 해야 할 일과 결정이 많아지는 달에 가깝습니다.",
-    "큰 계약·이동처럼 되돌리기 어려운 선택이 겹치면 확인 절차를 하나 더 두고, 수정 가능한 일은 지나치게 겁내지 않는 편이 좋습니다.",
-    "달별 흐름은 운에 맞춰 모든 일을 정하는 용도보다 바쁜 시기를 미리 알아두는 일정표로 쓰는 게 좋습니다."
-  ];
+  if(group==="MONTHLY"){
+    const monthly=fortuneSnapshots(input,row)
+      .filter(snapshot=>snapshot.synthesisId.includes("WOLUN-")&&snapshot.month!=null)
+      .sort((a,b)=>b.activationScore-a.activationScore||b.favorabilityScore-a.favorabilityScore||((a.month??0)-(b.month??0)));
+    const top=monthly.slice(0,3);
+    return top.length?[
+      "올해 안에서도 일정과 선택이 특히 몰리기 쉬운 달을 월운 활동량 기준으로 보면 "+top.map(snapshot=>snapshot.month+"월").join(" · ")+"입니다.",
+      ...top.map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity");const support=topSnapshotCategory(snapshot,"support");return snapshot.month+"월은 "+(active?active.label+" 쪽 움직임이 상대적으로 크고, "+categoryLifeSentence(active.label):"여러 분야의 일정이 함께 움직일 수 있습니다.")+(support&&(!active||support.key!==active.key)?" 다만 도움은 "+support.label+" 쪽에서 받기 쉬운 편입니다.":"");}),
+      "변화가 큰 달은 나쁜 달이라는 뜻이 아니라 결정과 일정이 몰리기 쉬운 달입니다. 계약·이동처럼 되돌리기 어려운 선택만 확인 절차를 하나 더 두는 편이 좋습니다."
+    ]:[
+      "현재 계산에서는 월별 차이를 고객에게 보여줄 만큼 충분한 월운 근거가 잡히지 않았습니다.",
+      "몇 월이 좋다고 억지로 단정하기보다 연간 흐름까지만 보는 편이 정확합니다."
+    ];
+  }
 
   return null;
 }
@@ -3251,7 +3387,7 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
 
   if(group==="DAEUN_OVERVIEW"&&/평생 10년 흐름 한눈에 보기|평생 대운/.test(title))return snapshots.length?[
     "대운을 한눈에 보면 시기마다 중심 분야가 어디로 옮겨가는지 볼 수 있습니다.",
-    ...snapshots.map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity");return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운은 "+(active?active.label+" 쪽 움직임이 상대적으로 큽니다.":"여러 분야가 비슷하게 움직입니다.");}),
+    ...snapshots.map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity"),stage=lifeStageForSnapshot(snapshot);return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운은 "+(active?ageAwareCategoryLabel(active.label,stage)+" 쪽 움직임이 상대적으로 큽니다.":"여러 분야가 비슷하게 움직입니다.");}),
     "어린 시절 구간은 사건을 기억하는 장이 아니라 가족·학교 환경 속에서 어떤 적응 습관이 만들어졌는지 보는 배경이고, 성인 이후부터는 직업·재물·관계의 실제 선택과 더 직접적으로 연결해서 봅니다."
   ]:[
     "대운은 각 나이 구간마다 일·돈·관계의 중심이 어떻게 바뀌는지를 보는 흐름표입니다.",
@@ -3275,21 +3411,25 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
   if(/^DAEUN_[1-9]$/.test(group)||group==="DAEUN_10"){
     const snapshot=snapshots[0]??null;
     if(!snapshot)return["이 대운은 해당 구간의 계산 결과를 기준으로 봅니다.","같은 10년이라도 실제 활동량과 도움 정도를 따로 확인하는 편이 좋습니다."];
-    const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");
-    const childhood=snapshot.endAge!=null&&snapshot.endAge<=15;
-    const youth=!childhood&&snapshot.startAge!=null&&snapshot.startAge<30;
-    const lifeContext=childhood
-      ?"이 구간은 본인이 사건을 세세하게 기억하는지보다 가족·학교·생활환경 속에서 어떤 적응 방식이 만들어졌는지를 보는 시기입니다."
-      :youth
-        ?"이 구간은 공부·첫 직장·독립처럼 내가 어떤 일을 선택하고 사회에서 어떤 역할을 맡을지 만들어가는 의미가 큽니다."
-        :"이 구간은 이미 쌓은 경험을 직업·재물·관계에서 실제 결과로 굳히는 선택이 더 중요해지는 시기입니다.";
+    const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support"),stage=lifeStageForSnapshot(snapshot);
+    const lifeContext=stage==="CHILD"
+      ?"이 구간은 직업이나 돈을 직접 만드는 시기가 아니라 가족·학교·친구 속에서 어떤 적응 습관과 자신감이 만들어졌는지를 보는 시기입니다."
+      :stage==="TEEN"
+        ?"이 구간은 공부·진로·친구 관계를 통해 내가 잘하는 것과 불편한 환경을 처음 구체적으로 알아가는 시기입니다."
+        :stage==="EARLY_ADULT"
+          ?"이 구간은 독립·직업·관계처럼 내 이름으로 선택한 일이 실제 생활 구조를 만들기 시작하는 시기입니다."
+          :stage==="MID_ADULT"
+            ?"이 구간은 이미 쌓은 경험을 일·돈·가족에서 실제 결과와 책임으로 굳히는 선택이 중요해집니다."
+            :stage==="LATER_ADULT"
+              ?"이 구간은 더 많이 벌이기보다 쌓아온 경험·자산·관계를 어디에 쓰고 무엇을 줄일지 선택하는 의미가 커집니다."
+              :"이 구간은 새로운 성취를 늘리는 것보다 생활의 안정, 가족과의 연결, 쌓아온 경험을 편하게 남기는 쪽에 무게가 실립니다.";
     return[
       snapshot.ageRange+"의 "+snapshot.daeunPillar+" 대운입니다. "+lifeContext,
       snapshot.daeunPillar?fortunePillarSentence(snapshot.daeunPillar):"대운의 글자는 원래 사주와 만나 어느 성향이 커지는지 봅니다.",
-      active?("이 대운에서 가장 많이 움직이는 분야는 "+active.label+"입니다. "+categoryLifeSentence(active.label)):"이 대운은 한 분야에 변화가 몰리기보다 여러 역할이 함께 움직이는 편입니다.",
-      support?("상대적으로 도움을 받기 쉬운 분야는 "+support.label+" 쪽입니다. "+(active&&support.key===active.key?"움직임과 지원이 같은 곳에 겹쳐 결과를 만들기 좋은 편입니다.":"바쁜 분야와 유리한 분야가 다르므로 힘을 쓰는 순서를 나눠보는 게 좋습니다.")):"도움을 받는 정도는 다른 대운 근거와 함께 봅니다.",
+      active?("계산상 가장 크게 움직이는 축은 "+ageAwareCategoryLabel(active.label,stage)+"입니다. "+ageAwareCategoryLifeSentence(active.label,stage)):"한 분야에만 변화가 몰리기보다 여러 역할이 함께 움직이는 구간입니다.",
+      support?("상대적으로 힘을 보태는 축은 "+ageAwareCategoryLabel(support.label,stage)+"입니다. "+(active&&support.key===active.key?"움직이는 곳과 도움을 받는 곳이 겹쳐 해당 경험이 더 선명해질 수 있습니다.":"가장 바쁜 영역과 도움을 받는 영역이 다르게 나타날 수 있습니다.")):"도움 정도는 다른 대운 근거와 함께 봅니다.",
       (FAVORABILITY_LABELS[snapshot.favorabilityLevel]&&ACTIVATION_LABELS[snapshot.activationLevel])?("전체적으로는 "+FAVORABILITY_LABELS[snapshot.favorabilityLevel]+", 활동량은 "+ACTIVATION_LABELS[snapshot.activationLevel]+"에 가깝습니다."):"지원 정도와 활동량은 별개로 봅니다.",
-      childhood?"이 시기를 잘 기억하려고 애쓰기보다 지금도 남아 있는 습관과 가족·학교에서 배운 대응 방식이 무엇인지 돌아보는 정도면 충분합니다.":categoryActionSentence(active?.label??"")
+      ageAwareCategoryActionSentence(active?.label??"",stage)
     ];
   }
 
