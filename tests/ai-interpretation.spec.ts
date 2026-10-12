@@ -78,6 +78,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(book.parts.find(part=>part.partNumber==="10")?.title).toBe("십성");
     expect(book.parts.find(part=>part.partNumber==="11")?.title).toBe("연운 · 앞으로 5년");
     expect(book.parts.find(part=>part.partNumber==="12S")?.title).toBe("삼재 · 변화운");
+    expect(book.sections.find(section=>section.id==="legacy-book-007")?.title).toBe("결정을 내릴 때의 나");
     expect(book.sections.find(section=>section.id==="legacy-book-009")?.title).toBe("낯선 곳·일·가까운 사람 앞에서");
     expect(book.sections.find(section=>section.id==="legacy-book-011")?.partNumber).toBe("03");
     expect(book.sections.find(section=>section.id==="legacy-book-036")?.title).toBe("돈을 쓸 때 가장 먼저 보는 것");
