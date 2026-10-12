@@ -55,10 +55,18 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
     const part=customerPart(remappedPartNumber,legacyPart.title);
     let title=page.title;
     if(page.id==="book-007")title="내가 마음을 정하는 순서";
+    if(page.id==="book-044"){
+      if(options.relationshipStatus==="DATING")title="연애할 때의 나";
+      else if(options.relationshipStatus==="MARRIED")title="부부 관계에서의 나";
+    }
     if(page.id==="book-047"){
       if(options.relationshipStatus==="SINGLE")title="미래 배우자는 어떤 사람일까";
       else if(options.relationshipStatus==="DATING")title="현재 연인에게 끌리는 이유";
       else if(options.relationshipStatus==="MARRIED")title="배우자에게 중요하게 보는 것";
+    }
+    if(page.id==="book-050"){
+      if(options.relationshipStatus==="DATING")title="이 관계를 결혼으로 이어갈 때";
+      else if(options.relationshipStatus==="MARRIED")title="결혼생활에서 중요한 것";
     }
     if(page.id==="book-051"){
       if(options.childStatus==="HAS_CHILDREN")title="현재 부모 역할에서의 나";
