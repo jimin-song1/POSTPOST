@@ -2662,6 +2662,66 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
 function childrenConsultation(row:Row,facts:ConsultationFacts,input:InterpretationInput):string[]|null{
   if(row.evidenceGroup!=="CHILDREN")return null;
   const title=row.topic??row.title,hourRole=facts.branchMainTenGodByPosition.hour||facts.stemTenGodByPosition.hour,hourTone=tenGodTone(hourRole),childStatus=input.minimalContext.childStatus;
+  const bond=asRecord(evidenceValue(input,"CHILD:BOND")),count=asRecord(evidenceValue(input,"CHILD:COUNT_TENDENCY")),parenting=asRecord(evidenceValue(input,"CHILD:PARENTING_STYLE"));
+  const strengthsRaw=evidenceValue(input,"CHILD:STRENGTHS"),attentionRaw=evidenceValue(input,"CHILD:ATTENTION_AREAS"),periodsRaw=evidenceValue(input,"CHILD:LIFETIME_CONTEXT");
+  const strengths=Array.isArray(strengthsRaw)?strengthsRaw.map(item=>asText(asRecord(item)?.text)).filter(Boolean):[];
+  const attention=Array.isArray(attentionRaw)?attentionRaw.map(item=>asText(asRecord(item)?.text)).filter(Boolean):[];
+  const periods=Array.isArray(periodsRaw)?periodsRaw.map(item=>asRecord(item)).filter((item):item is LooseRecord=>Boolean(item)):[];
+  const bondLevel=asText(bond?.level),countLabel=asText(count?.label);
+  const bondText=bondLevel==="VERY_STRONG"?"자녀와의 인연이 비교적 또렷하게 잡히는 편입니다."
+    :bondLevel==="STRONG"?"자녀와의 인연이 생활에서 중요한 축으로 자리 잡기 쉬운 편입니다."
+    :bondLevel==="MODERATE"?"자녀 인연은 한쪽으로 과하게 치우치기보다 생활 흐름 속에서 자연스럽게 이어지는 편입니다."
+    :"자녀 문제를 삶의 중심으로 단정하기보다 실제 관계와 돌봄이 생겼을 때의 반응을 함께 보는 편이 맞습니다.";
+  const expression=asText(parenting?.expression),guidance=asText(parenting?.guidance),conflict=asText(parenting?.conflict);
+  const expressionText=expression==="EXPRESSIVE"?"마음을 말과 행동으로 비교적 바로 표현하는 편"
+    :expression==="PRACTICAL"?"필요한 걸 챙기고 해결해주는 행동으로 마음을 표현하는 편"
+    :expression==="RESERVED"?"마음을 크게 드러내기보다 꾸준히 챙기는 행동으로 보여주는 편"
+    :"말과 행동을 상황에 맞게 섞어 표현하는 편";
+  const guidanceText=guidance==="STRUCTURED"?"규칙과 순서를 정해 안정감을 주는 쪽"
+    :guidance==="AUTONOMY_ORIENTED"?"아이에게 직접 해볼 여지를 남기는 쪽"
+    :guidance==="PROTECTIVE"?"필요한 걸 미리 살피고 보호하는 쪽"
+    :"상황에 따라 기준과 자율성을 조절하는 쪽";
+  const conflictText=conflict==="DIRECT"?"문제가 생기면 바로 확인하고 해결하려는 쪽"
+    :conflict==="INTERNALIZE"?"먼저 속으로 정리한 뒤 말을 꺼내는 쪽"
+    :conflict==="NEGOTIATE"?"대화를 통해 서로의 기준을 맞추려는 쪽"
+    :"감정이 커지면 잠시 거리를 두고 정리하려는 쪽";
+
+  if(/자녀운 한눈에 보기/.test(title))return[
+    childStatus==="EXPECTING"
+      ?"지금은 자녀운을 먼 미래의 가능성으로만 볼 단계가 아니라, 출산을 앞둔 현실과 연결해서 읽는 게 자연스럽습니다."
+      :childStatus==="HAS_CHILDREN"
+        ?"이미 자녀가 있는 경우에는 몇 명을 낳는지보다 지금 아이와 어떤 관계를 만들고 있는지를 중심으로 보는 게 더 자연스럽습니다."
+        :"자녀운은 아이가 반드시 생긴다고 단정하는 항목이 아니라, 자녀와 돌봄의 역할이 들어왔을 때 어떤 흐름이 강해지는지를 보는 부분입니다.",
+    bondText,
+    countLabel?("자녀 인연의 폭을 보는 경향값은 '"+countLabel+"' 쪽입니다. 다만 이 값은 실제 자녀 수를 맞히는 숫자가 아니라 인연이 한쪽에 집중되는지, 비교적 폭넓게 이어지는지를 설명하는 참고에 가깝습니다."):"자녀 수는 사주만으로 정확히 단정하지 않습니다.",
+    strengths[0]?("부모 역할에서 먼저 살아날 수 있는 장점은 "+strengths[0]):"부모 역할에서는 꾸준히 챙기고 생활을 안정시키는 힘이 장점으로 쓰이기 쉽습니다.",
+    attention[0]?("반대로 오래 신경 써야 할 부분은 "+attention[0]):"잘해주려는 마음이 커질수록 아이가 직접 해볼 몫까지 가져오지 않는 게 중요합니다."
+  ];
+
+  if(/아이와 맺는 관계/.test(title))return[
+    "아이와의 관계에서는 "+expressionText+"이고, "+guidanceText+"에 가깝습니다.",
+    "갈등이 생겼을 때는 "+conflictText+"으로 나타날 가능성이 큽니다.",
+    strengths[1]?("관계에서 잘 살아나는 힘은 "+strengths[1]):"약속을 지키고 필요한 순간에 꾸준히 옆에 있어주는 모습이 아이에게 안정감으로 남기 쉽습니다.",
+    attention[1]?("다만 "+attention[1]):"다만 해결책을 빨리 주는 것보다 아이가 자기 감정을 먼저 말할 시간을 남겨두는 게 관계를 더 편하게 만들 수 있습니다.",
+    "결국 아이와 가까워지는 핵심은 완벽하게 챙기는 데 있지 않고, 도움이 필요한 순간과 스스로 해볼 순간을 구분하는 데 있습니다."
+  ];
+
+  if(/자녀운이 크게 움직이는 시기/.test(title)){
+    const top=periods.slice(0,3);
+    if(!top.length)return[
+      "자녀운의 시기는 한 해의 사건을 단정하기보다 가족과 돌봄의 역할이 어느 시기에 커지는지를 보는 편이 맞습니다.",
+      "현재 계산에서는 특정 구간을 강하게 단정할 만큼 자녀운 시기 근거가 충분하지 않아 생활 변화와 함께 보는 편이 좋습니다."
+    ];
+    return[
+      "자녀운의 시기는 임신·출산 자체를 맞히는 표가 아니라, 자녀·돌봄·가족 역할이 생활에서 더 크게 느껴지기 쉬운 구간을 보는 것입니다.",
+      ...top.map((period,index)=>{
+        const ageRange=asText(period.ageRange),level=asText(period.activationLevel),themes=Array.isArray(period.themes)?period.themes.map(asText).filter(Boolean):[];
+        const levelText=level==="VERY_HIGH"?"움직임이 매우 큰 편":level==="HIGH"?"움직임이 큰 편":level==="MODERATE"?"움직임이 어느 정도 생기는 편":"비교적 잔잔한 편";
+        return (index===0?"가장 먼저 눈에 띄는 구간은 ":"그다음으로 보는 구간은 ")+ageRange+"입니다. 이때는 자녀·가족 역할의 "+levelText+(themes.length?"이고, "+themes.join(" · ")+" 같은 주제가 함께 잡힙니다.":".");
+      }),
+      "이 구간이 곧 출산 시점을 뜻하는 것은 아닙니다. 실제 임신·출산 여부와 시기는 건강 상태와 현실 계획을 우선하고, 여기서는 가족 역할이 커지는 큰 흐름으로만 보는 게 맞습니다."
+    ];
+  }
 
   if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습|부모가 된다면 먼저 나오는 모습|곧 부모가 되는 시기의 나|현재 부모 역할에서의 나/.test(title)){
     if(childStatus==="HAS_CHILDREN")return[
