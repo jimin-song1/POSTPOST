@@ -3464,7 +3464,7 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
     return[
       snapshot.ageRange+"의 "+snapshot.daeunPillar+" 대운입니다. "+lifeContext,
       snapshot.daeunPillar?fortunePillarSentence(snapshot.daeunPillar):"대운의 글자는 원래 사주와 만나 어느 성향이 커지는지 봅니다.",
-      active?("계산상 가장 크게 움직이는 축은 "+ageAwareCategoryLabel(active.label,stage)+"입니다. "+ageAwareCategoryLifeSentence(active.label,stage)):"한 분야에만 변화가 몰리기보다 여러 역할이 함께 움직이는 구간입니다.",
+      active?("이 대운에서 가장 크게 움직이는 축은 "+ageAwareCategoryLabel(active.label,stage)+"입니다. "+ageAwareCategoryLifeSentence(active.label,stage)):"한 분야에만 변화가 몰리기보다 여러 역할이 함께 움직이는 구간입니다.",
       support?("상대적으로 힘을 보태는 축은 "+ageAwareCategoryLabel(support.label,stage)+"입니다. "+(active&&support.key===active.key?"움직이는 곳과 도움을 받는 곳이 겹쳐 해당 경험이 더 선명해질 수 있습니다.":"가장 바쁜 영역과 도움을 받는 영역이 다르게 나타날 수 있습니다.")):"도움 정도는 다른 대운 근거와 함께 봅니다.",
       (FAVORABILITY_LABELS[snapshot.favorabilityLevel]&&ACTIVATION_LABELS[snapshot.activationLevel])?("전체적으로는 "+FAVORABILITY_LABELS[snapshot.favorabilityLevel]+", 활동량은 "+ACTIVATION_LABELS[snapshot.activationLevel]+"에 가깝습니다."):"지원 정도와 활동량은 별개로 봅니다.",
       ageAwareCategoryActionSentence(active?.label??"",stage)
