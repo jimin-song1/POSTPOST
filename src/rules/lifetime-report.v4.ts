@@ -28,19 +28,19 @@ const extra=(id:string,title:string,partNumber:string,partTitle:string,evidenceG
 
 
 const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
-  "01":"성격과 기본 성향",
+  "01":"나는 어떤 존재인가",
   "02":"일주와 오행",
-  "03":"직업운·학업운",
+  "03":"직업운 · 학업운",
   "04":"재물운",
-  "05":"연애운·결혼운·자녀운",
+  "05":"연애운 · 결혼운 · 자녀운",
   "06":"건강운",
   "07":"귀인운",
-  "08":"신살 · 특별하게 드러나는 성향",
-  "09":"십이운성 · 시기마다 달라지는 모습",
-  "10":"십성 · 내가 일·돈·사람을 다루는 방식",
-  "11":"앞으로 5년",
-  "12S":"변화가 커지는 시기",
-  "13":"대운 · 10년 단위 큰 흐름",
+  "08":"신살",
+  "09":"십이운성",
+  "10":"십성",
+  "11":"연운 · 앞으로 5년",
+  "12S":"삼재 · 변화운",
+  "13":"대운",
   "14":"총정리"
 };
 const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
