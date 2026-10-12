@@ -2706,7 +2706,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
     "결국 아이와 가까워지는 핵심은 완벽하게 챙기는 데 있지 않고, 도움이 필요한 순간과 스스로 해볼 순간을 구분하는 데 있습니다."
   ];
 
-  if(/자녀운이 크게 움직이는 시기/.test(title)){
+  if(/자녀운이 크게 움직이는 시기|자녀운의 현재와 앞으로/.test(title)){
     const top=periods.slice(0,3);
     if(!top.length)return[
       "자녀운의 시기는 한 해의 사건을 단정하는 항목이 아니라, 가족과 돌봄의 역할이 어느 시기에 커지는지를 살펴보는 항목입니다.",
@@ -2716,12 +2716,12 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
       "자녀운의 시기는 임신·출산 자체를 맞히는 표가 아니라, 자녀·돌봄·가족 역할이 생활에서 더 크게 느껴지기 쉬운 구간을 보는 것입니다.",
       ...top.map((period,index)=>{
         const ageRange=asText(period.ageRange),level=asText(period.activationLevel),themes=Array.isArray(period.themes)?period.themes.map(asText).filter(Boolean):[];
-        const levelText=level==="VERY_HIGH"?"움직임이 매우 큰 편":level==="HIGH"?"움직임이 큰 편":level==="MODERATE"?"움직임이 어느 정도 생기는 편":"비교적 잔잔한 편";
+        const levelText=level==="VERY_HIGH"?"매우 큰 편":level==="HIGH"?"큰 편":level==="MODERATE"?"어느 정도 생기는 편":"비교적 잔잔한 편";
         const readableThemes=themes.map(theme=>theme==="표현·성장 역할 활성"?"아이와 함께 성장하고 돌보는 역할"
           :theme==="자녀 영역과의 관계 변화"?"자녀·가족 관계의 변화"
           :theme==="생활 변화가 큰 흐름"?"생활환경과 역할의 큰 변화"
           :theme==="가족 역할의 안정적 흐름"?"가족 역할이 자리를 잡는 흐름":theme);
-        return (index===0?"현재와 앞으로 먼저 눈에 띄는 구간은 ":"그다음으로 보는 구간은 ")+ageRange+"입니다. 이때는 자녀·가족 역할의 "+levelText+(readableThemes.length?"이고, "+readableThemes.join(" · ")+"이 함께 나타날 수 있습니다.":".");
+        return (index===0?"현재 구간은 ":"그다음 구간은 ")+ageRange+"입니다. 이때는 자녀·가족 역할의 움직임이 "+levelText+(readableThemes.length?"이고, "+readableThemes.join(" · ")+" 같은 흐름이 함께 나타날 수 있습니다.":".");
       }),
       "이 구간이 곧 출산 시점을 뜻하는 것은 아닙니다. 실제 임신·출산 여부와 시기는 건강 상태와 현실 계획을 우선하고, 여기서는 가족 역할이 커지는 큰 흐름으로만 보는 게 맞습니다."
     ];
