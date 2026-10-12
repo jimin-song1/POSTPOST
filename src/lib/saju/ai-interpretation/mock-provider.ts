@@ -1951,6 +1951,16 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   const strongest=facts.strongest?.element,weakest=facts.weakest?.element;
   const strongStory=strongest?elementStory(strongest):null,weakStory=weakest?elementStory(weakest):null;
   const spine=personalitySpine(facts);
+  const family=dominantFamily(facts);
+  const openingScene=family==="비겁"
+    ?"누가 '이게 더 낫다'고 말해도 바로 따라가는 편은 아니에요. 왜 그래야 하는지 본인이 이해가 돼야 마음이 움직입니다."
+    :family==="식상"
+      ?"생각이 생기면 머릿속에서만 정리하는 것보다 한번 말해보거나 직접 만들어보면서 답을 찾는 쪽에 가까워요."
+      :family==="재성"
+        ?"선택할 일이 생기면 '이걸 해서 실제로 뭐가 남지?'를 꽤 빨리 보는 편이에요. 시간과 돈을 쓰는 이유가 분명해야 움직임도 빨라집니다."
+        :family==="관성"
+          ?"해야 할 일이 생기면 누가 시켰는지보다 '어디까지 해야 끝난 건가'를 먼저 보는 편이에요. 맡은 범위가 분명할수록 마음도 편해집니다."
+          :"낯선 일 앞에서는 바로 뛰어들기보다 먼저 충분히 이해해야 마음이 놓여요. 왜 하는지, 어떻게 돌아가는지 감이 잡힌 뒤에 움직이는 편입니다.";
 
   const strengthScene=strongest==="metal"
     ?"무엇이 빠졌는지, 어디가 어긋났는지, 마무리가 덜 된 부분이 비교적 빨리 눈에 들어옵니다. 그래서 남들이 그냥 넘기는 일도 한 번 더 확인하고 끝내는 쪽이에요."
@@ -1973,11 +1983,11 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
 
   if(id==="book-007"){
     return[
-      "겉으로는 크게 흔들리지 않는 사람처럼 보여도, 사실 아무 일에나 같은 힘을 쓰는 사람은 아니에요. 마음속에서 '이건 내가 해볼 만하다'는 이유가 생겨야 오래 갑니다.",
-      "그래서 결정하기 전에는 생각이 길어질 수 있지만, 한번 자기 일이라고 받아들이면 태도가 달라져요. 중간에 흐리게 끝내기보다 끝을 보고 싶어하고, 남들이 방향을 바꿔도 자기 안의 이유가 남아 있으면 쉽게 따라 바꾸지 않습니다.",
+      openingScene,
+      "처음에는 생각이 조금 길어질 수 있어요. 대신 본인 안에서 '그래, 이건 해야겠다'가 서면 그때부터는 태도가 꽤 분명해집니다. 중간에 흐리게 끝내기보다 끝을 확인하고 싶어해요.",
       strengthScene,
       slowScene,
-      "이 사람을 단순히 고집이 세다거나 신중하다고만 보면 반만 맞아요. 시작 전에는 충분히 보고, 마음이 정해진 뒤에는 오래 밀고 가는 사람에 더 가깝습니다."
+      "그래서 단순히 신중한 사람, 고집이 센 사람이라고만 보면 잘 맞지 않아요. 시작하기 전에는 충분히 보고, 시작한 뒤에는 쉽게 놓지 않는 쪽에 더 가깝습니다."
     ];
   }
 
