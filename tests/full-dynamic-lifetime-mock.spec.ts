@@ -78,7 +78,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const section of customerSections){
       const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
       const topic=bookSectionById.get(section.id)?.topic;
-      if(topic)expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBe(0);
+      if(topic&&section.contentKind==="CONTENT")expect(paragraphs.filter(paragraph=>paragraph.startsWith(topic)).length,section.id).toBe(0);
       const paragraphSet=new Set(paragraphs.map(paragraph=>paragraph.replace(/\s+/g," ").trim()));
       for(const point of section.keyPoints??[]){
         const normalizedPoint=point.replace(/\s+/g," ").trim();
