@@ -95,9 +95,9 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
       const childOrder=(id:string)=>{
         const legacy=id.match(/^legacy-book-(\d+)$/);
         if(legacy)return Number(legacy[1])-43;
-        if(id==="children-overview")return 8.5;
-        if(id==="children-bond")return 9.5;
-        if(id==="children-timing")return 9.7;
+        if(id==="children-overview")return 7.5;
+        if(id==="children-bond")return 8.5;
+        if(id==="children-timing")return 8.7;
         return 99;
       };
       return childOrder(a.id)-childOrder(b.id);
