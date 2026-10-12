@@ -117,6 +117,14 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(edited).toContain("58.26");expect(edited).toContain("甲子");
   });
 
+  it("keeps valid Korean word boundaries while removing true duplicate words",()=>{
+    const source="왜 그래야 하는지 본인이 이해가 돼야 마음이 움직입니다. 같은 같은 단어만 줄여야 합니다.";
+    const edited=copyEditKoreanText(source);
+    expect(edited).toContain("본인이 이해가");
+    expect(edited).toContain("같은 단어만");
+    expect(edited).not.toContain("같은 같은");
+  });
+
   it("locks numbers and labels to each section's cited evidence and each timeline period",()=>{
     const input:InterpretationInput={version:"interpretation-input-v1",reportType:"COMPREHENSIVE",minimalContext:{},
       evidence:[{id:"NATAL:A",kind:"NATAL",value:{score:58.26,strength:"중화신약"}},
