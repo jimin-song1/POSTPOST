@@ -744,6 +744,16 @@ function lifeStageForSnapshot(snapshot:FortuneSnapshot):LifeStage{
   if(mid<80)return"LATER_ADULT";
   return"ELDER";
 }
+function lifeStageForAgeRange(ageRange:string):LifeStage{
+  const values=Array.from(ageRange.matchAll(/\d+(?:\.\d+)?/g),match=>Number(match[0])).filter(Number.isFinite);
+  const start=values[0]??0,end=values[1]??start,mid=(start+end)/2;
+  if(mid<13)return"CHILD";
+  if(mid<22)return"TEEN";
+  if(mid<40)return"EARLY_ADULT";
+  if(mid<60)return"MID_ADULT";
+  if(mid<80)return"LATER_ADULT";
+  return"ELDER";
+}
 function ageAwareCategoryLabel(label:string,stage:LifeStage){
   if(stage==="CHILD"){
     if(label==="사업")return"활동·주도성";
@@ -2819,12 +2829,19 @@ function wellnessConsultation(row:Row,facts:ConsultationFacts):string[]|null{
     firstHabit||"잘 안 되는 관리 하나만 고정하고 나머지는 그다음에 붙이는 방식이 좋습니다."
   ];
 
-  if(/생활 리듬이 크게 흔들리는 시기|대운에서 건강/.test(title))return[
-    facts.wellnessPeriods.length?("건강 관리에 조금 더 신경 쓸 대운은 "+facts.wellnessPeriods.map(period=>period.ageRange).filter(Boolean).join(" · ")+" 구간입니다. 이 시기는 질병을 예고한다기보다 생활 변화와 활동량이 겹치면서 회복 관리의 중요도가 올라가는 때로 봅니다."):"생활환경이 크게 바뀌는 시기에는 평소보다 회복 시간을 더 의식적으로 확보하는 편이 좋습니다.",
-    facts.wellnessPeriods[0]?.pillar?("그중 가장 먼저 보는 구간은 "+facts.wellnessPeriods[0].ageRange+"의 "+facts.wellnessPeriods[0].pillar+" 대운입니다. 일정·직업·가족 역할이 같이 움직이면 몸보다 생활 리듬이 먼저 흔들릴 수 있습니다."):"직업·거주·가족 역할 변화가 겹칠 때 생활 리듬이 먼저 흔들릴 수 있습니다.",
-    "이 시기에는 새로운 일을 줄이라는 뜻이 아니라 수면·식사·회복 시간을 일정 안에서 먼저 확보하라는 의미에 가깝습니다.",
-    "대운의 건강 주의도는 의료 예측이 아니므로 실제 증상은 검진과 의료 판단을 우선해야 합니다."
-  ];
+  if(/생활 리듬이 크게 흔들리는 시기|대운에서 건강/.test(title)){
+    const firstPeriod=facts.wellnessPeriods[0],stage=firstPeriod?lifeStageForAgeRange(firstPeriod.ageRange):"MID_ADULT";
+    const context=stage==="CHILD"?"가족 일정·학교생활·활동량이 같이 바뀌면 생활 리듬이 먼저 흔들릴 수 있습니다."
+      :stage==="TEEN"?"학교·공부·수면 시간이 한꺼번에 달라지면 생활 리듬이 먼저 흔들릴 수 있습니다."
+      :stage==="LATER_ADULT"||stage==="ELDER"?"생활환경·가족 역할·활동량이 달라질 때 회복 리듬을 다시 맞추는 일이 중요해질 수 있습니다."
+      :"일정·일·가족 역할이 같이 움직이면 몸보다 생활 리듬이 먼저 흔들릴 수 있습니다.";
+    return[
+      facts.wellnessPeriods.length?("건강 관리에 조금 더 신경 쓸 대운은 "+facts.wellnessPeriods.map(period=>period.ageRange).filter(Boolean).join(" · ")+" 구간입니다. 이 시기는 질병을 예고한다기보다 생활 변화와 활동량이 겹치면서 회복 관리의 중요도가 올라가는 때로 봅니다."):"생활환경이 크게 바뀌는 시기에는 평소보다 회복 시간을 더 의식적으로 확보하는 편이 좋습니다.",
+      firstPeriod?.pillar?("그중 가장 먼저 보는 구간은 "+firstPeriod.ageRange+"의 "+firstPeriod.pillar+" 대운입니다. "+context):context,
+      "이 시기에는 무조건 활동을 줄이라는 뜻이 아니라 나이에 맞는 수면·식사·회복 리듬을 먼저 지키라는 의미에 가깝습니다.",
+      "대운의 건강 주의도는 의료 예측이 아니므로 실제 증상은 검진과 의료 판단을 우선해야 합니다."
+    ];
+  }
 
   if(row.evidenceGroup==="WELLNESS")return[
     first?("명리 건강에서는 "+firstLabel+" 쪽을 우선적으로 챙겨볼 만합니다."):"오행 균형과 생활 습관을 함께 봅니다.",
@@ -3388,17 +3405,23 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
     "평생 흐름에서는 과거 대운을 기억하려 하기보다 지금까지 어떤 성향이 만들어졌고 앞으로 어느 분야가 커지는지를 보는 게 더 유용합니다."
   ];
 
-  if(group==="DAEUN_OVERVIEW"&&/지금 지나고 있는 10년|현재 대운/.test(title))return current?[
-    "지금 지나고 있는 대운은 "+current.ageRange+" · "+current.daeunPillar+" 대운입니다.",
-    (topSnapshotCategory(current,"activity")?("이 구간에서 가장 많이 움직이는 분야는 "+topSnapshotCategory(current,"activity")?.label+"입니다. "+categoryLifeSentence(topSnapshotCategory(current,"activity")?.label??"")):"한 분야에만 변화가 몰리기보다 여러 선택이 섞여 들어오는 구간입니다."),
-    topSnapshotCategory(current,"support")?("상대적으로 도움을 받기 쉬운 쪽은 "+topSnapshotCategory(current,"support")?.label+"입니다. 바쁜 분야와 유리한 분야가 다르면 무조건 바쁜 쪽에만 힘을 쓰지 않는 게 중요합니다."):"도움을 받는 정도와 활동량을 따로 보는 편이 좋습니다.",
-    current.daeunPillar?fortunePillarSentence(current.daeunPillar):"대운의 글자는 원래 사주와 만나 어떤 역할이 커지는지 함께 봅니다.",
-    categoryActionSentence(topSnapshotCategory(current,"activity")?.label??"")
-  ]:[
+  if(group==="DAEUN_OVERVIEW"&&/지금 지나고 있는 10년|현재 대운/.test(title)){
+    if(current){
+      const active=topSnapshotCategory(current,"activity"),support=topSnapshotCategory(current,"support"),stage=lifeStageForSnapshot(current);
+      return[
+        "지금 지나고 있는 대운은 "+current.ageRange+" · "+current.daeunPillar+" 대운입니다.",
+        active?("이 구간에서 가장 크게 움직이는 축은 "+ageAwareCategoryLabel(active.label,stage)+"입니다. "+ageAwareCategoryLifeSentence(active.label,stage)):"한 분야에만 변화가 몰리기보다 여러 선택이 섞여 들어오는 구간입니다.",
+        support?("상대적으로 힘을 보태는 쪽은 "+ageAwareCategoryLabel(support.label,stage)+"입니다. 가장 바쁜 영역과 유리한 영역이 다르면 둘을 같은 목표로 볼 필요는 없습니다."):"도움을 받는 정도와 활동량을 따로 보는 편이 좋습니다.",
+        current.daeunPillar?fortunePillarSentence(current.daeunPillar):"대운의 글자는 원래 사주와 만나 어떤 역할이 커지는지 함께 봅니다.",
+        ageAwareCategoryActionSentence(active?.label??"",stage)
+      ];
+    }
+    return[
     "현재 대운은 기준연도에 해당하는 대운 구간을 먼저 찾아서 봅니다.",
     "현재 구간에서 일·돈·관계 중 어느 쪽이 가장 많이 움직이는지를 세운과 함께 확인하는 게 중요합니다.",
     "지금 반복해서 생기는 선택이 무엇인지 보면 현재 대운의 성격을 체감하기 쉽습니다."
-  ];
+    ];
+  }
 
   if(group==="DAEUN_OVERVIEW"&&/평생 10년 흐름 한눈에 보기|평생 대운/.test(title))return snapshots.length?[
     "대운을 한눈에 보면 시기마다 중심 분야가 어디로 옮겨가는지 볼 수 있습니다.",
