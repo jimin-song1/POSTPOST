@@ -80,6 +80,13 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(marriedBook.sections.some(row=>row.title==="배우자에게 중요하게 보는 것")).toBe(true);
     expect(marriedBook.sections.some(row=>row.title==="미래 배우자는 어떤 사람일까")).toBe(false);
     expect(marriedBook.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="자녀운 한눈에 보기")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="자녀운이 크게 움직이는 시기")).toBe(true);
+
+    const expectingBook=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"EXPECTING"});
+    expect(expectingBook.sections.some(row=>row.title==="곧 부모가 되는 시기의 나")).toBe(true);
+    expect(expectingBook.sections.filter(row=>row.evidenceGroup==="CHILDREN").length).toBeGreaterThanOrEqual(5);
 
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
     expect(input.minimalContext.childStatus).toBe("HAS_CHILDREN");
@@ -88,6 +95,16 @@ describe("AI_INTERPRETATION_V1",()=>{
     const provider=new DeterministicMockInterpretationProvider();
     const relationship=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
     expect(relationship.status).toBe("completed");
+    const expecting=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"EXPECTING",year,lifetimePartNumber:"05"});
+    expect(expecting.status).toBe("completed");
+    if(expecting.status==="completed"){
+      const childSections=expecting.report.sections.filter(row=>row.evidenceGroup==="CHILDREN");
+      expect(childSections.length).toBeGreaterThanOrEqual(5);
+      expect(childSections.some(row=>row.title==="자녀운 한눈에 보기"&&row.body.includes("출산을 앞둔 현실"))).toBe(true);
+      expect(childSections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
+      expect(childSections.some(row=>row.title==="자녀운이 크게 움직이는 시기"&&row.body.includes("출산 시점"))).toBe(true);
+      expect(childSections.map(row=>row.body).join("\n")).not.toContain("태아 성별");
+    }
     if(relationship.status==="completed"){
       const text=relationship.report.sections.map(row=>row.body).join("\n");
       expect(text).not.toContain("미래 배우자");
