@@ -84,7 +84,7 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
   additions.push(
     extra("children-overview","자녀운 한눈에 보기","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
     extra("children-bond","아이와 맺는 관계","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
-    extra("children-timing","자녀운이 크게 움직이는 시기","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")
+    extra("children-timing","자녀운의 현재와 앞으로","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")
   );
   if(options.includeSamjae)additions.push(extra("samjae-summary","삼재 · 실제 연도와 변화 포인트","12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
