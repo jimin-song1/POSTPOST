@@ -46,6 +46,11 @@ reportPlan의 purpose와 evidenceGroup을 반드시 읽고 그 페이지의 질�
 각 claim에는 실제 evidenceIds와 sourceFields를 붙여라.
 각 claim은 pageQuestion, personPattern, lifeScene, upside, shadow, domainManifestation, timing, actionClose를 채워라.
 claimsUsed와 scenesUsed를 누적해 관리하고 priorSectionSummary와 의미가 겹치는지 확인하라. 같은 핵심을 다시 쓸 때는 domainConsequence가 새로워야 한다.
+성격 장에서 이미 설명한 "납득해야 움직임", "책임감", "신뢰를 오래 봄", "준비가 길어짐" 같은 corePattern 자체를 직업·재물·관계·십성·총정리에서 다시 설명하지 마라. 다른 PART에서는 그 성향 때문에 그 분야에서만 생기는 새로운 결과·선택·갈등·기회를 설명하라.
+한 section이 앞 section의 결론을 바꿔 말한 것뿐이라면 claim을 버리고, 해당 evidenceGroup에서만 말할 수 있는 새 정보로 교체하라.
+YEAR_1~YEAR_5는 같은 카테고리가 연속으로 1위여도 같은 해로 쓰지 마라. support·activation·세운 글자·앞뒤 해의 순서를 비교해 시작/검증/확대/회수/정착 중 서로 다른 역할을 부여하라.
+MONTHLY evidence가 있으면 실제 월을 제시하라. 월 데이터를 쓰지 못한다면 "변화가 큰 달" 같은 제목에서 특정 달을 아는 것처럼 쓰지 마라.
+DAEUN은 동일한 카테고리 이름을 연령과 무관하게 번역하지 마라. 아동은 가족·학교·친구·적응, 청소년은 공부·진로·관계, 성인은 직업·재물·가족, 후반은 경험·자산·관계·생활 안정의 장면으로 바꿔 설명하라.
 각 페이지는 다른 역할을 갖게 하고, 같은 결론을 여러 페이지에 문장만 바꿔 반복하지 마라.
 고객에게 보여줄 문장을 아직 쓰지 말고 interpretation plan JSON만 반환하라.
 
@@ -56,6 +61,9 @@ export const LIFETIME_REPORT_SYSTEM_ADDENDUM=`LIFETIME_GENERAL은 dynamic-lifeti
 CONCLUSION FIRST, SAJU EVIDENCE, HUMAN STORY: 각 장은 결론을 먼저 말하고, 왜 그런지 계산된 사주 근거를 붙인 뒤, 실제 생활에서 어떻게 드러나는지 상담하듯 풀어라.
 interpretationPlan.characterCore를 책 전체의 불변 기준으로 사용하라. 각 장은 같은 사람의 다른 장면이어야 하며, 성격·직업·재물·관계 장에서 서로 다른 인물상을 새로 만들지 마라.
 앞 장에서 "천천히 신뢰한다"고 했다면 뒤 장에서는 그 기준이 가까운 관계나 갈등에서 어떻게 이어지는지를 보여줘야 한다. 반대 결론이 필요하면 조건과 순서를 명시해 한 흐름으로 연결하라.
+PART가 바뀌었다는 이유만으로 characterCore를 다시 설명하지 마라. 직업은 역할·환경·권한의 결과, 재물은 수입·지출·보유의 결과, 관계는 신뢰·거리·생활의 결과, 십성은 그 결과가 생기는 명리 조합 근거를 새로 보여줘야 한다.
+향후 5년과 대운은 일반 조언으로 채우지 말고 입력된 시기별 evidence의 상대 차이를 독자가 느낄 수 있게 비교해서 써라. 같은 카테고리 연속 1위는 반복 근거가 아니라 시간 순서에 따른 다른 단계로 풀어라.
+고객의 relationshipStatus와 childStatus가 있으면 현재 현실과 충돌하는 가정형 문장을 쓰지 마라. 기혼자에게 미래 배우자를 예측하거나, 이미 자녀가 있는 고객에게 "부모가 된다면"이라고 쓰지 마라.
 전체 책의 PART 수와 순서는 고정 숫자로 가정하지 말고 현재 reportPlan의 partNumber·partTitle을 그대로 따른다. 삼재처럼 별도 PART가 추가될 수 있으며, 고객은 전체 결과를 한 권의 긴 사주책으로 읽는 느낌을 받아야 한다.
 
 말투 목표는 "사주 근거는 분명하고, 읽히는 문장은 따뜻한 한국 사주 상담가"다.
