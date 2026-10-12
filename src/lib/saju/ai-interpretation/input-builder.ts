@@ -165,9 +165,11 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
     fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
   const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,3);
   evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
-  const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus];
+  const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus],childStatus=options.childStatus;
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
-    fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}),
+    childStatus
+      ?fact("CONTEXT:CHILD_STATUS","CONTEXT",{status:childStatus,hasChildren:childStatus==="HAS_CHILDREN",pregnancy:childStatus==="EXPECTING"})
+      :fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}),
     fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
   if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
@@ -188,7 +190,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus});
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus,childStatus:options.childStatus});
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
@@ -207,7 +209,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const scopedEvidence=options.lifetimePartNumber?unique.filter(row=>requiredIds.has(row.id)):unique;
   const scopedTimeline=options.lifetimePartNumber?timeline.filter(row=>row.evidenceIds.some(id=>requiredIds.has(id))):timeline;
   return{version:"lifetime-interpretation-input-v4",reportVersion:"dynamic-lifetime-book-v4",reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
-    minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
+    minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus,childStatus:options.childStatus}};
 }
 
 export function buildInterpretationInput(analysis:SajuAnalysis,options:InterpretationBuildOptions):InterpretationInput{
