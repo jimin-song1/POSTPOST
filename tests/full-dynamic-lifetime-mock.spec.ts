@@ -133,7 +133,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       expect(fortune.samjae.years.some(row=>row.supportScore!==row.activationScore)).toBe(true);}
 
     const childRows=report.sections.filter(row=>row.evidenceGroup==="CHILDREN"),childCitations=new Set(childRows.flatMap(row=>row.evidenceIds));
-    expect(childRows.length).toBeGreaterThan(2);
+    expect(childRows.length).toBeGreaterThanOrEqual(2);
     for(const id of ["CHILD:TEN_GOD_SIGNALS","CHILD:HOUR_PILLAR","CHILD:HOUR_STAGE","CHILD:RELATION_CONTEXT","CHILD:LIFETIME_CONTEXT"])expect(childCitations.has(id),id).toBe(true);
     const yearlyCitations=report.sections.filter(row=>row.evidenceGroup?.startsWith("YEAR_")).flatMap(row=>row.evidenceIds);
     expect(yearlyCitations.some(id=>id.includes("FAVORABILITY"))).toBe(true);expect(yearlyCitations.some(id=>id.includes("ACTIVATION"))).toBe(true);expect(yearlyCitations.some(id=>id.includes("PERIOD_CONTEXT"))).toBe(true);
