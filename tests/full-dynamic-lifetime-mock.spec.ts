@@ -105,7 +105,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
       expect(copy,section.id).not.toMatch(/(?:년주|월주|일주|시주)/);
     }
     const workVsBusiness=customerSections.find(section=>section.title.includes("직장과 사업"));
-    expect((workVsBusiness?.paragraphs??[])[0]??"").toContain("둘 중 하나를 고르면");
+    expect((workVsBusiness?.paragraphs??[])[0]??"").toMatch(/조직 안에서 역할과 권한|직장.*사업/);
     for(const label of [
       "강점으로 쓰일 때는","반대로 부담이 커지면","실제 결과로 이어지는 모습은","실천 기준으로는",
       "다른 장면에서는","다른 선택과 비교할 때는","추가 관점으로는","조금 더 구체적으로 좁혀 보면",
