@@ -54,6 +54,7 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
       legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
     const part=customerPart(remappedPartNumber,legacyPart.title);
     let title=page.title;
+    if(page.id==="book-007")title="내가 마음을 정하는 순서";
     if(page.id==="book-047"){
       if(options.relationshipStatus==="SINGLE")title="미래 배우자는 어떤 사람일까";
       else if(options.relationshipStatus==="DATING")title="현재 연인에게 끌리는 이유";
