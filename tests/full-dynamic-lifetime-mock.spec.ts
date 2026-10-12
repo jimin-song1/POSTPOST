@@ -31,8 +31,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR,relationshipStatus:"SINGLE"}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "성격과 기본 성향","일주와 오행","직업운·학업운","재물운","연애운·결혼운·자녀운","건강운","귀인운",
-      "신살 · 특별하게 드러나는 성향","십이운성 · 시기마다 달라지는 모습","십성 · 내가 일·돈·사람을 다루는 방식","앞으로 5년","변화가 커지는 시기","대운 · 10년 단위 큰 흐름","총정리"
+      "나는 어떤 존재인가","일주와 오행","직업운 · 학업운","재물운","연애운 · 결혼운 · 자녀운","건강운","귀인운",
+      "신살","십이운성","십성","연운 · 앞으로 5년","삼재 · 변화운","대운","총정리"
     ]);
     expect(book.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(true);
     expect(book.sections.some(section=>section.title==="어디에서 인연이 시작되기 쉬울까")).toBe(false);
