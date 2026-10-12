@@ -72,6 +72,18 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(RULE.promptVersion).toBe("interpretation-prompt-v5");
   });
 
+  it("uses customer-facing lifetime chapter and subsection titles",()=>{
+    const book=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"EXPECTING"});
+    expect(book.parts.find(part=>part.partNumber==="01")?.title).toBe("나는 어떤 존재인가");
+    expect(book.parts.find(part=>part.partNumber==="10")?.title).toBe("십성");
+    expect(book.parts.find(part=>part.partNumber==="11")?.title).toBe("연운 · 앞으로 5년");
+    expect(book.parts.find(part=>part.partNumber==="12S")?.title).toBe("삼재 · 변화운");
+    expect(book.sections.find(section=>section.id==="legacy-book-009")?.title).toBe("낯선 곳·일·가까운 사람 앞에서");
+    expect(book.sections.find(section=>section.id==="legacy-book-011")?.partNumber).toBe("03");
+    expect(book.sections.find(section=>section.id==="legacy-book-036")?.title).toBe("돈을 쓸 때 가장 먼저 보는 것");
+    expect(book.sections.find(section=>section.id==="legacy-book-096")?.title).toBe("내 안에서 가장 자주 쓰는 힘");
+  });
+
   it("locks customer-reality branching and life-stage timing rules",async()=>{
     expect(LIFETIME_INTERPRETATION_PLANNER_PROMPT).toContain("DAEUN은 동일한 카테고리 이름을 연령과 무관하게 번역하지 마라");
     expect(LIFETIME_INTERPRETATION_PLANNER_PROMPT).toContain("YEAR_1~YEAR_5는 같은 카테고리가 연속으로 1위여도 같은 해로 쓰지 마라");
@@ -279,7 +291,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(allText).not.toMatch(/(?:^|\n\n)낮 시간 활동(?:$|\n\n)/);
     expect(allText).not.toMatch(/(?:^|\n\n)편안한 호흡(?:$|\n\n)/);
 
-    const overview=result.report.sections.find(section=>section.evidenceGroup==="YEARLY_OVERVIEW"&&section.title==="앞으로 5년");
+    const overview=result.report.sections.find(section=>section.evidenceGroup==="YEARLY_OVERVIEW"&&section.title==="앞으로 5년의 흐름");
     expect(overview).toBeTruthy();
     for(let offset=0;offset<5;offset++){
       const target=String(year+offset),count=(overview!.body.match(new RegExp(target+"년","g"))??[]).length;
