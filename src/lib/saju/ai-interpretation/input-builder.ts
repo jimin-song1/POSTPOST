@@ -164,7 +164,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
     fact("CHILD:HOUR_PILLAR","CHILD",analysis.pillars.hour),fact("CHILD:HOUR_STAGE","CHILD",analysis.twelveStages.value?.stages.hour),
     fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
   const birthYear=Number(analysis.birthInput.birthDate.slice(0,4)),currentAge=Number.isFinite(birthYear)?Math.max(0,currentYear-birthYear):0;
-  const ageBounds=(ageRange:string)=>{const values=ageRange.match(/\d+(?:\.\d+)?/g)?.map(Number)??[];return{start:values[0]??0,end:values[1]??values[0]??0};};
+  const ageBounds=(ageRange:string)=>{const values=Array.from(ageRange.matchAll(/(\d+(?:\.\d+)?)세/g),match=>Number(match[1]));return{start:values[0]??0,end:values[1]??values[0]??0};};
   const childPeriods=[...children.daeunPeriods]
     .filter(row=>{const ages=ageBounds(row.ageRange);return ages.end>=Math.max(18,currentAge);})
     .sort((a,b)=>{
