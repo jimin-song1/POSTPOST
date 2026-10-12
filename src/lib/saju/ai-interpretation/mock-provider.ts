@@ -1953,7 +1953,7 @@ function coreIdentityConsultation(row:Row,facts:ConsultationFacts):string[]|null
   const spine=personalitySpine(facts);
   const family=dominantFamily(facts);
   const openingScene=family==="비겁"
-    ?"누가 '이게 더 낫다'고 말해도 바로 따라가는 편은 아니에요. 왜 그래야 하는지 본인이 이해가 돼야 마음이 움직입니다."
+    ?"누가 '이게 더 낫다'고 말해도 바로 따라가지는 않아요. 본인도 그 이유가 납득돼야 움직이는 쪽이에요."
     :family==="식상"
       ?"생각이 생기면 머릿속에서만 정리하는 것보다 한번 말해보거나 직접 만들어보면서 답을 찾는 쪽에 가까워요."
       :family==="재성"
