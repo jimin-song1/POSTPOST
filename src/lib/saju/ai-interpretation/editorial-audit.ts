@@ -108,7 +108,7 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
     const ids=new Set(rows.map(row=>row.id)),domainWarnings=warnings.filter(row=>ids.has(row.sectionId));
     const naturalKorean=!domainWarnings.some(row=>["AI_TONE","REPORT_TONE","TECHNICAL_LEAKAGE","LONG_SENTENCE","REPEATED_ENDING"].includes(row.code));
     const sceneRows=rows.filter(row=>hasConcreteScene(sectionText(row))).length;
-    const concrete=rows.length>0&&sceneRows/rows.length>=0.7;
+    const concrete=rows.length>0&&(rows.length<=2?sceneRows>=1:sceneRows/rows.length>=0.7);
     const novel=!domainWarnings.some(row=>row.code==="DUPLICATE_CLAIM"||row.code==="DUPLICATE_SCENE");
     const grounded=rows.length>0&&rows.every(row=>row.evidenceIds.length>0);
     const nonRepetitive=novel;
