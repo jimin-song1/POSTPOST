@@ -715,6 +715,17 @@ function uniqueYearSnapshots(rows:FortuneSnapshot[]){
     .sort(([a],[b])=>a-b)
     .map(([,bucket])=>[...bucket].sort((a,b)=>duration(b)-duration(a)||a.synthesisId.localeCompare(b.synthesisId))[0]);
 }
+function uniqueMonthSnapshots(rows:FortuneSnapshot[]){
+  const grouped=new Map<number,FortuneSnapshot[]>();
+  for(const row of rows){
+    if(row.month==null)continue;
+    const bucket=grouped.get(row.month)??[];
+    bucket.push(row);grouped.set(row.month,bucket);
+  }
+  return Array.from(grouped.entries())
+    .sort(([a],[b])=>a-b)
+    .map(([,bucket])=>[...bucket].sort((a,b)=>b.activationScore-a.activationScore||b.favorabilityScore-a.favorabilityScore||a.synthesisId.localeCompare(b.synthesisId))[0]);
+}
 function categoryLifeSentence(label:string){
   if(label==="재물")return"돈의 출입·수입 구조·큰 지출처럼 재물 선택이 많아지기 쉽습니다.";
   if(label==="사업")return"사업·부수입·고객·판매처럼 시장 반응을 직접 확인할 일이 늘기 쉽습니다.";
@@ -3265,8 +3276,8 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
   }
 
   if(group==="MONTHLY"){
-    const monthly=fortuneSnapshots(input,row)
-      .filter(snapshot=>snapshot.synthesisId.includes("WOLUN-")&&snapshot.month!=null)
+    const monthly=uniqueMonthSnapshots(fortuneSnapshots(input,row)
+      .filter(snapshot=>snapshot.synthesisId.includes("WOLUN-")&&snapshot.month!=null))
       .sort((a,b)=>b.activationScore-a.activationScore||b.favorabilityScore-a.favorabilityScore||((a.month??0)-(b.month??0)));
     const top=monthly.slice(0,3);
     return top.length?[
