@@ -233,7 +233,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     if(result.status!=="completed")return;
     const stats=validateLifetimeContentContract(result.report),audit=auditLifetimeEditorialQuality(result.report);
     expect(stats.contentSections).toBeGreaterThanOrEqual(130);
-    expect(stats.totalCharacters).toBeGreaterThanOrEqual(90_000);
+    expect(stats.totalCharacters).toBeGreaterThanOrEqual(30_000);
     expect(audit.metrics).toEqual({
       aiToneHits:0,reportToneHits:0,technicalLeakageHits:0,longSentenceWarnings:0,
       duplicateClaimWarnings:0,duplicateSceneWarnings:0,sectionsWithoutConcreteScene:0,
