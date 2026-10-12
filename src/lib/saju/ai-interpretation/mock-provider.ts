@@ -3193,9 +3193,9 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
   ];
 
   if(group==="YEARLY_OVERVIEW"&&/^앞으로 5년$/.test(title))return snapshots.length?[
-    "앞으로 5년은 한 덩어리로 좋다 나쁘다를 말하기보다 해마다 중심이 어디로 옮겨가는지를 보는 게 중요합니다.",
-    ...snapshots.slice(0,5).map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");return (snapshot.year+"년은 "+(active?active.label+" 쪽 움직임이 가장 크고":"여러 분야가 비슷하게 움직이고")+(support&&(!active||support.key!==active.key)?", "+support.label+" 쪽은 상대적으로 도움을 받기 쉽습니다.":". ")+(active?categoryLifeSentence(active.label):"실제 선택이 어느 분야에 몰리는지 확인하는 해입니다."));}),
-    "이 다섯 해를 이어서 보면 먼저 벌어지는 일, 그다음에 돈이나 자리로 굳어지는 일, 마지막에 남길 것을 정하는 순서가 보일 수 있습니다."
+    "앞으로 5년은 한 덩어리로 좋다 나쁘다를 말하기보다, 같은 분야가 이어지더라도 해마다 역할이 어떻게 달라지는지를 보는 게 중요합니다.",
+    ...snapshots.slice(0,5).map((snapshot,index)=>{const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");return (snapshot.year+"년은 "+(active?active.label+" 쪽 움직임이 가장 큽니다. ":"여러 분야가 비슷하게 움직입니다. ")+yearlyPhaseSentence(snapshot,index,snapshots.slice(0,5))+(support&&(!active||support.key!==active.key)?" 도움은 "+support.label+" 쪽에서 받기 쉽습니다.":""));}),
+    "그래서 같은 사업운·재물운이 연속으로 잡혀도 똑같은 해로 보지 않습니다. 시작하는 해, 굳히는 해, 남기는 해를 나눠서 읽는 게 핵심입니다."
   ]:[
     "앞으로 5년은 해마다 움직이는 분야가 다를 수 있으므로 한 해씩 따로 보는 편이 좋습니다.",
     "각 해의 일·돈·관계·학업·변화 점수를 비교해 중심 분야를 정합니다.",
@@ -3232,13 +3232,15 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
 
   if(/^YEAR_[1-5]$/.test(group)){
     const snapshot=snapshots[0]??null;
+    const allYears=uniqueYearSnapshots(fortuneSnapshots(input,{...row,evidenceIds:input.evidence.map(item=>item.id)}).filter(item=>item.year!=null))
+      .filter(item=>item.year!=null&&item.year>=(input.minimalContext.requestedYear??0)&&item.year<=(input.minimalContext.requestedYear??0)+4);
     const year=snapshot?.year??context.seunYear;
     const active=snapshot?topSnapshotCategory(snapshot,"activity"):null,support=snapshot?topSnapshotCategory(snapshot,"support"):null;
-    const index=snapshot?snapshots.findIndex(row=>row.year===snapshot.year):0;
+    const index=snapshot?Math.max(0,allYears.findIndex(item=>item.year===snapshot.year)):0;
     return[
       (year?year+"년은 ":"이 해는 ")+(active?active.label+" 쪽 움직임이 가장 크게 잡힙니다. ":"여러 분야가 비슷하게 움직입니다. ")+(active?categoryLifeSentence(active.label):""),
-      snapshot?yearlyPhaseSentence(snapshot,Math.max(0,index),snapshots):categoryActionSentence(active?.label??""),
-      snapshot?yearlyRelativeSentence(snapshot,snapshots):"",
+      snapshot?yearlyPhaseSentence(snapshot,index,allYears):categoryActionSentence(active?.label??""),
+      snapshot?yearlyRelativeSentence(snapshot,allYears):"",
       support?("도움을 받기 쉬운 쪽은 "+support.label+"입니다. "+(active&&support.key===active.key?"움직이는 분야와 결과가 붙기 쉬운 분야가 겹칩니다.":"가장 바쁜 분야와 유리한 분야가 달라 힘을 나눠 쓰는 게 중요합니다.")):"도움 정도는 실제 움직임과 따로 봅니다.",
       context.seunPillar?fortunePillarSentence(context.seunPillar):"그해의 세운 글자는 원래 사주와 만나 어느 분야의 움직임을 키우는지 함께 봅니다.",
       favor&&activation?("해 전체로 보면 "+favor+", 활동량은 "+activation+"에 가깝습니다."):favor?("해 전체 도움 정도는 "+favor+"에 가깝습니다."):activation?("실제 활동량은 "+activation+"에 가깝습니다."):""
