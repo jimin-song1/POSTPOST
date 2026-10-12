@@ -756,7 +756,7 @@ function lifeStageForSnapshot(snapshot:FortuneSnapshot):LifeStage{
   return"ELDER";
 }
 function lifeStageForAgeRange(ageRange:string):LifeStage{
-  const values=Array.from(ageRange.matchAll(/\d+(?:\.\d+)?/g),match=>Number(match[0])).filter(Number.isFinite);
+  const values=Array.from(ageRange.matchAll(/(\d+(?:\.\d+)?)세/g),match=>Number(match[1])).filter(Number.isFinite);
   const start=values[0]??0,end=values[1]??start,mid=(start+end)/2;
   if(mid<13)return"CHILD";
   if(mid<22)return"TEEN";
@@ -2709,8 +2709,8 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
   if(/자녀운이 크게 움직이는 시기/.test(title)){
     const top=periods.slice(0,3);
     if(!top.length)return[
-      "자녀운의 시기는 한 해의 사건을 단정하기보다 가족과 돌봄의 역할이 어느 시기에 커지는지를 보는 편이 맞습니다.",
-      "현재 계산에서는 특정 구간을 강하게 단정할 만큼 자녀운 시기 근거가 충분하지 않아 생활 변화와 함께 보는 편이 좋습니다."
+      "자녀운의 시기는 한 해의 사건을 단정하는 항목이 아니라, 가족과 돌봄의 역할이 어느 시기에 커지는지를 살펴보는 항목입니다.",
+      "특정 구간을 강하게 말할 만큼 근거가 충분하지 않을 때는 억지로 시기를 만들지 않고 실제 가족 변화와 함께 보는 게 좋습니다."
     ];
     return[
       "자녀운의 시기는 임신·출산 자체를 맞히는 표가 아니라, 자녀·돌봄·가족 역할이 생활에서 더 크게 느껴지기 쉬운 구간을 보는 것입니다.",
