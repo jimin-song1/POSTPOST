@@ -12,6 +12,7 @@ import { OpenAIInterpretationProvider } from "@/lib/saju/ai-interpretation/opena
 import { MockInterpretationProvider as DeterministicMockInterpretationProvider } from "@/lib/saju/ai-interpretation/mock-provider";
 import { auditLifetimeEditorialQuality } from "@/lib/saju/ai-interpretation/editorial-audit";
 import { validateLifetimeContentContract } from "@/lib/saju/ai-interpretation/lifetime-content-contract";
+import { buildDynamicLifetimeBook } from "@/rules/lifetime-report.v4";
 import { InterpretationProviderError,InterpretationProviderTimeoutError } from "@/lib/saju/ai-interpretation/provider";
 import type { InterpretationInput,InterpretationProvider,InterpretationProviderRequest,InterpretationProviderResponse,
   InterpretationReportType,StructuredInterpretation } from "@/types/ai-interpretation";
@@ -69,6 +70,49 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(a).toEqual(b);expect(a.evidence.map(row=>row.id)).toEqual(b.evidence.map(row=>row.id));
     expect(a.evidence.some(row=>row.id.startsWith("CATEGORY:"))).toBe(true);
     expect(RULE.promptVersion).toBe("interpretation-prompt-v5");
+  });
+
+  it("locks customer-reality branching and life-stage timing rules",async()=>{
+    expect(LIFETIME_INTERPRETATION_PLANNER_PROMPT).toContain("DAEUN은 동일한 카테고리 이름을 연령과 무관하게 번역하지 마라");
+    expect(LIFETIME_INTERPRETATION_PLANNER_PROMPT).toContain("YEAR_1~YEAR_5는 같은 카테고리가 연속으로 1위여도 같은 해로 쓰지 마라");
+
+    const marriedBook=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN"});
+    expect(marriedBook.sections.some(row=>row.title==="배우자에게 중요하게 보는 것")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="미래 배우자는 어떤 사람일까")).toBe(false);
+    expect(marriedBook.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
+
+    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
+    expect(input.minimalContext.childStatus).toBe("HAS_CHILDREN");
+    expect(input.evidence.some(row=>row.id==="CONTEXT:CHILD_STATUS")).toBe(true);
+
+    const provider=new DeterministicMockInterpretationProvider();
+    const relationship=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
+    expect(relationship.status).toBe("completed");
+    if(relationship.status==="completed"){
+      const text=relationship.report.sections.map(row=>row.body).join("\n");
+      expect(text).not.toContain("미래 배우자");
+      expect(text).not.toContain("배우자 자리인 일지의 분위기를 외형으로 풀면");
+      expect(relationship.report.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
+    }
+
+    const timing=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"11"});
+    expect(timing.status).toBe("completed");
+    if(timing.status==="completed"){
+      const monthly=timing.report.sections.find(row=>row.evidenceGroup==="MONTHLY");
+      expect(monthly).toBeTruthy();
+      const months=(monthly?.paragraphs?.[0]??"").match(/\d{1,2}월/g)??[];
+      expect(months.length).toBeGreaterThanOrEqual(1);
+      expect(new Set(months).size).toBe(months.length);
+    }
+
+    const daeun=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"13"});
+    expect(daeun.status).toBe("completed");
+    if(daeun.status==="completed"){
+      const first=daeun.report.sections.find(row=>row.evidenceGroup==="DAEUN_1");
+      expect(first).toBeTruthy();
+      expect(first?.body).not.toContain("사업·부수입·고객·판매");
+      expect(first?.body).not.toContain("자격증·전문 공부·새 기술");
+    }
   });
 
   it("plans LIFETIME_GENERAL claims before writing the customer narrative",async()=>{
