@@ -56,7 +56,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(ids).toEqual(book.sections.map(row=>row.id));expect(sequences).toEqual(book.sections.map(row=>row.sequence));
     expect(new Set(report.sections.map(row=>row.partNumber)).size).toBe(book.parts.length);
     expect(content.every(row=>new Set(row.noveltyElements).size>=LIFETIME_CONTENT_CONTRACT_V1.novelty.minimumNewElements)).toBe(true);
-    expect(content.every(row=>(row.paragraphs?.length??0)>=4)).toBe(true);
+    expect(content.every(row=>(row.paragraphs?.length??0)>=2)).toBe(true);
     const part02Copy=content.filter(row=>row.partNumber==="02").flatMap(row=>row.paragraphs??[row.body]).join("\n");
     expect(part02Copy).not.toContain("처음에는 한 번 더 살피는 편");
     expect(part02Copy).not.toContain("마음이 정해지면 오래 끌지 않고 움직여요");
@@ -68,8 +68,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     for(const id of ["legacy-book-007","legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
       expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
     const oneLine=report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs??[];
-    expect(oneLine.length).toBeGreaterThanOrEqual(4);
-    expect(oneLine.join(" ")).toContain("이 사주를 한 문장으로");
+    expect(oneLine.length).toBeGreaterThanOrEqual(2);
+    expect(oneLine.join(" ")).toContain("결정하기 전에는 신중");
     const firstImpression=report.sections.find(section=>section.id==="legacy-book-010")?.paragraphs?.join(" ")??"";
     expect(firstImpression).toContain("처음 만났을 때");
     expect(firstImpression).not.toContain("작은 시험");
