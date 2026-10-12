@@ -2671,7 +2671,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
   const bondText=bondLevel==="VERY_STRONG"?"자녀와의 인연이 비교적 또렷하게 잡히는 편입니다."
     :bondLevel==="STRONG"?"자녀와의 인연이 생활에서 중요한 축으로 자리 잡기 쉬운 편입니다."
     :bondLevel==="MODERATE"?"자녀 인연은 한쪽으로 과하게 치우치기보다 생활 흐름 속에서 자연스럽게 이어지는 편입니다."
-    :"자녀 문제를 삶의 중심으로 단정하기보다 실제 관계와 돌봄이 생겼을 때의 반응을 함께 보는 편이 맞습니다.";
+    :"자녀 인연 자체를 강하게 단정하기보다, 실제 돌봄과 가족 역할이 생겼을 때 어떤 관계를 만드는지가 더 중요하게 잡힙니다.";
   const expression=asText(parenting?.expression),guidance=asText(parenting?.guidance),conflict=asText(parenting?.conflict);
   const expressionText=expression==="EXPRESSIVE"?"마음을 말과 행동으로 비교적 바로 표현하는 편"
     :expression==="PRACTICAL"?"필요한 걸 챙기고 해결해주는 행동으로 마음을 표현하는 편"
@@ -2694,15 +2694,15 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
         :"자녀운은 아이가 반드시 생긴다고 단정하는 항목이 아니라, 자녀와 돌봄의 역할이 들어왔을 때 어떤 흐름이 강해지는지를 보는 부분입니다.",
     bondText,
     countLabel?("자녀 인연의 폭을 보는 경향값은 '"+countLabel+"' 쪽입니다. 다만 이 값은 실제 자녀 수를 맞히는 숫자가 아니라 인연이 한쪽에 집중되는지, 비교적 폭넓게 이어지는지를 설명하는 참고에 가깝습니다."):"자녀 수는 사주만으로 정확히 단정하지 않습니다.",
-    strengths[0]?("부모 역할에서 먼저 살아날 수 있는 장점은 "+strengths[0]):"부모 역할에서는 꾸준히 챙기고 생활을 안정시키는 힘이 장점으로 쓰이기 쉽습니다.",
-    attention[0]?("반대로 오래 신경 써야 할 부분은 "+attention[0]):"잘해주려는 마음이 커질수록 아이가 직접 해볼 몫까지 가져오지 않는 게 중요합니다."
+    strengths[0]?("이 사주에서 부모 역할의 장점으로 잡힌 내용은 '"+strengths[0]+"'입니다."):"부모 역할에서는 꾸준히 챙기고 생활을 안정시키는 힘이 장점으로 쓰이기 쉽습니다.",
+    attention[0]?("주의해서 볼 내용은 '"+attention[0]+"'입니다."):"잘해주려는 마음이 커질수록 아이가 직접 해볼 몫까지 가져오지 않는 게 중요합니다."
   ];
 
   if(/아이와 맺는 관계/.test(title))return[
     "아이와의 관계에서는 "+expressionText+"이고, "+guidanceText+"에 가깝습니다.",
     "갈등이 생겼을 때는 "+conflictText+"으로 나타날 가능성이 큽니다.",
-    strengths[1]?("관계에서 잘 살아나는 힘은 "+strengths[1]):"약속을 지키고 필요한 순간에 꾸준히 옆에 있어주는 모습이 아이에게 안정감으로 남기 쉽습니다.",
-    attention[1]?("다만 "+attention[1]):"다만 해결책을 빨리 주는 것보다 아이가 자기 감정을 먼저 말할 시간을 남겨두는 게 관계를 더 편하게 만들 수 있습니다.",
+    strengths[1]?("아이와의 관계에서 잘 살아나는 힘은 '"+strengths[1]+"'입니다."):"약속을 지키고 필요한 순간에 꾸준히 옆에 있어주는 모습이 아이에게 안정감으로 남기 쉽습니다.",
+    attention[1]?("다만 '"+attention[1]+"' 부분은 오래 신경 써서 보는 게 좋습니다."):"다만 해결책을 빨리 주는 것보다 아이가 자기 감정을 먼저 말할 시간을 남겨두는 게 관계를 더 편하게 만들 수 있습니다.",
     "결국 아이와 가까워지는 핵심은 완벽하게 챙기는 데 있지 않고, 도움이 필요한 순간과 스스로 해볼 순간을 구분하는 데 있습니다."
   ];
 
@@ -2717,7 +2717,11 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
       ...top.map((period,index)=>{
         const ageRange=asText(period.ageRange),level=asText(period.activationLevel),themes=Array.isArray(period.themes)?period.themes.map(asText).filter(Boolean):[];
         const levelText=level==="VERY_HIGH"?"움직임이 매우 큰 편":level==="HIGH"?"움직임이 큰 편":level==="MODERATE"?"움직임이 어느 정도 생기는 편":"비교적 잔잔한 편";
-        return (index===0?"가장 먼저 눈에 띄는 구간은 ":"그다음으로 보는 구간은 ")+ageRange+"입니다. 이때는 자녀·가족 역할의 "+levelText+(themes.length?"이고, "+themes.join(" · ")+" 같은 주제가 함께 잡힙니다.":".");
+        const readableThemes=themes.map(theme=>theme==="표현·성장 역할 활성"?"아이와 함께 성장하고 돌보는 역할"
+          :theme==="자녀 영역과의 관계 변화"?"자녀·가족 관계의 변화"
+          :theme==="생활 변화가 큰 흐름"?"생활환경과 역할의 큰 변화"
+          :theme==="가족 역할의 안정적 흐름"?"가족 역할이 자리를 잡는 흐름":theme);
+        return (index===0?"현재와 앞으로 먼저 눈에 띄는 구간은 ":"그다음으로 보는 구간은 ")+ageRange+"입니다. 이때는 자녀·가족 역할의 "+levelText+(readableThemes.length?"이고, "+readableThemes.join(" · ")+"이 함께 나타날 수 있습니다.":".");
       }),
       "이 구간이 곧 출산 시점을 뜻하는 것은 아닙니다. 실제 임신·출산 여부와 시기는 건강 상태와 현실 계획을 우선하고, 여기서는 가족 역할이 커지는 큰 흐름으로만 보는 게 맞습니다."
     ];
