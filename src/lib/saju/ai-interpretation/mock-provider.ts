@@ -2611,7 +2611,7 @@ function relationshipConsultation(row:Row,facts:ConsultationFacts,input:Interpre
   ];
 
   if(/애정 표현/.test(title))return[
-    "애정 표현은 말만 많이 하는 방식보다 행동으로 챙기는 쪽에 가깝습니다. 필요한 것을 기억하고, 계획을 같이 세우고, 실제로 시간을 내는 식입니다.",
+    "마음을 표현할 때는 말보다 행동이 먼저 나오는 쪽에 가깝습니다. 필요한 것을 기억하고, 계획을 같이 세우고, 실제로 시간을 내는 식입니다.",
     "본인은 행동으로 충분히 표현했다고 생각해도 상대는 말로 확인받고 싶을 수 있습니다. 이 차이를 모르면 서로 좋아하면서도 서운함이 생길 수 있습니다.",
     "반대로 상대가 말은 잘하지만 행동이 따라오지 않으면 신뢰가 빠르게 떨어질 수 있습니다.",
     "그래서 가까운 관계에서는 '나는 이렇게 하고 있으니 알겠지'보다 짧게라도 마음을 말해주는 편이 좋습니다.",
@@ -3234,7 +3234,7 @@ function timingConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
   ];
 
   if(group==="YEARLY_OVERVIEW"&&/^앞으로 5년$/.test(title))return snapshots.length?[
-    "앞으로 5년은 한 덩어리로 좋다 나쁘다를 말하기보다, 같은 분야가 이어지더라도 해마다 역할이 어떻게 달라지는지를 보는 게 중요합니다.",
+    "같은 분야가 몇 해 이어진다고 해도 매년 같은 의미는 아닙니다. 무엇을 시작하는지, 무엇을 굳히고 남기는지가 해마다 달라집니다.",
     ...snapshots.slice(0,5).map((snapshot,index)=>{const active=topSnapshotCategory(snapshot,"activity"),support=topSnapshotCategory(snapshot,"support");return (snapshot.year+"년은 "+(active?active.label+" 쪽 움직임이 가장 큽니다. ":"여러 분야가 비슷하게 움직입니다. ")+yearlyPhaseSentence(snapshot,index,snapshots.slice(0,5))+(support&&(!active||support.key!==active.key)?" 도움은 "+support.label+" 쪽에서 받기 쉽습니다.":""));}),
     "그래서 같은 사업운·재물운이 연속으로 잡혀도 똑같은 해로 보지 않습니다. 시작하는 해, 굳히는 해, 남기는 해를 나눠서 읽는 게 핵심입니다."
   ]:[
@@ -3346,7 +3346,7 @@ function changeConsultation(row:Row,facts:ConsultationFacts,input:Interpretation
     ];
 
     if(/사람과 일이 한쪽으로 몰리는 때|서로 모이며 일이 커지는 때/.test(title))return[
-      "사람과 일이 한쪽으로 몰리는 때에는 잘 맞는 프로젝트나 관계 하나에 집중력이 크게 올라갈 수 있습니다.",
+      "잘 맞는 프로젝트나 관계가 생기면 여러 곳에 힘을 나누기보다 한쪽에 집중력이 크게 올라갈 수 있습니다.",
       facts.relationCounts.combination?"사람이나 목표와 연결되면 집중력이 강해지는 편이라, 이 시기에는 한 관계나 일에 에너지가 빠르게 모일 수 있습니다.":"평소에는 여러 일을 나눠 하더라도 특정 시기에는 한쪽에 집중력이 크게 몰릴 수 있습니다.",
       "잘 쓰이면 협업과 계약, 몰입으로 이어지지만 한 가지에 너무 많이 묶이면 다른 선택지가 잘 보이지 않을 수 있습니다.",
       "무엇이 커지는지만 보지 말고 그만큼 무엇을 줄여야 하는지도 같이 보는 편이 좋습니다."
