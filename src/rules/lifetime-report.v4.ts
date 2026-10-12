@@ -198,7 +198,7 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
       legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
     const part=customerPart(remappedPartNumber,legacyPart.title);
     let title=CUSTOMER_SECTION_TITLES[page.id]??page.title;
-    if(page.id==="book-007")title="내가 마음을 정하는 순서";
+    if(page.id==="book-007")title="결정을 내릴 때의 나";
     if(page.id==="book-044"){
       if(options.relationshipStatus==="DATING")title="연애할 때의 나";
       else if(options.relationshipStatus==="MARRIED")title="부부 관계에서의 나";
