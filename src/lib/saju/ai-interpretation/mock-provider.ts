@@ -3449,7 +3449,14 @@ function daeunConsultation(row:Row,facts:ConsultationFacts,input:InterpretationI
 
   if(group==="DAEUN_OVERVIEW"&&/평생 10년 흐름 한눈에 보기|평생 대운/.test(title))return snapshots.length?[
     "대운을 한눈에 보면 시기마다 중심 분야가 어디로 옮겨가는지 볼 수 있습니다.",
-    ...snapshots.map(snapshot=>{const active=topSnapshotCategory(snapshot,"activity"),stage=lifeStageForSnapshot(snapshot);return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운은 "+(active?ageAwareCategoryLabel(active.label,stage)+" 쪽 움직임이 상대적으로 큽니다.":"여러 분야가 비슷하게 움직입니다.");}),
+    ...snapshots.map((snapshot,index)=>{
+      const active=topSnapshotCategory(snapshot,"activity"),stage=lifeStageForSnapshot(snapshot),label=active?ageAwareCategoryLabel(active.label,stage):"생활 전반";
+      if(!active)return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운은 한쪽에 치우치기보다 여러 경험이 함께 들어오는 구간입니다.";
+      if(index%4===0)return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운에서는 "+label+" 쪽 움직임이 먼저 눈에 띕니다.";
+      if(index%4===1)return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운의 중심은 "+label+" 쪽에 더 가깝습니다.";
+      if(index%4===2)return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운으로 넘어가면 "+label+"의 비중이 이전보다 커질 수 있습니다.";
+      return snapshot.ageRange+" · "+snapshot.daeunPillar+" 대운은 "+label+"을 생활의 주요 축으로 보게 되는 구간입니다.";
+    }),
     "어린 시절 구간은 사건을 기억하는 장이 아니라 가족·학교 환경 속에서 어떤 적응 습관이 만들어졌는지 보는 배경이고, 성인 이후부터는 직업·재물·관계의 실제 선택과 더 직접적으로 연결해서 봅니다."
   ]:[
     "대운은 각 나이 구간마다 일·돈·관계의 중심이 어떻게 바뀌는지를 보는 흐름표입니다.",
