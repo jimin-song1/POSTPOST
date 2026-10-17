@@ -21,9 +21,9 @@ export const NARRATIVE_EDITORIAL_QA_V1={
     {id:"WORK",label:"직업·사업·학업",groups:["WORK"],timingRequired:false},
     {id:"WEALTH",label:"재물",groups:["WEALTH"],timingRequired:false},
     {id:"RELATIONSHIP",label:"연애·결혼",groups:["RELATIONSHIP"],timingRequired:false},
-    {id:"CHILDREN",label:"자녀",groups:["CHILDREN"],timingRequired:true},
+    {id:"FAMILY",label:"가족",groups:["FAMILY","CHILDREN"],timingRequired:false},
     {id:"SAMJAE",label:"삼재",groups:["SAMJAE"],timingRequired:true},
-    {id:"YEARLY",label:"향후 5년",groups:["YEARLY_OVERVIEW","YEAR_1","YEAR_2","YEAR_3","YEAR_4","YEAR_5","MONTHLY"],timingRequired:true},
+    {id:"YEARLY",label:"향후 5년",groups:["YEARLY_OVERVIEW","YEAR_1","YEAR_2","YEAR_3","YEAR_4","YEAR_5","YEAR_6","MONTHLY"],timingRequired:true},
     {id:"DAEUN",label:"대운",groups:["DAEUN_OVERVIEW","DAEUN_1","DAEUN_2","DAEUN_3","DAEUN_4","DAEUN_5","DAEUN_6","DAEUN_7","DAEUN_8","DAEUN_9","DAEUN_10"],timingRequired:true},
     {id:"SYNTHESIS",label:"최종 종합",groups:["SYNTHESIS"],timingRequired:false}
   ]

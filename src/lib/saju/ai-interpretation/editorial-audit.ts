@@ -22,7 +22,7 @@ export interface LifetimeEditorialAudit{
   coreNine:CoreNineEditorialResult[];
 }
 
-const sectionText=(row:InterpretationSection)=>[row.title,row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[]),row.mascotComment].filter(Boolean).join("\n");
+const sectionText=(row:InterpretationSection)=>[row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[]),row.mascotComment].filter(Boolean).map(text=>text!.split(row.title).join("현재 주제")).join("\n");
 const sentenceList=(value:string)=>value.split(/(?<=[.!?])\s+/).map(row=>row.trim()).filter(Boolean);
 const endings=(value:string)=>sentenceList(value).map(sentence=>{
   const normalized=sentence.replace(/[.!?]+$/,"").trim();

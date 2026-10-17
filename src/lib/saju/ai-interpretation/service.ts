@@ -1,7 +1,7 @@
 import type { SajuAnalysis } from "@/types/saju-analysis";
 import type { InterpretationBuildOptions,InterpretationErrorCode,InterpretationProvider,InterpretationResult,StructuredInterpretation } from "@/types/ai-interpretation";
 import { AI_INTERPRETATION_V1 as RULE } from "@/rules/ai-interpretation.v1";
-import { INTERPRETATION_JSON_SCHEMA,LIFETIME_INTERPRETATION_PLAN_JSON_SCHEMA,lifetimeInterpretationPlanSchema,structuredInterpretationSchema,type LifetimeInterpretationPlan } from "./schema";
+import { interpretationSchemaForPlan,INTERPRETATION_JSON_SCHEMA,LIFETIME_INTERPRETATION_PLAN_JSON_SCHEMA,lifetimeInterpretationPlanSchema,structuredInterpretationSchema,type LifetimeInterpretationPlan } from "./schema";
 import { INTERPRETATION_SYSTEM_PROMPT,LIFETIME_INTERPRETATION_PLANNER_PROMPT,LIFETIME_REPORT_SYSTEM_ADDENDUM } from "./prompt";
 import { AnalysisNotCompletedError,buildInterpretationInput,InterpretationInputError } from "./input-builder";
 import { GroundingValidationError,validateGrounding } from "./grounding";
@@ -60,6 +60,7 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
   try{input=buildInterpretationInput(analysis,options);}catch(error){
     if(error instanceof AnalysisNotCompletedError)return failure(error.code,error.message);
     if(error instanceof InterpretationInputError)return failure(error.code,error.message);throw error;}
+  const outputSchema=interpretationSchemaForPlan(input.reportPlan);
   const {analysisHash,cacheKey}=interpretationHashes(input,options.reportType,options.modelConfigVersion);
   const cached=await options.cache?.get(cacheKey);if(cached)return cached;
 
@@ -79,12 +80,12 @@ export async function interpretSajuAnalysis(analysis:SajuAnalysis,provider:Inter
   const systemPrompt=options.reportType==="LIFETIME_GENERAL"
     ?`${INTERPRETATION_SYSTEM_PROMPT}\n\n${LIFETIME_REPORT_SYSTEM_ADDENDUM}\n\n확정된 interpretationPlan JSON:\n${JSON.stringify(plan)}`
     :INTERPRETATION_SYSTEM_PROMPT;
-  let response;try{response=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>});}
+  let response;try{response=await provider.generate({systemPrompt,input,analysisHash,schema:outputSchema});}
   catch(error){return providerFailure(error);}
   const initialNarrativeUsage=response.tokenUsage;
   let checked=validate(response.output,input),repaired=false,repairUsage:{input:number;output:number}|undefined;
   if(!checked.ok){
-    try{const repair=await provider.generate({systemPrompt,input,analysisHash,schema:INTERPRETATION_JSON_SCHEMA as unknown as Record<string,unknown>,
+    try{const repair=await provider.generate({systemPrompt,input,analysisHash,schema:outputSchema,
       repair:{validationError:checked.code,previousOutput:response.output}});response=repair;checked=validate(repair.output,input);repaired=true;repairUsage=repair.tokenUsage;}
     catch(error){return providerFailure(error);}
   }

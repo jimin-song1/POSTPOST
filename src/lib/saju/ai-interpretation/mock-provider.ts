@@ -150,7 +150,7 @@ function profile(row:Row,index:number):DomainProfile{
       scene:`삼재에 해당하는 해에는 자리, 역할, 관계처럼 평소보다 신경 쓸 변화가 겹치는지 먼저 확인합니다. 변화가 많아도 바로 나쁜 해라고 정하지 않고 어떤 선택을 앞두고 있는지부터 살핍니다.`,
       strength:"잘 쓰이면 미리 정리할 것과 새로 시작할 것을 구분하는 계기로 삼을 수 있습니다. 변화를 알고 준비하면 갑작스럽게 끌려가기보다 선택권을 남길 수 있습니다.",
       shadow:"다만 삼재라는 이름만 보고 모든 일을 미루거나 겁부터 내면 실제로 필요한 기회까지 놓칠 수 있습니다. 반대로 변화가 크다는 이유로 무리하게 움직이는 것도 피해야 합니다.",
-      consequence:`${topic}에서는 삼재 단계, 원래 사주의 관계, 당시 10년 흐름과 해의 움직임을 함께 봅니다. 변화 활성도와 유리한 정도는 끝까지 다른 값으로 다룹니다.`,
+      consequence:`${topic}에서는 삼재 단계, 원래 사주의 관계, 당시 십 년 흐름과 해의 움직임을 함께 봅니다. 변화 활성도와 유리한 정도는 끝까지 다른 값으로 다룹니다.`,
       action:"변화가 겹치는 해에는 계약, 이동, 역할 변경처럼 되돌리기 어려운 선택을 한 번 더 점검하세요. 조심한다는 말은 멈추라는 뜻보다 확인 범위를 넓히라는 뜻에 가깝습니다.",
       timing:"들어오는 해, 머무는 해, 정리되는 해의 성격을 나누어 보되 사건을 미리 정해 놓지는 않습니다."
     },
@@ -160,18 +160,18 @@ function profile(row:Row,index:number):DomainProfile{
       scene:`해가 바뀌면 일, 돈, 관계 가운데 먼저 움직이는 영역이 달라질 수 있습니다. 중요한 선택이 생기면 그해의 변화가 큰 부분부터 확인하고 실제 생활에서 무엇을 조정할지 결정합니다.`,
       strength:"잘 쓰이면 움직임이 큰 시기를 준비와 실행의 계기로 바꿀 수 있습니다. 도움이 붙는 영역은 힘을 쓰고, 부담이 큰 영역은 속도를 조절하는 식으로 대응할 수 있습니다.",
       shadow:"다만 변화가 크다는 이유만으로 좋은 해라고 보거나, 부담 신호 하나 때문에 나쁜 해라고 정하면 실제 선택이 단순해집니다. 같은 해 안에서도 분야별 체감은 다를 수 있습니다.",
-      consequence:`${topic}에서는 해당 연도의 두 기운, 태어날 때의 기본 흐름, 당시 10년 흐름을 함께 참고합니다. 사건을 만들기보다 실제로 움직임이 커진 영역의 행동 기준을 정합니다.`,
+      consequence:`${topic}에서는 해당 연도의 두 기운, 태어날 때의 기본 흐름, 당시 십 년 흐름을 함께 참고합니다. 사건을 만들기보다 실제로 움직임이 커진 영역의 행동 기준을 정합니다.`,
       action:"그해에 일이 몰리는 분야 한 곳을 정하고 준비할 것, 바로 움직일 것, 보류할 것을 나눠 보세요. 해석은 선택 순서를 잡는 참고로 쓰는 편이 좋습니다.",
       timing:"연도와 시기 정보는 제공된 계산값 안에서만 사용하며 없는 월이나 사건을 새로 만들지 않습니다."
     },
     DAEUN:{
-      headline:`${topic}, 10년 흐름이 바뀔 때 달라지는 역할`,
-      lead:"10년을 한 줄 점수로 줄이지 않고 환경과 역할의 변화가 어떻게 이어지는지 봅니다.",
-      scene:`10년 흐름이 바뀌는 구간에는 같은 사람도 맡는 역할과 선택 기준이 달라질 수 있습니다. 이전 시기에 익숙했던 방식이 잘 맞지 않으면 먼저 환경을 확인하고 무엇을 유지할지 결정하는 편이 좋습니다.`,
+      headline:`${topic}, 십 년 흐름이 바뀔 때 달라지는 역할`,
+      lead:"십 년을 한 줄 점수로 줄이지 않고 환경과 역할의 변화가 어떻게 이어지는지 봅니다.",
+      scene:`십 년 흐름이 바뀌는 구간에는 같은 사람도 맡는 역할과 선택 기준이 달라질 수 있습니다. 이전 시기에 익숙했던 방식이 잘 맞지 않으면 먼저 환경을 확인하고 무엇을 유지할지 결정하는 편이 좋습니다.`,
       strength:"잘 쓰이면 한 시기의 경험을 다음 시기의 자산으로 넘길 수 있습니다. 익숙한 강점을 그대로 반복하기보다 새 역할에 맞게 쓰는 방식을 바꾸면 흐름 전환을 활용하기 쉽습니다.",
       shadow:"다만 과거에 잘되던 방식만 고집하면 환경이 바뀌었는데도 같은 문제를 되풀이할 수 있습니다. 반대로 변화가 시작됐다고 모든 것을 한 번에 바꾸는 것도 부담이 큽니다.",
       consequence:`${topic}에서는 전반부와 후반부의 체감 차이, 앞 흐름에서 넘어온 과제, 다음 흐름으로 이어질 준비를 함께 봅니다. 재물이나 관계를 단일 점수로 줄이지 않습니다.`,
-      action:"10년 단위의 전환에서는 버릴 것보다 계속 가져갈 강점부터 정하세요. 그다음 새 환경에서 더 이상 맞지 않는 습관 한 가지를 줄이면 변화가 덜 거칠게 느껴집니다.",
+      action:"십 년 단위의 전환에서는 버릴 것보다 계속 가져갈 강점부터 정하세요. 그다음 새 환경에서 더 이상 맞지 않는 습관 한 가지를 줄이면 변화가 덜 거칠게 느껴집니다.",
       timing:"시기별로 도움을 받기 쉬운 정도와 변화가 큰 정도를 따로 보며, 큰 변화가 곧 좋은 결과나 나쁜 결과를 뜻하지는 않습니다."
     },
     SYNTHESIS:{
@@ -411,16 +411,16 @@ const EDITORIAL_ANGLE_BANKS:Record<string,EditorialAngleBank>={
   },
   DAEUN:{
     scenes:[
-      "10년 흐름이 바뀌는 초입에는 맡는 역할이나 주변 환경이 예전과 달라지는지 먼저 확인합니다.",
+      "십 년 흐름이 바뀌는 초입에는 맡는 역할이나 주변 환경이 예전과 달라지는지 먼저 확인합니다.",
       "익숙했던 방식이 잘 맞지 않는 상황에서는 능력을 탓하기 전에 환경이 어떻게 달라졌는지 확인합니다.",
       "새로운 사람과 연결이 늘어나는 시기에는 만남의 수보다 어떤 역할로 만날지 먼저 선택합니다.",
       "책임이 커지는 자리에서는 직접 하는 일과 관리할 일을 나누어 부담이 한곳에 몰리지 않게 합니다.",
       "배운 것을 결과로 바꿔야 하는 시기에는 준비 내용을 정리한 뒤 작은 결과물부터 남깁니다.",
-      "다음 10년으로 넘어가기 전에는 지금까지 잘된 방식 가운데 무엇을 가져갈지 먼저 정리합니다."
+      "다음 십 년으로 넘어가기 전에는 지금까지 잘된 방식 가운데 무엇을 가져갈지 먼저 정리합니다."
     ],
     consequences:[
       "한 시기의 강점이 다음 시기에는 같은 모습으로 통하지 않을 수 있어 쓰는 방식을 바꾸는 유연함이 필요합니다.",
-      "전반부와 후반부의 체감이 달라질 수 있으므로 10년 전체를 한 문장으로 고정하지 않는 편이 좋습니다.",
+      "전반부와 후반부의 체감이 달라질 수 있으므로 십 년 전체를 한 문장으로 고정하지 않는 편이 좋습니다.",
       "환경 변화가 크더라도 도움받을 조건이 함께 있으면 혼자 모든 부담을 떠안을 필요는 없습니다.",
       "역할이 커질수록 실무를 직접 붙잡는 것보다 기준을 세우고 나누는 일이 중요해질 수 있습니다.",
       "이전 시기의 경험은 버리는 것이 아니라 새 환경에서 다른 방식으로 쓰는 자산이 될 수 있습니다.",
@@ -552,7 +552,7 @@ function editorialAngle(row:Row,index:number){
 
 function shouldIncludeTimingNote(row:Row){
   const topic=row.topic??row.title,group=row.evidenceGroup??"";
-  if(group==="CHILDREN")return /시기|10년|몇 년|테마/.test(topic);
+  if(group==="CHILDREN")return /시기|십 년|몇 년|테마/.test(topic);
   if(group==="SAMJAE")return /들삼재|눌삼재|날삼재|주기|다음 삼재|지나온/.test(topic);
   return false;
 }
@@ -577,6 +577,7 @@ function buildParagraphs(row:Row,index:number){
   if(["IDENTITY","WORK","WEALTH","RELATIONSHIP","WELLNESS","SAMJAE","DAEUN"].includes(domain))
     paragraphs.push(`${particle(topic,"을","를")} 더 구체적으로 좁혀 보면 ${value.consequence}`);
   const group=row.evidenceGroup??"";
+  if(group==="SYNTHESIS")paragraphs.push("이 책에서 읽은 성향을 모두 한꺼번에 바꾸려 하기보다, 지금 가장 자주 부딪히는 생활 장면 하나부터 돌아보세요. 주변의 기대에 맞추느라 내가 편안한 방식을 잊었다면, 어떤 때에 힘이 나고 어떤 때에 지치는지 기록하는 것부터 시작할 수 있습니다.","타고난 성향이 같아도 경험과 환경에 따라 선택은 달라집니다. 앞에서 살펴본 장점은 필요할 때 꺼내 쓰고, 부담이 되는 습관은 도움을 요청하거나 역할을 나누는 방식으로 조절할 수 있습니다. 이 이야기가 나를 단정하는 말보다 앞으로의 선택을 돌아보는 계기가 되기를 바랍니다.");
   if(["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group))paragraphs.push(`${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`);
   if(["IDENTITY","ELEMENTS","STRENGTH"].includes(group))paragraphs.push(
     `${particle(topic,"을","를")} 판단하는 별도 장면에서는 ${value.scene}`,
@@ -599,7 +600,8 @@ function report(input:InterpretationInput):StructuredInterpretation{
   const rows=input.reportPlan??[];
   const sections=rows.map((row,index)=>{
     const ids=evidenceFor(row,row.pageNumber??index),value=profile(row,index),angle=editorialAngle(row,index);
-    const fullParagraphs=buildParagraphs(row,index);
+    if(row.evidenceGroup==="CHILDREN")value.lead=input.minimalContext.hasChildren?"현재 자녀와의 관계에서 드러나는 부모로서의 모습과 서로 기대하는 바를 살펴봅니다.":"자녀가 없는 현재를 존중하며, 부모가 되었을 때의 성향과 관계를 맺는 방식을 조건부로 살펴봅니다.";
+    const fullParagraphs=buildParagraphs(row,index).map(text=>row.evidenceGroup==="CHILDREN"&&input.minimalContext.hasChildren?text.replaceAll("아이를 돌보는 역할이 생긴다면","자녀와 함께 생활할 때").replaceAll("아이를 돌보는 역할을 맡는다면","부모로서 자녀를 돌볼 때"):text);
     const paragraphs=row.contentKind==="FRONT_MATTER"
       ?[fullParagraphs[0],fullParagraphs[1],fullParagraphs[3]]
       :row.contentKind==="PROFESSIONAL"

@@ -32,7 +32,7 @@ describe("CUSTOMER_LIFETIME_UI_V2 input", () => {
   it("shows leap-month controls only in lunar state source and blocks unsupported lunar submission",async()=>{const source=await formSource();expect(source).toContain('form.calendarType === "lunar"');expect(source).toContain("윤달 여부");expect(source).toContain("평달");expect(source).toContain("윤달");expect(source).toContain("현재 음력 계산은 준비 중입니다.");});
   it("blocks unsupported country and incomplete lunar mode", async()=>{const source=await formSource();expect(source).toContain("현재 해외 출생 계산은 지원되지 않습니다.");expect(source).toContain("음력 계산은 준비 중입니다.");});
   it("does not invent a time when it is unknown", async()=>{const source=await formSource();expect(source).toContain("임의 시간으로 계산하지 않습니다.");expect(source).toContain('birthTime: event.target.checked ? null : ""');});
-  it("contains no child reality input", async()=>{const source=await formSource();for(const text of ["자녀 있음","몇 명","아들/딸","임신 여부","출산 계획"])expect(source).not.toContain(text);});
+  it("asks child status only for married customers",async()=>{const source=await formSource();expect(source).toContain('relationshipStatus==="MARRIED"&&');expect(source).toContain('자녀 유무');const html=renderToStaticMarkup(createElement(SajuInputForm,{onResult:()=>{}}));expect(html).not.toContain('자녀 유무');});
 });
 
 describe("CUSTOMER_LIFETIME_UI_V2 dropdown",()=>{
@@ -42,24 +42,6 @@ describe("CUSTOMER_LIFETIME_UI_V2 dropdown",()=>{
   it("flips above when lower viewport space is insufficient",async()=>expect(await selectSource()).toContain("innerHeight - rect.bottom < 340"));
 });
 
-describe("CUSTOMER_LIFETIME_UI_V2 report",()=>{
-  it("shows each generation stage until every dynamic interpretation is ready",async()=>{const source=await reportSource(),page=await readFile("src/app/page.tsx","utf8");expect(source).toContain("사주책을 만들고 있어요");expect(source).toContain("중심 성향을 정리하고 있어요");expect(source).toContain("묶음을 한 권의 책으로 정리하고 있어요");expect(source).toContain("필요한 모든 풀이가 검증되면 한 번에 보여드릴게요");expect(source).toContain("해설이 완성되면 자동으로 결과가 열립니다.");expect(page).toContain('stage:"CHARACTER_CORE"');expect(page).toContain('stage:"PARTS"');expect(page).toContain('stage:"MERGE"');});
-  it("keeps customer-facing generation copy free of internal English jargon",async()=>{const source=await reportSource(),preview=await readFile("src/app/dev/lifetime-report/page.tsx","utf8");expect(source).not.toContain("모든 section");expect(preview).not.toContain("이 section에서는");});
-  it("explains network failures and refresh recovery in Korean",async()=>{const form=await formSource(),page=await readFile("src/app/page.tsx","utf8");expect(form).toContain("네트워크 연결을 확인한 뒤 다시 시도해 주세요.");expect(page).toContain("새로고침되어 이전 결과를 다시 불러올 수 없어요.");expect(page).toContain("postpost-lifetime-result-active");});
-  it("keeps the canonical 01~18 order",()=>expect(LIFETIME_REPORT_V2.sections.map(row=>row.chapterNumber)).toEqual(Array.from({length:18},(_,index)=>String(index+1).padStart(2,"0"))));
-  it("uses centralized customer terminology",async()=>{const source=await reportSource();expect(source).toContain("customerElement");expect(source).toContain("customerTerm");expect(CUSTOMER_TERMINOLOGY_V1.terms.용신).toBe("나에게 가장 필요한 기운");});
-  it("renders five representative element percentages",async()=>{const source=await reportSource();expect(source).toContain("adjusted?.[element].percentage");expect(source).toContain("ELEMENTS.map");});
-  it("renders deterministic wellness with a plain medical disclaimer",async()=>{const source=await reportSource();expect(source).toContain("constitutionalBalanceScore");expect(source).toContain("병을 알아보는 검사가 아닙니다");});
-  it("renders deterministic children without reality assumptions",async()=>{const source=await reportSource();expect(source).toContain("children.bond.score");expect(source).toContain("sonPercent");expect(source).toContain("daughterPercent");expect(source).not.toContain("현재 자녀와");expect(source).not.toContain("첫째");expect(source).not.toContain("둘째");});
-  it("keeps support and activation separate",async()=>{const source=await reportSource();expect(source).toContain('label="도움받기 쉬운 정도"');expect(source).toContain('label="바빠지거나 바뀌는 정도"');expect(source).toContain("두 숫자를 합쳐 좋다거나 나쁘다고 말하지 않습니다");});
-  it("keeps all ten daeun available in a controlled scroller",async()=>{const source=await reportSource();expect(source).toContain("periods.map");expect(source).toContain('className="daeunRail"');});
-  it("keeps professional analysis collapsed",async()=>{const source=await reportSource();expect(source).toContain('id="chapter-18"');expect(source).toContain("버전과 evidence IDs");});
-  it("isolates AI failure while preserving deterministic chapters",async()=>{const source=await reportSource();expect(source).toContain('interpretation.status === "failed"');expect(source).toContain("계산된 평생사주 결과는 정상적으로 표시");});
-  it("uses real text and no information image or canvas dependency",async()=>{const source=await reportSource();expect(source).not.toContain("<img");expect(source).not.toContain("<canvas");expect(source).toContain("삼족오 한마디");});
-  it("ships deep, distinct Korean synthetic copy without repeated boilerplate",async()=>{const preview=await readFile("src/app/dev/lifetime-report/page.tsx","utf8");expect(preview).toContain("겉으로는");expect(preview).toContain("한 번에 큰돈");expect(preview).toContain("부모가 된다면");expect(preview).toContain("생활 습관");expect(preview.length).toBeGreaterThan(7000);expect(preview).not.toContain("이 장은 공개 합성 입력에서 계산된 근거만 사용합니다");expect(preview).not.toContain("OPENAI_API_KEY");});
-  it("labels Daeun Korean-first with a period indicator",async()=>{const source=await reportSource();expect(source).toContain("STEM_HANGUL");expect(source).toContain("BRANCH_HANGUL");expect(source).toContain('className="periodIndicator"');});
-  it("explains wellness percentages as element composition",async()=>{const source=await reportSource();expect(source).toContain("건강 점수가 아닙니다");expect(source).toContain("기운 <strong>");});
-  it("places children metric explanations beside their values",async()=>{const source=await reportSource();expect(source).toContain("출산 가능성을 뜻하지 않습니다");expect(source).toContain("실제 아이의 성별을 맞히는 숫자가 아닙니다");});
-  it("labels professional pillar Ten Gods explicitly",async()=>{const source=await reportSource();expect(source).toContain("천간 십성:");});
-  it("formats customer labels Korean-first and professional labels Han-second",()=>{expect(CUSTOMER_TERMINOLOGY_V1.elements.wood).toEqual({customer:"나무",professional:"목(木)"});});
+describe("V5.6 report structure",()=>{
+ it("renders canonical titles and keeps evidence collapsed",async()=>{const source=await reportSource();expect(source).toContain('section.title.replace');expect(source).toContain('<details className="chapterEvidence">');expect(source).toContain('소제목 전체 목차');});
 });

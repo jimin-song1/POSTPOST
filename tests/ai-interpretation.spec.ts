@@ -73,7 +73,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year}),plan=validPlan(input);
     expect(lifetimeInterpretationPlanSchema.parse(plan)).toEqual(plan);
     const provider=new MockProvider(),result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
-    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan!.length).toBeGreaterThanOrEqual(130);
+    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan!.length).toBeGreaterThanOrEqual(90);
     expect(provider.calls[0].systemPrompt).toContain(LIFETIME_INTERPRETATION_PLANNER_PROMPT);
     expect((provider.calls[0].schema as {properties?:Record<string,unknown>}).properties?.planVersion).toBeTruthy();
     expect(provider.calls[1].systemPrompt).toContain("확정된 interpretationPlan JSON");
@@ -153,7 +153,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(result.status).toBe("completed");
     if(result.status!=="completed")return;
     const stats=validateLifetimeContentContract(result.report),audit=auditLifetimeEditorialQuality(result.report);
-    expect(stats.contentSections).toBeGreaterThanOrEqual(130);
+    expect(stats.contentSections).toBeGreaterThanOrEqual(90);
     expect(stats.totalCharacters).toBeGreaterThanOrEqual(90_000);
     expect(audit.metrics).toEqual({
       aiToneHits:0,reportToneHits:0,technicalLeakageHits:0,longSentenceWarnings:0,

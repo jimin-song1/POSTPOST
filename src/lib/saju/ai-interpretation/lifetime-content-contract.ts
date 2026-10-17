@@ -1,11 +1,11 @@
-import {LIFETIME_CONTENT_CONTRACT_V1 as RULE,type NoveltyElement} from "@/rules/lifetime-report.v4";
+import {buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1 as RULE,type LifetimeBookOptions,type NoveltyElement} from "@/rules/lifetime-report.v5.6";
 import type {InterpretationSection,StructuredInterpretation} from "@/types/ai-interpretation";
 
 export interface LifetimeContentStats{contentSections:number;totalCharacters:number;chapterCharacters:Record<string,number>;}
 export class LifetimeContentContractError extends Error{constructor(message:string){super(message);this.name="LifetimeContentContractError";}}
 const chapter=(group:string)=>["CORE","PILLARS","HIDDEN_STEMS","STRUCTURE_USEFUL"].includes(group)?"CORE":
   ["IDENTITY","ELEMENTS","STRENGTH"].includes(group)?"IDENTITY":group==="WORK"?"WORK":group==="WEALTH"?"WEALTH":group==="RELATIONSHIP"?"RELATIONSHIP":
-  group==="CHILDREN"?"CHILDREN":group==="WELLNESS"?"WELLNESS":["NOBLE","STARS_RELATIONS"].includes(group)?"NOBLE_STARS":
+  group==="FAMILY"?"FAMILY":group==="CHILDREN"?"CHILDREN":group==="WELLNESS"?"WELLNESS":["NOBLE","STARS_RELATIONS"].includes(group)?"NOBLE_STARS":
   ["TEN_GODS","TWELVE_STAGES"].includes(group)?"TEN_GODS_STAGES":group.startsWith("YEAR_")||["YEARLY_OVERVIEW","MONTHLY"].includes(group)?"YEARLY":
   group==="SAMJAE"?"SAMJAE":group.startsWith("DAEUN")?"DAEUN":group==="SYNTHESIS"?"SYNTHESIS":"OTHER";
 const prose=(row:InterpretationSection)=>[row.headline,row.lead,...(row.paragraphs??[row.body]),...(row.keyPoints??[])].filter(Boolean).join("\n");
@@ -25,12 +25,17 @@ export function lifetimeContentStats(report:StructuredInterpretation):LifetimeCo
   for(const row of content){const key=chapter(row.evidenceGroup??"");chapterCharacters[key]=(chapterCharacters[key]??0)+prose(row).length;}
   return{contentSections:content.length,totalCharacters:content.reduce((sum,row)=>sum+prose(row).length,0),chapterCharacters};
 }
-export function validateLifetimeContentContract(report:StructuredInterpretation){
+export function validateLifetimeContentContract(report:StructuredInterpretation,context?:LifetimeBookOptions){
+  if(context){const expected=buildDynamicLifetimeBook(context);
+    const actual=report.sections.filter(row=>row.partNumber!=="12");
+    const required=expected.sections.filter(row=>row.partNumber!=="12");
+    if(JSON.stringify(actual.map(row=>[row.id,row.title,row.partNumber,row.partTitle]))!==JSON.stringify(required.map(row=>[row.id,row.title,row.partNumber,row.partTitle])))throw new LifetimeContentContractError("V5.6 목차가 고객 상태와 다릅니다.");
+  }
   const stats=lifetimeContentStats(report),ids=new Set<string>(),scenes=new Set<string>(),claimCounts=new Map<string,number>(),fingerprints:Array<{id:string;text:string}>=[];
   if(stats.contentSections<RULE.minimumContentSections)throw new LifetimeContentContractError(`본문 section이 ${RULE.minimumContentSections}개보다 적습니다.`);
   if(stats.totalCharacters<RULE.totalCharacters.minimum)throw new LifetimeContentContractError(`전체 본문이 ${RULE.totalCharacters.minimum}자보다 짧습니다.`);
   for(const required of RULE.requiredChapters)if(!(required in stats.chapterCharacters))throw new LifetimeContentContractError(`필수 chapter가 없습니다: ${required}`);
-  for(const [key,minimum] of Object.entries(RULE.chapterMinimumCharacters))if((stats.chapterCharacters[key]??0)<minimum)
+  for(const [key,minimum] of Object.entries(RULE.chapterMinimumCharacters))if((key!=="CHILDREN"||context?.relationshipStatus==="MARRIED")&&(stats.chapterCharacters[key]??0)<minimum)
     throw new LifetimeContentContractError(`${key} 본문이 최소 ${minimum}자보다 짧습니다.`);
   for(const row of report.sections){
     if(ids.has(row.id))throw new LifetimeContentContractError(`중복 section ID: ${row.id}`);ids.add(row.id);

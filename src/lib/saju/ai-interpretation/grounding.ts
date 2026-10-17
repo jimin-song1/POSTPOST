@@ -17,7 +17,7 @@ const GENERIC_FORTUNE_COOKIE_PHRASES=["긍정적으로 생각하세요","긍정�
 function countOccurrences(text:string,phrase:string){let count=0,index=0;while((index=text.indexOf(phrase,index))!==-1){count+=1;index+=phrase.length;}return count;}
 function validateLifetimeVoice(report:StructuredInterpretation){
   const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
-  const prose=customerSections.flatMap(row=>[row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??""]).join("\n");
+  const prose=customerSections.flatMap(row=>[row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??""].map(text=>text.split(row.title).join(""))).join("\n");
   const technicalHits=customerTechnicalTermHits(prose);if(technicalHits.length)throw new GroundingValidationError(`고객 본문 전문용어 노출: ${technicalHits.join(", ")}`);
   const aiToneCount=EDITORIAL_RULE.aiTonePatterns.reduce((total,phrase)=>total+countOccurrences(prose,phrase),0);
   if(aiToneCount>0)throw new GroundingValidationError(`AI 보고서 문체가 포함되어 있습니다: ${aiToneCount}회`);
@@ -76,18 +76,19 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
       for(const metric of row.metrics??[]){if(!row.evidenceIds.includes(metric.evidenceId))throw new GroundingValidationError(`metric evidence가 section에 인용되지 않았습니다: ${metric.evidenceId}`);
         const inventory=factInventory([evidenceById.get(metric.evidenceId)!.value]);if(!inventory.allowedNumbers.has(metric.value))throw new GroundingValidationError(`근거에 없는 metric 값: ${metric.value}`);}
       if(plan.contentKind==="PROFESSIONAL"){if(!row.professionalDetails)throw new GroundingValidationError("마지막 전문 근거 section의 technical details가 없습니다.");for(const id of row.professionalDetails.evidenceIds)if(!row.evidenceIds.includes(id))throw new GroundingValidationError(`전문 분석 근거가 section 범위를 벗어났습니다: ${id}`);}
-      if(input.reportVersion==="dynamic-lifetime-book-v4"&&(row.partNumber!==plan.partNumber||row.partTitle!==plan.partTitle||row.evidenceGroup!==plan.evidenceGroup||row.contentKind!==plan.contentKind))
+      if((input.reportVersion==="dynamic-lifetime-book-v4"||input.reportVersion==="lifetime-book-v5.6")&&(row.partNumber!==plan.partNumber||row.partTitle!==plan.partTitle||row.evidenceGroup!==plan.evidenceGroup||row.contentKind!==plan.contentKind))
         throw new GroundingValidationError(`${row.id}의 동적 책 메타데이터가 plan과 다릅니다.`);}
     for(const row of report.sections.filter(section=>section.contentKind==="CONTENT"))if((new Set(row.noveltyElements)).size<3)
       throw new GroundingValidationError(`${row.id} section의 새 정보 요소가 3개보다 적습니다.`);
   }
 
-  for(const row of report.sections)validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
-    [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
+  for(const row of report.sections)try{validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
+    [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);}catch(error){throw new GroundingValidationError(`${row.id}: ${error instanceof Error?error.message:error}`);}
   for(const row of report.timeline)validateLockedText(`${row.title}\n${row.body}`,
     row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
 
   const combined=texts(report).join("\n");
+  if(input.reportType==="LIFETIME_GENERAL"&&input.minimalContext.relationshipStatus!=="MARRIED"&&/자녀|아이(?!디어)|임신|출산|손주|부모가 (?:되|된)|부모로서/.test(combined))throw new GroundingValidationError("미혼 고객에게 자녀 관련 문구가 포함되었습니다.");
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL"){for(const phrase of [...LIFETIME_BOOK_V1.prohibitedChildrenClaims,...LIFETIME_BOOK_V1.prohibitedWellnessClaims,...LIFETIME_BOOK_V1.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);validateLifetimeVoice(report);}

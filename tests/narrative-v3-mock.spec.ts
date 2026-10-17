@@ -2,7 +2,7 @@ import {describe,expect,it} from "vitest";
 import {calculateSaju} from "@/lib/saju/engine";
 import {interpretSajuAnalysis} from "@/lib/saju/ai-interpretation/service";
 import {MockInterpretationProvider} from "@/lib/saju/ai-interpretation/mock-provider";
-import {buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1} from "@/rules/lifetime-report.v4";
+import {buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1} from "@/rules/lifetime-report.v5.6";
 import {INTERPRETATION_BRIDGE_V3} from "@/rules/interpretation-bridge.v3";
 import {validateLifetimeContentContract} from "@/lib/saju/ai-interpretation/lifetime-content-contract";
 import {SYNTHETIC_INPUT} from "./synthetic-input";

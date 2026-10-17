@@ -97,3 +97,14 @@ export const INTERPRETATION_JSON_SCHEMA={type:"object",additionalProperties:fals
       properties:{id:{type:"string"},title:{type:"string"},body:{type:"string"},evidenceIds:evidenceIdArray,chapterNumber:{type:"string"},headline:{type:"string"},lead:{type:"string"},paragraphs:stringArray,keyPoints:stringArray,metrics:{type:"array",items:{type:"object",additionalProperties:false,required:["id","label","value","unit","evidenceId"],properties:{id:{type:"string"},label:{type:"string"},value:{type:"number"},unit:{type:"string",enum:["PERCENT","SCORE"]},evidenceId:{type:"string"}}}},mascotComment:{type:"string"},claimsUsed:stringArray,scenesUsed:stringArray,priorSectionSummary:{type:"string"},domainConsequence:{type:"string"},partNumber:{type:"string"},partTitle:{type:"string"},evidenceGroup:{type:"string"},contentKind:{type:"string",enum:["FRONT_MATTER","CONTENT","PROFESSIONAL"]},noveltyElements:stringArray,professionalDetails:{type:"object",additionalProperties:false,required:["summary","evidenceIds"],properties:{summary:{type:"string"},evidenceIds:evidenceIdArray}}}}},highlights:stringArray,cautions:stringArray,
     timeline:{type:"array",items:{type:"object",additionalProperties:false,required:["periodId","title","body","evidenceIds"],
       properties:{periodId:{type:"string"},title:{type:"string"},body:{type:"string"},evidenceIds:evidenceIdArray}}},disclaimer:{type:"string"}}} as const;
+
+/** Provider schema and grounding derive their allowed headings from the same resolved plan. */
+export function interpretationSchemaForPlan(plan?:import("@/types/ai-interpretation").InterpretationReportPlanSection[]):Record<string,unknown>{
+  if(!plan)return INTERPRETATION_JSON_SCHEMA;
+  const section=INTERPRETATION_JSON_SCHEMA.properties.sections.items;
+  return {...INTERPRETATION_JSON_SCHEMA,properties:{...INTERPRETATION_JSON_SCHEMA.properties,
+    sections:{type:"array",minItems:plan.length,maxItems:plan.length,items:{...section,properties:{...section.properties,
+      id:{type:"string",enum:plan.map(row=>row.id)},title:{type:"string",enum:plan.map(row=>row.title)},
+      partNumber:{type:"string",enum:Array.from(new Set(plan.map(row=>row.partNumber)))},
+      partTitle:{type:"string",enum:Array.from(new Set(plan.map(row=>row.partTitle)))}}}}}};
+}

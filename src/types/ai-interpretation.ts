@@ -8,9 +8,9 @@ export type InterpretationErrorCode="ANALYSIS_NOT_COMPLETED"|"MISSING_REQUIRED_E
 export interface InterpretationEvidence {id:string;kind:"NATAL"|"USEFUL_GOD"|"FORTUNE"|"CATEGORY"|"WELLNESS"|"CHILD"|"CONTEXT";value:unknown;}
 export interface InterpretationTimelineInput {id:string;period:{startInstant:string;endInstant:string};evidenceIds:string[];}
 export interface InterpretationReportPlanSection {id:string;chapterNumber:string;title:string;evidenceIds:string[];pageNumber?:number;partNumber?:string;partTitle?:string;purpose?:string;evidenceGroup?:string;contentKind?:"FRONT_MATTER"|"CONTENT"|"PROFESSIONAL";density?:"CONCEPT"|"GENERAL"|"CORE"|"TIMING_CORE";topic?:string;}
-export interface InterpretationInput {version:"interpretation-input-v1"|"lifetime-interpretation-input-v2"|"lifetime-interpretation-input-v3"|"lifetime-interpretation-input-v4";reportType:InterpretationReportType;
-  reportVersion?:"lifetime-report-v2"|"lifetime-report-v3"|"dynamic-lifetime-book-v4";reportPlan?:InterpretationReportPlanSection[];evidence:InterpretationEvidence[];timeline:InterpretationTimelineInput[];
-  minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;relationshipLabel?:string;relationshipFocus?:readonly string[]};}
+export interface InterpretationInput {version:"interpretation-input-v1"|"lifetime-interpretation-input-v2"|"lifetime-interpretation-input-v3"|"lifetime-interpretation-input-v4"|"lifetime-interpretation-input-v5.6";reportType:InterpretationReportType;
+  reportVersion?:"lifetime-report-v2"|"lifetime-report-v3"|"dynamic-lifetime-book-v4"|"lifetime-book-v5.6";reportPlan?:InterpretationReportPlanSection[];evidence:InterpretationEvidence[];timeline:InterpretationTimelineInput[];
+  minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;hasChildren?:boolean;relationshipLabel?:string;relationshipFocus?:readonly string[]};}
 export interface InterpretationMetric {id:string;label:string;value:number;unit:"PERCENT"|"SCORE";evidenceId:string;}
 export interface InterpretationSection {id:string;title:string;body:string;evidenceIds:string[];chapterNumber?:string;headline?:string;lead?:string;
   paragraphs?:string[];keyPoints?:string[];metrics?:InterpretationMetric[];mascotComment?:string;professionalDetails?:{summary:string;evidenceIds:string[]};
@@ -28,5 +28,5 @@ export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-inter
   metadata:{provider:string;model:string;repaired:boolean;tokenUsage?:{input:number;output:number}};}
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
 export type InterpretationResult=InterpretationSuccess|InterpretationFailure;
-export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;lifetimePartNumber?:string;characterCore?:CharacterCore;}
+export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;hasChildren?:boolean;lifetimePartNumber?:string;characterCore?:CharacterCore;}
 export interface InterpretationApiRequest extends InterpretationBuildOptions {input:SajuInput;}

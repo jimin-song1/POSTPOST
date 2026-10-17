@@ -1,57 +1,12 @@
-import { LifetimePreviewClient } from "@/components/LifetimePreviewClient";
-import { calculateSaju } from "@/lib/saju/engine";
-import { selectCurrentPeriods } from "@/lib/saju/presentation/current-period";
-import {buildDynamicLifetimeBook,type LifetimeEvidenceGroup} from "@/rules/lifetime-report.v4";
-import type { InterpretationUiState } from "@/types/customer-result";
-import type { FortuneResult } from "@/types/fortune";
-import type { SajuAnalysis } from "@/types/saju-analysis";
-
-const fullAnalysis = calculateSaju({ name:"테스트사용자", gender:"female", calendarType:"solar", birthDate:"1992-04-17", birthTime:"14:20", birthTimeKnown:true, birthCountry:"KR", birthCityKnown:true, birthCity:"서울특별시" });
-const fullFortune = fullAnalysis.fortune as FortuneResult;
-const previewBook=buildDynamicLifetimeBook({includeSamjae:fullFortune.samjae.status==="implemented",year:2026});
-// The preview renders Daeun and the first category summary only. Excluding unused
-// Seun/Wolun arrays keeps this public synthetic route below platform ISR limits.
-const analysis: SajuAnalysis = { ...fullAnalysis, fortune: { ...fullFortune,
-  seun: fullFortune.seun.status === "implemented" ? { ...fullFortune.seun, periods: [], evidence: [] } : fullFortune.seun,
-  wolun: fullFortune.wolun.status === "implemented" ? { ...fullFortune.wolun, periods: [], evidence: [] } : fullFortune.wolun,
-  transformation: { status:"not_implemented" }, synthesis: { status:"not_implemented" },
-  categories: fullFortune.categories.status === "implemented" ? { ...fullFortune.categories, seun:[], wolun:[], seunPeriodSummaries:[], wolunPeriodSummaries:[], evidence:[] } : fullFortune.categories,
-} };
-const previewCopy: Record<string, { headline:string; paragraphs:string[] }> = {
-  overview:{headline:"천천히 살펴보고, 정한 일은 끝까지 해내는 사람",paragraphs:["처음에는 주변을 충분히 살펴봅니다. 하지만 마음을 정한 뒤에는 쉽게 흔들리지 않습니다.","빨리 끝내는 일보다, 오래 남는 결과를 만들 때 더 큰 보람을 느낍니다."]},
-  personality:{headline:"처음에는 지켜보고, 익숙해지면 자기 방식대로 움직입니다",paragraphs:["바로 결정하기보다 필요한 내용을 먼저 알아보는 편입니다. 시간이 조금 걸려도 마음을 정한 뒤에는 꾸준히 밀고 갑니다.","겉으로는 차분하고 부드러워 보여도 속에는 분명한 생각이 있습니다. 가까운 사람에게는 고집이 세다는 말을 들을 수도 있어요.","낯선 곳에서는 먼저 분위기를 살핍니다. 익숙해지면 해야 할 일의 순서를 정하고 주변을 정리하는 역할을 맡기 쉽습니다.","작은 차이를 잘 알아차리고, 시작한 일을 끝까지 이어가는 힘이 있습니다.","다만 너무 많이 알아본 뒤에 시작하려 하면 좋은 때를 놓칠 수 있습니다. 확신이 생길 때까지 기다리기보다 작은 일부터 먼저 해보는 편이 좋습니다."]},
-  "five-elements":{headline:"자주 쓰는 힘과 아직 익숙하지 않은 힘이 함께 있습니다",paragraphs:["쇠와 나무의 비율이 높은 편입니다. 일을 정리하는 힘과 더 나아지려는 마음을 자주 쓴다는 뜻입니다.","물은 생각을 이어 가고, 상황이 바뀌었을 때 다른 방법을 찾는 데 도움을 줍니다.","불의 비율이 낮다고 표현을 못하는 것은 아닙니다. 다만 생각한 것을 바로 말하거나 보여 주는 데 시간이 조금 더 필요할 수 있어요.","이 숫자는 성적표가 아닙니다. 내가 자주 쓰는 힘과 덜 익숙한 힘을 알아보는 자료입니다."]},
-  strength:{headline:"혼자 버티기보다 도움을 받을 때 일을 더 쉽게 풀어갑니다",paragraphs:["혼자서도 해낼 수 있지만, 주변 상황에 따라 힘을 쓰는 정도가 달라지는 편입니다.","해야 할 일이 분명하고 믿을 만한 사람이 곁에 있으면 집중하기가 더 쉽습니다. 반대로 모든 결정을 혼자 해야 하면 생각이 많아져 시작이 늦어질 수 있어요.","도움을 받는다고 해서 약한 것은 아닙니다. 시작하기 전에 누구와 무엇을 나눌지 정하면 지치지 않고 오래 할 수 있습니다.","잠자는 시간, 밥 먹는 시간, 일하는 순서를 일정하게 만드는 것도 도움이 됩니다."]},
-  "strengths-and-cautions":{headline:"꼼꼼함은 실수를 줄이지만, 걱정이 많으면 시작이 늦어집니다",paragraphs:["작은 실수나 빠진 부분을 잘 찾아냅니다. 덕분에 결과를 더 꼼꼼하게 만들 수 있어요.","서두르기보다 순서를 정하고 하나씩 끝냅니다. 이런 모습은 주변 사람에게 믿음을 줍니다.","하지만 준비가 다 끝나야 시작할 수 있다고 생각하면 좋은 때를 놓칠 수 있습니다.","혼자 오래 책임지다 보면 지친 것도 늦게 알아차립니다. 중간에 상태를 확인하고 다른 사람과 일을 나누는 것이 좋습니다."]},
-  "talent-and-work":{headline:"복잡한 일을 순서대로 정리하는 데 강합니다",paragraphs:["무엇을 해야 하는지만 듣기보다 왜 해야 하는지 알 때 일을 더 잘합니다. 뒤섞인 내용을 정리하고, 다음에도 같은 방법으로 할 수 있게 만드는 데 강합니다.","회사에서는 내가 맡은 일이 분명할수록 편합니다. 일하는 방법까지 모두 정해 주기보다, 어느 정도는 스스로 선택할 수 있어야 답답하지 않습니다.","혼자 하는 일도 중간에 의견을 들으면 결과가 더 좋아집니다. 모든 일을 혼자 하는 것보다, 내 판단을 존중해 주는 사람과 함께할 때 잘 맞습니다.","이유 없이 지시가 자주 바뀌거나 무조건 빨리하라고 재촉하는 곳에서는 쉽게 지칠 수 있습니다.","생각만 오래 하기보다 마감 날짜를 정해 실제 결과로 끝내는 것이 중요합니다. 기록, 편집, 기획, 운영처럼 복잡한 일을 정리하는 역할이 잘 맞습니다."]},
-  "money-style":{headline:"큰돈을 한 번 노리기보다 꾸준히 벌고 지키는 편입니다",paragraphs:["한 번에 큰돈을 벌기보다, 실력과 신뢰를 쌓아 수입을 꾸준히 만드는 방식이 잘 맞습니다. 내가 잘 알고 이해하는 일에서 돈을 벌 때 마음도 편합니다.","쓸 이유가 분명하면 돈을 쓰지만, 별생각 없이 쓰는 돈에는 조심스럽습니다. 생활비, 저축, 여유 자금처럼 용도를 미리 나눠 두는 방법이 잘 맞습니다.","새로운 기회가 와도 먼저 손해를 줄일 방법부터 찾습니다. 하지만 확신이 생기면 생각보다 크게 돈을 쓸 수 있으니, 결정하기 전에 최대 금액을 정해 두는 게 좋습니다.","오래 고민하다가 한꺼번에 돈을 쓰거나, 다른 사람의 비용까지 대신 책임지려는 습관은 조심해야 합니다.","돈을 모으고 관리하는 힘이 있습니다. 다만 결정을 너무 늦추지 않도록 작은 금액으로 먼저 해보고 결과를 적어 두세요."]},
-  relationship:{headline:"처음의 설렘보다 오래 믿을 수 있는 사람인지 살핍니다",paragraphs:["새로운 사람을 만나면 대화가 잘 통하는지, 약속을 지키는지, 생활 방식이 맞는지를 천천히 살펴봅니다.","처음에는 마음을 크게 드러내지 않아 차갑게 보일 수 있습니다. 하지만 믿음이 생기면 말보다 행동으로 꾸준히 마음을 보여 줍니다.","화려하게 말하는 사람보다 말과 행동이 같은 사람에게 마음이 갑니다. 서로 혼자 있는 시간을 존중하면서 필요할 때 곁에 있어 주는 관계가 편합니다.","다툼이 생기면 바로 말하기보다 혼자 생각을 정리하려는 편입니다. 말없이 오래 있으면 오해가 생길 수 있으니, 생각할 시간이 필요하다고 먼저 말해 주세요.","상대가 내 마음을 알아서 알기를 기다리지 마세요. 원하는 것과 천천히 만나고 싶은 속도를 말로 알려 주는 것이 좋습니다."]},
-  children:{headline:"아이를 대할 때는 작은 변화를 잘 살피고 꾸준히 챙깁니다",paragraphs:["아이와의 관계가 얼마나 크게 드러나는지를 보는 수치입니다. 숫자가 낮아도 아이와 사이가 나쁘거나 출산이 어렵다는 뜻은 아닙니다.","아이 수에 관한 표현도 실제로 몇 명을 낳는다는 예측이 아닙니다. 관심과 책임이 한두 아이에게 모이는지, 여러 아이에게 넓어지는지를 옛 방식으로 설명한 것입니다.","아들 쪽과 딸 쪽 숫자도 실제 아이의 성별을 맞히는 확률이 아닙니다. 두 가지 상징을 단순히 비교한 값입니다.","부모가 된다면 생활 규칙을 만들고 필요한 것을 미리 준비하는 모습을 보이기 쉽습니다. 아이의 작은 변화도 잘 알아차리는 편입니다.","한번 맡은 일은 오래 책임지고, 말보다 행동으로 믿음을 줍니다.","다만 걱정이 많아지면 아이의 선택까지 대신 정하려 할 수 있습니다. 아이가 스스로 해볼 시간을 남겨 주세요."]},
-  wellness:{headline:"일이 바빠도 잠과 식사 시간을 지켜야 덜 지칩니다",paragraphs:["쇠·나무·물의 비율은 높은 편이고 불은 낮은 편입니다. 병을 알아보는 검사가 아니라, 평소 생활 습관을 돌아보기 위한 참고 자료입니다.","해야 할 일이 정리되어 있으면 몸과 마음도 한결 편해집니다.","오래 앉아서 생각만 하기보다 잠깐 걷고 햇빛을 쬐는 것이 좋습니다. 밥 먹는 시간도 되도록 일정하게 지켜 주세요.","바쁠수록 쉬는 일을 뒤로 미루기 쉽습니다. 아주 지친 다음에 몰아서 쉬지 말고, 하루 중간에 짧게라도 쉬는 시간을 넣으세요.","운동은 한 번에 세게 하기보다 짧게라도 자주 하는 편이 잘 맞습니다. 가볍게 걷거나 몸을 풀어 주는 것도 좋습니다.","일정이나 맡은 일이 크게 바뀔 때는 잠, 식사, 움직이는 시간을 먼저 챙기세요."]},
-  "helpful-elements":{headline:"생각이 막힐 때는 다른 방법을 찾고, 준비한 것은 밖으로 보여 주세요",paragraphs:["물은 한 가지 방법이 막혔을 때 다른 길을 찾는 데 도움을 주는 기운입니다.","나무는 배운 것을 직접 해보게 하고, 불은 준비한 생각을 말이나 행동으로 보여 주는 데 도움을 줍니다.","이 점수는 성공할 확률이 아닙니다. 내가 부족하기 쉬운 부분을 채우는 데 어떤 기운이 도움이 되는지를 보여 줍니다."]},
-  "special-features":{headline:"궁금한 것은 대충 넘기지 않고 끝까지 알아보려 합니다",paragraphs:["관심이 생기면 겉만 보고 넘기기보다 왜 그런지까지 알고 싶어 합니다.","혼자 생각을 정리하는 시간이 글쓰기나 만들기, 한 분야를 깊이 배우는 일로 이어질 수 있습니다.","옛 사주 이름은 이런 모습을 설명하는 참고 자료입니다. 이름 하나만으로 좋은 일이나 나쁜 일이 생긴다고 판단하지 않습니다."]},
-  "inner-roles":{headline:"일할 때의 나와 편한 사람 앞에서의 나는 다를 수 있습니다",paragraphs:["책임져야 하는 자리에서는 규칙을 세우고 일을 정리하려 합니다.","새로운 것을 배우면 먼저 충분히 살펴본 뒤 내 말로 다시 정리합니다.","마음이 편한 사람 앞에서는 평소보다 솔직하고 장난스러운 모습도 나옵니다.","상황에 따라 다른 모습이 나오는 것은 자연스러운 일입니다. 그중 어느 하나만 진짜 모습인 것은 아닙니다."]},
-  "lifetime-flow":{headline:"배우는 때와 직접 해내는 때가 번갈아 찾아옵니다",paragraphs:["인생 초반에는 여러 일을 겪으며 나에게 맞는 방법을 찾습니다.","중간 시기에는 지금까지 배운 것을 일과 결과로 보여 주는 일이 중요해집니다.","후반에는 내가 직접 하는 일뿐 아니라, 배운 것을 다른 사람에게 알려 주는 일도 커집니다.","이 내용은 어떤 사건이 반드시 생긴다는 뜻이 아닙니다. 시기마다 어떤 선택이 조금 더 편하게 느껴지는지 보여 주는 참고 자료입니다."]},
-  daeun:{headline:"10년마다 편하게 풀리는 일과 바빠지는 정도가 달라집니다",paragraphs:["앞 시기에 쌓은 경험은 다음 시기에 선택할 때 도움이 됩니다. 한 시기만 보고 좋다거나 나쁘다고 판단하지 마세요.","도움 점수가 높으면 사람이나 환경의 도움을 받기 쉬운 때입니다. 변화 점수가 높으면 맡은 일이나 생활 환경이 자주 바뀔 수 있습니다.","도움을 많이 받아도 큰 변화는 없을 수 있습니다. 반대로 변화가 많다고 해서 꼭 힘든 시기인 것도 아닙니다.","먼저 나이와 기간을 확인하세요. 한자는 더 자세히 알고 싶을 때만 보면 됩니다."]},
-  "life-phases":{headline:"초반에는 배우고, 중간에는 고르고, 후반에는 나눕니다",paragraphs:["인생 초반에는 여러 경험을 하며 나에게 맞는 방법을 찾습니다.","중간 시기에는 계속할 일과 그만둘 일을 골라야 하는 순간이 많아집니다.","후반에는 지금까지 배운 것과 맺어 온 관계를 정리해 다른 사람과 나누는 일이 중요해집니다."]},
-  takeaways:{headline:"생각이 다 끝날 때까지 기다리지 말고, 작은 일부터 시작하세요",paragraphs:["빨리 움직이는 것보다 정한 일을 오래 이어가는 데 강합니다.","필요할 때 도움을 요청하고 일을 나누는 것도 잘 해내는 방법입니다.","완벽하게 준비될 때까지 기다리지 말고, 작은 일부터 먼저 해보세요.","바쁜 변화가 생기면 무조건 서두르지 마세요. 먼저 잠과 식사 시간을 지키고, 가장 중요한 일부터 정하세요."]},
-  professional:{headline:"쉬운 해석 뒤에는 같은 계산 근거가 놓여 있습니다",paragraphs:["이곳에서는 앞 장에서 사용한 원국, 오행 분포, 강약, 구조와 도움 기운을 전문 명칭과 함께 확인할 수 있습니다.","전문용어는 새로운 판단을 추가하는 것이 아니라 이미 본 고객용 설명의 계산 출처를 보여 줍니다."]},
-};
-
-const groupCopy: Record<LifetimeEvidenceGroup, keyof typeof previewCopy> = {
-  COVER:"overview",INTRO:"overview",CORE:"personality",PILLARS:"personality",HIDDEN_STEMS:"personality",TEN_GODS:"inner-roles",
-  ELEMENTS:"five-elements",STRENGTH:"strength",STRUCTURE_USEFUL:"helpful-elements",FORTUNE_EXPLAIN:"lifetime-flow",IDENTITY:"personality",
-  WORK:"talent-and-work",WEALTH:"money-style",RELATIONSHIP:"relationship",CHILDREN:"children",WELLNESS:"wellness",NOBLE:"special-features",
-  STARS_RELATIONS:"special-features",TWELVE_STAGES:"life-phases",YEARLY_OVERVIEW:"lifetime-flow",YEAR_1:"lifetime-flow",YEAR_2:"lifetime-flow",
-  YEAR_3:"lifetime-flow",YEAR_4:"lifetime-flow",YEAR_5:"lifetime-flow",MONTHLY:"lifetime-flow",CHANGE:"strengths-and-cautions",
-  DAEUN_OVERVIEW:"daeun",DAEUN_1:"daeun",DAEUN_2:"daeun",DAEUN_3:"daeun",DAEUN_4:"daeun",DAEUN_5:"daeun",
-  DAEUN_6:"daeun",DAEUN_7:"daeun",DAEUN_8:"daeun",DAEUN_9:"daeun",DAEUN_10:"daeun",SAMJAE:"lifetime-flow",SYNTHESIS:"takeaways",PROFESSIONAL:"professional"
-};
-
-const interpretation: InterpretationUiState = { status:"completed", ruleVersion:"ai-interpretation-v1", promptVersion:"interpretation-prompt-v3", groundingVersion:"interpretation-grounding-v3", analysisHash:"editorial-preview-v4", cacheKey:"editorial-preview-v4", metadata:{provider:"editorial-sample",model:"fixed-editorial-preview",repaired:false}, report:{ status:"completed",reportType:"LIFETIME_GENERAL",headline:"제공한 사주 계산값으로 먼저 다듬는 동적 평생사주",summary:"API 호출 없이, 제공한 사주를 deterministic 엔진으로 계산해 해설의 깊이와 말투를 검토합니다.",sections:previewBook.sections.map(section=>{
-  const copy=previewCopy[groupCopy[section.evidenceGroup]];
-  const paragraphs=[`${section.title}은 이 가상 사주에서 따로 떼어 단정하는 항목이 아닙니다. 앞뒤 계산 근거를 함께 보면서 생활에서 반복되는 모습으로 풀어봅니다.`,...copy.paragraphs];
-  return {id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,headline:section.sequence===1?"테스트사용자님의 해설 품질을 확인하는 책입니다":copy.headline,lead:"API 키 없이 검토하는 동적 편집 샘플입니다.",body:paragraphs.join("\n\n"),paragraphs,keyPoints:[copy.paragraphs[0]],evidenceIds:[`EDITORIAL_SAMPLE:${section.evidenceGroup}`],partNumber:section.partNumber,partTitle:section.partTitle,evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,noveltyElements:["NEW_CLAIM","NEW_SCENE","NEW_ACTION"],mascotComment:"이 풀이에서는 한 가지 특징을 좋고 나쁨으로 단정하지 않고, 실제 생활에서 어떻게 쓰이는지 살펴봅니다.",...(section.contentKind==="PROFESSIONAL"?{professionalDetails:{summary:"제공한 입력을 deterministic 엔진으로 계산한 뒤 만든 편집용 샘플입니다.",evidenceIds:["EDITORIAL_SAMPLE:PROFESSIONAL"]}}:{})};
-}),highlights:["할 일의 순서를 정하고, 시작한 일은 끝까지 이어갑니다."],cautions:["혼자 너무 오래 책임지지 마세요. 지치기 전에 쉬고 다른 사람과 일을 나누세요."],timeline:[],disclaimer:"제공한 사주 입력으로 만든 편집용 샘플입니다. 실제 사건을 확정적으로 예측하지 않습니다." } };
-
-export default function LifetimePreview() { return <LifetimePreviewClient analysis={analysis} current={selectCurrentPeriods(analysis)} interpretation={interpretation} />; }
+import {LifetimePreviewClient} from "@/components/LifetimePreviewClient";
+import {calculateSaju} from "@/lib/saju/engine";
+import {selectCurrentPeriods} from "@/lib/saju/presentation/current-period";
+import {interpretSajuAnalysis} from "@/lib/saju/ai-interpretation/service";
+import {MockInterpretationProvider} from "@/lib/saju/ai-interpretation/mock-provider";
+import {lifetimeDisplayAnalysis} from "@/lib/saju/presentation/lifetime-display";
+export default async function LifetimePreview(){
+  const analysis=calculateSaju({name:"테스트사용자",gender:"female",calendarType:"solar",birthDate:"1992-04-17",birthTime:"14:20",birthTimeKnown:true,birthCountry:"KR",birthCityKnown:true,birthCity:"서울특별시"});
+  const interpretation=await interpretSajuAnalysis(analysis,new MockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:new Date().getFullYear()});
+  const displayAnalysis=lifetimeDisplayAnalysis(analysis);
+  return <LifetimePreviewClient analysis={displayAnalysis} current={selectCurrentPeriods(analysis)} interpretation={interpretation}/>;
+}

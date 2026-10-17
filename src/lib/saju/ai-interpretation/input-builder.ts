@@ -4,7 +4,7 @@ import type { FortuneSynthesisPeriod,FortuneSynthesisResult } from "@/types/fort
 import type { FortuneResult } from "@/types/fortune";
 import type { InterpretationBuildOptions,InterpretationEvidence,InterpretationInput,InterpretationReportType } from "@/types/ai-interpretation";
 import {LIFETIME_BOOK_V1,type LifetimeBookEvidenceGroup} from "@/rules/lifetime-report.v3";
-import {buildDynamicLifetimeBook,type LifetimeEvidenceGroup} from "@/rules/lifetime-report.v4";
+import {buildDynamicLifetimeBook,type LifetimeEvidenceGroup} from "@/rules/lifetime-report.v5.6";
 import {customerElement} from "@/rules/customer-terminology.v1";
 import type {WellnessResult} from "@/types/wellness";
 import type {ChildrenFortuneResult} from "@/types/children-fortune";
@@ -92,7 +92,7 @@ function bookPurpose(group:LifetimeEvidenceGroup){
     CHANGE:"합·충·형·파·해·변환과 fortune activation이 만드는 움직임을 유불과 분리해 설명한다.",DAEUN_OVERVIEW:"10개 대운의 전체 순서와 현재 큰 흐름을 설명한다.",
     DAEUN_1:"첫 번째 대운을 설명한다.",DAEUN_2:"두 번째 대운을 설명한다.",DAEUN_3:"세 번째 대운을 설명한다.",DAEUN_4:"네 번째 대운을 설명한다.",DAEUN_5:"다섯 번째 대운을 설명한다.",
     DAEUN_6:"여섯 번째 대운을 설명한다.",DAEUN_7:"일곱 번째 대운을 설명한다.",DAEUN_8:"여덟 번째 대운을 설명한다.",DAEUN_9:"아홉 번째 대운을 설명한다.",DAEUN_10:"열 번째 대운을 설명한다.",
-    SAMJAE:"삼재 여부, 관계 활성, 변화량과 유불을 분리해 생애 주기를 설명한다.",SYNTHESIS:"앞의 여러 장에서 반복해서 확인된 근거만 다시 묶어 평생 패턴을 설명한다.",PROFESSIONAL:"같은 계산 결과를 전문용어와 evidence로 확인한다."
+    FAMILY:"부모·형제자매·원가족과의 관계를 설명한다. 원가족의 관계에 집중한다.",YEAR_6:"기준연도에서 다섯 해 뒤의 세운을 설명한다.",SAMJAE:"삼재 여부, 관계 활성, 변화량과 유불을 분리해 생애 주기를 설명한다.",SYNTHESIS:"앞의 여러 장에서 반복해서 확인된 근거만 다시 묶어 평생 패턴을 설명한다.",PROFESSIONAL:"같은 계산 결과를 전문용어와 evidence로 확인한다."
   };return purposes[group];
 }
 function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:InterpretationEvidence[],currentYear:number){
@@ -110,6 +110,7 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"IDENTITY":return idsByPrefix(evidence,"NATAL:DAY_MASTER","NATAL:PILLARS","NATAL:STRENGTH","NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:RELATIONS","NATAL:FIVE_ELEMENTS:");
     case"WORK":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:STRUCTURE","NATAL:TEN_GODS","NATAL:STRENGTH","NATAL:RELATIONS","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"WEALTH":return Array.from(new Set([...idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:PILLARS","NATAL:FIVE_ELEMENTS:","NATAL:STRUCTURE","USEFUL_GOD:"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
+    case"FAMILY":return idsByPrefix(evidence,"NATAL:PILLARS","NATAL:TEN_GODS","NATAL:RELATIONS");
     case"RELATIONSHIP":return Array.from(new Set([...idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:PILLARS","NATAL:TEN_GODS","NATAL:HIDDEN_STEMS","NATAL:RELATIONS"),...idsByContains(evidence,"CATEGORY:DAEUN-")]));
     case"CHILDREN":return idsByPrefix(evidence,"CHILD:","CONTEXT:CHILD_REALITY_UNKNOWN");
     case"WELLNESS":return idsByPrefix(evidence,"WELLNESS:");
@@ -117,14 +118,14 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
     case"STARS_RELATIONS":return idsByPrefix(evidence,"NATAL:STARS","NATAL:RELATIONS","NATAL:SAMJAE");
     case"TWELVE_STAGES":return idsByPrefix(evidence,"NATAL:TWELVE_STAGES","NATAL:PILLARS");
     case"YEARLY_OVERVIEW":return Array.from(new Set([...idsByPrefix(evidence,"FORTUNE:SEUN-","CATEGORY:SEUN-"),...idsByContains(evidence,"REQUEST:LIFETIME_YEAR_RANGE")]));
-    case"YEAR_1":case"YEAR_2":case"YEAR_3":case"YEAR_4":case"YEAR_5":{
+    case"YEAR_1":case"YEAR_2":case"YEAR_3":case"YEAR_4":case"YEAR_5":case"YEAR_6":{
       const offset=Number(group.slice(-1))-1,year=currentYear+offset;return idsByContains(evidence,`SEUN-${year}`);
     }
     case"MONTHLY":return idsByContains(evidence,`WOLUN-${currentYear}`);
     case"CHANGE":return idsByPrefix(evidence,"NATAL:RELATIONS","FORTUNE:DAEUN-","FORTUNE:SEUN-");
     case"DAEUN_OVERVIEW":return idsByPrefix(evidence,"FORTUNE:DAEUN-");
     case"DAEUN_1":case"DAEUN_2":case"DAEUN_3":case"DAEUN_4":case"DAEUN_5":case"DAEUN_6":case"DAEUN_7":case"DAEUN_8":case"DAEUN_9":case"DAEUN_10":{
-      const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${index}`);
+      const index=Number(group.split("_")[1]);return idsByContains(evidence,`DAEUN-${String(index).padStart(2,"0")}:`);
     }
     case"SAMJAE":return idsByPrefix(evidence,"FORTUNE:SAMJAE","NATAL:SAMJAE","NATAL:RELATIONS");
     case"SYNTHESIS":return Array.from(new Set([...allNatal(),...idsByPrefix(evidence,"USEFUL_GOD:","WELLNESS:BALANCE","CHILD:BOND","FORTUNE:DAEUN-","FORTUNE:SAMJAE")]));
@@ -132,7 +133,8 @@ function evidenceForBookGroup(group:LifetimeEvidenceGroup,evidence:Interpretatio
   }
 }
 function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOptions,fortune:FortuneResult,synthesis:FortuneSynthesisResult,categories:CategoryFortuneResult):InterpretationInput{
-  if(!options.relationshipStatus)throw new InterpretationInputError("LIFETIME_GENERAL report에는 relationshipStatus가 필요합니다.");
+  if(!options.relationshipStatus||!["SINGLE","DATING","MARRIED"].includes(options.relationshipStatus))throw new InterpretationInputError("LIFETIME_GENERAL report에는 relationshipStatus가 필요합니다.");
+  if(options.relationshipStatus==="MARRIED"&&typeof options.hasChildren!=="boolean")throw new InterpretationInputError("기혼 고객은 자녀 유무를 선택해 주세요.");
   const currentYear=Number.isInteger(options.year)?options.year as number:new Date().getUTCFullYear();
   if(analysis.wellness.status!=="implemented"||!("elements" in analysis.wellness))throw new InterpretationInputError("평생총운에는 wellness-v1 결과가 필요합니다.");
   if(analysis.childrenFortune.status!=="implemented"||!("bond" in analysis.childrenFortune))throw new InterpretationInputError("평생총운에는 children-fortune-v1 결과가 필요합니다.");
@@ -160,13 +162,13 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
   const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus];
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
-    fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}),
-    fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
+    fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:options.relationshipStatus==="MARRIED"?options.hasChildren:null,count:null,gender:null,pregnancy:null}),
+    fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+5}));
   if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
   for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
 
-  const selectedSeun=synthesis.seun.filter(row=>row.context.seunYear!=null&&row.context.seunYear>=currentYear&&row.context.seunYear<=currentYear+4);
+  const selectedSeun=synthesis.seun.filter(row=>row.context.seunYear!=null&&row.context.seunYear>=currentYear&&row.context.seunYear<=currentYear+5);
   const seunCategoryById=new Map(categories.seun.map(row=>[row.synthesisId,row]));
   for(const row of selectedSeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=seunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
@@ -182,21 +184,21 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const daeunCategoryById=new Map(categories.daeun.map(row=>[row.synthesisId,row]));
   for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
 
-  const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear});
+  const unique=Array.from(new Map(evidence.filter(item=>options.relationshipStatus==="MARRIED"||(!item.id.startsWith("CHILD:")&&!item.id.startsWith("CONTEXT:CHILD"))).map(item=>[item.id,item])).values());
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus,hasChildren:options.hasChildren,daeunPeriods:fortune.daeun.status==="implemented"?fortune.daeun.periods.map(p=>({index:p.index,ageRange:p.sourcePeriod.ageRange,pillar:`${p.pillar.stem}${p.pillar.branch}`})):[]});
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
-    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
-      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
+    return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.pageStart,partNumber:section.partNumber,partTitle:section.partTitle,
+      purpose:`${section.title}: ${section.evidenceGroup==="CHILDREN"?(options.hasChildren?"현재 자녀와의 관계와 부모로서 드러나는 모습을 설명한다. 미래의 출산이나 부모가 될 가능성을 가정하지 않는다.":"자녀가 없는 상태를 존중하며 부모가 되었을 때의 성향과 자녀 인연을 조건부로 설명한다."):bookPurpose(section.evidenceGroup)} (편집 ${section.pageStart}~${section.pageEnd}p)`,evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
   });
   const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
   if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);
   const requiredIds=new Set(plan.flatMap(row=>row.evidenceIds));
   const scopedEvidence=options.lifetimePartNumber?unique.filter(row=>requiredIds.has(row.id)):unique;
   const scopedTimeline=options.lifetimePartNumber?timeline.filter(row=>row.evidenceIds.some(id=>requiredIds.has(id))):timeline;
-  return{version:"lifetime-interpretation-input-v4",reportVersion:"dynamic-lifetime-book-v4",reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
-    minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
+  return{version:"lifetime-interpretation-input-v5.6",reportVersion:"lifetime-book-v5.6",reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
+    minimalContext:{requestedYear:currentYear,hasChildren:options.relationshipStatus==="MARRIED"?options.hasChildren:undefined,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
 }
 
 export function buildInterpretationInput(analysis:SajuAnalysis,options:InterpretationBuildOptions):InterpretationInput{
