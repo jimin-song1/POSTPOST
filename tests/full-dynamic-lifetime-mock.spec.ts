@@ -65,8 +65,10 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const bookSectionById=new Map(book.sections.map(row=>[row.id,row]));
     const customerSections=report.sections.filter(row=>row.contentKind!=="PROFESSIONAL");
     expect(customerSections.every(section=>(section.paragraphs??[section.body]).every(paragraph=>typeof paragraph==="string"&&paragraph.length>0))).toBe(true);
-    for(const id of ["legacy-book-007","legacy-book-008","legacy-book-009","legacy-book-010","legacy-book-011","legacy-book-012","legacy-book-013","legacy-book-014"])
+    for(const id of ["legacy-book-007","legacy-book-008","legacy-book-010","legacy-book-012","legacy-book-013","legacy-book-014"])
       expect(report.sections.find(section=>section.id===id)?.lead,id).toBeUndefined();
+    for(const id of ["legacy-book-009","legacy-book-011","legacy-book-020","legacy-book-023","legacy-book-093","legacy-book-094","legacy-book-095","legacy-book-105","legacy-book-106","legacy-book-107","legacy-book-108"])
+      expect(report.sections.some(section=>section.id===id),id).toBe(false);
     const oneLine=report.sections.find(section=>section.id==="legacy-book-008")?.paragraphs??[];
     expect(oneLine.length).toBeGreaterThanOrEqual(2);
     expect(oneLine.join(" ")).toContain("내 이유가 생기면 오래 가는 사람");
@@ -159,9 +161,6 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(editorial.metrics.sectionsWithoutConcreteScene).toBeLessThan(25);
     expect(editorial.coreNine).toHaveLength(9);
     expect(editorial.coreNine.every(row=>row.pass)).toBe(true);
-    const roleOverview=report.sections.find(row=>row.id==="legacy-book-015"),visibleRole=report.sections.find(row=>row.id==="legacy-book-105");
-    expect(roleOverview?.body).toBeTruthy();expect(visibleRole?.body).toBeTruthy();
-    expect(roleOverview?.body).not.toBe(visibleRole?.body);
 
     const artifact={input:{...FULL_SAMPLE_INPUT,name:"synthetic-test-user"},contentSections:stats.contentSections,totalCharacters:stats.totalCharacters,totalParagraphs:content.reduce((sum,row)=>sum+(row.paragraphs?.length??1),0),
       totalParts:book.parts.length,totalChapters:new Set(content.map(row=>row.evidenceGroup)).size,sectionHash:createHash("sha256").update(ids.join("\n")).digest("hex"),density,
