@@ -109,6 +109,22 @@ const BOOK_PART_TITLES:Record<string,string>={
   "13":"대운",
   "14":"총정리"
 };
+const BOOK_PART_SUBTITLES:Record<string,string>={
+  "01":"타고난 성향과 마음이 움직이는 기준",
+  "02":"일주와 오행으로 보는 내 기운의 균형",
+  "03":"재능이 살아나는 일과 배움의 방향",
+  "04":"돈이 들어오고 남는 흐름",
+  "05":"사랑·배우자·가족·자녀와 맺는 관계",
+  "06":"몸의 리듬과 회복이 필요한 순간",
+  "07":"나를 돕는 사람과 기회가 들어오는 자리",
+  "08":"도화·화개·원진 등 특별하게 드러나는 기운",
+  "09":"삶의 단계마다 달라지는 힘",
+  "10":"내 안에서 반복해서 쓰는 역할과 성향",
+  "11":"해마다 달라지는 앞으로의 흐름",
+  "12S":"삼재와 큰 변화가 들어오는 시기",
+  "13":"10년 단위로 보는 평생의 큰 흐름",
+  "14":"내 사주에서 끝까지 남는 핵심"
+};
 const customerSectionTitle=(_id:string,fallback:string)=>fallback;
 const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
 const ordinalDaeun=(index:number)=>["첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째","여덟 번째","아홉 번째","열 번째"][index]??`${index+1}번째`;
@@ -180,7 +196,7 @@ function FiveElementSpread({analysis}:{analysis:SajuAnalysis}){
 
 function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRestart }: { analysis:SajuAnalysis; report:StructuredInterpretation; interpretation:InterpretationUiState; onRetry:()=>void; onRestart:()=>void }) {
   const visibleSections=report.sections.filter(section=>section.contentKind==="CONTENT");
-  const parts=Array.from(new Map(visibleSections.map(section=>{const partNumber=section.partNumber??"00",rawTitle=section.partTitle??"평생사주";return[partNumber,{partNumber,title:customerPartTitle(partNumber,rawTitle)}];})).values());
+  const parts=Array.from(new Map(visibleSections.map(section=>{const partNumber=section.partNumber??"00",rawTitle=section.partTitle??"평생사주";return[partNumber,{partNumber,title:customerPartTitle(partNumber,rawTitle),subtitle:BOOK_PART_SUBTITLES[partNumber]??""}];})).values());
   return <div className="lifetimeReport lifetimeBook154">
     <header className="lifetimeCover book154Cover">
       <div className="coverTop"><b>POSTPOST</b><button onClick={onRestart}>다시 입력</button></div>
@@ -190,12 +206,18 @@ function DynamicLifetimeBook({ analysis, report, interpretation, onRetry, onRest
       <h2>{report.headline}</h2>
       <span>어려운 말은 줄이고, 내 사주 이야기는 더 쉽게</span>
     </header>
-    <nav className="book154Toc" aria-label="평생사주 목차">
-      {parts.map(part=>{const count=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber).length;return <a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span><small>{count}개 주제</small></a>;})}
+    <section className="book154Contents" aria-label="평생사주 전체 목차">
+      <header><span>CONTENTS</span><h2>목차</h2><p>나를 이해하는 데서 시작해, 일·돈·관계와 앞으로의 흐름까지 차례로 이어집니다.</p></header>
+      <div className="book154ContentsGrid">
+        {parts.map(part=><a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>PART {part.partNumber}</b><strong>{part.title}</strong><small>{part.subtitle}</small></a>)}
+      </div>
+    </section>
+    <nav className="book154Toc" aria-label="빠른 목차">
+      {parts.map(part=><a key={part.partNumber} href={`#book-part-${part.partNumber}`}><b>{part.partNumber}</b><span>{part.title}</span></a>)}
     </nav>
     <main className="book154Main">
       {parts.map(part=>{const sections=visibleSections.filter(section=>(section.partNumber??"00")===part.partNumber);return <section key={part.partNumber} id={`book-part-${part.partNumber}`} className="book154Part">
-        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2></header>
+        <header className="book154PartHeader"><span>PART {part.partNumber}</span><h2>{part.title}</h2>{part.subtitle?<p>{part.subtitle}</p>:null}</header>
         {part.partNumber==="01"?<SajuAtGlance analysis={analysis}/>:null}
         {sections.map((section,index)=>{
           const paragraphs=section.paragraphs?.length?section.paragraphs:[section.body];
