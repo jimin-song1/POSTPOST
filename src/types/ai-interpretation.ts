@@ -2,6 +2,7 @@ import type { SajuInput } from "./saju-input";
 
 export type InterpretationReportType="COMPREHENSIVE"|"LIFETIME_GENERAL"|"WEALTH"|"BUSINESS"|"CAREER"|"RELATIONSHIP"|"STUDY"|"YEARLY";
 export type RelationshipStatus="SINGLE"|"DATING"|"MARRIED";
+export type ChildStatus="NONE"|"EXPECTING"|"HAS_CHILDREN";
 export interface CharacterCore{corePatterns:string[];contradictions:string[];dominantStrengths:string[];shadowPatterns:string[];relationshipPattern:string;workPattern:string;decisionPattern:string;}
 export type InterpretationErrorCode="ANALYSIS_NOT_COMPLETED"|"MISSING_REQUIRED_EVIDENCE"|"PROVIDER_ERROR"|
   "PROVIDER_TIMEOUT"|"SCHEMA_VALIDATION_FAILED"|"GROUNDING_VALIDATION_FAILED";
@@ -10,7 +11,7 @@ export interface InterpretationTimelineInput {id:string;period:{startInstant:str
 export interface InterpretationReportPlanSection {id:string;chapterNumber:string;title:string;evidenceIds:string[];pageNumber?:number;partNumber?:string;partTitle?:string;purpose?:string;evidenceGroup?:string;contentKind?:"FRONT_MATTER"|"CONTENT"|"PROFESSIONAL";density?:"CONCEPT"|"GENERAL"|"CORE"|"TIMING_CORE";topic?:string;}
 export interface InterpretationInput {version:"interpretation-input-v1"|"lifetime-interpretation-input-v2"|"lifetime-interpretation-input-v3"|"lifetime-interpretation-input-v4";reportType:InterpretationReportType;
   reportVersion?:"lifetime-report-v2"|"lifetime-report-v3"|"dynamic-lifetime-book-v4";reportPlan?:InterpretationReportPlanSection[];evidence:InterpretationEvidence[];timeline:InterpretationTimelineInput[];
-  minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;relationshipLabel?:string;relationshipFocus?:readonly string[]};}
+  minimalContext:{gender?:"male"|"female";requestedYear?:number;relationshipStatus?:RelationshipStatus;relationshipLabel?:string;relationshipFocus?:readonly string[];childStatus?:ChildStatus};}
 export interface InterpretationMetric {id:string;label:string;value:number;unit:"PERCENT"|"SCORE";evidenceId:string;}
 export interface InterpretationSection {id:string;title:string;body:string;evidenceIds:string[];chapterNumber?:string;headline?:string;lead?:string;
   paragraphs?:string[];keyPoints?:string[];metrics?:InterpretationMetric[];mascotComment?:string;professionalDetails?:{summary:string;evidenceIds:string[]};
@@ -23,10 +24,10 @@ export interface InterpretationProviderRequest {systemPrompt:string;input:Interp
   repair?:{validationError:InterpretationErrorCode;previousOutput:unknown};}
 export interface InterpretationProviderResponse {output:unknown;provider:string;model:string;tokenUsage?:{input:number;output:number};}
 export interface InterpretationProvider {generate(request:InterpretationProviderRequest):Promise<InterpretationProviderResponse>;}
-export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v3";
+export interface InterpretationSuccess {status:"completed";ruleVersion:"ai-interpretation-v1";promptVersion:"interpretation-prompt-v5";
   groundingVersion:"interpretation-grounding-v3";analysisHash:string;cacheKey:string;report:StructuredInterpretation;
   metadata:{provider:string;model:string;repaired:boolean;tokenUsage?:{input:number;output:number}};}
 export interface InterpretationFailure {status:"failed";ruleVersion:"ai-interpretation-v1";error:{code:InterpretationErrorCode;message:string};}
 export type InterpretationResult=InterpretationSuccess|InterpretationFailure;
-export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;lifetimePartNumber?:string;characterCore?:CharacterCore;}
+export interface InterpretationBuildOptions {reportType:InterpretationReportType;referenceInstant?:string;year?:number;relationshipStatus?:RelationshipStatus;childStatus?:ChildStatus;lifetimePartNumber?:string;characterCore?:CharacterCore;}
 export interface InterpretationApiRequest extends InterpretationBuildOptions {input:SajuInput;}

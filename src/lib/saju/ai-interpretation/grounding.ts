@@ -22,9 +22,19 @@ function validateLifetimeVoice(report:StructuredInterpretation){
   const aiToneCount=EDITORIAL_RULE.aiTonePatterns.reduce((total,phrase)=>total+countOccurrences(prose,phrase),0);
   if(aiToneCount>0)throw new GroundingValidationError(`AI 보고서 문체가 포함되어 있습니다: ${aiToneCount}회`);
   for(const phrase of GENERIC_FORTUNE_COOKIE_PHRASES)if(prose.includes(phrase))throw new GroundingValidationError(`근거 없는 범용 조언 표현: ${phrase}`);
-  const seen=new Set<string>();for(const paragraph of customerSections.flatMap(row=>row.paragraphs??[])){
-    const normalized=paragraph.replace(/\s+/g," ").trim();if(normalized.length<24)continue;
-    if(seen.has(normalized))throw new GroundingValidationError("동일한 고객 본문 문단이 여러 장에 반복됩니다.");seen.add(normalized);
+  const sectionOwner=new Map<string,string>();
+  for(const section of customerSections){
+    const normalized=[
+      section.title,
+      section.headline??"",
+      section.lead??"",
+      ...(section.paragraphs?.length?section.paragraphs:[section.body]),
+      ...(section.keyPoints??[])
+    ].join("\n").replace(/\s+/g," ").trim();
+    if(normalized.length<80)continue;
+    const previous=sectionOwner.get(normalized);
+    if(previous&&previous!==section.id)throw new GroundingValidationError(`동일한 고객 section 전체가 반복됩니다: ${previous} / ${section.id}`);
+    sectionOwner.set(normalized,section.id);
   }
   const sceneOwner=new Map<string,string>();
   for(const section of customerSections)for(const scene of section.scenesUsed??[]){
@@ -71,7 +81,10 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
     if(!input.reportPlan)throw new GroundingValidationError("평생총운 report plan이 없습니다.");
     const expected=input.reportPlan.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`),actual=report.sections.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`);
     if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운의 동적 section 순서 또는 제목이 다릅니다.");
-    for(const row of report.sections){if(!row.headline||!row.lead||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 서술 구조가 불완전합니다.`);
+    for(const row of report.sections){
+      const leadIsValid=input.reportVersion==="dynamic-lifetime-book-v4"||Boolean(row.lead);
+      const keyPointsAreValid=input.reportVersion==="dynamic-lifetime-book-v4"||Boolean(row.keyPoints?.length);
+      if(!row.headline||!leadIsValid||!row.paragraphs||row.paragraphs.length<2||!keyPointsAreValid)throw new GroundingValidationError(`${row.id} section의 서술 구조가 불완전합니다.`);
       const plan=input.reportPlan.find(item=>item.id===row.id)!;for(const id of row.evidenceIds)if(!plan.evidenceIds.includes(id))throw new GroundingValidationError(`${row.id} 범위를 벗어난 evidence ID: ${id}`);
       for(const metric of row.metrics??[]){if(!row.evidenceIds.includes(metric.evidenceId))throw new GroundingValidationError(`metric evidence가 section에 인용되지 않았습니다: ${metric.evidenceId}`);
         const inventory=factInventory([evidenceById.get(metric.evidenceId)!.value]);if(!inventory.allowedNumbers.has(metric.value))throw new GroundingValidationError(`근거에 없는 metric 값: ${metric.value}`);}
@@ -82,8 +95,15 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
       throw new GroundingValidationError(`${row.id} section의 새 정보 요소가 3개보다 적습니다.`);
   }
 
-  for(const row of report.sections)validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
-    [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
+  for(const row of report.sections){
+    try{
+      validateLockedText([...(input.reportType==="LIFETIME_GENERAL"?[]:[row.title]),row.body,row.headline,row.lead,...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment,row.professionalDetails?.summary].filter(Boolean).join("\n"),
+        [...row.evidenceIds.map(id=>evidenceById.get(id)!.value),...(input.reportPlan?.filter(plan=>plan.id===row.id)??[])],input.minimalContext.requestedYear);
+    }catch(error){
+      if(error instanceof GroundingValidationError)throw new GroundingValidationError(row.id+": "+error.message);
+      throw error;
+    }
+  }
   for(const row of report.timeline)validateLockedText(`${row.title}\n${row.body}`,
     row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
 
@@ -91,7 +111,15 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL"){for(const phrase of [...LIFETIME_BOOK_V1.prohibitedChildrenClaims,...LIFETIME_BOOK_V1.prohibitedWellnessClaims,...LIFETIME_BOOK_V1.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);validateLifetimeVoice(report);}
-  if(input.reportType==="LIFETIME_GENERAL")try{validateKoreanEditorial(report.sections.filter(row=>row.contentKind!=="PROFESSIONAL").flatMap(row=>row.paragraphs??[row.body]).join("\n"));}catch(error){throw new GroundingValidationError(error instanceof Error?error.message:"한국어 편집 검증 실패");}
+  if(input.reportType==="LIFETIME_GENERAL")for(const row of report.sections.filter(row=>row.contentKind!=="PROFESSIONAL")){
+    const customerText=(row.paragraphs??[row.body]).join("\n");
+    try{validateKoreanEditorial(customerText);}
+    catch(error){throw new GroundingValidationError(row.id+": "+(error instanceof Error?error.message:"한국어 편집 검증 실패"));}
+    for(const phrase of ["원국에","원국에서","원국의 관계","계산상","POSTPOST에서는","이 장에서는"])
+      if(customerText.includes(phrase))throw new GroundingValidationError(row.id+": 고객에게 불필요한 보고서식 표현: "+phrase);
+    if(!["02","09"].includes(row.partNumber??"")&&/(?:년주|월주|일주|시주)/.test(customerText))
+      throw new GroundingValidationError(row.id+": 고객 본문에 불필요한 기둥 용어가 남아 있습니다.");
+  }
   validateLockedText(combined,[...input.evidence.map(row=>row.value),...(input.reportPlan??[])],input.minimalContext.requestedYear);
   return true;
 }

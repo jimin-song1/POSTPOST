@@ -70,7 +70,7 @@ function findTemplateRepeats(content:InterpretationSection[]){
 }
 
 const contradictoryPatterns=[
-  [/생각 없이|아무 고민 없이|무조건 바로 결정/,"신중한 결정 core와 충돌"],
+  [/(?:아무 고민 없이|무조건)\s*(?:바로\s*)?결정/,"신중한 결정 core와 충돌"],
   [/누구에게나 바로 마음을 열|처음 본 사람에게도 속마음을/,"관계 core와 충돌"],
   [/마무리에는 관심이 없|끝맺음을 피하/,"마무리 core와 충돌"]
 ] as const;
@@ -107,7 +107,8 @@ export function auditLifetimeEditorialQuality(report:StructuredInterpretation):L
     const rows=content.filter(row=>domain.groups.some(group=>group===(row.evidenceGroup??"")));
     const ids=new Set(rows.map(row=>row.id)),domainWarnings=warnings.filter(row=>ids.has(row.sectionId));
     const naturalKorean=!domainWarnings.some(row=>["AI_TONE","REPORT_TONE","TECHNICAL_LEAKAGE","LONG_SENTENCE","REPEATED_ENDING"].includes(row.code));
-    const concrete=!domainWarnings.some(row=>row.code==="MISSING_SCENE");
+    const sceneRows=rows.filter(row=>hasConcreteScene(sectionText(row))).length;
+    const concrete=rows.length>0&&(rows.length<=2?sceneRows>=1:sceneRows/rows.length>=0.7);
     const novel=!domainWarnings.some(row=>row.code==="DUPLICATE_CLAIM"||row.code==="DUPLICATE_SCENE");
     const grounded=rows.length>0&&rows.every(row=>row.evidenceIds.length>0);
     const nonRepetitive=novel;

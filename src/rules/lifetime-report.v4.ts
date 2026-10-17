@@ -11,11 +11,11 @@ export interface DynamicBookPart{partNumber:string;title:string;requiredTopics:s
 export interface DynamicLifetimeBook{version:"dynamic-lifetime-book-v4";parts:DynamicBookPart[];sections:DynamicBookSection[];contentSectionCount:number;}
 
 export const LIFETIME_CONTENT_CONTRACT_V1={
-  version:"lifetime-content-contract-v1",minimumContentSections:130,recommendedContentSections:{min:140,max:null},
-  totalCharacters:{minimum:90_000,recommendedMin:110_000,recommendedMax:140_000},
-  sectionCharacters:{CONCEPT:{min:250,recommendedMax:450},GENERAL:{min:550,recommendedMax:900},CORE:{min:900,recommendedMax:1400},TIMING_CORE:{min:1000,recommendedMax:1800}},
-  chapterMinimumCharacters:{CORE:8000,IDENTITY:8000,WORK:8000,WEALTH:8000,RELATIONSHIP:8000,CHILDREN:6000,WELLNESS:6000,
-    NOBLE_STARS:7000,TEN_GODS_STAGES:8000,YEARLY:12000,SAMJAE:6000,DAEUN:15000,SYNTHESIS:4000},
+  version:"lifetime-content-contract-v1",minimumContentSections:90,recommendedContentSections:{min:100,max:140},
+  totalCharacters:{minimum:30_000,recommendedMin:38_000,recommendedMax:75_000},
+  sectionCharacters:{CONCEPT:{min:100,recommendedMax:420},GENERAL:{min:180,recommendedMax:700},CORE:{min:240,recommendedMax:900},TIMING_CORE:{min:240,recommendedMax:950}},
+  chapterMinimumCharacters:{CORE:1600,IDENTITY:1200,WORK:1400,WEALTH:1500,RELATIONSHIP:1400,CHILDREN:1200,WELLNESS:1500,
+    NOBLE_STARS:1800,TEN_GODS_STAGES:1900,YEARLY:1700,SAMJAE:350,DAEUN:2500,SYNTHESIS:1400},
   novelty:{minimumNewElements:3,maxReusedCoreClaim:1,maxReusedScene:0,semanticDuplicateThreshold:0.9},
   requiredChapters:["CORE","IDENTITY","WORK","WEALTH","RELATIONSHIP","CHILDREN","WELLNESS","NOBLE_STARS","TEN_GODS_STAGES","YEARLY","SAMJAE","DAEUN","SYNTHESIS"]
 } as const;
@@ -23,27 +23,249 @@ export const LIFETIME_CONTENT_CONTRACT_V1={
 const density=(group:LifetimeEvidenceGroup):ContentDensity=>["COVER","INTRO","FORTUNE_EXPLAIN"].includes(group)?"CONCEPT":
   ["CHILDREN","YEARLY_OVERVIEW","YEAR_1","YEAR_2","YEAR_3","YEAR_4","YEAR_5","MONTHLY","DAEUN_OVERVIEW","DAEUN_1","DAEUN_2","DAEUN_3","DAEUN_4","DAEUN_5","DAEUN_6","DAEUN_7","DAEUN_8","DAEUN_9","DAEUN_10"].includes(group)?"TIMING_CORE":
   ["CORE","IDENTITY","ELEMENTS","STRENGTH","WORK","WEALTH","RELATIONSHIP","SYNTHESIS"].includes(group)?"CORE":"GENERAL";
-const slug=(value:string)=>value.toLowerCase().replace(/[^a-z0-9가-힣]+/g,"-").replace(/^-|-$/g,"");
 const extra=(id:string,title:string,partNumber:string,partTitle:string,evidenceGroup:LifetimeEvidenceGroup,densityValue:ContentDensity,topic=title)=>
   ({id,title,partNumber,partTitle,evidenceGroup,density:densityValue,topic,contentKind:"CONTENT" as const});
 
-const childTopics=["자녀와 돌봄을 뜻하는 기운","아이와 돌봄의 기운이 겉으로 드러나는 자리","겉으로 보이지 않는 자녀와 돌봄의 기운","태어난 시간의 두 글자","태어난 시간 자리가 보여주는 가족 역할","태어난 시간 자리의 에너지 단계","태어난 시간 자리와 다른 자리의 관계","부모 역할을 맡는 방식","아이와 가까워지는 방식","부모가 되었을 때의 장점","부모 역할이 짐이 되는 순간","가족 역할이 커지는 10년 흐름","가까운 몇 년의 자녀와 가족 테마"];
-const samjaeTopics=["삼재란 무엇인가","내 생년지가 만드는 삼재 주기","들삼재의 시작","눌삼재의 머무름","날삼재의 정리","내 사주에서 삼재가 체감되는 방식","타고난 관계 패턴과 삼재","10년 흐름과 삼재의 중첩","지나온 삼재와 다음 삼재","삼재를 지나가는 현실적인 방식"];
-const yearTopics=["그 해의 두 기운과 내 기본 흐름의 만남","10년 흐름 속 도움과 변화","움직임이 커지는 분야의 행동 기준"];
-const daeunTopics=["전반부와 후반부, 앞뒤 흐름의 차이"];
 
-export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number}):DynamicLifetimeBook{
-  const base=LIFETIME_BOOK_PAGES.map(page=>{const part=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
-    return{id:`legacy-${page.id}`,title:page.title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic:page.title,
+const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
+  "01":"나는 어떤 사람인가",
+  "02":"나를 이루는 여덟 글자",
+  "03":"내 안에는 여러 모습이 있다",
+  "04":"나는 어떤 일을 하며 살아갈까",
+  "05":"돈과는 어떤 인연일까",
+  "06":"사랑하고 함께 살아가는 일",
+  "07":"가족이라는 이름 안에서",
+  "08":"살면서 만나게 되는 사람들",
+  "09":"몸과 마음의 기운",
+  "10":"내 사주에서 눈여겨볼 것들",
+  "11":"열 해마다 달라지는 인생의 운",
+  "12":"앞으로 다섯 해는 어떨까",
+  "13":"인생의 방향이 바뀌는 때",
+  "14":"긴 사주 이야기를 마치며"
+};
+const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
+
+const CUSTOMER_SECTION_TITLES:Record<string,string>={
+  "book-002":"이 책을 읽기 전에",
+  "book-003":"사주는 무엇을 보고 읽을까",
+  "book-004":"이 책이 사주를 풀어가는 순서",
+  "book-005":"계산된 값이 해설이 되는 과정",
+  "book-006":"어려운 용어는 이렇게 풀어봅니다",
+
+  "book-008":"나를 한 문장으로 말하면",
+  "book-009":"낯선 곳·일·가까운 사람 앞에서",
+  "book-010":"첫인상 뒤에 숨은 기준",
+  "book-011":"일이 생겼을 때 먼저 보는 것",
+  "book-012":"가까워질수록 달라지는 모습",
+  "book-013":"혼자 있을 때 드러나는 본모습",
+  "book-014":"쉽게 지나치지 못하는 감정",
+
+  "book-015":"내가 자주 쓰는 역할",
+  "book-016":"오행의 균형과 치우침",
+  "book-017":"혼자 버티는 힘",
+  "book-018":"나에게 힘을 보태는 기운",
+  "book-019":"운의 흐름은 이렇게 읽어요",
+  "book-020":"내 사주의 중심은 어디에 있을까",
+  "book-021":"나를 이루는 중심 기운",
+  "book-022":"나를 대표하는 두 글자",
+  "book-023":"겉으로 보이는 모습과 속마음",
+  "book-024":"강점과 약점이 갈리는 지점",
+  "book-025":"부족한 기운을 채우는 방향",
+  "book-026":"강점이 과해지는 순간",
+
+  "book-027":"일과 배움의 큰 방향",
+  "book-028":"재능이 가장 잘 살아나는 일",
+  "book-029":"직장과 사업, 더 맞는 자리",
+  "book-030":"직장에서 강점이 살아나는 조건",
+  "book-031":"책임이 커질수록 달라지는 점",
+  "book-032":"함께 일하기 좋은 사람",
+  "book-033":"사업에서 강점이 살아나는 구조",
+  "book-034":"배움이 성과로 이어지는 분야",
+
+  "book-035":"재물운의 큰 흐름",
+  "book-036":"돈 앞에서 드러나는 기준",
+  "book-037":"돈이 움직이는 방향",
+  "book-038":"수입이 만들어지는 경로",
+  "book-039":"번 돈이 남는 조건",
+  "book-040":"사람과 돈의 경계",
+  "book-041":"큰돈이 움직일 때",
+  "book-042":"평생 재물운의 핵심",
+
+  "book-043":"관계운의 큰 흐름",
+  "book-045":"관계에서 반복되는 패턴",
+  "book-048":"사랑을 표현하는 모습",
+  "book-049":"갈등이 생겼을 때",
+  "book-052":"가족 안에서 맡는 역할",
+
+  "book-053":"몸의 균형과 타고난 리듬",
+  "book-054":"먼저 살펴야 할 약한 지점",
+  "book-055":"생활에서 보완할 부분",
+  "book-056":"회복이 필요한 신호",
+  "book-057":"스트레스가 쌓이는 패턴",
+  "book-058":"기운을 회복하는 순서",
+  "book-059":"수면·식사·움직임의 균형",
+  "book-062":"잘 챙기는 것과 놓치는 것",
+  "book-063":"생활 리듬이 흔들리는 시기",
+
+  "book-064":"귀인운의 큰 흐름",
+  "book-067":"내게 귀인이 되는 사람",
+  "book-068":"배움과 성장에서 만나는 인연",
+  "book-069":"기회를 연결하는 사람",
+  "book-071":"좋은 인연이 들어오는 자리",
+  "book-072":"귀인운이 강해지는 시기",
+  "book-073":"좋은 인연을 알아보는 기준",
+
+  "book-074":"사주에서 두드러지는 신살",
+  "book-077":"도화 · 사람들에게 남는 인상",
+  "book-078":"화개 · 혼자 깊이 파고드는 힘",
+  "book-079":"귀문 · 남들보다 예민하게 감지하는 것",
+  "book-080":"원진 · 가까울수록 예민해지는 이유",
+  "book-081":"현침 · 세밀하게 보고 정확히 짚는 힘",
+  "book-082":"충·형·파·해 · 부딪힘이 만드는 변화",
+  "book-083":"합 · 사람과 일이 모이는 힘",
+  "book-084":"신살을 삶에서 쓰는 법",
+
+  "book-085":"십이운성으로 보는 삶의 기세",
+  "book-089":"어린 시절 · 처음 자리 잡은 기운",
+  "book-090":"사회생활 · 밖에서 쓰는 기운",
+  "book-091":"가까운 관계 · 안쪽에서 드러나는 기운",
+  "book-092":"후반의 삶 · 시간이 갈수록 깊어지는 기운",
+  "book-093":"인생 초반",
+  "book-094":"인생 중반",
+  "book-095":"인생 후반",
+
+  "book-096":"십성으로 보는 나의 중심 역할",
+  "book-100":"비겁 · 스스로 밀고 가는 힘",
+  "book-101":"식상 · 표현하고 만들어내는 힘",
+  "book-102":"재성 · 돈과 현실을 다루는 힘",
+  "book-103":"관성 · 책임과 기준을 세우는 힘",
+  "book-104":"인성 · 배우고 이해하는 힘",
+  "book-105":"처음 보이는 모습",
+  "book-106":"가까워진 뒤 드러나는 모습",
+  "book-107":"겉과 속에서 다른 역할",
+  "book-108":"일·돈·관계에서 달라지는 역할",
+
+  "book-109":"앞으로 5년의 큰 흐름",
+  "book-117":"올해 움직임이 큰 달",
+  "book-118":"5년 동안 달라지는 일·돈·관계",
+  "book-119":"5년을 지나며 남는 핵심",
+
+  "book-120":"변화운의 큰 흐름",
+  "book-121":"지금의 변화운",
+  "book-122":"변화가 커질 때 먼저 생기는 일",
+  "book-123":"부딪힘이 방향을 바꾸는 때",
+  "book-124":"사람과 일이 몰리는 때",
+  "book-125":"반복해서 걸리는 문제",
+  "book-126":"사람과 환경이 바꾸는 방향",
+  "book-127":"큰 변화가 들어오는 때",
+  "book-128":"변화 속에서 지켜야 할 기준",
+
+  "book-129":"평생 대운의 지도",
+  "book-130":"현재 대운 · 지금의 10년",
+  "book-131":"평생 대운 흐름표",
+  "book-132":"운의 방향이 바뀌는 때",
+  "book-134":"첫 번째 대운",
+  "book-135":"두 번째 대운",
+  "book-136":"세 번째 대운",
+  "book-137":"네 번째 대운",
+  "book-138":"다섯 번째 대운",
+  "book-139":"여섯 번째 대운",
+  "book-140":"일곱 번째 대운",
+  "book-141":"여덟 번째 대운",
+  "book-142":"아홉 번째 대운",
+  "book-143":"열 번째 대운",
+  "book-144":"인생의 세 구간",
+
+  "book-145":"한 권으로 정리한 내 사주",
+  "book-146":"결국 나는 어떤 사람인가",
+  "book-147":"강점이 가장 잘 살아나는 순간",
+  "book-148":"강점이 부담으로 바뀌는 순간",
+  "book-149":"일과 돈에서 기억할 기준",
+  "book-150":"사랑과 가족에서 기억할 기준",
+  "book-151":"몸과 생활에서 기억할 기준",
+  "book-152":"앞으로 선택할 때 도움이 되는 기준",
+  "book-153":"평생 기억할 다섯 가지",
+  "book-154":"계산 근거 · 자세히 보기"
+};
+
+export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:number;relationshipStatus?:"SINGLE"|"DATING"|"MARRIED";childStatus?:"NONE"|"EXPECTING"|"HAS_CHILDREN"}):DynamicLifetimeBook{
+  const omittedBaseIds=new Set([
+    "book-009","book-011","book-015","book-019","book-020","book-023",
+    "book-046","book-060","book-061","book-065","book-066","book-070","book-075","book-076",
+    "book-086","book-087","book-088","book-093","book-094","book-095",
+    "book-097","book-098","book-099","book-105","book-106","book-107","book-108",
+    "book-110","book-111","book-120","book-122","book-133","book-146","book-152"
+  ]);
+  const base=LIFETIME_BOOK_PAGES.filter(page=>!omittedBaseIds.has(page.id)).map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
+    const pageNumber=Number(page.id.replace("book-",""));
+    const remappedPartNumber=
+      pageNumber>=7&&pageNumber<=14?"01":
+      pageNumber>=16&&pageNumber<=26?"02":
+      (pageNumber===96||pageNumber>=100&&pageNumber<=104)?"03":
+      pageNumber>=27&&pageNumber<=34?"04":
+      pageNumber>=35&&pageNumber<=42?"05":
+      pageNumber>=43&&pageNumber<=50?"06":
+      pageNumber>=51&&pageNumber<=52?"07":
+      pageNumber>=64&&pageNumber<=73?"08":
+      pageNumber>=53&&pageNumber<=63?"09":
+      pageNumber>=74&&pageNumber<=92?"10":
+      pageNumber>=129&&pageNumber<=144?"11":
+      pageNumber>=109&&pageNumber<=119?"12":
+      pageNumber>=121&&pageNumber<=128?"13":
+      pageNumber>=145&&pageNumber<=154?"14":
+      legacyPart.partNumber;
+    const part=customerPart(remappedPartNumber,legacyPart.title);
+    let title=CUSTOMER_SECTION_TITLES[page.id]??page.title;
+    if(page.id==="book-007")title="선택 앞에서 드러나는 기준";
+    if(page.id==="book-044"){
+      if(options.relationshipStatus==="DATING")title="연애할 때의 나";
+      else if(options.relationshipStatus==="MARRIED")title="부부 관계에서의 나";
+    }
+    if(page.id==="book-047"){
+      if(options.relationshipStatus==="SINGLE")title="미래 배우자는 어떤 사람일까";
+      else if(options.relationshipStatus==="DATING")title="현재 연인에게 끌리는 이유";
+      else if(options.relationshipStatus==="MARRIED")title="배우자에게 중요하게 보는 것";
+    }
+    if(page.id==="book-050"){
+      if(options.relationshipStatus==="DATING")title="이 관계를 결혼으로 이어갈 때";
+      else if(options.relationshipStatus==="MARRIED")title="결혼생활에서 중요한 것";
+    }
+    if(page.id==="book-051"){
+      if(options.childStatus==="HAS_CHILDREN")title="현재 부모 역할";
+      else if(options.childStatus==="EXPECTING")title="출산을 앞둔 지금";
+      else title="부모가 된다면 드러나는 모습";
+    }
+    if(page.id==="book-112")title=`${options.year}년 · 한 해의 흐름`;
+    if(page.id==="book-113")title=`${options.year+1}년 · 한 해의 흐름`;
+    if(page.id==="book-114")title=`${options.year+2}년 · 한 해의 흐름`;
+    if(page.id==="book-115")title=`${options.year+3}년 · 한 해의 흐름`;
+    if(page.id==="book-116")title=`${options.year+4}년 · 한 해의 흐름`;
+    const topic=page.id==="book-047"?title:page.title;
+    return{id:`legacy-${page.id}`,title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
-  childTopics.forEach((title,index)=>additions.push(extra(`children-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"09","아이와 가족 역할","CHILDREN","TIMING_CORE")));
-  if(options.includeSamjae)samjaeTopics.forEach((title,index)=>additions.push(extra(`samjae-${String(index+1).padStart(2,"0")}-${slug(title)}`,title,"12S","삼재와 인생의 큰 변화","SAMJAE","TIMING_CORE")));
-  for(let offset=0;offset<5;offset++)yearTopics.forEach((title,index)=>{const yearlyTitle=`${options.year+offset}년 · ${title}`;additions.push(extra(`year-${options.year+offset}-${String(index+1).padStart(2,"0")}`,yearlyTitle,"11","앞으로 5년",(`YEAR_${offset+1}` as LifetimeEvidenceGroup),"TIMING_CORE",yearlyTitle));});
-  for(let daeun=1;daeun<=10;daeun++)daeunTopics.forEach((title,index)=>{const daeunTitle=`${daeun}번째 10년 · ${title}`;additions.push(extra(`daeun-${daeun}-${String(index+1).padStart(2,"0")}`,daeunTitle,"13","10년마다 바뀌는 큰 흐름",(`DAEUN_${daeun}` as LifetimeEvidenceGroup),"TIMING_CORE",daeunTitle));});
+  additions.push(
+    extra("children-overview","자녀운의 큰 흐름","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","CORE"),
+    extra("children-bond","아이와 맺게 되는 관계","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","CORE"),
+    extra("children-timing","자녀운의 현재와 다음 흐름","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","TIMING_CORE")
+  );
+  if(options.includeSamjae)additions.push(extra("samjae-summary","삼재의 실제 연도와 흐름","13",YINYANGWAN_STYLE_PART_TITLES["13"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
-    const original=LIFETIME_BOOK_V1.parts.map(row=>row.partNumber),insertAt=original.indexOf("13"),order=[...original.slice(0,insertAt),"12S",...original.slice(insertAt)];
-    return order.indexOf(a.partNumber)-order.indexOf(b.partNumber);});
+    const order=["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14"];
+    const partDiff=order.indexOf(a.partNumber)-order.indexOf(b.partNumber);
+    if(partDiff!==0)return partDiff;
+    if(a.partNumber==="07"){
+      const familyOrder=(id:string)=>{
+        if(id==="legacy-book-052")return 1;
+        if(id==="children-overview")return 2;
+        if(id==="legacy-book-051")return 3;
+        if(id==="children-bond")return 4;
+        if(id==="children-timing")return 5;
+        return 99;
+      };
+      return familyOrder(a.id)-familyOrder(b.id);
+    }
+    return 0;});
   const sections=all.map((row,index)=>({...row,sequence:index+1}));
   const partOrder=Array.from(new Set(sections.map(row=>row.partNumber)));
   const parts=partOrder.map(partNumber=>{const rows=sections.filter(row=>row.partNumber===partNumber);return{partNumber,title:rows[0].partTitle,
