@@ -37,13 +37,13 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(book.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(true);
     expect(book.sections.some(section=>section.title==="어디에서 인연이 시작되기 쉬울까")).toBe(false);
     expect(book.sections.some(section=>section.title==="결혼하면 잘 맞는 생활 방식")).toBe(false);
-    expect(book.sections.some(section=>section.title==="삼재 · 실제 연도와 변화 포인트")).toBe(true);
+    expect(book.sections.some(section=>section.title==="삼재의 실제 연도와 흐름")).toBe(true);
     const datingBook=buildDynamicLifetimeBook({includeSamjae:false,year:YEAR,relationshipStatus:"DATING"});
     expect(datingBook.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(false);
     expect(datingBook.sections.some(section=>section.title==="현재 연인에게 끌리는 이유")).toBe(true);
-    expect(book.sections.find(section=>section.id==="legacy-book-015")?.partNumber).toBe("10");
+    expect(book.sections.some(section=>section.id==="legacy-book-015")).toBe(false);
     for(const id of ["legacy-book-016","legacy-book-017","legacy-book-018"]) expect(book.sections.find(section=>section.id===id)?.partNumber,id).toBe("02");
-    expect(book.sections.find(section=>section.id==="legacy-book-019")?.partNumber).toBe("11");
+    expect(book.sections.some(section=>section.id==="legacy-book-019")).toBe(false);
     expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
     expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
     for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
