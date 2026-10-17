@@ -28,20 +28,20 @@ const extra=(id:string,title:string,partNumber:string,partTitle:string,evidenceG
 
 
 const YINYANGWAN_STYLE_PART_TITLES:Record<string,string>={
-  "01":"나는 어떤 존재인가",
-  "02":"일주와 오행",
-  "03":"직업운 · 학업운",
-  "04":"재물운",
-  "05":"연애운 · 결혼운 · 자녀운",
-  "06":"건강운",
-  "07":"귀인운",
-  "08":"신살",
-  "09":"십이운성",
-  "10":"십성",
-  "11":"연운 · 앞으로 5년",
-  "12S":"삼재 · 변화운",
-  "13":"대운",
-  "14":"총정리"
+  "01":"나는 어떤 사람인가",
+  "02":"나를 이루는 여덟 글자",
+  "03":"내 안에는 여러 모습이 있다",
+  "04":"나는 어떤 일을 하며 살아갈까",
+  "05":"돈과는 어떤 인연일까",
+  "06":"사랑하고 함께 살아가는 일",
+  "07":"가족이라는 이름 안에서",
+  "08":"살면서 만나게 되는 사람들",
+  "09":"몸과 마음의 기운",
+  "10":"내 사주에서 눈여겨볼 것들",
+  "11":"열 해마다 달라지는 인생의 운",
+  "12":"앞으로 다섯 해는 어떨까",
+  "13":"인생의 방향이 바뀌는 때",
+  "14":"긴 사주 이야기를 마치며"
 };
 const customerPart=(partNumber:string,fallback:string)=>({partNumber,title:YINYANGWAN_STYLE_PART_TITLES[partNumber]??fallback});
 
@@ -197,11 +197,23 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
     "book-110","book-111","book-120","book-122","book-133","book-146","book-152"
   ]);
   const base=LIFETIME_BOOK_PAGES.filter(page=>!omittedBaseIds.has(page.id)).map(page=>{const legacyPart=LIFETIME_BOOK_V1.parts.find(item=>item.partNumber===page.partNumber)!;
-    const remappedPartNumber=page.id==="book-011"?"03":
-      page.id==="book-015"?"10":
-      ["book-016","book-017","book-018"].includes(page.id)?"02":
-      page.id==="book-019"?"11":
-      legacyPart.partNumber==="12"?"12S":legacyPart.partNumber;
+    const pageNumber=Number(page.id.replace("book-",""));
+    const remappedPartNumber=
+      pageNumber>=7&&pageNumber<=14?"01":
+      pageNumber>=16&&pageNumber<=26?"02":
+      (pageNumber===96||pageNumber>=100&&pageNumber<=104)?"03":
+      pageNumber>=27&&pageNumber<=34?"04":
+      pageNumber>=35&&pageNumber<=42?"05":
+      pageNumber>=43&&pageNumber<=50?"06":
+      pageNumber>=51&&pageNumber<=52?"07":
+      pageNumber>=64&&pageNumber<=73?"08":
+      pageNumber>=53&&pageNumber<=63?"09":
+      pageNumber>=74&&pageNumber<=92?"10":
+      pageNumber>=129&&pageNumber<=144?"11":
+      pageNumber>=109&&pageNumber<=119?"12":
+      pageNumber>=121&&pageNumber<=128?"13":
+      pageNumber>=145&&pageNumber<=154?"14":
+      legacyPart.partNumber;
     const part=customerPart(remappedPartNumber,legacyPart.title);
     let title=CUSTOMER_SECTION_TITLES[page.id]??page.title;
     if(page.id==="book-007")title="선택 앞에서 드러나는 기준";
@@ -223,35 +235,35 @@ export function buildDynamicLifetimeBook(options:{includeSamjae:boolean;year:num
       else if(options.childStatus==="EXPECTING")title="출산을 앞둔 지금";
       else title="부모가 된다면 드러나는 모습";
     }
-    if(page.id==="book-112")title=`${options.year}년 · 시작점이 되는 해`;
-    if(page.id==="book-113")title=`${options.year+1}년 · 이어지는 흐름과 변화`;
-    if(page.id==="book-114")title=`${options.year+2}년 · 선택이 중요해지는 해`;
-    if(page.id==="book-115")title=`${options.year+3}년 · 변화가 커지는 해`;
-    if(page.id==="book-116")title=`${options.year+4}년 · 남는 것을 정하는 해`;
+    if(page.id==="book-112")title=`${options.year}년 · 한 해의 흐름`;
+    if(page.id==="book-113")title=`${options.year+1}년 · 한 해의 흐름`;
+    if(page.id==="book-114")title=`${options.year+2}년 · 한 해의 흐름`;
+    if(page.id==="book-115")title=`${options.year+3}년 · 한 해의 흐름`;
+    if(page.id==="book-116")title=`${options.year+4}년 · 한 해의 흐름`;
     const topic=page.id==="book-047"?title:page.title;
     return{id:`legacy-${page.id}`,title,partNumber:part.partNumber,partTitle:part.title,evidenceGroup:page.evidenceGroup,density:density(page.evidenceGroup),topic,
       contentKind:page.evidenceGroup==="COVER"||page.evidenceGroup==="INTRO"?"FRONT_MATTER" as const:page.evidenceGroup==="PROFESSIONAL"?"PROFESSIONAL" as const:"CONTENT" as const};});
   const additions:Array<Omit<DynamicBookSection,"sequence">>=[];
   additions.push(
-    extra("children-overview","자녀운의 큰 흐름","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
-    extra("children-bond","아이와 맺게 되는 관계","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","CORE"),
-    extra("children-timing","자녀운의 현재와 다음 흐름","05",YINYANGWAN_STYLE_PART_TITLES["05"],"CHILDREN","TIMING_CORE")
+    extra("children-overview","자녀운의 큰 흐름","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","CORE"),
+    extra("children-bond","아이와 맺게 되는 관계","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","CORE"),
+    extra("children-timing","자녀운의 현재와 다음 흐름","07",YINYANGWAN_STYLE_PART_TITLES["07"],"CHILDREN","TIMING_CORE")
   );
-  if(options.includeSamjae)additions.push(extra("samjae-summary","삼재의 실제 연도와 흐름","12S",YINYANGWAN_STYLE_PART_TITLES["12S"],"SAMJAE","TIMING_CORE"));
+  if(options.includeSamjae)additions.push(extra("samjae-summary","삼재의 실제 연도와 흐름","13",YINYANGWAN_STYLE_PART_TITLES["13"],"SAMJAE","TIMING_CORE"));
   const all=[...base,...additions].sort((a,b)=>{
-    const order=["00","01","02","03","04","05","06","07","08","09","10","11","12S","13","14"];
+    const order=["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14"];
     const partDiff=order.indexOf(a.partNumber)-order.indexOf(b.partNumber);
     if(partDiff!==0)return partDiff;
-    if(a.partNumber==="05"){
-      const childOrder=(id:string)=>{
-        const legacy=id.match(/^legacy-book-(\d+)$/);
-        if(legacy)return Number(legacy[1])-43;
-        if(id==="children-overview")return 7.5;
-        if(id==="children-bond")return 8.5;
-        if(id==="children-timing")return 8.7;
+    if(a.partNumber==="07"){
+      const familyOrder=(id:string)=>{
+        if(id==="legacy-book-052")return 1;
+        if(id==="children-overview")return 2;
+        if(id==="legacy-book-051")return 3;
+        if(id==="children-bond")return 4;
+        if(id==="children-timing")return 5;
         return 99;
       };
-      return childOrder(a.id)-childOrder(b.id);
+      return familyOrder(a.id)-familyOrder(b.id);
     }
     return 0;});
   const sections=all.map((row,index)=>({...row,sequence:index+1}));
