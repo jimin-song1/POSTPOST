@@ -2686,7 +2686,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
     :conflict==="NEGOTIATE"?"대화를 통해 서로의 기준을 맞추려는 쪽"
     :"감정이 커지면 잠시 거리를 두고 정리하려는 쪽";
 
-  if(/자녀운 한눈에 보기/.test(title))return[
+  if(/자녀운 한눈에 보기|자녀운의 큰 흐름/.test(title))return[
     childStatus==="EXPECTING"
       ?"지금은 자녀운을 먼 미래의 가능성으로만 볼 단계가 아니라, 출산을 앞둔 현실과 연결해서 읽는 게 자연스럽습니다."
       :childStatus==="HAS_CHILDREN"
@@ -2701,7 +2701,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
     attention[0]?("주의해서 볼 내용은 '"+attention[0]+"'입니다."):"잘해주려는 마음이 커질수록 아이가 직접 해볼 몫까지 가져오지 않는 게 중요합니다."
   ];
 
-  if(/아이와 맺는 관계/.test(title))return[
+  if(/아이와 맺는 관계|아이와 맺게 되는 관계/.test(title))return[
     "아이와의 관계에서는 "+expressionText+"이고, "+guidanceText+"에 가깝습니다.",
     "갈등이 생겼을 때는 "+conflictText+"으로 나타날 가능성이 큽니다.",
     strengths[1]?("아이와의 관계에서 잘 살아나는 힘은 '"+strengths[1]+"'입니다."):"약속을 지키고 필요한 순간에 꾸준히 옆에 있어주는 모습이 아이에게 안정감으로 남기 쉽습니다.",
@@ -2709,7 +2709,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
     "결국 아이와 가까워지는 핵심은 완벽하게 챙기는 데 있지 않고, 도움이 필요한 순간과 스스로 해볼 순간을 구분하는 데 있습니다."
   ];
 
-  if(/자녀운이 크게 움직이는 시기|자녀운의 현재와 앞으로/.test(title)){
+  if(/자녀운이 크게 움직이는 시기|자녀운의 현재와 앞으로|자녀운의 현재와 다음 흐름/.test(title)){
     const top=periods.slice(0,3);
     if(!top.length)return[
       "자녀운의 시기는 한 해의 사건을 단정하는 항목이 아니라, 가족과 돌봄의 역할이 어느 시기에 커지는지를 살펴보는 항목입니다.",
@@ -2732,7 +2732,7 @@ function childrenConsultation(row:Row,facts:ConsultationFacts,input:Interpretati
     ];
   }
 
-  if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습|부모가 된다면 먼저 나오는 모습|곧 부모가 되는 시기의 나|현재 부모 역할에서의 나/.test(title)){
+  if(/부모가 되었을 때의 나|부모가 되었을 때 먼저 나오는 모습|부모가 된다면 먼저 나오는 모습|부모가 된다면 드러나는 모습|곧 부모가 되는 시기의 나|출산을 앞둔 지금|현재 부모 역할에서의 나|현재 부모 역할/.test(title)){
     if(childStatus==="HAS_CHILDREN")return[
       "지금 부모 역할에서는 아이에게 필요한 걸 먼저 알아차리고 생활을 안정시키려는 모습이 자연스럽게 나올 수 있습니다.",
       "문제가 생기면 감정만 달래기보다 무엇부터 해결할지 정리해주는 쪽이라 아이에게는 믿고 돌아갈 수 있는 사람으로 느껴지기 쉽습니다.",
