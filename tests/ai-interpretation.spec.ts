@@ -149,7 +149,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year}),plan=validPlan(input);
     expect(lifetimeInterpretationPlanSchema.parse(plan)).toEqual(plan);
     const provider=new MockProvider(),result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year});
-    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan!.length).toBeGreaterThanOrEqual(130);
+    expect(result.status).toBe("completed");expect(provider.calls).toHaveLength(2);expect(input.reportPlan!.length).toBeGreaterThanOrEqual(LIFETIME_CONTENT_CONTRACT_V1.minimumContentSections);
     expect(provider.calls[0].systemPrompt).toContain(LIFETIME_INTERPRETATION_PLANNER_PROMPT);
     expect((provider.calls[0].schema as {properties?:Record<string,unknown>}).properties?.planVersion).toBeTruthy();
     expect(provider.calls[1].systemPrompt).toContain("확정된 interpretationPlan JSON");
@@ -262,7 +262,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(result.status).toBe("completed");
     if(result.status!=="completed")return;
     const stats=validateLifetimeContentContract(result.report),audit=auditLifetimeEditorialQuality(result.report);
-    expect(stats.contentSections).toBeGreaterThanOrEqual(130);
+    expect(stats.contentSections).toBeGreaterThanOrEqual(LIFETIME_CONTENT_CONTRACT_V1.minimumContentSections);
     expect(stats.totalCharacters).toBeGreaterThanOrEqual(30_000);
     expect(audit.metrics.aiToneHits).toBe(0);
     expect(audit.metrics.reportToneHits).toBe(0);
@@ -292,7 +292,7 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(allText).not.toMatch(/(?:^|\n\n)낮 시간 활동(?:$|\n\n)/);
     expect(allText).not.toMatch(/(?:^|\n\n)편안한 호흡(?:$|\n\n)/);
 
-    const overview=result.report.sections.find(section=>section.evidenceGroup==="YEARLY_OVERVIEW"&&section.title==="앞으로 5년의 흐름");
+    const overview=result.report.sections.find(section=>section.evidenceGroup==="YEARLY_OVERVIEW"&&section.title==="앞으로 5년의 큰 흐름");
     expect(overview).toBeTruthy();
     for(let offset=0;offset<5;offset++){
       const target=String(year+offset),count=(overview!.body.match(new RegExp(target+"년","g"))??[]).length;
