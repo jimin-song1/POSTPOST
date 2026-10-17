@@ -78,11 +78,11 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(book.parts.find(part=>part.partNumber==="10")?.title).toBe("십성");
     expect(book.parts.find(part=>part.partNumber==="11")?.title).toBe("연운 · 앞으로 5년");
     expect(book.parts.find(part=>part.partNumber==="12S")?.title).toBe("삼재 · 변화운");
-    expect(book.sections.find(section=>section.id==="legacy-book-007")?.title).toBe("결정을 내릴 때의 나");
-    expect(book.sections.find(section=>section.id==="legacy-book-009")?.title).toBe("낯선 곳·일·가까운 사람 앞에서");
-    expect(book.sections.find(section=>section.id==="legacy-book-011")?.partNumber).toBe("03");
-    expect(book.sections.find(section=>section.id==="legacy-book-036")?.title).toBe("돈을 쓸 때 가장 먼저 보는 것");
-    expect(book.sections.find(section=>section.id==="legacy-book-096")?.title).toBe("내 안에서 가장 자주 쓰는 힘");
+    expect(book.sections.find(section=>section.id==="legacy-book-007")?.title).toBe("선택 앞에서 드러나는 기준");
+    expect(book.sections.some(section=>section.id==="legacy-book-009")).toBe(false);
+    expect(book.sections.some(section=>section.id==="legacy-book-011")).toBe(false);
+    expect(book.sections.find(section=>section.id==="legacy-book-036")?.title).toBe("돈 앞에서 드러나는 기준");
+    expect(book.sections.find(section=>section.id==="legacy-book-096")?.title).toBe("십성으로 보는 나의 중심 역할");
   });
 
   it("locks customer-reality branching and life-stage timing rules",async()=>{
@@ -92,13 +92,13 @@ describe("AI_INTERPRETATION_V1",()=>{
     const marriedBook=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN"});
     expect(marriedBook.sections.some(row=>row.title==="배우자에게 중요하게 보는 것")).toBe(true);
     expect(marriedBook.sections.some(row=>row.title==="미래 배우자는 어떤 사람일까")).toBe(false);
-    expect(marriedBook.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
-    expect(marriedBook.sections.some(row=>row.title==="자녀운 한눈에 보기")).toBe(true);
-    expect(marriedBook.sections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
-    expect(marriedBook.sections.some(row=>row.title==="자녀운의 현재와 앞으로")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="현재 부모 역할")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="자녀운의 큰 흐름")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="아이와 맺게 되는 관계")).toBe(true);
+    expect(marriedBook.sections.some(row=>row.title==="자녀운의 현재와 다음 흐름")).toBe(true);
 
     const expectingBook=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"EXPECTING"});
-    expect(expectingBook.sections.some(row=>row.title==="곧 부모가 되는 시기의 나")).toBe(true);
+    expect(expectingBook.sections.some(row=>row.title==="출산을 앞둔 지금")).toBe(true);
     expect(expectingBook.sections.filter(row=>row.evidenceGroup==="CHILDREN").length).toBeGreaterThanOrEqual(5);
 
     const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
@@ -113,16 +113,16 @@ describe("AI_INTERPRETATION_V1",()=>{
     if(expecting.status==="completed"){
       const childSections=expecting.report.sections.filter(row=>row.evidenceGroup==="CHILDREN");
       expect(childSections.length).toBeGreaterThanOrEqual(5);
-      expect(childSections.some(row=>row.title==="자녀운 한눈에 보기"&&row.body.includes("출산을 앞둔 현실"))).toBe(true);
-      expect(childSections.some(row=>row.title==="아이와 맺는 관계")).toBe(true);
-      expect(childSections.some(row=>row.title==="자녀운의 현재와 앞으로"&&row.body.includes("출산 시점"))).toBe(true);
+      expect(childSections.some(row=>row.title==="자녀운의 큰 흐름"&&row.body.includes("출산을 앞둔 현실"))).toBe(true);
+      expect(childSections.some(row=>row.title==="아이와 맺게 되는 관계")).toBe(true);
+      expect(childSections.some(row=>row.title==="자녀운의 현재와 다음 흐름"&&row.body.includes("출산 시점"))).toBe(true);
       expect(childSections.map(row=>row.body).join("\n")).not.toContain("태아 성별");
     }
     if(relationship.status==="completed"){
       const text=relationship.report.sections.map(row=>row.body).join("\n");
       expect(text).not.toContain("미래 배우자");
       expect(text).not.toContain("배우자 자리인 일지의 분위기를 외형으로 풀면");
-      expect(relationship.report.sections.some(row=>row.title==="현재 부모 역할에서의 나")).toBe(true);
+      expect(relationship.report.sections.some(row=>row.title==="현재 부모 역할")).toBe(true);
     }
 
     const timing=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"11"});
