@@ -102,14 +102,14 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(expectingBook.sections.some(row=>row.title==="출산을 앞둔 지금")).toBe(true);
     expect(expectingBook.sections.filter(row=>row.evidenceGroup==="CHILDREN").length).toBeGreaterThanOrEqual(5);
 
-    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
+    const input=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"07"});
     expect(input.minimalContext.childStatus).toBe("HAS_CHILDREN");
     expect(input.evidence.some(row=>row.id==="CONTEXT:CHILD_STATUS")).toBe(true);
 
     const provider=new DeterministicMockInterpretationProvider();
-    const relationship=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"05"});
+    const relationship=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year,lifetimePartNumber:"07"});
     expect(relationship.status).toBe("completed");
-    const expecting=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"EXPECTING",year,lifetimePartNumber:"05"});
+    const expecting=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"EXPECTING",year,lifetimePartNumber:"07"});
     expect(expecting.status).toBe("completed");
     if(expecting.status==="completed"){
       const childSections=expecting.report.sections.filter(row=>row.evidenceGroup==="CHILDREN");
