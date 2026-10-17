@@ -126,7 +126,7 @@ describe("AI_INTERPRETATION_V1",()=>{
       expect(relationship.report.sections.some(row=>row.title==="현재 부모 역할")).toBe(true);
     }
 
-    const timing=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"11"});
+    const timing=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"12"});
     expect(timing.status).toBe("completed");
     if(timing.status==="completed"){
       const monthly=timing.report.sections.find(row=>row.evidenceGroup==="MONTHLY");
