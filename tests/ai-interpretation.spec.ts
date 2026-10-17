@@ -12,7 +12,7 @@ import { OpenAIInterpretationProvider } from "@/lib/saju/ai-interpretation/opena
 import { MockInterpretationProvider as DeterministicMockInterpretationProvider } from "@/lib/saju/ai-interpretation/mock-provider";
 import { auditLifetimeEditorialQuality } from "@/lib/saju/ai-interpretation/editorial-audit";
 import { validateLifetimeContentContract } from "@/lib/saju/ai-interpretation/lifetime-content-contract";
-import { buildDynamicLifetimeBook } from "@/rules/lifetime-report.v4";
+import { buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1 } from "@/rules/lifetime-report.v4";
 import { InterpretationProviderError,InterpretationProviderTimeoutError } from "@/lib/saju/ai-interpretation/provider";
 import type { InterpretationInput,InterpretationProvider,InterpretationProviderRequest,InterpretationProviderResponse,
   InterpretationReportType,StructuredInterpretation } from "@/types/ai-interpretation";
