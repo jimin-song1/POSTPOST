@@ -74,10 +74,11 @@ describe("AI_INTERPRETATION_V1",()=>{
 
   it("uses customer-facing lifetime chapter and subsection titles",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:true,year,relationshipStatus:"MARRIED",childStatus:"EXPECTING"});
-    expect(book.parts.find(part=>part.partNumber==="01")?.title).toBe("나는 어떤 존재인가");
-    expect(book.parts.find(part=>part.partNumber==="10")?.title).toBe("십성");
-    expect(book.parts.find(part=>part.partNumber==="11")?.title).toBe("연운 · 앞으로 5년");
-    expect(book.parts.find(part=>part.partNumber==="12S")?.title).toBe("삼재 · 변화운");
+    expect(book.parts.find(part=>part.partNumber==="01")?.title).toBe("나는 어떤 사람인가");
+    expect(book.parts.find(part=>part.partNumber==="03")?.title).toBe("내 안에는 여러 모습이 있다");
+    expect(book.parts.find(part=>part.partNumber==="11")?.title).toBe("열 해마다 달라지는 인생의 운");
+    expect(book.parts.find(part=>part.partNumber==="12")?.title).toBe("앞으로 다섯 해는 어떨까");
+    expect(book.parts.find(part=>part.partNumber==="13")?.title).toBe("인생의 방향이 바뀌는 때");
     expect(book.sections.find(section=>section.id==="legacy-book-007")?.title).toBe("선택 앞에서 드러나는 기준");
     expect(book.sections.some(section=>section.id==="legacy-book-009")).toBe(false);
     expect(book.sections.some(section=>section.id==="legacy-book-011")).toBe(false);
