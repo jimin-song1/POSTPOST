@@ -118,16 +118,16 @@ const BOOK_PART_SUBTITLES:Record<string,string>={
   "06":"몸의 리듬과 회복이 필요한 순간",
   "07":"나를 돕는 사람과 기회가 들어오는 자리",
   "08":"도화·화개·원진 등 특별하게 드러나는 기운",
-  "09":"삶의 단계마다 달라지는 힘",
+  "09":"십이운성으로 읽는 삶의 자리와 기세",
   "10":"내 안에서 반복해서 쓰는 역할과 성향",
   "11":"해마다 달라지는 앞으로의 흐름",
-  "12S":"삼재와 큰 변화가 들어오는 시기",
-  "13":"10년 단위로 보는 평생의 큰 흐름",
+  "12S":"삼재와 변화가 만드는 삶의 전환점",
+  "13":"10년마다 달라지는 인생의 방향",
   "14":"내 사주에서 끝까지 남는 핵심"
 };
 const customerSectionTitle=(_id:string,fallback:string)=>fallback;
 const customerPartTitle=(partNumber:string,fallback:string)=>BOOK_PART_TITLES[partNumber]??fallback;
-const ordinalDaeun=(index:number)=>["첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째","여덟 번째","아홉 번째","열 번째"][index]??`${index+1}번째`;
+const ordinalDaeun=(index:number)=>["첫","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째","여덟 번째","아홉 번째","열 번째"][index]??`${index+1}번째`;
 const daeunAgeLabel=(analysis:SajuAnalysis,index:number)=>{
   const period=analysis.daeun.periods[index];
   if(!period)return null;
