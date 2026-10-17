@@ -31,8 +31,10 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR,relationshipStatus:"SINGLE"}),completed=[];
     const customerParts=book.parts.filter(part=>part.sections.some(section=>section.contentKind==="CONTENT"));
     expect(customerParts.map(part=>part.title)).toEqual([
-      "나는 어떤 존재인가","일주와 오행","직업운 · 학업운","재물운","연애운 · 결혼운 · 자녀운","건강운","귀인운",
-      "신살","십이운성","십성","연운 · 앞으로 5년","삼재 · 변화운","대운","총정리"
+      "나는 어떤 사람인가","나를 이루는 여덟 글자","내 안에는 여러 모습이 있다","나는 어떤 일을 하며 살아갈까",
+      "돈과는 어떤 인연일까","사랑하고 함께 살아가는 일","가족이라는 이름 안에서","살면서 만나게 되는 사람들",
+      "몸과 마음의 기운","내 사주에서 눈여겨볼 것들","열 해마다 달라지는 인생의 운","앞으로 다섯 해는 어떨까",
+      "인생의 방향이 바뀌는 때","긴 사주 이야기를 마치며"
     ]);
     expect(book.sections.some(section=>section.title==="미래 배우자는 어떤 사람일까")).toBe(true);
     expect(book.sections.some(section=>section.title==="어디에서 인연이 시작되기 쉬울까")).toBe(false);
@@ -44,8 +46,8 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(book.sections.some(section=>section.id==="legacy-book-015")).toBe(false);
     for(const id of ["legacy-book-016","legacy-book-017","legacy-book-018"]) expect(book.sections.find(section=>section.id===id)?.partNumber,id).toBe("02");
     expect(book.sections.some(section=>section.id==="legacy-book-019")).toBe(false);
-    expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="05")).toBe(true);
-    expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="12S")).toBe(true);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHILDREN").every(section=>section.partNumber==="07")).toBe(true);
+    expect(book.sections.filter(section=>section.evidenceGroup==="CHANGE"||section.evidenceGroup==="SAMJAE").every(section=>section.partNumber==="13")).toBe(true);
     for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
       expect(result.status,part.partNumber).toBe("completed");if(result.status==="completed")completed.push(result);}
     const report:StructuredInterpretation={...completed[0].report,sections:completed.flatMap(row=>row.report.sections),timeline:completed.flatMap(row=>row.report.timeline),
@@ -126,7 +128,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(coreRequests).toHaveLength(1);
     const sharedMarker=characterCore.corePatterns[0];expect(provider.requests.slice(1).every(request=>request.systemPrompt.includes(sharedMarker))).toBe(true);
 
-    const samjaeInput=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:"12S"});
+    const samjaeInput=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:"13"});
     expect(samjaeInput.evidence.some(row=>row.id==="FORTUNE:SAMJAE")).toBe(true);
     expect(samjaeInput.evidence.some(row=>row.id==="NATAL:RELATIONS")).toBe(true);
     const samjaeCitations=report.sections.filter(row=>row.evidenceGroup==="SAMJAE").flatMap(row=>row.evidenceIds);
