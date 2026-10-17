@@ -128,7 +128,7 @@ const displaySectionTitle=(section:{id:string;title:string;evidenceGroup?:string
   const age=daeunAgeLabel(analysis,index);
   if(!age)return section.title;
   if(section.id.startsWith("daeun-"))return `${age} · 이 대운의 전반부와 후반부`;
-  return `${ordinalDaeun(index)} 대운 · ${age}`;
+  return `${age} · ${ordinalDaeun(index)} 대운`;
 };
 
 function SajuAtGlance({analysis}:{analysis:SajuAnalysis}){
