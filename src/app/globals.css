@@ -293,9 +293,22 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
 /* Dynamic lifetime book v4; legacy class names preserve the existing visual layout. */
 .lifetimeBook154 { background:var(--book); }
 .book154Cover { min-height:90vh; }
-.book154Toc { position:sticky; z-index:20; top:0; display:flex; gap:8px; padding:10px max(10px,calc((100vw - 1040px)/2)); overflow-x:auto; background:rgba(246,240,229,.96); border-bottom:1px solid #d9cebe; backdrop-filter:blur(12px); scrollbar-width:none; }
-.book154Toc a { display:grid; flex:0 0 168px; grid-template-columns:28px 1fr auto; gap:7px; align-items:center; min-height:48px; padding:8px 10px; color:#574c43; background:#fffaf2; border:1px solid #ded2c3; border-radius:12px; text-decoration:none; }
-.book154Toc b { color:var(--wine); font:700 11px Georgia,serif; }.book154Toc span { font-size:12px; font-weight:800; white-space:nowrap; }.book154Toc small { color:#8c8176; font-size:9px; }
+.book154Contents { width:min(100% - 28px,1040px); margin:0 auto; padding:96px 0 86px; }
+.book154Contents>header { max-width:720px; margin-bottom:42px; padding-bottom:26px; border-bottom:1px solid #cfc2b0; }
+.book154Contents>header span { color:var(--wine); font:700 12px Georgia,serif; letter-spacing:.2em; }
+.book154Contents>header h2 { margin:10px 0 10px; font:700 clamp(42px,6vw,68px)/1.08 Georgia,"Noto Serif KR",serif; letter-spacing:-.045em; }
+.book154Contents>header p { max-width:620px; margin:0; color:#746a60; font-size:15px; line-height:1.8; word-break:keep-all; }
+.book154ContentsGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid #cfc2b0; }
+.book154ContentsGrid a { position:relative; display:grid; grid-template-columns:82px minmax(0,1fr); grid-template-rows:auto auto; column-gap:20px; padding:28px 8px 30px; color:#312b26; border-bottom:1px solid #d8ccbc; text-decoration:none; }
+.book154ContentsGrid a:nth-child(odd) { padding-right:34px; border-right:1px solid #d8ccbc; }
+.book154ContentsGrid a:nth-child(even) { padding-left:34px; }
+.book154ContentsGrid b { grid-row:1/3; color:var(--wine); font:700 11px/1.4 Georgia,serif; letter-spacing:.12em; }
+.book154ContentsGrid strong { font:700 22px/1.4 Georgia,"Noto Serif KR",serif; letter-spacing:-.025em; word-break:keep-all; }
+.book154ContentsGrid small { margin-top:6px; color:#83766b; font-size:12px; line-height:1.6; word-break:keep-all; }
+.book154Toc { position:sticky; z-index:20; top:0; display:flex; gap:6px; padding:8px max(10px,calc((100vw - 1040px)/2)); overflow-x:auto; background:rgba(246,240,229,.96); border-top:1px solid #ded2c3; border-bottom:1px solid #d9cebe; backdrop-filter:blur(12px); scrollbar-width:none; }
+.book154Toc a { display:grid; flex:0 0 auto; grid-template-columns:24px auto; gap:7px; align-items:center; min-height:38px; padding:6px 10px; color:#574c43; text-decoration:none; border-radius:8px; }
+.book154Toc a:hover { background:#eee3d4; }
+.book154Toc b { color:var(--wine); font:700 10px Georgia,serif; }.book154Toc span { font-size:11px; font-weight:800; white-space:nowrap; }
 .lifetimeReport .book154Main { width:min(100% - 28px,920px); padding:0 0 90px; }
 .book154Part { scroll-margin-top:74px; }
 .book154PartHeader { padding:92px 8px 46px; border-bottom:1px solid #cfc2b0; }
@@ -319,7 +332,11 @@ button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visi
 .fiveElementSummary { margin:22px 0 0; padding-top:18px; border-top:1px solid #d9cbbb; color:#5f574f; font-size:14px; line-height:1.75; }.fiveElementSummary b { color:var(--wine); }
 .book154EvidenceIds { overflow-wrap:anywhere; color:#81776c; font:500 10px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace; }
 @media (max-width:700px) {
-  .book154Toc a { flex-basis:145px; grid-template-columns:24px 1fr; }.book154Toc small { display:none; }
+  .book154Contents { width:min(100% - 24px,1040px); padding:66px 0 56px; }
+  .book154Contents>header { margin-bottom:24px; padding-bottom:20px; }.book154Contents>header h2 { font-size:44px; }
+  .book154ContentsGrid { grid-template-columns:1fr; }.book154ContentsGrid a,.book154ContentsGrid a:nth-child(odd),.book154ContentsGrid a:nth-child(even) { grid-template-columns:64px minmax(0,1fr); padding:22px 4px; border-right:0; }
+  .book154ContentsGrid strong { font-size:19px; }.book154ContentsGrid small { font-size:11px; }
+  .book154Toc a { grid-template-columns:20px auto; }.book154Toc span { font-size:10px; }
   .lifetimeReport .book154Main { width:min(100% - 18px,920px); }.book154PartHeader { padding:68px 4px 34px; }.book154PartHeader h2 { font-size:39px; }
   .book154Page { min-height:0; padding:58px 4px 62px; }.book154Page h3 { font-size:31px; }.book154Lead,.book154Page .longCopy p { font-size:16px; }.book154Metrics { grid-template-columns:1fr; } .sajuAtGlance { padding:24px 16px 18px; border-radius:20px; }.sajuAtGlance>header h3 { font-size:24px; }.sajuPillarTable { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }.sajuPillarTable article>b { font-size:26px; } .dayPillarFocus { padding:22px 16px; border-radius:18px; }.dayPillarFocus>strong { font-size:42px; } .fiveElementSpread { padding:22px 18px; border-radius:18px; }.fiveElementRow { grid-template-columns:46px minmax(0,1fr) 52px; gap:9px; }.fiveElementRow>small { grid-column:2/-1; margin-top:-5px; }.fiveElementSpread figcaption strong { font-size:21px; }
 }
