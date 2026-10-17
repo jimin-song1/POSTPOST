@@ -136,7 +136,7 @@ describe("AI_INTERPRETATION_V1",()=>{
       expect(new Set(months).size).toBe(months.length);
     }
 
-    const daeun=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"13"});
+    const daeun=await interpretSajuAnalysis(analysis,new DeterministicMockInterpretationProvider(),{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",childStatus:"NONE",year,lifetimePartNumber:"11"});
     expect(daeun.status).toBe("completed");
     if(daeun.status==="completed"){
       const first=daeun.report.sections.find(row=>row.evidenceGroup==="DAEUN_1");
