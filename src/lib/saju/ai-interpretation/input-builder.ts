@@ -2,8 +2,8 @@ import type { SajuAnalysis } from "@/types/saju-analysis";
 import type { CategoryFortunePeriod,CategoryFortuneResult } from "@/types/category-fortune";
 import type { FortuneSynthesisPeriod,FortuneSynthesisResult } from "@/types/fortune-synthesis";
 import type { FortuneResult } from "@/types/fortune";
-import type { InterpretationBuildOptions,InterpretationEvidence,InterpretationInput,InterpretationReportType } from "@/types/ai-interpretation";
-import {LIFETIME_REPORT_V2} from "@/rules/lifetime-report.v2";
+import type { ChildStatus,InterpretationBuildOptions,InterpretationEvidence,InterpretationInput,InterpretationReportType } from "@/types/ai-interpretation";
+import {getLifetimeReportSections,LIFETIME_REPORT_V2} from "@/rules/lifetime-report.v2";
 import {customerElement} from "@/rules/customer-terminology.v1";
 import type {WellnessResult} from "@/types/wellness";
 import type {ChildrenFortuneResult} from "@/types/children-fortune";
@@ -72,8 +72,14 @@ function pairRows(synthesisRows:FortuneSynthesisPeriod[],categoryRows:CategoryFo
 }
 
 function idsByPrefix(evidence:InterpretationEvidence[],...prefixes:string[]){return evidence.filter(row=>prefixes.some(prefix=>row.id.startsWith(prefix))).map(row=>row.id);}
+function familyContext(relationshipStatus:NonNullable<InterpretationBuildOptions["relationshipStatus"]>,childStatus:ChildStatus){
+  if(relationshipStatus!=="MARRIED")return LIFETIME_REPORT_V2.family.SINGLE;
+  return childStatus==="HAS_CHILDREN"?LIFETIME_REPORT_V2.family.MARRIED_WITH_CHILDREN:LIFETIME_REPORT_V2.family.MARRIED_NO_CHILDREN;
+}
 function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOptions,fortune:FortuneResult,synthesis:FortuneSynthesisResult):InterpretationInput{
   if(!options.relationshipStatus)throw new InterpretationInputError("LIFETIME_GENERAL report에는 relationshipStatus가 필요합니다.");
+  const childStatus:ChildStatus=options.relationshipStatus==="MARRIED"?(options.childStatus??"NO_CHILDREN"):"NOT_APPLICABLE";
+  if(options.relationshipStatus==="MARRIED"&&childStatus==="NOT_APPLICABLE")throw new InterpretationInputError("기혼 평생총운에는 childStatus가 필요합니다.");
   if(analysis.wellness.status!=="implemented"||!("elements" in analysis.wellness))throw new InterpretationInputError("평생총운에는 wellness-v1 결과가 필요합니다.");
   if(analysis.childrenFortune.status!=="implemented"||!("bond" in analysis.childrenFortune))throw new InterpretationInputError("평생총운에는 children-fortune-v1 결과가 필요합니다.");
   const wellness=analysis.wellness as WellnessResult,children=analysis.childrenFortune as ChildrenFortuneResult,evidence:InterpretationEvidence[]=[],timeline:InterpretationInput["timeline"]=[];
@@ -90,31 +96,38 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const [element,row] of Object.entries(wellness.elements))evidence.push(fact(`WELLNESS:ELEMENT:${element.toUpperCase()}`,"WELLNESS",row));
   const wellnessPeriods=[...wellness.daeunPeriods].sort((a,b)=>b.wellnessPeriodAttention-a.wellnessPeriodAttention||a.daeunIndex-b.daeunIndex).slice(0,LIFETIME_REPORT_V2.selectedContextPeriods);
   evidence.push(fact("WELLNESS:LIFETIME_CONTEXT","WELLNESS",wellnessPeriods.map(row=>({daeunIndex:row.daeunIndex,ageRange:row.ageRange,pillar:row.pillar,attention:row.wellnessPeriodAttention,level:row.attentionLevel}))));
-  evidence.push(fact("CHILD:BOND","CHILD",children.bond),fact("CHILD:COUNT_TENDENCY","CHILD",children.countTendency),fact("CHILD:GENDER_ENERGY","CHILD",children.genderEnergy),
-    fact("CHILD:PARENTING_STYLE","CHILD",children.parentingStyle),fact("CHILD:STRENGTHS","CHILD",children.strengths),fact("CHILD:ATTENTION_AREAS","CHILD",children.attentionAreas));
-  const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,LIFETIME_REPORT_V2.selectedContextPeriods);
-  evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
+  if(options.relationshipStatus==="MARRIED"){
+    evidence.push(fact("CHILD:BOND","CHILD",children.bond),fact("CHILD:PARENTING_STYLE","CHILD",children.parentingStyle),fact("CHILD:STRENGTHS","CHILD",children.strengths),fact("CHILD:ATTENTION_AREAS","CHILD",children.attentionAreas));
+    const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,LIFETIME_REPORT_V2.selectedContextPeriods);
+    evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
+  }
   const relationship=LIFETIME_REPORT_V2.relationship[options.relationshipStatus];
+  const family=familyContext(options.relationshipStatus,childStatus);
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
-    fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}));
+    fact("CONTEXT:FAMILY_STATUS","CONTEXT",{childStatus,sectionTitle:family.title,interpretationFocus:family.focus,calculationEffect:false}));
+  if(fortune.seun.status==="implemented")evidence.push(fact("FORTUNE:SEUN:PERIODS","FORTUNE",fortune.seun.periods));
+  if(fortune.wolun.status==="implemented")evidence.push(fact("FORTUNE:WOLUN:PERIODS","FORTUNE",fortune.wolun.periods));
   for(const row of synthesis.daeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
-  const plan=LIFETIME_REPORT_V2.sections.map(section=>{let evidenceIds:string[]=[];switch(section.id){
-    case"overview":evidenceIds=idsByPrefix(evidence,"NATAL:PILLARS","NATAL:DAY_MASTER","NATAL:STRENGTH","NATAL:STRUCTURE");break;
-    case"personality":case"strengths-and-cautions":evidenceIds=idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:STRENGTH","NATAL:STRUCTURE");break;
-    case"five-elements":evidenceIds=idsByPrefix(evidence,"NATAL:FIVE_ELEMENTS:ELEMENT:");break;
-    case"strength":evidenceIds=idsByPrefix(evidence,"NATAL:STRENGTH");break;
-    case"talent-and-work":case"money-style":case"inner-roles":evidenceIds=idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:STRUCTURE","USEFUL_GOD:SYNTHESIS");break;
-    case"relationship":evidenceIds=idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:TEN_GODS","NATAL:RELATIONS");break;
-    case"children":evidenceIds=idsByPrefix(evidence,"CHILD:","CONTEXT:CHILD_REALITY_UNKNOWN");break;
-    case"wellness":evidenceIds=idsByPrefix(evidence,"WELLNESS:");break;
-    case"helpful-elements":evidenceIds=idsByPrefix(evidence,"USEFUL_GOD:");break;
-    case"special-features":evidenceIds=idsByPrefix(evidence,"NATAL:STARS","NATAL:RELATIONS");break;
-    case"lifetime-flow":case"daeun":case"life-phases":evidenceIds=idsByPrefix(evidence,"FORTUNE:DAEUN-");break;
-    case"takeaways":evidenceIds=idsByPrefix(evidence,"NATAL:STRENGTH","NATAL:STRUCTURE","USEFUL_GOD:SYNTHESIS","WELLNESS:BALANCE","CHILD:BOND");break;
-    case"professional":evidenceIds=evidence.map(row=>row.id);break;}
-    return{...section,evidenceIds:Array.from(new Set(evidenceIds))};});
+  const starResult=analysis.nobleAndSpecialStars.status==="implemented"&&"nobleStars" in analysis.nobleAndSpecialStars?analysis.nobleAndSpecialStars:null;
+  const starLabels=starResult?[...starResult.nobleStars,...starResult.peachBlossom,...starResult.travelHorse,...starResult.flowerCanopy].map(row=>row.label).slice(0,2):[];
+  const seun=fortune.seun.status==="implemented"?fortune.seun.periods?.[0]:undefined,wolun=fortune.wolun.status==="implemented"?fortune.wolun.periods?.[0]:undefined;
+  const daeun=fortune.daeun.status==="implemented"?fortune.daeun.periods:[];
+  const plan=getLifetimeReportSections(options.relationshipStatus,childStatus).map(section=>{let evidenceIds:string[]=[];let title=section.title;switch(section.id){
+    case"prologue":evidenceIds=idsByPrefix(evidence,"NATAL:PILLARS","NATAL:DAY_MASTER","NATAL:STRENGTH","NATAL:STRUCTURE");break;
+    case"personality":evidenceIds=idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:STRENGTH","NATAL:FIVE_ELEMENTS");break;
+    case"career-study":case"workplace":case"business":case"wealth":evidenceIds=idsByPrefix(evidence,"NATAL:TEN_GODS","NATAL:STRUCTURE","USEFUL_GOD:SYNTHESIS","FORTUNE:");break;
+    case"love-marriage":evidenceIds=idsByPrefix(evidence,"CONTEXT:RELATIONSHIP_STATUS","NATAL:TEN_GODS","NATAL:RELATIONS","FORTUNE:");break;
+    case"family":evidenceIds=idsByPrefix(evidence,"CONTEXT:FAMILY_STATUS","NATAL:RELATIONS",...(options.relationshipStatus==="MARRIED"?["CHILD:"]:[]));break;
+    case"benefactor":evidenceIds=idsByPrefix(evidence,"NATAL:STARS","USEFUL_GOD:");break;
+    case"health":evidenceIds=idsByPrefix(evidence,"WELLNESS:");break;
+    case"deep-reading":evidenceIds=idsByPrefix(evidence,"NATAL:","USEFUL_GOD:");break;
+    case"special":evidenceIds=idsByPrefix(evidence,"NATAL:STARS","NATAL:RELATIONS","FORTUNE:");title=`신살·삼재 · ${starLabels.join("·")||"명식의 보조 지표"}`;break;
+    case"yearly":evidenceIds=idsByPrefix(evidence,"FORTUNE:");title=`연운 · ${seun?`${seun.year}년 ${seun.pillar.stem}${seun.pillar.branch}`:"계산된 해의 흐름"}${wolun?` · 월운 ${wolun.pillar.stem}${wolun.pillar.branch}`:""}`;break;
+    case"daeun":evidenceIds=idsByPrefix(evidence,"FORTUNE:DAEUN-");title=`평생 대운 · ${daeun.length?`${daeun[0].sourcePeriod.ageRange}~${daeun.at(-1)!.sourcePeriod.ageRange}`:"10년 흐름"}`;break;
+    case"epilogue":evidenceIds=idsByPrefix(evidence,"NATAL:STRENGTH","NATAL:STRUCTURE","USEFUL_GOD:SYNTHESIS","WELLNESS:BALANCE");break;}
+    return{...section,title,evidenceIds:Array.from(new Set(evidenceIds))};});
   return{version:LIFETIME_REPORT_V2.inputVersion,reportVersion:LIFETIME_REPORT_V2.reportVersion,reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence,timeline,
-    minimalContext:{relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
+    minimalContext:{relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus,childStatus,familyFocus:family.focus}};
 }
 
 export function buildInterpretationInput(analysis:SajuAnalysis,options:InterpretationBuildOptions):InterpretationInput{

@@ -46,7 +46,7 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   if(input.reportType==="LIFETIME_GENERAL"){
     if(!input.reportPlan)throw new GroundingValidationError("평생총운 report plan이 없습니다.");
     const expected=input.reportPlan.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`),actual=report.sections.map(row=>`${row.chapterNumber}:${row.id}:${row.title}`);
-    if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운 01~18 section 순서 또는 제목이 다릅니다.");
+    if(JSON.stringify(actual)!==JSON.stringify(expected))throw new GroundingValidationError("평생총운 V5.6 section 순서 또는 제목이 다릅니다.");
     for(const row of report.sections){if(!row.headline||!row.lead||!row.paragraphs||row.paragraphs.length<2||!row.keyPoints?.length)throw new GroundingValidationError(`${row.id} section의 v2 서술 구조가 불완전합니다.`);
       const plan=input.reportPlan.find(item=>item.id===row.id)!;for(const id of row.evidenceIds)if(!plan.evidenceIds.includes(id))throw new GroundingValidationError(`${row.id} 범위를 벗어난 evidence ID: ${id}`);
       for(const metric of row.metrics??[]){if(!row.evidenceIds.includes(metric.evidenceId))throw new GroundingValidationError(`metric evidence가 section에 인용되지 않았습니다: ${metric.evidenceId}`);
@@ -62,7 +62,11 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
   const combined=texts(report).join("\n");
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
-  if(input.reportType==="LIFETIME_GENERAL")for(const phrase of [...LIFETIME_REPORT_V2.prohibitedChildrenClaims,...LIFETIME_REPORT_V2.prohibitedWellnessClaims,...LIFETIME_REPORT_V2.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);
+  if(input.reportType==="LIFETIME_GENERAL"){
+    for(const phrase of [...LIFETIME_REPORT_V2.prohibitedChildrenClaims,...LIFETIME_REPORT_V2.prohibitedWellnessClaims,...LIFETIME_REPORT_V2.prohibitedAxisConfusion,...LIFETIME_REPORT_V2.prohibitedFixedHeadings])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);
+    if(input.minimalContext.relationshipStatus!=="MARRIED")for(const phrase of ["자녀운","자녀 인연","아이와","부모 역할","부모로서","출산","손주"])
+      if(combined.includes(phrase))throw new GroundingValidationError(`미혼 보고서에 자녀 관련 표현이 포함되었습니다: ${phrase}`);
+  }
   validateLockedText(combined,[...input.evidence.map(row=>row.value),...(input.reportPlan??[])],input.minimalContext.requestedYear);
   return true;
 }
