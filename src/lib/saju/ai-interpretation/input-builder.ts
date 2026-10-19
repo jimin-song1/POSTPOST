@@ -151,16 +151,19 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const [element,row] of Object.entries(wellness.elements))evidence.push(fact(`WELLNESS:ELEMENT:${element.toUpperCase()}`,"WELLNESS",row));
   const wellnessPeriods=[...wellness.daeunPeriods].sort((a,b)=>b.wellnessPeriodAttention-a.wellnessPeriodAttention||a.daeunIndex-b.daeunIndex).slice(0,3);
   evidence.push(fact("WELLNESS:LIFETIME_CONTEXT","WELLNESS",wellnessPeriods.map(row=>({daeunIndex:row.daeunIndex,ageRange:row.ageRange,pillar:row.pillar,attention:row.wellnessPeriodAttention,level:row.attentionLevel}))));
-  evidence.push(fact("CHILD:BOND","CHILD",children.bond),fact("CHILD:COUNT_TENDENCY","CHILD",children.countTendency),fact("CHILD:GENDER_ENERGY","CHILD",children.genderEnergy),
-    fact("CHILD:PARENTING_STYLE","CHILD",children.parentingStyle),fact("CHILD:STRENGTHS","CHILD",children.strengths),fact("CHILD:ATTENTION_AREAS","CHILD",children.attentionAreas));
-  evidence.push(fact("CHILD:TEN_GOD_SIGNALS","CHILD",{visibleStems:analysis.tenGods.value?.heavenlyStems,hiddenStems:analysis.tenGods.value?.hiddenStems}),
-    fact("CHILD:HOUR_PILLAR","CHILD",analysis.pillars.hour),fact("CHILD:HOUR_STAGE","CHILD",analysis.twelveStages.value?.stages.hour),
-    fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
-  const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,3);
-  evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
+  const childStatus=options.relationshipStatus==="MARRIED"?(options.childStatus??"NO_CHILDREN"):"NOT_APPLICABLE";
+  if(options.relationshipStatus==="MARRIED"){
+    evidence.push(fact("CHILD:BOND","CHILD",children.bond),fact("CHILD:COUNT_TENDENCY","CHILD",children.countTendency),fact("CHILD:GENDER_ENERGY","CHILD",children.genderEnergy),
+      fact("CHILD:PARENTING_STYLE","CHILD",children.parentingStyle),fact("CHILD:STRENGTHS","CHILD",children.strengths),fact("CHILD:ATTENTION_AREAS","CHILD",children.attentionAreas));
+    evidence.push(fact("CHILD:TEN_GOD_SIGNALS","CHILD",{visibleStems:analysis.tenGods.value?.heavenlyStems,hiddenStems:analysis.tenGods.value?.hiddenStems}),
+      fact("CHILD:HOUR_PILLAR","CHILD",analysis.pillars.hour),fact("CHILD:HOUR_STAGE","CHILD",analysis.twelveStages.value?.stages.hour),
+      fact("CHILD:RELATION_CONTEXT","CHILD",analysis.relations.evidence.filter(row=>row.positions.includes("hour"))));
+    const childPeriods=[...children.daeunPeriods].sort((a,b)=>b.activationScore-a.activationScore||a.periodIndex-b.periodIndex).slice(0,3);
+    evidence.push(fact("CHILD:LIFETIME_CONTEXT","CHILD",childPeriods.map(row=>({periodIndex:row.periodIndex,ageRange:row.ageRange,pillar:row.pillar,activationScore:row.activationScore,activationLevel:row.activationLevel,themes:row.themes}))));
+  }
   const relationship=LIFETIME_BOOK_V1.relationship[options.relationshipStatus];
   evidence.push(fact("CONTEXT:RELATIONSHIP_STATUS","CONTEXT",{status:options.relationshipStatus,label:relationship.label,interpretationFocus:relationship.focus,calculationEffect:false}),
-    fact("CONTEXT:CHILD_REALITY_UNKNOWN","CONTEXT",{hasChildren:null,count:null,gender:null,pregnancy:null}),
+    fact("CONTEXT:FAMILY_STATUS","CONTEXT",{childStatus,calculationEffect:false}),
     fact("REQUEST:LIFETIME_YEAR_RANGE","CONTEXT",{startYear:currentYear,endYear:currentYear+4}));
   if(fortune.samjae.status==="implemented")evidence.push(fact("FORTUNE:SAMJAE","FORTUNE",fortune.samjae));
 
@@ -170,7 +173,7 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const seunCategoryById=new Map(categories.seun.map(row=>[row.synthesisId,row]));
   for(const row of selectedSeun){addFortuneFacts(row,evidence);addPillarContext(row,fortune,evidence);const category=seunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);
     const ids=evidence.filter(item=>item.id.includes(row.synthesisId)).map(item=>item.id);timeline.push({id:row.synthesisId,period:row.period,evidenceIds:ids});}
-  evidence.push(fact("CHILD:NEAR_TERM_CONTEXT","CHILD",selectedSeun.map(row=>({year:row.context.seunYear,favorability:row.favorability.score,activation:row.activation.score,
+  if(options.relationshipStatus==="MARRIED")evidence.push(fact("CHILD:NEAR_TERM_CONTEXT","CHILD",selectedSeun.map(row=>({year:row.context.seunYear,favorability:row.favorability.score,activation:row.activation.score,
     daeunIndex:row.context.daeunIndex,tags:row.tags}))));
 
   const selectedWolun=synthesis.wolun.filter(row=>row.context.seunYear===currentYear);
@@ -183,12 +186,12 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   for(const row of synthesis.daeun.filter(item=>activeDaeunIndexes.has(item.context.daeunIndex))){const category=daeunCategoryById.get(row.synthesisId);if(category)addCategoryFact(category,"COMPREHENSIVE",evidence);}
 
   const unique=Array.from(new Map(evidence.map(item=>[item.id,item])).values());
-  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear});
+  const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:currentYear,relationshipStatus:options.relationshipStatus,childStatus});
   const fullPlan=book.sections.map(section=>{
     const evidenceIds=Array.from(new Set(evidenceForBookGroup(section.evidenceGroup,unique,currentYear)));
     if(!evidenceIds.length)evidenceIds.push("NATAL:PILLARS");
     return{id:section.id,chapterNumber:String(section.sequence).padStart(3,"0"),title:section.title,evidenceIds,pageNumber:section.sequence,partNumber:section.partNumber,partTitle:section.partTitle,
-      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.topic};
+      purpose:bookPurpose(section.evidenceGroup),evidenceGroup:section.evidenceGroup,contentKind:section.contentKind,density:section.density,topic:section.title};
   });
   const plan=options.lifetimePartNumber?fullPlan.filter(row=>row.partNumber===options.lifetimePartNumber):fullPlan;
   if(!plan.length)throw new InterpretationInputError(`알 수 없는 lifetime part: ${options.lifetimePartNumber}`);
@@ -196,7 +199,8 @@ function buildLifetimeInput(analysis:SajuAnalysis,options:InterpretationBuildOpt
   const scopedEvidence=options.lifetimePartNumber?unique.filter(row=>requiredIds.has(row.id)):unique;
   const scopedTimeline=options.lifetimePartNumber?timeline.filter(row=>row.evidenceIds.some(id=>requiredIds.has(id))):timeline;
   return{version:"lifetime-interpretation-input-v4",reportVersion:"dynamic-lifetime-book-v4",reportType:"LIFETIME_GENERAL",reportPlan:plan,evidence:scopedEvidence,timeline:scopedTimeline,
-    minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus}};
+    minimalContext:{requestedYear:currentYear,relationshipStatus:options.relationshipStatus,relationshipLabel:relationship.label,relationshipFocus:relationship.focus,childStatus,
+      familyFocus:options.relationshipStatus==="MARRIED"?(childStatus==="HAS_CHILDREN"?["자녀와 나의 인연","부모로서의 모습","자녀에게 기대하는 것","자녀와 의견이 다를 때","성장에 따른 관계 변화"]:["자녀 인연","부모가 되었을 때의 모습","자녀에게 기대하는 것","자녀와 관계 맺는 방식"]):["원가족과의 관계","가족 안에서 맡는 역할","가족과 건강한 경계를 세우는 방식"]}};
 }
 
 export function buildInterpretationInput(analysis:SajuAnalysis,options:InterpretationBuildOptions):InterpretationInput{

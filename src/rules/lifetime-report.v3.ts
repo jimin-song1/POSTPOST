@@ -217,7 +217,7 @@ export const LIFETIME_BOOK_V1={
   ]}
   ] as LifetimeBookPart[],
   relationship:{
-    SINGLE:{label:"솔로",focus:["사람을 고르는 기준","관계 시작 방식","새로운 만남에서 보이는 성향","장기 관계에서 중요한 요소"]},
+    SINGLE:{label:"미혼",focus:["사람을 고르는 기준","관계 시작 방식","새로운 만남에서 보이는 성향","장기 관계에서 중요한 요소"]},
     DATING:{label:"연애 중",focus:["현재 관계에서 나타나는 성향","표현과 소통 방식","갈등 패턴","장기 관계로 갈 때 중요한 부분"]},
     MARRIED:{label:"기혼",focus:["배우자와 생활할 때의 성향","역할과 책임","소통 방식","오래 함께할수록 중요한 요소"]}
   },

@@ -3,17 +3,17 @@ import { FormEvent, useState } from "react";
 import { HybridDateField } from "@/components/HybridDateField";
 import { HybridTimeField } from "@/components/HybridTimeField";
 import { SearchSelect } from "@/components/SearchSelect";
-import { COUNTRY_OPTIONS, KR_CITY_OPTIONS, RELATIONSHIP_OPTIONS, normalizeDateInput, normalizeTimeInput } from "@/lib/saju/presentation/customer-input";
+import { CHILD_STATUS_OPTIONS, COUNTRY_OPTIONS, KR_CITY_OPTIONS, RELATIONSHIP_OPTIONS, normalizeDateInput, normalizeTimeInput } from "@/lib/saju/presentation/customer-input";
 import type { SajuInput } from "@/types/saju-input";
 import type { CustomerResultPayload } from "@/types/customer-result";
-import type { RelationshipStatus } from "@/types/ai-interpretation";
+import type { ChildStatus, RelationshipStatus } from "@/types/ai-interpretation";
 
 export const TEST_INPUT: SajuInput = { name: "", gender: "female", calendarType: "solar", birthDate: "", birthTime: "", birthTimeKnown: true, birthCountry: "KR", birthCityKnown: true, birthCity: "" };
-export interface LifetimeFormResult { payload: CustomerResultPayload; relationshipStatus: RelationshipStatus }
+export interface LifetimeFormResult { payload: CustomerResultPayload; relationshipStatus: RelationshipStatus; childStatus: ChildStatus }
 const cityOptions = KR_CITY_OPTIONS.map((label) => ({ value: label === "출생도시를 모름" ? "UNKNOWN" : label, label }));
 
 export function SajuInputForm({ onResult }: { onResult: (value: LifetimeFormResult) => void }) {
-  const [form, setForm] = useState(TEST_INPUT), [relationshipStatus, setRelationshipStatus] = useState<RelationshipStatus>("SINGLE");
+  const [form, setForm] = useState(TEST_INPUT), [relationshipStatus, setRelationshipStatus] = useState<RelationshipStatus>("SINGLE"), [childStatus, setChildStatus] = useState<ChildStatus>("NOT_APPLICABLE");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const update = <K extends keyof SajuInput>(key: K, value: SajuInput[K]) => setForm((current) => ({ ...current, [key]: value }));
@@ -30,12 +30,13 @@ export function SajuInputForm({ onResult }: { onResult: (value: LifetimeFormResu
   }
   async function submit(event: FormEvent) {
     event.preventDefault(); if (!validate()) return; setLoading(true); setErrors({});
-    try { const response = await fetch("/api/saju/result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); const body = await response.json(); if (!response.ok) throw new Error(body.error ?? body.message ?? "요청에 실패했습니다."); onResult({ payload: body, relationshipStatus }); }
+    try { const response = await fetch("/api/saju/result", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }); const body = await response.json(); if (!response.ok) throw new Error(body.error ?? body.message ?? "요청에 실패했습니다."); onResult({ payload: body, relationshipStatus, childStatus: relationshipStatus === "MARRIED" ? childStatus : "NOT_APPLICABLE" }); }
     catch (reason) { setErrors({ submit: reason instanceof Error ? reason.message : "알 수 없는 오류" }); } finally { setLoading(false); }
   }
   return <section className="inputBook"><header><span>POSTPOST · 평생사주</span><h1>나의 시간을<br />한 권의 이야기로</h1><p>정확한 계산을 위해 태어난 정보를 차례로 입력해 주세요.</p></header><form onSubmit={submit} noValidate>
     <div className="field"><label htmlFor="customer-name">이름</label><input id="customer-name" value={form.name} onChange={(event) => update("name", event.target.value)} aria-invalid={Boolean(errors.name)} placeholder="이름을 입력해 주세요" />{errors.name && <p className="fieldError">{errors.name}</p>}</div>
-    <div className="formGrid"><label className="field">성별<select value={form.gender} onChange={(event) => update("gender", event.target.value as SajuInput["gender"])}><option value="female">여성</option><option value="male">남성</option></select></label><label className="field">현재 관계<select value={relationshipStatus} onChange={(event) => setRelationshipStatus(event.target.value as RelationshipStatus)}>{RELATIONSHIP_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label></div>
+    <div className="formGrid"><label className="field">성별<select value={form.gender} onChange={(event) => update("gender", event.target.value as SajuInput["gender"])}><option value="female">여성</option><option value="male">남성</option></select></label><label className="field">현재 관계<select value={relationshipStatus} onChange={(event) => { const value=event.target.value as RelationshipStatus; setRelationshipStatus(value); setChildStatus(value === "MARRIED" ? "NO_CHILDREN" : "NOT_APPLICABLE"); }}>{RELATIONSHIP_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label></div>
+    {relationshipStatus === "MARRIED" && <label className="field">자녀 여부<select value={childStatus} onChange={(event) => setChildStatus(event.target.value as ChildStatus)}>{CHILD_STATUS_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>}
     <HybridDateField value={form.birthDate} onChange={(value) => update("birthDate", value)} error={errors.date} onError={(message) => setErrors((current) => ({ ...current, date: message ?? "" }))} />
     <div className="formGrid calendarFields"><label className="field">달력<select value={form.calendarType} onChange={(event) => { const value = event.target.value as SajuInput["calendarType"]; setForm((current) => value === "lunar" ? { ...current, calendarType: value, lunarLeapMonth: "normal" } : (({ lunarLeapMonth: _omit, ...rest }) => ({ ...rest, calendarType: value }))(current)); }}><option value="solar">양력</option><option value="lunar">음력</option></select></label>{form.calendarType === "lunar" && <label className="field">윤달 여부<select value={form.lunarLeapMonth ?? "normal"} onChange={(event) => update("lunarLeapMonth", event.target.value as "normal" | "leap")}><option value="normal">평달</option><option value="leap">윤달</option></select></label>}</div>
     {form.calendarType === "lunar" && <p className="fieldNotice">현재 음력 계산은 준비 중입니다. 양력을 선택해야 계산할 수 있습니다.</p>}{errors.calendar && <p className="fieldError">{errors.calendar}</p>}

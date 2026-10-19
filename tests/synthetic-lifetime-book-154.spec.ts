@@ -8,7 +8,7 @@ describe("dynamic lifetime-book interpretation preview", () => {
     const book=buildDynamicLifetimeBook({includeSamjae:true,year:2026});
     expect(book.sections.length).toBeGreaterThanOrEqual(LIFETIME_CONTENT_CONTRACT_V1.minimumContentSections);
     expect(new Set(book.sections.map(section=>section.id)).size).toBe(book.sections.length);
-    expect(book.parts.some(part=>part.partNumber==="12S")).toBe(true);
+    expect(book.parts.some(part=>part.partNumber==="SPECIAL")).toBe(true);
     expect(source).toContain("previewBook.sections.map");
     expect(source).toContain('birthCity:"경기도 시흥시"');
     expect(source).toContain("API 키 없이 검토하는 동적 편집 샘플입니다");

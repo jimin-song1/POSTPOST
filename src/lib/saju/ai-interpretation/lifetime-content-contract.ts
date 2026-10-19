@@ -29,8 +29,9 @@ export function validateLifetimeContentContract(report:StructuredInterpretation)
   const stats=lifetimeContentStats(report),ids=new Set<string>(),scenes=new Set<string>(),claimCounts=new Map<string,number>(),fingerprints:Array<{id:string;text:string}>=[];
   if(stats.contentSections<RULE.minimumContentSections)throw new LifetimeContentContractError(`본문 section이 ${RULE.minimumContentSections}개보다 적습니다.`);
   if(stats.totalCharacters<RULE.totalCharacters.minimum)throw new LifetimeContentContractError(`전체 본문이 ${RULE.totalCharacters.minimum}자보다 짧습니다.`);
-  for(const required of RULE.requiredChapters)if(!(required in stats.chapterCharacters))throw new LifetimeContentContractError(`필수 chapter가 없습니다: ${required}`);
-  for(const [key,minimum] of Object.entries(RULE.chapterMinimumCharacters))if((stats.chapterCharacters[key]??0)<minimum)
+  const requiredChapters=RULE.requiredChapters.filter(required=>required!=="CHILDREN"||"CHILDREN" in stats.chapterCharacters);
+  for(const required of requiredChapters)if(!(required in stats.chapterCharacters))throw new LifetimeContentContractError(`필수 chapter가 없습니다: ${required}`);
+  for(const [key,minimum] of Object.entries(RULE.chapterMinimumCharacters))if((key!=="CHILDREN"||"CHILDREN" in stats.chapterCharacters)&&(stats.chapterCharacters[key]??0)<minimum)
     throw new LifetimeContentContractError(`${key} 본문이 최소 ${minimum}자보다 짧습니다.`);
   for(const row of report.sections){
     if(ids.has(row.id))throw new LifetimeContentContractError(`중복 section ID: ${row.id}`);ids.add(row.id);

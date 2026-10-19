@@ -16,7 +16,7 @@ const timeSource = () => readFile("src/components/HybridTimeField.tsx", "utf8");
 const reportSource = () => readFile("src/components/LifetimeReport.tsx", "utf8");
 
 describe("CUSTOMER_LIFETIME_UI_V2 input", () => {
-  it("offers exactly three relationship values", () => expect(RELATIONSHIP_OPTIONS).toEqual([{value:"SINGLE",label:"솔로"},{value:"DATING",label:"연애 중"},{value:"MARRIED",label:"기혼"}]));
+  it("offers exactly three relationship values", () => expect(RELATIONSHIP_OPTIONS).toEqual([{value:"SINGLE",label:"미혼"},{value:"DATING",label:"연애 중"},{value:"MARRIED",label:"기혼"}]));
   it("keeps relationship context out of deterministic input", () => { const stable=(value:ReturnType<typeof calculateSaju>)=>({...value,engineMetadata:{...value.engineMetadata,calculatedAt:"stable"}}),before=stable(calculateSaju(SYNTHETIC_INPUT)); for(const relationshipStatus of RELATIONSHIP_OPTIONS.map(row=>row.value)){ expect(stable(calculateSaju(SYNTHETIC_INPUT))).toEqual(before); expect(JSON.stringify(SYNTHETIC_INPUT)).not.toContain(relationshipStatus); } });
   it("uses a verified static country list and exposes KR", () => { expect(COUNTRY_OPTIONS.find(row=>row.value==="KR")?.label).toBe("대한민국"); expect(COUNTRY_OPTIONS.length).toBeGreaterThan(5); });
   it("supports Korean city search data and unknown city", () => { expect(KR_CITY_OPTIONS.filter(city=>city.includes("시흥"))).toEqual(["경기도 시흥시"]); expect(KR_CITY_OPTIONS).toContain("경기도 화성시"); expect(KR_CITY_OPTIONS).toContain("출생도시를 모름"); });
@@ -32,7 +32,7 @@ describe("CUSTOMER_LIFETIME_UI_V2 input", () => {
   it("shows leap-month controls only in lunar state source and blocks unsupported lunar submission",async()=>{const source=await formSource();expect(source).toContain('form.calendarType === "lunar"');expect(source).toContain("윤달 여부");expect(source).toContain("평달");expect(source).toContain("윤달");expect(source).toContain("현재 음력 계산은 준비 중입니다.");});
   it("blocks unsupported country and incomplete lunar mode", async()=>{const source=await formSource();expect(source).toContain("현재 해외 출생 계산은 지원되지 않습니다.");expect(source).toContain("음력 계산은 준비 중입니다.");});
   it("does not invent a time when it is unknown", async()=>{const source=await formSource();expect(source).toContain("임의 시간으로 계산하지 않습니다.");expect(source).toContain('birthTime: event.target.checked ? null : ""');});
-  it("contains no child reality input", async()=>{const source=await formSource();for(const text of ["자녀 있음","몇 명","아들/딸","임신 여부","출산 계획"])expect(source).not.toContain(text);});
+  it("asks child status only for married customers", async()=>{const source=await formSource();expect(source).toContain('relationshipStatus === "MARRIED"');expect(source).toContain("자녀 여부");for(const text of ["몇 명","아들/딸","임신 여부","출산 계획"])expect(source).not.toContain(text);});
 });
 
 describe("CUSTOMER_LIFETIME_UI_V2 dropdown",()=>{

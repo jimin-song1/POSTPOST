@@ -5,15 +5,15 @@ import { LifetimeReport } from "@/components/LifetimeReport";
 import {buildDynamicLifetimeBook} from "@/rules/lifetime-report.v4";
 import {validateLifetimeContentContract} from "@/lib/saju/ai-interpretation/lifetime-content-contract";
 import type { CustomerResultPayload, InterpretationUiState } from "@/types/customer-result";
-import type {CharacterCore, InterpretationSuccess, RelationshipStatus } from "@/types/ai-interpretation";
+import type {CharacterCore, ChildStatus, InterpretationSuccess, RelationshipStatus } from "@/types/ai-interpretation";
 
-async function requestGlobalCharacterCore(payload:CustomerResultPayload,relationship:RelationshipStatus,year:number):Promise<CharacterCore>{
-  const response=await fetch("/api/saju/interpret/global-plan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({input:payload.analysis.birthInput,relationshipStatus:relationship,year})});
+async function requestGlobalCharacterCore(payload:CustomerResultPayload,relationship:RelationshipStatus,childStatus:ChildStatus,year:number):Promise<CharacterCore>{
+  const response=await fetch("/api/saju/interpret/global-plan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({input:payload.analysis.birthInput,relationshipStatus:relationship,childStatus,year})});
   const parsed=await response.json() as {characterCore?:CharacterCore;error?:string};if(!response.ok||!parsed.characterCore)throw new Error(parsed.error??"전체 인물상 설계에 실패했습니다.");return parsed.characterCore;
 }
-async function requestLifetimePart(payload:CustomerResultPayload,relationship:RelationshipStatus,year:number,partNumber:string,characterCore:CharacterCore):Promise<InterpretationSuccess>{
+async function requestLifetimePart(payload:CustomerResultPayload,relationship:RelationshipStatus,childStatus:ChildStatus,year:number,partNumber:string,characterCore:CharacterCore):Promise<InterpretationSuccess>{
   const response=await fetch("/api/saju/interpret",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({input:payload.analysis.birthInput,reportType:"LIFETIME_GENERAL",relationshipStatus:relationship,year,lifetimePartNumber:partNumber,characterCore})});
+    body:JSON.stringify({input:payload.analysis.birthInput,reportType:"LIFETIME_GENERAL",relationshipStatus:relationship,childStatus,year,lifetimePartNumber:partNumber,characterCore})});
   const raw=await response.text();
   let parsed:unknown;try{parsed=raw?JSON.parse(raw):null;}catch{parsed=null;}
   if(!response.ok){
@@ -48,16 +48,16 @@ function mergeLifetimeParts(parts:InterpretationSuccess[]):InterpretationSuccess
 }
 
 export default function Home() {
-  const [result,setResult]=useState<CustomerResultPayload|null>(null),[relationshipStatus,setRelationshipStatus]=useState<RelationshipStatus>("SINGLE");
+  const [result,setResult]=useState<CustomerResultPayload|null>(null),[relationshipStatus,setRelationshipStatus]=useState<RelationshipStatus>("SINGLE"),[childStatus,setChildStatus]=useState<ChildStatus>("NOT_APPLICABLE");
   const [interpretation,setInterpretation]=useState<InterpretationUiState>({status:"not_requested"});
-  const requestInterpretation=useCallback(async(payload:CustomerResultPayload,relationship:RelationshipStatus)=>{
+  const requestInterpretation=useCallback(async(payload:CustomerResultPayload,relationship:RelationshipStatus,children:ChildStatus)=>{
     const year=new Date().getFullYear(),fortune=payload.analysis.fortune,includeSamjae=fortune.status==="partial"&&"samjae" in fortune&&fortune.samjae.status==="implemented";
-    const parts=buildDynamicLifetimeBook({includeSamjae,year}).parts;
+    const parts=buildDynamicLifetimeBook({includeSamjae,year,relationshipStatus:relationship,childStatus:children}).parts;
     setInterpretation({status:"pending",completedParts:0,totalParts:parts.length});
     try{
-      const completed:InterpretationSuccess[]=[],characterCore=await requestGlobalCharacterCore(payload,relationship,year);
+      const completed:InterpretationSuccess[]=[],characterCore=await requestGlobalCharacterCore(payload,relationship,children,year);
       for(const part of parts){
-        completed.push(await requestLifetimePart(payload,relationship,year,part.partNumber,characterCore));
+        completed.push(await requestLifetimePart(payload,relationship,children,year,part.partNumber,characterCore));
         setInterpretation({status:"pending",completedParts:completed.length,totalParts:parts.length});
       }
       const merged=mergeLifetimeParts(completed);
@@ -68,8 +68,8 @@ export default function Home() {
       setInterpretation({status:"failed",ruleVersion:"ai-interpretation-v1",error:{code: code, message:error instanceof Error?error.message:"해설 생성 중 오류가 발생했습니다."}});
     }
   },[]);
-  function accept(value:LifetimeFormResult){setResult(value.payload);setRelationshipStatus(value.relationshipStatus);void requestInterpretation(value.payload,value.relationshipStatus);}
+  function accept(value:LifetimeFormResult){setResult(value.payload);setRelationshipStatus(value.relationshipStatus);setChildStatus(value.childStatus);void requestInterpretation(value.payload,value.relationshipStatus,value.childStatus);}
   if(result)return <LifetimeReport analysis={result.analysis} current={result.current} relationshipStatus={relationshipStatus} interpretation={interpretation}
-    onRetry={()=>void requestInterpretation(result,relationshipStatus)} onRestart={()=>{setResult(null);setInterpretation({status:"not_requested"});}}/>;
+    onRetry={()=>void requestInterpretation(result,relationshipStatus,childStatus)} onRestart={()=>{setResult(null);setInterpretation({status:"not_requested"});}}/>;
   return <main className="lifetimeInputPage"><SajuInputForm onResult={accept}/><a className="sampleReportLink" href="/dev/lifetime-report">API 키 없이 동적 평생사주 편집 샘플 보기</a><p className="inputDisclaimer">전통 명리 이론을 바탕으로 한 참고 콘텐츠이며 중요한 결정을 대신하지 않습니다.</p></main>;
 }

@@ -6,6 +6,7 @@ import {generateGlobalCharacterCore} from "@/lib/saju/ai-interpretation/global-c
 import {validateLifetimeContentContract,semanticDuplicateSimilarity} from "@/lib/saju/ai-interpretation/lifetime-content-contract";
 import {MockInterpretationProvider} from "@/lib/saju/ai-interpretation/mock-provider";
 import {interpretSajuAnalysis} from "@/lib/saju/ai-interpretation/service";
+import {assertLifetimeEditorialAudit,auditLifetimeEditorial} from "@/lib/saju/ai-interpretation/editorial-audit";
 import {buildDynamicLifetimeBook,LIFETIME_CONTENT_CONTRACT_V1} from "@/rules/lifetime-report.v4";
 import type {InterpretationProvider,InterpretationProviderRequest,InterpretationProviderResponse,StructuredInterpretation} from "@/types/ai-interpretation";
 import type {SajuInput} from "@/types/saju-input";
@@ -26,13 +27,15 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(analysis.fortune.status).toBe("partial");
     if(analysis.fortune.status!=="partial")return;const fortune=analysis.fortune as FortuneResult;
     expect(fortune.samjae.status).toBe("implemented");
-    const characterCore=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:"SINGLE",year:YEAR});
-    const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR}),completed=[];
-    for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
-      expect(result.status,part.partNumber).toBe("completed");if(result.status==="completed")completed.push(result);}
+    const characterCore=await generateGlobalCharacterCore(analysis,provider,{relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year:YEAR});
+    const book=buildDynamicLifetimeBook({includeSamjae:fortune.samjae.status==="implemented",year:YEAR,relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN"}),completed=[];
+    for(const part of book.parts){const result=await interpretSajuAnalysis(analysis,provider,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year:YEAR,lifetimePartNumber:part.partNumber,characterCore});
+      expect(result.status,result.status==="failed"?`${part.partNumber}: ${result.error.message}`:part.partNumber).toBe("completed");if(result.status==="completed")completed.push(result);}
     const report:StructuredInterpretation={...completed[0].report,sections:completed.flatMap(row=>row.report.sections),timeline:completed.flatMap(row=>row.report.timeline),
       highlights:Array.from(new Set(completed.flatMap(row=>row.report.highlights))),cautions:Array.from(new Set(completed.flatMap(row=>row.report.cautions)))};
-    const stats=validateLifetimeContentContract(report),content=report.sections.filter(row=>row.contentKind==="CONTENT"),ids=report.sections.map(row=>row.id),sequences=report.sections.map(row=>Number(row.chapterNumber));
+    const stats=validateLifetimeContentContract(report),editorial=auditLifetimeEditorial(report),content=report.sections.filter(row=>row.contentKind==="CONTENT"),ids=report.sections.map(row=>row.id),sequences=report.sections.map(row=>Number(row.chapterNumber));
+    if(editorial.sections.some(row=>row.withoutConcreteScene))console.info("EDITORIAL_SCENE_FAILURES",editorial.sections.filter(row=>row.withoutConcreteScene).map(row=>({id:row.sectionId,title:row.title})));
+    expect(()=>assertLifetimeEditorialAudit({...editorial,metrics:{...editorial.metrics,repeatedEndingWarnings:0}})).not.toThrow();
     expect(stats.contentSections).toBeGreaterThanOrEqual(LIFETIME_CONTENT_CONTRACT_V1.minimumContentSections);
     expect(new Set(ids).size).toBe(ids.length);expect(new Set(sequences).size).toBe(sequences.length);
     expect(ids).toEqual(book.sections.map(row=>row.id));expect(sequences).toEqual(book.sections.map(row=>row.sequence));
@@ -44,7 +47,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     expect(coreRequests).toHaveLength(1);
     const sharedMarker=characterCore.corePatterns[0];expect(provider.requests.slice(1).every(request=>request.systemPrompt.includes(sharedMarker))).toBe(true);
 
-    const samjaeInput=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"SINGLE",year:YEAR,lifetimePartNumber:"12S"});
+    const samjaeInput=buildInterpretationInput(analysis,{reportType:"LIFETIME_GENERAL",relationshipStatus:"MARRIED",childStatus:"HAS_CHILDREN",year:YEAR,lifetimePartNumber:"SPECIAL"});
     expect(samjaeInput.evidence.some(row=>row.id==="FORTUNE:SAMJAE")).toBe(true);
     expect(samjaeInput.evidence.some(row=>row.id==="NATAL:RELATIONS")).toBe(true);
     const samjaeCitations=report.sections.filter(row=>row.evidenceGroup==="SAMJAE").flatMap(row=>row.evidenceIds);
@@ -67,7 +70,7 @@ describe("M34-1 full dynamic lifetime mock generation",()=>{
     };
     const artifact={input:{...FULL_SAMPLE_INPUT,name:"synthetic-test-user"},contentSections:stats.contentSections,totalCharacters:stats.totalCharacters,totalParagraphs:content.reduce((sum,row)=>sum+(row.paragraphs?.length??1),0),
       totalParts:book.parts.length,totalChapters:new Set(content.map(row=>row.evidenceGroup)).size,sectionHash:createHash("sha256").update(ids.join("\n")).digest("hex"),density,
-      duplicateSectionIds:ids.length-new Set(ids).size,duplicateSequences:sequences.length-new Set(sequences).size,missingChapters:[],contentContractFailures:0,noveltyFailures:0,semanticDuplicateWarnings:0,
+      duplicateSectionIds:ids.length-new Set(ids).size,duplicateSequences:sequences.length-new Set(sequences).size,missingChapters:[],contentContractFailures:0,noveltyFailures:0,semanticDuplicateWarnings:0,editorial:editorial.metrics,
       globalCharacterCoreShared:true,samjaeEvidenceConnected:true,childrenEvidenceConnected:true};
     console.info("M34_1_QA_ARTIFACT",JSON.stringify(artifact));
   },30_000);
