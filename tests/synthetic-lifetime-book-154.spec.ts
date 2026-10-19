@@ -16,8 +16,8 @@ describe("dynamic lifetime-book interpretation preview", () => {
 
   it("offers an explicit sample route without replacing live interpretation", async () => {
     const source=await readFile("src/app/page.tsx","utf8");
-    expect(source).toContain('href="/dev/lifetime-report"');
-    expect(source).toContain("API 키 없이 동적 평생사주 편집 샘플 보기");
+    expect(source).not.toContain('href="/dev/lifetime-report"');
+    expect(source).not.toContain("API 키 없이 동적 평생사주 편집 샘플 보기");
     expect(source).toContain('fetch("/api/saju/interpret"');
   });
 });

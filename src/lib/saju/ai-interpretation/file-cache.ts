@@ -1,11 +1,17 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import type { InterpretationSuccess } from "@/types/ai-interpretation";
 import type { InterpretationCache } from "./cache";
 
+export function defaultInterpretationCacheDirectory(environment:Readonly<Record<string,string|undefined>>=process.env,cwd=process.cwd()){
+  if(environment.AI_INTERPRETATION_CACHE_DIR)return environment.AI_INTERPRETATION_CACHE_DIR;
+  return environment.VERCEL?path.join(tmpdir(),"postpost-interpretations"):path.join(cwd,".cache","interpretations");
+}
+
 /** Small persistent v1 backend. Atomic files keep the M17 cache key unchanged. */
 export class FileInterpretationCache implements InterpretationCache {
-  constructor(private readonly directory = process.env.AI_INTERPRETATION_CACHE_DIR ?? path.join(process.cwd(), ".cache", "interpretations"),
+  constructor(private readonly directory = defaultInterpretationCacheDirectory(),
     private readonly logger?: (event: { cache: "hit" | "miss" | "set"; cacheKey: string }) => void) {}
   private file(key: string) { return path.join(this.directory, `${key}.json`); }
   async get(key: string) {

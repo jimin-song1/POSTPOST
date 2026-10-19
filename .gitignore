@@ -12,3 +12,5 @@ tests/private/
 calibration/private/**
 fixtures/private/**
 benchmarks/private/**
+.vercel
+.env*.local
