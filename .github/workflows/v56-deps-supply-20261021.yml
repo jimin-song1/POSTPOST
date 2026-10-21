@@ -1,0 +1,32 @@
+name: Temporary V5.6 dependency supply
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/v56-deps-supply-20261021.yml'
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - run: npm ci
+      - name: Package pinned dependencies
+        run: |
+          tar -czf /tmp/v56-node-modules.tar.gz node_modules
+          sha256sum /tmp/v56-node-modules.tar.gz | tee /tmp/node-modules.sha256
+          node --version | tee /tmp/node-version.txt
+          git rev-parse HEAD | tee /tmp/repository-commit.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v56-deps-linux-x64-20261021
+          path: |
+            /tmp/v56-node-modules.tar.gz
+            /tmp/node-modules.sha256
+            /tmp/node-version.txt
+            /tmp/repository-commit.txt
+          retention-days: 1
