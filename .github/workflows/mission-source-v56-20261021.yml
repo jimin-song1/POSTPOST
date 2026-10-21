@@ -1,7 +1,7 @@
 name: V56 exact source transport
 on:
-  push:
-    branches: [feat/v56-part01-pipeline-20261021]
+  pull_request:
+    branches: [main]
     paths: [.github/workflows/mission-source-v56-20261021.yml]
 permissions:
   contents: read
