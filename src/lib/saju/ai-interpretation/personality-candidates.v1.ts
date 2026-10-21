@@ -203,7 +203,7 @@ export function buildPersonalityCandidatePlan(analysis:SajuAnalysis): Personalit
       id:rule.id,sectionId:rule.sectionId,kind:rule.kind,
       claim:rule.claim,strength:rule.strength,drawback:rule.drawback,unexpected:rule.unexpected,
       exampleScene:rule.exampleScene,evidenceIds:[...rule.evidenceIds],
-      sourceIds:[...new Set(rule.sources.flatMap(key=>facts.sources[key]))],
+      sourceIds:Array.from(new Set(rule.sources.flatMap(key=>facts.sources[key]))),
       relationRuleId:"personality-candidates-v1:"+rule.id,limits:[...rule.limits],
       narrativeKey:rule.narrativeKey,confidence:rule.confidence
     });
