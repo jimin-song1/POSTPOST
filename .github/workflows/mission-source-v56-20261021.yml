@@ -1,0 +1,27 @@
+name: V56 exact source transport
+on:
+  push:
+    branches: [feat/v56-part01-pipeline-20261021]
+    paths: [.github/workflows/mission-source-v56-20261021.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 311b0efa4d8944febd377f70ff714657a8bb2415
+          persist-credentials: false
+      - run: |
+          test "$(git rev-parse HEAD)" = 311b0efa4d8944febd377f70ff714657a8bb2415
+          git archive --format=tar --prefix=POSTPOST/ HEAD > source.tar
+          sha256sum source.tar > source.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v56-source-311b0efa
+          path: |
+            source.tar
+            source.sha256
+          retention-days: 1
