@@ -185,7 +185,7 @@ function factsFromAnalysis(analysis:SajuAnalysis): Facts | null {
       resource:["PILLAR:day:branch:"+analysis.pillars.day.branch],
       wealth:["PILLAR:hour:stem:"+analysis.pillars.hour.stem],
       output:(["year","month","hour"] as const).map(p=>"PILLAR:"+p+":stem:"+analysis.pillars[p].stem),
-      strength:["PILLAR:month:branch:"+analysis.pillars.month.branch]
+      strength:["NATAL:STRENGTH:ADJUSTED"]
     }
   };
 }
