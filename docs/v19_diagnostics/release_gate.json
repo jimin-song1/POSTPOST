@@ -2,9 +2,9 @@
   "version": "V19 diagnostic gate",
   "charts": 12,
   "slots": 120,
-  "selected": 119,
-  "writingReady": 96,
-  "unapproved": 24,
+  "selected": 120,
+  "writingReady": 98,
+  "unapproved": 22,
   "failedRegressions": [
     "V6",
     "V8",
@@ -172,22 +172,6 @@
       "type": "legacy",
       "status": "DO_NOT_GENERATE",
       "candidateId": "V56-X-P01-07-1"
-    },
-    {
-      "kind": "UNAPPROVED_SLOT",
-      "chart": "RC11",
-      "section": "P01-09",
-      "type": "legacy",
-      "status": "DO_NOT_GENERATE",
-      "candidateId": "V56-X-P01-09-2"
-    },
-    {
-      "kind": "UNAPPROVED_SLOT",
-      "chart": "RC11",
-      "section": "P01-10",
-      "type": "empty",
-      "status": "DO_NOT_GENERATE",
-      "candidateId": ""
     },
     {
       "kind": "UNAPPROVED_SLOT",

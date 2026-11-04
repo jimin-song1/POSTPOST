@@ -19,10 +19,18 @@
       "result": "PASS"
     },
     {
-      "name": "RC11 unstructured candidate remains non-publishable",
+      "name": "RC11 unstructured candidate remains non-publishable (V34 snapshot)",
+      "result": "PASS"
+    },
+    {
+      "name": "V35 live RC11: a structured P01-09 must carry rule-table goal/output and a linked P01-10",
+      "result": "PASS"
+    },
+    {
+      "name": "V35 chain uses rule-table output instead of inferring one",
       "result": "PASS"
     }
   ],
-  "passed": 5,
+  "passed": 7,
   "failed": 0
 }

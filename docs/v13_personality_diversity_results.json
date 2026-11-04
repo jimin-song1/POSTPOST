@@ -1,12 +1,12 @@
 {
   "suite": "V13 focused offline regression",
   "fixtureType": "synthetic ten-god signal recombination, not independent calendar calculation or personality accuracy",
-  "selected": 118,
-  "structured": 69,
-  "strength": 10,
-  "weakness": 10,
-  "writingReadyStrength": 10,
-  "writingReadyWeakness": 10,
+  "selected": 116,
+  "structured": 65,
+  "strength": 8,
+  "weakness": 8,
+  "writingReadyStrength": 7,
+  "writingReadyWeakness": 7,
   "passed": 15,
   "failed": 0,
   "checks": [
@@ -22,8 +22,8 @@
       "name": "current selection counts are bounded by valid evidence, not historical snapshots",
       "ok": true,
       "detail": {
-        "selected": 118,
-        "structured": 69
+        "selected": 116,
+        "structured": 65
       }
     },
     {
@@ -50,7 +50,7 @@
       "name": "exact natal source pair reuse in strength requires a distinct actual scene",
       "ok": true,
       "detail": {
-        "reusedDistinctScenes": 7
+        "reusedDistinctScenes": 2
       }
     },
     {
@@ -65,7 +65,7 @@
       "name": "weakness trigger is no longer one fixed text",
       "ok": true,
       "detail": {
-        "differentTriggers": 4
+        "differentTriggers": 5
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "editorial warnings remain visible for unresolved overlap",
       "ok": true,
       "detail": {
-        "warnings": 17
+        "warnings": 14
       }
     },
     {
@@ -92,7 +92,7 @@
     {
       "id": "B00_original",
       "empty": [],
-      "overlapWarnings": 2
+      "overlapWarnings": 3
     },
     {
       "id": "B01_peer_heavy",
@@ -121,12 +121,14 @@
     {
       "id": "B05_resource_heavy",
       "empty": [],
-      "overlapWarnings": 2
+      "overlapWarnings": 1
     },
     {
       "id": "B06_peer_wealth",
-      "empty": [],
-      "overlapWarnings": 3
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 1
     },
     {
       "id": "B07_output_officer",
@@ -140,8 +142,10 @@
     },
     {
       "id": "B09_wealth_officer",
-      "empty": [],
-      "overlapWarnings": 1
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 0
     },
     {
       "id": "B10_resource_peer",
@@ -280,25 +284,9 @@
     {
       "case": "B00_original",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
       "type": "structured",
       "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-      "family": "output|wealth",
-      "sourceIds": [
-        "PILLAR:month:stem:丁",
-        "PILLAR:day:branch:未"
-      ],
-      "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
-      ]
-    },
-    {
-      "case": "B00_original",
-      "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-dayBranch-hourBranch",
-      "type": "structured",
-      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
       "family": "output|wealth",
       "sourceIds": [
         "PILLAR:day:branch:未",
@@ -306,6 +294,22 @@
       ],
       "flags": [
         "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+      "type": "structured",
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
       ]
     },
     {
@@ -432,9 +436,26 @@
     {
       "case": "B01_peer_heavy",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-yearStem-dayBranch",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
       "type": "structured",
-      "trigger": "자신이 맡을 범위를 정한 뒤 여러 선택지를 좁혀야 할 때",
+      "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "REUSED_SOURCE_PAIR",
+        "SCENE_COMPARISON_UNAVAILABLE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+      "type": "structured",
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
       "family": "peer|wealth",
       "sourceIds": [
         "PILLAR:year:stem:甲",
@@ -443,21 +464,6 @@
       "flags": [
         "LOW_CONFIDENCE",
         "SEMANTIC_OVERLAP"
-      ]
-    },
-    {
-      "case": "B01_peer_heavy",
-      "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-dayBranch-hourBranch",
-      "type": "structured",
-      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-      "family": "resource|wealth",
-      "sourceIds": [
-        "PILLAR:day:branch:未",
-        "PILLAR:hour:branch:亥"
-      ],
-      "flags": [
-        "LOW_CONFIDENCE"
       ]
     },
     {
@@ -881,17 +887,16 @@
     {
       "case": "B04_officer_heavy",
       "section": "P01-09",
-      "candidateId": "V56-X-P01-09-2",
+      "candidateId": "V56-X-P01-09-11",
       "type": "legacy",
       "trigger": "",
       "family": "",
       "sourceIds": [
-        "PILLAR:month:stem:辛",
+        "PILLAR:year:branch:申",
         "PILLAR:day:branch:未"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
@@ -1037,8 +1042,7 @@
         "PILLAR:hour:branch:申"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "SEMANTIC_OVERLAP"
+        "LOW_CONFIDENCE"
       ]
     },
     {
@@ -1180,34 +1184,27 @@
     {
       "case": "B06_peer_wealth",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
-      "type": "structured",
-      "trigger": "자신이 맡을 범위를 정한 뒤 여러 선택지를 좁혀야 할 때",
-      "family": "peer|wealth",
+      "candidateId": "V56-X-P01-09-2",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
       "sourceIds": [
-        "PILLAR:year:branch:卯",
-        "PILLAR:month:stem:己"
+        "PILLAR:month:stem:己",
+        "PILLAR:day:branch:未"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "SEMANTIC_OVERLAP"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B06_peer_wealth",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-monthBranch-yearBranch",
-      "type": "structured",
-      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-      "family": "peer|wealth",
-      "sourceIds": [
-        "PILLAR:month:branch:辰",
-        "PILLAR:year:branch:卯"
-      ],
-      "flags": [
-        "LOW_CONFIDENCE",
-        "SEMANTIC_OVERLAP"
-      ]
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
     },
     {
       "case": "B07_output_officer",
@@ -1333,29 +1330,28 @@
     {
       "case": "B07_output_officer",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
       "type": "structured",
-      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-      "family": "output|wealth",
+      "trigger": "공동의 절차 안에서 결과물을 완성해야 할 때",
+      "family": "officer|output",
       "sourceIds": [
         "PILLAR:year:branch:午",
-        "PILLAR:day:branch:未"
+        "PILLAR:month:stem:庚"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B07_output_officer",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-yearBranch-monthStem",
+      "candidateId": "V56-B2-P01-10-monthBranch-yearBranch",
       "type": "structured",
-      "trigger": "여러 결과를 한꺼번에 마무리하려고 할 때",
+      "trigger": "정해진 절차를 모두 지키려다 일정과 조율해야 할 때",
       "family": "officer|output",
       "sourceIds": [
-        "PILLAR:year:branch:午",
-        "PILLAR:month:stem:庚"
+        "PILLAR:month:branch:申",
+        "PILLAR:year:branch:午"
       ],
       "flags": [
         "LOW_CONFIDENCE"
@@ -1485,29 +1481,28 @@
     {
       "case": "B08_resource_output",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
       "type": "structured",
       "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
       "family": "output|wealth",
       "sourceIds": [
-        "PILLAR:month:stem:丙",
-        "PILLAR:day:branch:未"
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:丁"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B08_resource_output",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-dayBranch-hourStem",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
       "type": "structured",
-      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-      "family": "output|wealth",
+      "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
+      "family": "resource|wealth",
       "sourceIds": [
-        "PILLAR:day:branch:未",
-        "PILLAR:hour:stem:丁"
+        "PILLAR:year:stem:癸",
+        "PILLAR:day:branch:未"
       ],
       "flags": [
         "LOW_CONFIDENCE"
@@ -1636,34 +1631,27 @@
     {
       "case": "B09_wealth_officer",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
-      "type": "structured",
-      "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
-      "family": "officer|wealth",
+      "candidateId": "V56-X-P01-09-15",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
       "sourceIds": [
-        "PILLAR:year:branch:辰",
-        "PILLAR:month:stem:庚"
+        "PILLAR:month:branch:申",
+        "PILLAR:hour:stem:辛"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B09_wealth_officer",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-yearStem-monthStem",
-      "type": "structured",
-      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-      "family": "officer|wealth",
-      "sourceIds": [
-        "PILLAR:year:stem:己",
-        "PILLAR:month:stem:庚"
-      ],
-      "flags": [
-        "LOW_CONFIDENCE",
-        "SEMANTIC_OVERLAP"
-      ]
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
     },
     {
       "case": "B10_resource_peer",
@@ -1788,28 +1776,27 @@
     {
       "case": "B10_resource_peer",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
       "type": "structured",
-      "trigger": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때",
+      "trigger": "함께 판단할 사람들과 필요한 정보를 나눌 수 있을 때",
       "family": "peer|resource",
       "sourceIds": [
         "PILLAR:month:branch:寅",
-        "PILLAR:hour:branch:子"
+        "PILLAR:hour:stem:癸"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B10_resource_peer",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+      "candidateId": "V56-B2-P01-10-monthStem-hourStem",
       "type": "structured",
       "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
       "family": "peer|resource",
       "sourceIds": [
-        "PILLAR:month:branch:寅",
+        "PILLAR:month:stem:甲",
         "PILLAR:hour:stem:癸"
       ],
       "flags": [
@@ -1941,29 +1928,28 @@
     {
       "case": "B11_mixed",
       "section": "P01-09",
-      "candidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
       "type": "structured",
       "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
       "family": "output|wealth",
       "sourceIds": [
-        "PILLAR:month:branch:辰",
+        "PILLAR:month:stem:戊",
         "PILLAR:hour:branch:巳"
       ],
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "case": "B11_mixed",
       "section": "P01-10",
-      "candidateId": "V56-B2-P01-10-monthStem-hourBranch",
+      "candidateId": "V56-B2-P01-10-monthStem-hourStem",
       "type": "structured",
       "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
       "family": "output|wealth",
       "sourceIds": [
         "PILLAR:month:stem:戊",
-        "PILLAR:hour:branch:巳"
+        "PILLAR:hour:stem:丁"
       ],
       "flags": [
         "LOW_CONFIDENCE",

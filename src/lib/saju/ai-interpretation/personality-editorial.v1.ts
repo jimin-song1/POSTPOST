@@ -48,6 +48,9 @@ export interface PersonalityEditorialPlan {
     singleCandidateSections: PersonalitySectionId[];
     repeatedThemes: Array<{ candidateIds: string[]; theme: string }>;
     semanticOverlapReviews: Array<{ priorId: string; candidateId: string; overlappingMotifs: string[] }>;
+    /** V35: motif heuristic said "duplicate" but rule-table goal AND output differ. Writer must keep them apart. */
+    goalOutputReviews: Array<{ priorId: string; candidateId: string; overlappingMotifs: string[];
+      priorGoal: string; candidateGoal: string; priorOutput: string; candidateOutput: string }>;
     droppedCandidateIds: string[];
     warnings: string[];
   };
@@ -62,6 +65,9 @@ export interface StrengthDevelopmentChain {
   observableAction: string;
   /** Never infer success or achievement beyond the observable action itself. */
   possibleResult: string | null;
+  /** V35: rule-table goal of the scene (null when not defined). */
+  actionGoal: string | null;
+  goalOutputSource: "SCENE_RULE" | "TEXT_EXTRACTION" | null;
   burdenCondition: string;
   counterCondition: string;
   linkedWeaknessCandidateId: string | null;
@@ -76,16 +82,20 @@ export function buildStrengthDevelopmentChain(
   const h = strength.behaviorHypothesis!;
   const linked = weakness?.behaviorHypothesis?.linkedStrengthCandidateId === strength.id;
   const action = h.observableBehavior.trim();
-  // A result is only describable when it is already *explicit* in the action.
-  const hasObservableResult = /결과|완성|마무리|만들|수행|적용|확인/.test(action);
+  // V35: use the rule-table output when the scene carries one; it is already
+  // written into the action text. Otherwise keep the V31 explicit-word check.
+  const ruleOutput = h.goalOutputSource === "SCENE_RULE" && h.observableOutput ? h.observableOutput : null;
+  const hasObservableResult = !!ruleOutput || /결과|완성|마무리|만들|수행|적용|확인/.test(action);
   return {
     status: hasObservableResult ? "SUPPORTED_SCENE" : "RESULT_UNSPECIFIED",
+    actionGoal: h.goalOutputSource === "SCENE_RULE" ? h.actionGoal : null,
+    goalOutputSource: h.goalOutputSource ?? null,
     sourceIds: [...strength.sourceIds],
     evidenceIds: [...strength.evidenceIds],
     condition: h.trigger,
     decisionBasis: h.decisionBasis,
     observableAction: action,
-    possibleResult: hasObservableResult ? action : null,
+    possibleResult: ruleOutput ?? (hasObservableResult ? action : null),
     burdenCondition: linked ? weakness!.behaviorHypothesis!.trigger : "근거 있는 부담 조건이 선정되지 않아 자동 서술하지 않음",
     counterCondition: h.counterCondition,
     linkedWeaknessCandidateId: linked ? weakness!.id : null,
@@ -193,6 +203,8 @@ function availableEvidence(analysis: SajuAnalysis): Set<string> {
 export function selectPersonalityInterpretations(
   analysis: SajuAnalysis,
   extraCandidates: readonly PersonalityCandidate[] = [],
+  /** V35 experiment hook. Default "P01-09"; "all"/"none" are for offline comparison only. */
+  options: { goalOutputScope?: "P01-09" | "all" | "none" } = {},
 ): PersonalityEditorialPlan {
   const plan = buildPersonalityCandidatePlan(analysis);
   const allow = availableEvidence(analysis);
@@ -204,6 +216,7 @@ export function selectPersonalityInterpretations(
   const selectedBySection = new Map<PersonalitySectionId, PersonalityEditorialSection>();
   const repeatedThemes: PersonalityEditorialPlan["audit"]["repeatedThemes"] = [];
   const semanticOverlapReviews: PersonalityEditorialPlan["audit"]["semanticOverlapReviews"] = [];
+  const goalOutputReviews: PersonalityEditorialPlan["audit"]["goalOutputReviews"] = [];
   const selectedBehaviors: Array<{id:string;sectionId:PersonalitySectionId;candidate:PersonalityCandidate}> = [];
   const droppedCandidateIds: string[] = [];
 
@@ -242,6 +255,13 @@ export function selectPersonalityInterpretations(
         });
       }
     }
+    // V35: goal/output may clear a motif-only duplicate on P01-09 alone.
+    // Never on the exact same natal source pair: identical evidence plus shared
+    // vocabulary is not made independent by a different goal label alone.
+    const sectionAllows = options.goalOutputScope === "all" || (options.goalOutputScope !== "none" && section.id === "P01-09");
+    const pairOf = (c: PersonalityCandidate) => c.sourceIds.filter(id=>id.startsWith("PILLAR:")).slice().sort().join("|");
+    const optFor = (c: PersonalityCandidate, prior: PersonalityCandidate) =>
+      ({allowGoalOutputDistinct: sectionAllows && pairOf(c) !== pairOf(prior)});
     const unique = new Map(pool.map(c => [c.id, c]));
     const assessments = Array.from(unique.values()).map(candidate => {
       const provenance = sourcePositions(candidate, analysis);
@@ -284,7 +304,7 @@ export function selectPersonalityInterpretations(
         // Chapter 10 deliberately carries the chapter 09 strength forward,
         // so do not penalize the required causal link. Other duplicates count.
         Math.max(max, section.id === "P01-10" && previous.sectionId === "P01-09"
-          ? 0 : behavioralOverlap(candidate, previous.candidate).penalty), 0);
+          ? 0 : behavioralOverlap(candidate, previous.candidate, optFor(candidate, previous.candidate)).penalty), 0);
       const noveltyPenalty = Math.min(semanticPenalty, section.id === "P01-10" ? 8 : 4);
       // On P01-06, prefer a genuinely supported post-decision revision scene
       // over a generic contrast, but never override provenance/contract failures.
@@ -317,11 +337,15 @@ export function selectPersonalityInterpretations(
         Array.from(selectedBySection.values()).map(s=>s.selected).find(c=>
           c?.sourceIds.filter(id=>id.startsWith("PILLAR:")).slice().sort().join("|")===sourcePairKey) : null;
       const uncheckableReusePenalty = sameEarlierSource && !sameEarlierSource.behaviorHypothesis ? 12 : 0;
+      // V35: a structured earlier chapter already used this exact pair. The
+      // scene may differ, but no independent natal evidence is added, so a
+      // fresh position pair is preferred when one passes the same checks.
+      const structuredReusePenalty = sameEarlierSource?.behaviorHypothesis ? 3 : 0;
       const editorialRank = specificRevision + strengthExecution + privatePractice + Math.min(4, provenance.positions.length) +
         (candidate.confidence === "EDITORIAL_HYPOTHESIS" ? 1 : 0) +
         (candidate.kind === "CONTRAST" ? 1 : 0) +
         (candidate.editorialPriority ?? 0) + priority.adjustment +
-        (candidate.behaviorHypothesis ? 3 : 0) - noveltyPenalty - exactPairReusePenalty - uncheckableReusePenalty;
+        (candidate.behaviorHypothesis ? 3 : 0) - noveltyPenalty - exactPairReusePenalty - uncheckableReusePenalty - structuredReusePenalty;
       if(noveltyPenalty) reasons.push("앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤");
       if(exactPairReusePenalty) reasons.push("앞 장에서 이미 사용한 동일 원국 위치쌍을 약점 해석에 재참조함. 다른 위치쌍을 우선 선정함");
       reasons.push(...priority.signals.filter(s=>s.status!=="CONTEXT").map(s=>s.note));
@@ -377,19 +401,38 @@ export function selectPersonalityInterpretations(
       if (section.id === "P01-09" && candidate.behaviorHypothesis) {
         // Reusing the semantic god pair is only allowed when its actual
         // behavioral scene differs from every earlier selected section.
-        const repeatedBehavior=selectedBehaviors.find(previous =>
-          behavioralOverlap(candidate,previous.candidate).nearDuplicate);
+        // V35: compare with EARLIER chapters only; a same-chapter runner-up is an alternative, not a duplicate.
+        const repeatedBehavior=selectedBehaviors.find(previous => previous.sectionId!==section.id &&
+          behavioralOverlap(candidate,previous.candidate,optFor(candidate,previous.candidate)).nearDuplicate);
         if(repeatedBehavior){
+          const why=behavioralOverlap(candidate,repeatedBehavior.candidate,optFor(candidate,repeatedBehavior.candidate));
           evaluation.flags.push("SEMANTIC_OVERLAP");
-          evaluation.reasons.push("다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: "+repeatedBehavior.sectionId);
+          evaluation.reasons.push("다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: "+repeatedBehavior.sectionId+
+            (why.goalOutput==="SAME_GOAL_OR_OUTPUT" ? " (목표 또는 산출물이 같음)" :
+             why.goalOutput==="UNVERIFIED" ? " (목표와 산출물 근거가 부족해 독립성 확인 불가)" : ""));
           evaluation.decision="REJECTED";droppedCandidateIds.push(candidate.id);continue;
         }
         const priorDecision = selectedBySection.get("P01-05")?.selected;
-        if (priorDecision?.behaviorHypothesis && behavioralOverlap(candidate, priorDecision).nearDuplicate) {
+        if (priorDecision?.behaviorHypothesis && behavioralOverlap(candidate, priorDecision, optFor(candidate, priorDecision)).nearDuplicate) {
           evaluation.flags.push("SEMANTIC_OVERLAP");
           evaluation.reasons.push("결정 이전의 선택지 비교를 장점으로 반복하므로 반려함");
           evaluation.decision = "REJECTED";
           droppedCandidateIds.push(candidate.id);
+          continue;
+        }
+      }
+      // V35: a linked weakness may reuse one P01-09 source, but if it also reuses
+      // another chapter's exact source pair AND repeats that chapter's behavior,
+      // it retells that chapter rather than describing the strength's burden.
+      if (linkedWeakness && pairSignature && candidate.behaviorHypothesis) {
+        const retold = selectedBehaviors.find(previous => previous.sectionId!=="P01-09" &&
+          previous.candidate.sourceIds.filter(id=>id.startsWith("PILLAR:")).slice().sort().join("|")===pairSignature &&
+          behavioralOverlap(candidate,previous.candidate).nearDuplicate);
+        if (retold) {
+          evaluation.flags.push("DUPLICATE_NARRATIVE");
+          evaluation.reasons.push("부담 후보가 "+retold.sectionId+"와 같은 원국 위치쌍과 행동 주제를 반복함. 장점의 부담이 아니라 앞 장의 재서술이므로 제외");
+          evaluation.decision="REJECTED";droppedCandidateIds.push(candidate.id);
+          repeatedThemes.push({candidateIds:[retold.id,candidate.id],theme:candidate.narrativeKey});
           continue;
         }
       }
@@ -416,8 +459,15 @@ export function selectPersonalityInterpretations(
             // Chapter 10 intentionally reuses the validated strength's basis,
             // but must describe a drawback rather than presenting it as another strength.
             if(section.id==="P01-10" && prior.sectionId==="P01-09")continue;
-            const comparison=behavioralOverlap(candidate,prior.candidate);
+            const comparison=behavioralOverlap(candidate,prior.candidate,optFor(candidate,prior.candidate));
             const overlap=comparison.repeatedMotifs;
+            const ph=prior.candidate.behaviorHypothesis, ch=candidate.behaviorHypothesis;
+            if(!comparison.nearDuplicate && comparison.motifNearDuplicate && comparison.goalOutput==="DISTINCT_GOAL_AND_OUTPUT" && ph && ch) {
+              goalOutputReviews.push({priorId:prior.id,candidateId:candidate.id,overlappingMotifs:overlap,
+                priorGoal:ph.actionGoal ?? "",candidateGoal:ch.actionGoal ?? "",
+                priorOutput:ph.observableOutput ?? "",candidateOutput:ch.observableOutput ?? ""});
+              evaluation.reasons.push(`목표와 산출물을 비교해 ${prior.sectionId}와 구별함: 목표(${ph.actionGoal} ↔ ${ch.actionGoal}), 산출물(${ph.observableOutput} ↔ ${ch.observableOutput}). 공통 어휘(${overlap.join(", ")})는 본문에서 반복하지 않도록 검토`);
+            }
             if(comparison.nearDuplicate) {
               // Only the closest earlier chapter gets a diagnostic, rather than
               // flooding the writer with every shared common Korean verb.
@@ -454,13 +504,14 @@ export function selectPersonalityInterpretations(
     version:"personality-editorial-v1",
     status:emptySections.length ? "needs_more_evidence" : "reviewable",
     sections,
-    audit:{emptySections, singleCandidateSections:sections.filter(s=>s.selected && s.alternatives.length===0).map(s=>s.sectionId), repeatedThemes,semanticOverlapReviews,droppedCandidateIds,warnings:[
+    audit:{emptySections, singleCandidateSections:sections.filter(s=>s.selected && s.alternatives.length===0).map(s=>s.sectionId), repeatedThemes,semanticOverlapReviews,goalOutputReviews,droppedCandidateIds,warnings:[
       "편집상 우선순위는 심리 정확도, 미래 사건 예측, 용신 점수가 아닙니다.",
       "다른 섹션의 가설/생활 장면은 장별로 반복하지 않습니다.",
       ...emptySections.map(id => id === "P01-10" && !sections.find(s=>s.sectionId==="P01-09")?.selected?.behaviorHypothesis
         ? "P01-10: 앞 절 P01-09에 검증 가능한 행동 가설이 없어 약점 후보 생성 차단. 사실을 만들어 채우지 말고 근거 확충 및 수동 검토 필요"
         : `${id}: 검증을 통과한 후보가 없어 고객용 자동 생성 차단`),
       ...semanticOverlapReviews.map(r=>`${r.priorId}와 ${r.candidateId}는 행동 주제(${r.overlappingMotifs.join(", ")})가 겹침: 최종 문장 재검토 필요`),
+      ...goalOutputReviews.map(r=>`${r.priorId}와 ${r.candidateId}는 목표와 산출물이 다르지만 공통 어휘(${r.overlappingMotifs.join(", ")})가 있음: 같은 표현을 반복하지 않는지 편집 검토 필요`),
       ...sections.filter(s=>s.assessments.some(a=>a.candidateId===s.selected?.id && a.flags.includes("SCENE_COMPARISON_UNAVAILABLE")))
         .map(s=>`${s.sectionId}: 같은 원국 근거를 사용한 앞 장에 행동 가설이 없어 차별화 확인 불가. 고객용 자동 생성 보류`),
       "대안 후보가 없는 소제목은 단일 규칙 매칭이며 후보 비교 검증을 완료한 것으로 간주하지 않습니다.",
@@ -503,6 +554,8 @@ export function createPersonalityWritingBrief(plan: PersonalityEditorialPlan): P
       "P01-08은 제약 조건과 해결 행동의 순서를 비교하되 실제 위기 대응력과 정신적 회복력을 진단하지 마세요.",
       "V31: P01-09 strengthDevelopmentChain은 실제 성격이나 능력의 증명이 아닌 조건부 편집 구조입니다. possibleResult가 null이면 성공·성과·실행 능력을 덧붙이지 마세요.",
       "V31: P01-09의 판단기준과 행동은 구별해 설명하고, 10번 부담은 linkedWeaknessCandidateId가 확인된 경우에만 연결하세요.",
+      "V35: behaviorHypothesis의 actionGoal과 observableOutput은 장면 규칙표에서 정한 목표와 산출물입니다. 그 범위를 넘는 성과, 성공, 능력을 덧붙이지 말고, null이면 목표나 결과를 새로 만들지 마세요.",
+      "V35: goalOutputReviews에 있는 두 장은 목표와 산출물로 구별된 것이므로, 본문에서도 각 장의 목표와 산출물 차이가 드러나게 쓰고 공통 어휘를 반복하지 마세요.",
       "P01-09의 조건부 행동 후보가 검증되지 않았다면 P01-10의 약점 서술을 자동 생성하지 마세요.",
       "P01-10의 linkedStrengthContext가 있으면 P01-09의 실제 선정된 장점 행동을 참고해 부담 조건을 설명하세요. 서로 무관한 약점을 만들어 내지 말고, 연결 근거가 부족하면 재검토 대상으로 남기세요.",
       "P01-10의 linkedStrengthCandidateId는 앞선 P01-09 강점 후보를 가리킵니다. 장점을 반복 설명하지 말고, 같은 성향이 부담으로 바뀔 수 있는 조건만 별도로 설명하세요. 이 연관성도 명리 해석 가설입니다.",

@@ -1,9 +1,9 @@
 {
   "mode": "2026-11-02 offline Swiss-term adapter, six fabricated birth date/time charts, NOT the production JPL path",
   "originalBehaviorV14": 34,
-  "currentBehaviorV15": 45,
+  "currentBehaviorV15": 46,
   "originalTriggersV14": 25,
-  "currentTriggersV15": 32,
+  "currentTriggersV15": 35,
   "chapter07": {
     "structured": 5,
     "uniqueAction": 4,
@@ -50,7 +50,7 @@
       "result": "PASS",
       "detail": {
         "four": 4,
-        "nine": 5,
+        "nine": 6,
         "alerts": []
       }
     },

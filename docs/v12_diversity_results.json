@@ -9,15 +9,15 @@
       "name": "strength chapter 09 now has supported structured scenes in different signal combinations",
       "passed": true,
       "details": {
-        "behavior": 10,
-        "triggers": 3
+        "behavior": 8,
+        "triggers": 5
       }
     },
     {
       "name": "weakness chapter 10 only follows a linked structured strength",
       "passed": true,
       "details": {
-        "behavior": 10
+        "behavior": 8
       }
     },
     {
@@ -81,10 +81,10 @@
   "passed": 13,
   "failed": 0,
   "stats": {
-    "selected": 118,
-    "behaviorReady": 69,
-    "strength": 10,
-    "weakness": 10,
+    "selected": 116,
+    "behaviorReady": 65,
+    "strength": 8,
+    "weakness": 8,
     "alerts": [
       {
         "priorId": "V56-B2-P01-04-monthStem-yearBranch",

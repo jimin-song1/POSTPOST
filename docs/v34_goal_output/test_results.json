@@ -1,6 +1,6 @@
 {
   "version": "V34",
-  "newTests": 7,
+  "newTests": 8,
   "passed": true,
   "mode": "extraction unit + source contract; not 12-chart run",
   "selectionEngineChanges": false,

@@ -18,6 +18,12 @@ export interface PersonalityBehaviorHypothesis {
   observableOutput: string | null;
   /** Whether goal and output are directly supported, rather than inferred. */
   goalOutputEvidence: "EXPLICIT_SCENE" | "INSUFFICIENT_SCENE";
+  /** V35: canonical goal category from the scene rule table. Comparison key, not customer text. */
+  goalKey?: GoalKeyV35 | null;
+  /** V35: canonical output category from the scene rule table. */
+  outputKey?: string | null;
+  /** V35: SCENE_RULE = fixed in the rule table; TEXT_EXTRACTION = V34 phrase match only. */
+  goalOutputSource?: "SCENE_RULE" | "TEXT_EXTRACTION" | null;
   /** A possible interpretation, never an established unconscious motive. */
   possibleMotive: string | null;
   counterCondition: string;
@@ -36,6 +42,14 @@ export interface PersonalityBehaviorHypothesis {
   linkedStrengthCandidateId?: string;
 }
 
+/** V35: what the scene is for. Same key in two chapters means the same narrative job. */
+export type GoalKeyV35 =
+  | "START_ORDER" | "EXPLAIN_VIEW" | "CHOOSE_OPTION" | "REVISE_COMMITMENT"
+  | "ALLOCATE_RESPONSIBILITY" | "RESPOND_TO_PROBLEM" | "COMPLETE_OUTPUT"
+  | "APPLY_PROCEDURE_SCOPE" | "PRODUCE_FROM_KNOWLEDGE" | "ALLOCATE_OUTPUT_USE" | "SET_DECISION_SCOPE";
+export interface GoalOutputSpecV35 {
+  goalKey: GoalKeyV35; outputKey: string; actionGoal: string; observableOutput: string;
+}
 type Family = "peer" | "output" | "wealth" | "officer" | "resource";
 type StemOrBranch = "stem" | "branch";
 type Signal = {
@@ -70,6 +84,59 @@ function subjectParticle(word:string):string { return hasFinalConsonant(word) ? 
 type StrengthScene = {
   trigger: string; action: string; alternative: string;
 };
+/**
+ * V35: goal/output of each P01-09 family scene, defined at the data source.
+ * `clause` is appended to the action so the output is explicit in the scene
+ * text itself; it is a scene descriptor, never a claim of success or skill.
+ */
+const STRENGTH_GOALS: Record<string, GoalOutputSpecV35 & {clause:string|null}> = {
+  "officer|output": {goalKey:"COMPLETE_OUTPUT",outputKey:"finished-work",actionGoal:"정해진 기준 안에서 작업을 끝맺는 것",observableOutput:"기준에 맞춰 마무리한 작업 결과물",clause:"기준에 맞는 결과물로 마무리하려는"},
+  "officer|peer": {goalKey:"ALLOCATE_RESPONSIBILITY",outputKey:"role-allocation",actionGoal:"자기 몫과 공동 절차의 경계를 정하는 것",observableOutput:"구분된 자기 역할 범위",clause:"자기 몫과 공동 절차를 나눈 역할 범위를 정하려는"},
+  "officer|resource": {goalKey:"APPLY_PROCEDURE_SCOPE",outputKey:"procedure-application-scope",actionGoal:"새 절차를 실제 일에 어디까지 적용할지 정하는 것",observableOutput:"공식 기준과 대조해 정한 적용 범위",clause:"새 절차를 어디까지 적용할지 정하려는"},
+  "officer|wealth": {goalKey:"CHOOSE_OPTION",outputKey:"narrowed-options",actionGoal:"공식 기준에 맞는 선택지를 고르는 것",observableOutput:"기준을 충족하는 선택지",clause:"기준을 충족하는 선택지를 고르려는"},
+  "output|peer": {goalKey:"COMPLETE_OUTPUT",outputKey:"finished-work",actionGoal:"자기 몫의 일을 직접 끝맺는 것",observableOutput:"직접 끝낸 자기 몫의 결과물",clause:"맡은 몫을 결과물로 끝맺으려는"},
+  "output|resource": {goalKey:"PRODUCE_FROM_KNOWLEDGE",outputKey:"practice-result",actionGoal:"익힌 내용을 실제 결과물로 옮기는 것",observableOutput:"실제 수행 순서와 그 결과",clause:"익힌 내용을 실제 결과물로 옮겨 보려는"},
+  "output|wealth": {goalKey:"ALLOCATE_OUTPUT_USE",outputKey:"output-use-plan",actionGoal:"만든 결과물의 활용 방법을 고르는 것",observableOutput:"활용 방법을 정한 결과물",clause:null},
+  "peer|resource": {goalKey:"SET_DECISION_SCOPE",outputKey:"own-decision-scope",actionGoal:"확인한 정보로 스스로 결정할 범위를 정하는 것",observableOutput:"스스로 결정할 범위",clause:"스스로 결정할 범위를 정하려는"},
+  "peer|wealth": {goalKey:"CHOOSE_OPTION",outputKey:"narrowed-options",actionGoal:"맡을 범위 안에서 선택지를 좁히는 것",observableOutput:"좁혀진 선택지",clause:"선택지를 좁히려는"},
+  "resource|wealth": {goalKey:"CHOOSE_OPTION",outputKey:"narrowed-options",actionGoal:"설명이 다른 제안 가운데 선택지를 좁히는 것",observableOutput:"좁혀진 선택지",clause:"선택지를 좁히려는"},
+};
+/**
+ * V35.1: 겁재 is a SHARED-ownership signal. A family-level peer scene written
+ * for 비견 ("내 몫을 직접", "스스로 결정") contradicts it, so a 겁재 pair gets
+ * its own scene and goal. When the goal becomes allocation, it carries the
+ * same goal key as P01-07 so the duplicate check sees it honestly.
+ */
+const STRENGTH_VARIANTS: Record<string, {scene:StrengthScene; goal:GoalOutputSpecV35 & {clause:string|null}}> = {
+  "output|peer:겁재": {
+    scene:{trigger:"여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",action:"",alternative:"맡은 몫의 경계가 정해지지 않았다면 결과물보다 분담을 먼저 정해야 할 수 있음"},
+    goal:{goalKey:"COMPLETE_OUTPUT",outputKey:"finished-work",actionGoal:"함께 하는 일 안에서 자기 몫을 끝맺는 것",observableOutput:"공동 작업 속에서 끝낸 자기 몫의 결과물",clause:"공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는"},
+  },
+  "peer|resource:겁재": {
+    scene:{trigger:"함께 판단할 사람들과 필요한 정보를 나눌 수 있을 때",action:"",alternative:"혼자 결정해도 되는 일이라면 정보를 나누는 과정을 줄일 수 있음"},
+    goal:{goalKey:"ALLOCATE_RESPONSIBILITY",outputKey:"decision-allocation",actionGoal:"함께 정할 부분과 스스로 정할 부분을 나누는 것",observableOutput:"함께 정할 부분과 스스로 정할 부분의 구분",clause:"함께 정할 부분과 스스로 정할 부분을 나누려는"},
+  },
+  "peer|wealth:겁재": {
+    scene:{trigger:"함께 맡은 범위 안에서 여러 선택지를 좁혀야 할 때",action:"",alternative:"선택 범위가 이미 정해져 있다면 가능한 대안만 검토할 수 있음"},
+    goal:{goalKey:"CHOOSE_OPTION",outputKey:"narrowed-options",actionGoal:"함께 맡은 범위 안에서 선택지를 좁히는 것",observableOutput:"좁혀진 선택지",clause:"선택지를 좁히려는"},
+  },
+};
+function strengthGoalSpec(key:string):(GoalOutputSpecV35 & {clause:string|null})|undefined {
+  return STRENGTH_VARIANTS[key]?.goal ?? STRENGTH_GOALS[key];
+}
+/** V35: section-level goals. P01-02/03/10 have no tangible output and stay null. */
+const SECTION_GOALS: Partial<Record<PersonalitySectionId, GoalOutputSpecV35>> = {
+  "P01-01": {goalKey:"START_ORDER",outputKey:"start-sequence",actionGoal:"새 일을 어디서부터 시작할지 정하는 것",observableOutput:"정해진 시작 단계"},
+  "P01-04": {goalKey:"EXPLAIN_VIEW",outputKey:"structured-explanation",actionGoal:"의견을 상대에게 전달하는 것",observableOutput:"구분해 전달한 설명"},
+  "P01-05": {goalKey:"CHOOSE_OPTION",outputKey:"priority-conditions",actionGoal:"제안을 고르기 전에 우선 확인할 조건을 정하는 것",observableOutput:"선택 전에 우선 확인할 조건"},
+  "P01-06": {goalKey:"REVISE_COMMITMENT",outputKey:"revision-boundary",actionGoal:"이미 내린 결정을 유지할지 고칠지 정하는 것",observableOutput:"유지할 부분과 바꿀 부분의 구분"},
+  "P01-08": {goalKey:"RESPOND_TO_PROBLEM",outputKey:"problem-response-order",actionGoal:"예상 밖의 문제에 대응할 순서를 정하는 것",observableOutput:"문제 대응의 우선순위"},
+};
+function cooperationGoal(action:string):GoalOutputSpecV35 {
+  return /비용|지출|부담|예산/.test(action)
+    ? {goalKey:"ALLOCATE_RESPONSIBILITY",outputKey:"role-cost-allocation",actionGoal:"함께 하는 일의 역할과 비용 부담을 정하는 것",observableOutput:"합의된 역할과 비용 분담"}
+    : {goalKey:"ALLOCATE_RESPONSIBILITY",outputKey:"role-allocation",actionGoal:"함께 하는 일의 역할을 정하는 것",observableOutput:"합의된 역할 분담"};
+}
 /**
  * A strength needs a scene supported by BOTH symbolic families. The earlier
  * fixed learning-to-practice scene was applied even to peer+wealth and
@@ -182,7 +249,7 @@ function specificExpressionScene(primary:Signal, secondary:Signal): (StrengthSce
     ruleId:`P01-04:output:${primary.god}|${secondary.god}`,
   };
 }
-function specificStrengthScene(primary:Signal,secondary:Signal): (StrengthScene & {ruleId:string}) | undefined {
+function specificStrengthScene(primary:Signal,secondary:Signal): (StrengthScene & {ruleId:string; motifAction:string; goalSpecKey:string}) | undefined {
   const pair=familyPair(primary.family,secondary.family);
   const base=STRENGTH_SCENES[pair];
   if(!base)return undefined;
@@ -202,12 +269,21 @@ function specificStrengthScene(primary:Signal,secondary:Signal): (StrengthScene 
   };
   const a=specific[primary.god],b=specific[secondary.god];
   if(!a||!b)return undefined;
+  const variantKey=[primary.god,secondary.god].includes("겁재") && STRENGTH_VARIANTS[`${pair}:겁재`] ? `${pair}:겁재` : pair;
+  const variant=STRENGTH_VARIANTS[variantKey];
+  const clause=strengthGoalSpec(variantKey)?.clause ?? "결과를 정하려는";
   return {
-    trigger:base.trigger,
+    trigger:variant?.scene.trigger ?? base.trigger,
+    // V35.1: "A한 다음 B" asserted an order the chart does not support (it only
+    // reflected which position was listed first). Both clauses are now parallel.
     action:pair==="output|wealth" ?
-      `${base.action} (${primary.god}${andParticle(primary.god)} ${secondary.god}의 계산된 상징을 적용한 가설)` :
-      `${a}한 다음 ${b}하는 두 과정을 연결할 가능성을 살피는 모습`,
-    alternative:base.alternative,
+      "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교해 결과물의 활용 방법을 정하려는 모습" :
+      `${a}하는 일과 ${b}하는 일을 함께 살펴 ${clause} 모습`,
+    alternative:variant?.scene.alternative ?? base.alternative,
+    goalSpecKey:variantKey,
+    // V35: motif tags describe the behavior only. The goal/output clause is
+    // compared through goalKey/outputKey, so it must not inflate motif overlap.
+    motifAction:pair==="output|wealth" ? base.action : `${a}한 다음 ${b}하는 두 과정을 연결`,
     ruleId:`P01-09:${pair}:${primary.god}|${secondary.god}`,
   };
 }
@@ -604,13 +680,36 @@ export function extractGoalOutputV34(action: string, trigger: string): {
   const explicitResults: readonly [RegExp,string,string][] = [
     [/결과물.{0,18}(완성|마무리)|작업의 결과.{0,12}마무리/, "작업을 완결하는 것", "완성된 작업 결과물"],
     [/담당.{0,14}(합의|정리)|역할.{0,14}(합의|분담)/, "책임과 역할을 명확히 하는 것", "합의된 담당 범위"],
-    [/비용.{0,18}(합의|정리)|지출.{0,18}(합의|정리)/, "비용 부담을 정하는 것", "합의된 비용 부담 범위"],
+    // V35 fix: "기회비용" is an option-comparison term, not a cost-sharing agreement,
+    // and the agreement must follow the cost phrase within the same clause.
+    [/(?<!기회)비용[^.,]{0,8}(합의|정리)|지출[^.,]{0,8}(합의|정리)/, "비용 부담을 정하는 것", "합의된 비용 부담 범위"],
     [/진행.{0,12}순서.{0,15}(설명|정리)/, "진행 과정을 전달하는 것", "설명된 진행 순서"],
   ];
   for(const [pattern,goal,output] of explicitResults){
     if(pattern.test(a))return {actionGoal:goal,observableOutput:output,goalOutputEvidence:"EXPLICIT_SCENE"};
   }
   return {actionGoal:null,observableOutput:null,goalOutputEvidence:"INSUFFICIENT_SCENE"};
+}
+
+/**
+ * V35: prefer the rule-table goal/output. Only scenes actually produced by that
+ * rule receive it; otherwise fall back to the conservative V34 phrase match.
+ */
+export function goalOutputForScene(
+  id:PersonalitySectionId, pairFamily:string, baseline:boolean, cooperation:boolean,
+  strength:boolean, expression:boolean, revision:boolean, action:string, trigger:string,
+):Pick<PersonalityBehaviorHypothesis,"actionGoal"|"observableOutput"|"goalOutputEvidence"|"goalKey"|"outputKey"|"goalOutputSource"> {
+  let spec:GoalOutputSpecV35|undefined;
+  if(id==="P01-09" && strength)spec=strengthGoalSpec(pairFamily);
+  else if(id==="P01-07" && cooperation)spec=cooperationGoal(action);
+  else if(id==="P01-01" && baseline)spec=SECTION_GOALS["P01-01"];
+  else if(id==="P01-04" && expression)spec=SECTION_GOALS["P01-04"];
+  else if(id==="P01-06" && revision)spec=SECTION_GOALS["P01-06"];
+  else if(id==="P01-05" || id==="P01-08")spec=SECTION_GOALS[id];
+  if(spec)return {actionGoal:spec.actionGoal,observableOutput:spec.observableOutput,goalOutputEvidence:"EXPLICIT_SCENE",
+    goalKey:spec.goalKey,outputKey:spec.outputKey,goalOutputSource:"SCENE_RULE"};
+  const v34=extractGoalOutputV34(action,trigger);
+  return {...v34,goalKey:null,outputKey:null,goalOutputSource:v34.goalOutputEvidence==="EXPLICIT_SCENE"?"TEXT_EXTRACTION":null};
 }
 
 /** A bounded, differentiated candidate pool. No claim of verified psychology. */
@@ -668,7 +767,7 @@ export function generateConditionalBehaviorCandidates(a:SajuAnalysis):Personalit
       const behavior:PersonalityBehaviorHypothesis={
         axis:section.axis,trigger:sceneTrigger,
         observableBehavior:roleSpecific,
-        ...extractGoalOutputV34(roleSpecific,sceneTrigger),
+        ...goalOutputForScene(id,id==="P01-09" && strengthScene ? strengthScene.goalSpecKey : pairFamily,!!baselineScene,!!cooperationScene,!!strengthScene,!!expressionScene,!!revisionScene,roleSpecific,sceneTrigger),
         decisionBasis:`우선 기준: ${first.focus} / 함께 보는 기준: ${second.focus} (출처: ${POSITION_KR[primary.position]}${primary.kind==="stem"?"간":"지"} ${primary.god}, ${POSITION_KR[secondary.position]}${secondary.kind==="stem"?"간":"지"} ${secondary.god})`,
         possibleMotive:null,
         counterCondition:`${sceneAlternative}. ${second.condition}에는 다른 반응도 함께 검토`,
@@ -687,6 +786,7 @@ export function generateConditionalBehaviorCandidates(a:SajuAnalysis):Personalit
             id==="P01-07" && cooperationScene ? ["joint-role",...motifsFrom(cooperationScene.action)] :
           id==="P01-04" ? ["expression",...motifsFrom(expressionScene?.action ?? roleSpecific).filter(m=>m!=="expression")] :
           id==="P01-06" ? ["decision-revision","commitment-boundary",...motifsFrom(revisionScene?.action ?? roleSpecific).filter(m=>m!=="verification")] :
+          id==="P01-09" && strengthScene ? motifsFrom(strengthScene.motifAction) :
           motifsFrom(roleSpecific),
       };
       result.push({

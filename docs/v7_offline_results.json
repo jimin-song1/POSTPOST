@@ -56,12 +56,12 @@
     },
     {
       "section": "P01-09",
-      "id": "V56-B2-P01-09-monthBranch-yearBranch",
+      "id": "V56-B2-P01-09-yearStem-monthStem",
       "structured": true
     },
     {
       "section": "P01-10",
-      "id": "V56-B2-P01-10-monthBranch-dayBranch",
+      "id": "V56-B2-P01-10-yearStem-dayBranch",
       "structured": true
     }
   ],
@@ -135,7 +135,7 @@
       "name": "repeated ten-god names require distinct chapter roles and a verified strength link",
       "status": "PASS",
       "detail": {
-        "reusedPairs": 1
+        "reusedPairs": 0
       }
     },
     {

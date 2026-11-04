@@ -73,16 +73,16 @@
     },
     {
       "sectionId": "P01-09",
-      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
-      "scene": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-      "behavior": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (식신과 편재의 계산된 상징을 적용한 가설)",
-      "scenarioRuleId": "P01-09:output|wealth:식신|편재"
+      "candidateId": "V56-B2-P01-09-yearStem-monthStem",
+      "scene": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+      "behavior": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+      "scenarioRuleId": "P01-09:output|peer:겁재|식신"
     },
     {
       "sectionId": "P01-10",
-      "candidateId": "V56-B2-P01-10-monthBranch-dayBranch",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
       "scene": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
-      "behavior": "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
+      "behavior": "다른 사람과 나눌 몫과 주도권을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
       "scenarioRuleId": null
     }
   ],
@@ -116,9 +116,9 @@
       "name": "09 has evidence-aligned practical advantage",
       "status": "PASS",
       "detail": {
-        "rule": "P01-09:output|wealth:식신|편재",
-        "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-        "behavior": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (식신과 편재의 계산된 상징을 적용한 가설)"
+        "rule": "P01-09:output|peer:겁재|식신",
+        "trigger": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+        "behavior": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습"
       }
     },
     {
@@ -134,7 +134,7 @@
       "status": "PASS",
       "detail": {
         "first": "V56-B2-P01-07-monthBranch-yearBranch",
-        "second": "V56-B2-P01-09-monthStem-dayBranch"
+        "second": "V56-B2-P01-09-yearStem-monthStem"
       }
     },
     {
@@ -142,7 +142,7 @@
       "status": "PASS",
       "detail": {
         "rejectedRepetition": "V56-B2-P01-09-monthBranch-dayBranch",
-        "replacement": "V56-B2-P01-09-monthStem-dayBranch"
+        "replacement": "V56-B2-P01-09-yearStem-monthStem"
       }
     },
     {
@@ -157,15 +157,15 @@
       "name": "repeated natal pair only serves a distinct 09 scene and is flagged",
       "status": "PASS",
       "detail": {
-        "sourcePairReuse": 1
+        "sourcePairReuse": 0
       }
     },
     {
       "name": "10 weakness still points at selected 09 strength",
       "status": "PASS",
       "detail": {
-        "strength": "V56-B2-P01-09-monthStem-dayBranch",
-        "weakness": "V56-B2-P01-10-monthBranch-dayBranch"
+        "strength": "V56-B2-P01-09-yearStem-monthStem",
+        "weakness": "V56-B2-P01-10-yearStem-dayBranch"
       }
     },
     {

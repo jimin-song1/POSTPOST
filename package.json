@@ -19,7 +19,8 @@
     "test:personality-diversity-v13": "node scripts/check-cross-chart-v11.cjs && node scripts/verify-personality-diversity-v13.cjs",
     "test:personality-realcharts-v14": "node scripts/verify-personality-realcharts-v14.cjs",
     "test:personality-copy-v14": "node scripts/verify-personality-copy-v14.cjs",
-    "test:personality-scenes-v15": "node scripts/verify-personality-scene-v15.cjs"
+    "test:personality-scenes-v15": "node scripts/verify-personality-scene-v15.cjs",
+    "test:personality-goal-output-v35": "node scripts/verify-personality-crosscharts-v17.cjs && node scripts/verify-personality-v35-goal-output-overlap.cjs"
   },
   "dependencies": {
     "lunisolar-ephemeris": "^0.4.1",

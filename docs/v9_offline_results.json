@@ -17,8 +17,8 @@
       "name": "09 is an evidence-backed concrete output action, not more choice",
       "status": "PASS",
       "details": {
-        "scene": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (식신과 편재의 계산된 상징을 적용한 가설)",
-        "rule": "P01-09:output|wealth:식신|편재"
+        "scene": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+        "rule": "P01-09:output|peer:겁재|식신"
       }
     },
     {
@@ -28,6 +28,8 @@
         "similarity": {
           "repeatedMotifs": [],
           "nearDuplicate": false,
+          "motifNearDuplicate": false,
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
           "penalty": 0
         }
       }
@@ -52,7 +54,7 @@
       "name": "no output signal means no output-based strength rule",
       "status": "PASS",
       "details": {
-        "strength": "V56-B2-P01-09-monthBranch-yearBranch"
+        "strength": "V56-B2-P01-09-monthBranch-hourStem"
       }
     },
     {
@@ -165,23 +167,23 @@
     },
     {
       "section": "P01-09",
-      "candidate": "V56-B2-P01-09-monthStem-dayBranch",
-      "rule": "P01-09:output|wealth:식신|편재",
-      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-      "behavior": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (식신과 편재의 계산된 상징을 적용한 가설)",
+      "candidate": "V56-B2-P01-09-yearStem-monthStem",
+      "rule": "P01-09:output|peer:겁재|식신",
+      "trigger": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+      "behavior": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
       "sourceIds": [
-        "PILLAR:month:stem:丁",
-        "PILLAR:day:branch:未"
+        "PILLAR:year:stem:甲",
+        "PILLAR:month:stem:丁"
       ]
     },
     {
       "section": "P01-10",
-      "candidate": "V56-B2-P01-10-monthBranch-dayBranch",
+      "candidate": "V56-B2-P01-10-yearStem-dayBranch",
       "rule": null,
       "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
-      "behavior": "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
+      "behavior": "다른 사람과 나눌 몫과 주도권을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
       "sourceIds": [
-        "PILLAR:month:branch:卯",
+        "PILLAR:year:stem:甲",
         "PILLAR:day:branch:未"
       ]
     }
@@ -577,10 +579,17 @@
       },
       {
         "candidateIds": [
-          "V56-B2-P01-09-monthStem-dayBranch",
-          "V56-B2-P01-09-dayBranch-hourBranch"
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-10-monthStem-dayBranch"
         ],
-        "theme": "behavior-v2:P01-09:PILLAR:day:branch:未|PILLAR:hour:branch:午"
+        "theme": "behavior-v2:P01-10:PILLAR:day:branch:未|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-B2-P01-10-monthStem-hourStem"
+        ],
+        "theme": "behavior-v2:P01-10:PILLAR:hour:stem:壬|PILLAR:month:stem:丁"
       }
     ],
     "semanticOverlapReviews": [
@@ -593,6 +602,7 @@
         ]
       }
     ],
+    "goalOutputReviews": [],
     "droppedCandidateIds": [
       "V56-X-P01-01-15",
       "V56-B2-P01-02-monthBranch-hourStem",
@@ -649,21 +659,20 @@
       "V56-X-P01-08-9",
       "V56-X-P01-08-10",
       "V56-X-P01-08-11",
-      "V56-B2-P01-09-dayBranch-hourBranch",
+      "V56-B2-P01-09-monthBranch-dayBranch",
       "V56-B2-P01-09-monthBranch-hourBranch",
       "V56-B2-P01-09-monthStem-hourStem",
-      "V56-B2-P01-09-yearBranch-monthStem",
-      "V56-B2-P01-09-yearStem-monthStem",
-      "V56-B2-P01-09-monthBranch-dayBranch",
+      "V56-B2-P01-09-yearStem-dayBranch",
+      "V56-B2-P01-09-monthBranch-yearBranch",
       "V56-B2-P01-09-dayBranch-hourStem",
       "V56-B2-P01-09-monthBranch-hourStem",
-      "V56-B2-P01-09-yearStem-dayBranch",
+      "V56-B2-P01-10-monthBranch-dayBranch",
       "V56-B2-P01-10-monthBranch-yearBranch",
       "V56-X-P01-10-13",
+      "V56-B2-P01-10-yearStem-monthStem",
       "V56-X-P01-10-1",
       "V56-X-P01-10-14",
       "V56-X-P01-10-18",
-      "V56-B2-P01-10-monthStem-dayBranch",
       "V56-X-P01-10-10",
       "V56-X-P01-10-16",
       "V56-X-P01-10-17",
@@ -677,9 +686,13 @@
       "V56-X-P01-10-3",
       "V56-X-P01-10-7",
       "V56-X-P01-10-8",
+      "V56-B2-P01-10-dayBranch-hourBranch",
       "V56-B2-P01-10-monthBranch-hourBranch",
       "V56-X-P01-10-6",
-      "V56-B2-P01-10-monthBranch-hourStem"
+      "V56-B2-P01-10-dayBranch-hourStem",
+      "V56-B2-P01-10-monthBranch-hourStem",
+      "V56-B2-P01-10-monthStem-dayBranch",
+      "V56-B2-P01-10-monthStem-hourStem"
     ],
     "warnings": [
       "편집상 우선순위는 심리 정확도, 미래 사건 예측, 용신 점수가 아닙니다.",

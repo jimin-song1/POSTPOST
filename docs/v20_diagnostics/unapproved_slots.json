@@ -140,20 +140,6 @@
     "blocked": true
   },
   {
-    "caseId": "RC11",
-    "section": "P01-09",
-    "candidateId": "V56-X-P01-09-2",
-    "reason": "NO_STRUCTURED_BEHAVIOR",
-    "blocked": true
-  },
-  {
-    "caseId": "RC11",
-    "section": "P01-10",
-    "candidateId": null,
-    "reason": "NO_SELECTED_CANDIDATE",
-    "blocked": true
-  },
-  {
     "caseId": "RC12",
     "section": "P01-04",
     "candidateId": "V56-X-P01-04-10",

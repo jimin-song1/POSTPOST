@@ -1,6 +1,6 @@
 {
   "baseline": "V29",
-  "gateVersion": "V30",
+  "gateVersion": "V30 (V35 RC11 clauses)",
   "description": "Regression floor only; not production accuracy or coverage certification",
   "checks": [
     {
@@ -12,11 +12,11 @@
       "status": "PASS"
     },
     {
-      "name": "RC11 unresolved outcome is explicitly present and not silently approved",
+      "name": "RC11 outcome is explicit: unresolved, or resolved with evidence (not silently approved)",
       "status": "PASS"
     },
     {
-      "name": "RC11 P01-09 remains unstructured and therefore is not called a validated strength",
+      "name": "RC11 P01-10 is only filled when linked to the selected P01-09 strength",
       "status": "PASS"
     }
   ],
@@ -29,15 +29,15 @@
   },
   "twelve": {
     "total": 120,
-    "selected": 119,
-    "structured": 96,
-    "ready": 96,
-    "empty": 1
+    "selected": 120,
+    "structured": 98,
+    "ready": 98,
+    "empty": 0
   },
   "rc11": {
-    "selected": 9,
-    "ready": 5,
-    "chapter09": "legacy",
-    "chapter10": "empty"
+    "selected": 10,
+    "ready": 7,
+    "chapter09": "structured",
+    "chapter10": "structured"
   }
 }

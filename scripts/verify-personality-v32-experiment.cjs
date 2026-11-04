@@ -1,7 +1,8 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const base=path.resolve(__dirname,'..');
-const baseline=JSON.parse(fs.readFileSync(path.join(base,'docs/v17_cross_chart_audit/twelve_date_charts.json'),'utf8'));
+// V35: the V32 experiment is compared with the pre-V35 engine it was run against, archived from V34.
+const baseline=JSON.parse(fs.readFileSync(path.join(base,'docs/v35_goal_output_overlap/v34_baseline_twelve_date_charts.json'),'utf8'));
 const experimental=JSON.parse(fs.readFileSync(path.join(base,'docs/v32_experiment/experimental_twelve_charts.json'),'utf8'));
 const get=(data,id,section)=>data.charts.find(c=>c.id===id)?.sections.find(x=>x.id===section);
 const a=get(baseline,'RC11','P01-09'), b=get(experimental,'RC11','P01-09'),c=get(experimental,'RC11','P01-10');

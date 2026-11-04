@@ -5,7 +5,7 @@
       "collisions": [
         {
           "a": "P01-02",
-          "b": "P01-09",
+          "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "output|wealth"
@@ -18,6 +18,18 @@
           "semantic": "output|peer"
         },
         {
+          "a": "P01-04",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|output"
+        }
+      ]
+    },
+    {
+      "caseId": "RC02",
+      "collisions": [
+        {
           "a": "P01-07",
           "b": "P01-10",
           "exactAction": false,
@@ -27,40 +39,21 @@
       ]
     },
     {
-      "caseId": "RC02",
-      "collisions": [
-        {
-          "a": "P01-02",
-          "b": "P01-09",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|wealth"
-        }
-      ]
-    },
-    {
       "caseId": "RC03",
       "collisions": [
         {
           "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-08",
           "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "output|wealth"
-        },
-        {
-          "a": "P01-02",
-          "b": "P01-10",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|wealth"
-        },
-        {
-          "a": "P01-09",
-          "b": "P01-10",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|wealth"
+          "semantic": "output|peer"
         }
       ]
     },
@@ -75,18 +68,11 @@
           "semantic": "officer|peer"
         },
         {
-          "a": "P01-01",
+          "a": "P01-02",
           "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "officer|peer"
-        },
-        {
-          "a": "P01-09",
-          "b": "P01-10",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "officer|peer"
+          "semantic": "peer|wealth"
         }
       ]
     },
@@ -108,13 +94,6 @@
           "semantic": "peer|wealth"
         },
         {
-          "a": "P01-02",
-          "b": "P01-09",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "peer|wealth"
-        },
-        {
           "a": "P01-05",
           "b": "P01-06",
           "exactAction": false,
@@ -122,11 +101,11 @@
           "semantic": "resource|wealth"
         },
         {
-          "a": "P01-07",
+          "a": "P01-08",
           "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "peer|wealth"
+          "semantic": "output|peer"
         }
       ]
     },
@@ -148,22 +127,15 @@
           "semantic": "resource|wealth"
         },
         {
+          "a": "P01-03",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
           "a": "P01-04",
           "b": "P01-09",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|wealth"
-        },
-        {
-          "a": "P01-04",
-          "b": "P01-10",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|wealth"
-        },
-        {
-          "a": "P01-09",
-          "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "output|wealth"
@@ -182,7 +154,21 @@
         },
         {
           "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-02",
           "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "output|resource"
@@ -195,11 +181,11 @@
           "semantic": "output|resource"
         },
         {
-          "a": "P01-06",
-          "b": "P01-09",
+          "a": "P01-09",
+          "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "output|wealth"
+          "semantic": "output|resource"
         }
       ]
     },
@@ -214,11 +200,11 @@
           "semantic": "peer|resource"
         },
         {
-          "a": "P01-01",
+          "a": "P01-02",
           "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "peer|resource"
+          "semantic": "output|resource"
         },
         {
           "a": "P01-02",
@@ -235,11 +221,11 @@
           "semantic": "officer|resource"
         },
         {
-          "a": "P01-06",
-          "b": "P01-09",
+          "a": "P01-09",
+          "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "peer|resource"
+          "semantic": "output|resource"
         }
       ]
     },
@@ -254,25 +240,39 @@
           "semantic": "peer|resource"
         },
         {
-          "a": "P01-02",
+          "a": "P01-01",
           "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "resource|wealth"
+          "semantic": "peer|resource"
         },
         {
-          "a": "P01-02",
+          "a": "P01-01",
           "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "resource|wealth"
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
         },
         {
           "a": "P01-09",
           "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "resource|wealth"
+          "semantic": "peer|resource"
         }
       ]
     },
@@ -280,15 +280,15 @@
       "caseId": "RC10",
       "collisions": [
         {
-          "a": "P01-02",
-          "b": "P01-09",
+          "a": "P01-01",
+          "b": "P01-10",
           "exactAction": false,
           "sharedSemantic": true,
-          "semantic": "output|resource"
+          "semantic": "peer|resource"
         },
         {
           "a": "P01-02",
-          "b": "P01-10",
+          "b": "P01-09",
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "output|resource"
@@ -299,13 +299,6 @@
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "output|peer"
-        },
-        {
-          "a": "P01-09",
-          "b": "P01-10",
-          "exactAction": false,
-          "sharedSemantic": true,
-          "semantic": "output|resource"
         }
       ]
     },
@@ -320,11 +313,46 @@
           "semantic": "officer|resource"
         },
         {
+          "a": "P01-01",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
           "a": "P01-02",
           "b": "P01-05",
           "exactAction": false,
           "sharedSemantic": true,
           "semantic": "officer|wealth"
+        },
+        {
+          "a": "P01-08",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
+          "a": "P01-08",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
         }
       ]
     },
@@ -430,13 +458,13 @@
   "testType": "12 birth date/time derived anonymized synthetic people; Swiss Ephemeris solar terms injected into POSTPOST engine",
   "accuracyDisclaimer": "Dates are fabricated for testing. Behavior is classical-symbolic hypothesis, not verified personal attributes. Replacement Swiss terms, not original JPL provider.",
   "total": 120,
-  "selected": 119,
-  "structured": 96,
-  "ready": 96,
-  "empty": 1,
-  "legacy": 23,
-  "uniqueBehavioralActions": 77,
-  "uniqueTriggers": 49,
+  "selected": 120,
+  "structured": 98,
+  "ready": 98,
+  "empty": 0,
+  "legacy": 22,
+  "uniqueBehavioralActions": 78,
+  "uniqueTriggers": 53,
   "duplicateTriggers": [
     [
       "혼자서 만들거나 마무리할 일을 선택할 때",
@@ -447,7 +475,7 @@
       6
     ],
     [
-      "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+      "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
       5
     ],
     [
@@ -459,15 +487,7 @@
       4
     ],
     [
-      "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-      3
-    ],
-    [
       "설명이 서로 다른 두 방안을 검토할 때 책임과 조건도 함께 고려하는 상황",
-      3
-    ],
-    [
-      "여러 결과를 한꺼번에 마무리하려고 할 때",
       3
     ],
     [
@@ -479,11 +499,11 @@
       3
     ],
     [
-      "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때",
       3
     ],
     [
-      "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때",
+      "새로 익힌 내용을 직접 결과물로 만들어 볼 때",
       3
     ],
     [
@@ -495,7 +515,19 @@
       2
     ],
     [
+      "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
+      2
+    ],
+    [
       "공동 작업에서 개인 부담과 함께할 몫이 섞여 있을 때",
+      2
+    ],
+    [
+      "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+      2
+    ],
+    [
+      "여러 결과를 한꺼번에 마무리하려고 할 때",
       2
     ],
     [
@@ -511,6 +543,10 @@
       2
     ],
     [
+      "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
+      2
+    ],
+    [
       "낯선 규칙을 처음 적용해야 할 때",
       2
     ],
@@ -519,19 +555,11 @@
       2
     ],
     [
-      "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
-      2
-    ],
-    [
       "여러 사람 앞에서 의견이나 결과를 설명할 때와 신뢰하는 사람에게 의견의 이유를 설명할 때를 비교하는 상황",
       2
     ],
     [
       "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
-      2
-    ],
-    [
-      "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때",
       2
     ]
   ],
@@ -553,8 +581,8 @@
       3
     ],
     [
-      "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (정재와 식신의 계산된 상징을 적용한 가설)",
-      2
+      "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 익숙하지 않은 방식의 가능성을 고려할 여유가 줄어들 수 있다는 부담 가설",
+      3
     ],
     [
       "각자 부담할 비용과 함께 처리할 역할을 구분해 합의하는 모습이라는 조건부 가설",
@@ -649,16 +677,16 @@
     {
       "id": "P01-09",
       "title": "내 성격의 가장 큰 장점",
-      "structured": 11,
-      "ready": 11,
-      "actions": 10
+      "structured": 12,
+      "ready": 12,
+      "actions": 12
     },
     {
       "id": "P01-10",
       "title": "나를 힘들게 하는 성격",
-      "structured": 11,
-      "ready": 11,
-      "actions": 11
+      "structured": 12,
+      "ready": 12,
+      "actions": 10
     }
   ],
   "charts": [
@@ -689,6 +717,14 @@
             "verification",
             "finishing-work"
           ]
+        },
+        {
+          "priorId": "V56-B2-P01-02-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-10-monthBranch-yearStem",
+          "overlappingMotifs": [
+            "opportunity-choice",
+            "finishing-work"
+          ]
         }
       ],
       "sections": [
@@ -715,6 +751,11 @@
           "basis": "우선 기준: 합의된 절차와 명확한 책임 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월간 정관, 시간 겁재)",
           "counter": "역할이 이미 정해져 있다면 따로 분담을 논의하지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|peer",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -742,6 +783,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 정재, 일지 식신)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -769,6 +815,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 일지 식신, 시지 비견)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -795,6 +846,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 일지 식신, 월간 정관)",
           "counter": "격식이 필요 없는 자리에서는 설명의 순서를 달리할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|output",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -821,6 +877,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -847,6 +908,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -874,6 +940,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월지 정재, 시지 비견)",
           "counter": "공동 예산이 이미 확정됐다면 자신의 업무 범위를 실행하는 데 집중할 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할과 비용 부담을 정하는 것",
+          "observableOutput": "합의된 역할과 비용 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -900,6 +971,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 시간 겁재, 일지 식신)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -909,41 +985,44 @@
           "caseId": "RC01",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-09-yearStem-monthStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때의 조건부 해석. 우선 확인할 기준: 예측 가능한 비용과 관리 범위. 함께 검토할 기준: 하나씩 끝까지 만드는 과정.",
+          "claim": "공동의 절차 안에서 결과물을 완성해야 할 때의 조건부 해석. 우선 확인할 기준: 하나씩 끝까지 만드는 과정. 함께 검토할 기준: 합의된 절차와 명확한 책임.",
           "sourceIds": [
-            "PILLAR:month:branch:申",
-            "PILLAR:day:branch:未"
+            "PILLAR:year:stem:己",
+            "PILLAR:month:stem:壬"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:STRUCTURE:PRIMARY"
+            "NATAL:TEN_GODS"
           ],
-          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (정재와 식신의 계산된 상징을 적용한 가설)",
-          "scenarioRuleId": "P01-09:output|wealth:정재|식신",
-          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 정재, 일지 식신)",
-          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
-          "semantic": "output|wealth",
+          "trigger": "공동의 절차 안에서 결과물을 완성해야 할 때",
+          "action": "작업을 단계적으로 완성하는 일과 합의된 기준과 절차를 확인하는 일을 함께 살펴 기준에 맞는 결과물로 마무리하려는 모습",
+          "scenarioRuleId": "P01-09:officer|output:식신|정관",
+          "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 연간 식신, 월간 정관)",
+          "counter": "절차 자체가 불분명하면 작업을 시작하기 전에 기준을 확인할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
+          "semantic": "officer|output",
+          "actionGoal": "정해진 기준 안에서 작업을 끝맺는 것",
+          "observableOutput": "기준에 맞춰 마무리한 작업 결과물",
+          "goalKey": "COMPLETE_OUTPUT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
+            "LOW_CONFIDENCE"
           ]
         },
         {
           "caseId": "RC01",
           "id": "P01-10",
           "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+          "candidateId": "V56-B2-P01-10-monthBranch-yearStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 예측 가능한 비용과 관리 범위와 다른 사람과 나눌 몫과 주도권 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 예측 가능한 비용과 관리 범위와 하나씩 끝까지 만드는 과정 사이에 조정이 필요한 상황을 살펴봅니다.",
           "sourceIds": [
             "PILLAR:month:branch:申",
-            "PILLAR:hour:stem:丙"
+            "PILLAR:year:stem:己"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
@@ -951,13 +1030,19 @@
             "NATAL:STRUCTURE:PRIMARY"
           ],
           "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-          "action": "예측 가능한 비용과 관리 범위를 모든 상황에 적용하려 하면 다른 사람과 나눌 몫과 주도권을 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "action": "예측 가능한 비용과 관리 범위를 모든 상황에 적용하려 하면 하나씩 끝까지 만드는 과정을 고려할 여유가 줄어들 수 있다는 부담 가설",
           "scenarioRuleId": "",
-          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 정재, 시간 겁재)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "peer|wealth",
+          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 정재, 연간 식신)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
+          "semantic": "output|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-yearStem-monthStem",
           "flags": [
-            "LOW_CONFIDENCE"
+            "LOW_CONFIDENCE",
+            "SEMANTIC_OVERLAP"
           ]
         }
       ]
@@ -1004,6 +1089,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 비견, 시지 정관)",
           "counter": "재량이 거의 없는 업무라면 정해진 순서에 따라 시작할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|peer",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1031,6 +1121,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 식신, 일지 정재)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1057,6 +1152,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1085,6 +1185,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월지 식신, 시지 정관)",
           "counter": "격식이 필요 없는 자리에서는 설명의 순서를 달리할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|output",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1112,6 +1217,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연지 정인, 일지 정재)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1138,6 +1248,11 @@
           "basis": "우선 기준: 합의된 절차와 명확한 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 시지 정관, 연지 정인)",
           "counter": "변경된 설명이 핵심 규칙을 바꾸지 않는다면 기존 절차를 이어갈 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1164,6 +1279,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월간 비견, 일지 정재)",
           "counter": "개인 비용이 없는 공동 작업에서는 역할만 나누면 될 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할과 비용 부담을 정하는 것",
+          "observableOutput": "합의된 역할과 비용 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1190,6 +1310,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월간 비견, 연지 정인)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1198,38 +1323,10 @@
           "caseId": "RC02",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때의 조건부 해석. 우선 확인할 기준: 하나씩 끝까지 만드는 과정. 함께 검토할 기준: 예측 가능한 비용과 관리 범위.",
-          "sourceIds": [
-            "PILLAR:month:branch:卯",
-            "PILLAR:day:branch:巳"
-          ],
-          "evidenceIds": [
-            "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:STRUCTURE:PRIMARY"
-          ],
-          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (식신과 정재의 계산된 상징을 적용한 가설)",
-          "scenarioRuleId": "P01-09:output|wealth:식신|정재",
-          "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 식신, 일지 정재)",
-          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "output|wealth",
-          "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
-          ]
-        },
-        {
-          "caseId": "RC02",
-          "id": "P01-10",
-          "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-monthBranch-yearStem",
-          "type": "structured",
-          "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 하나씩 끝까지 만드는 과정과 다른 사람과 나눌 몫과 주도권 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때의 조건부 해석. 우선 확인할 기준: 하나씩 끝까지 만드는 과정. 함께 검토할 기준: 다른 사람과 나눌 몫과 주도권.",
           "sourceIds": [
             "PILLAR:month:branch:卯",
             "PILLAR:year:stem:壬"
@@ -1239,12 +1336,48 @@
             "NATAL:TEN_GODS",
             "NATAL:STRUCTURE:PRIMARY"
           ],
-          "trigger": "여러 결과를 한꺼번에 마무리하려고 할 때",
-          "action": "하나씩 끝까지 만드는 과정을 모든 상황에 적용하려 하면 다른 사람과 나눌 몫과 주도권을 고려할 여유가 줄어들 수 있다는 부담 가설",
-          "scenarioRuleId": "",
+          "trigger": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+          "action": "작업을 단계적으로 완성하는 일과 공동의 성과와 배분 책임을 조정하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+          "scenarioRuleId": "P01-09:output|peer:식신|겁재",
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 식신, 연간 겁재)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
+          "counter": "맡은 몫의 경계가 정해지지 않았다면 결과물보다 분담을 먼저 정해야 할 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "함께 하는 일 안에서 자기 몫을 끝맺는 것",
+          "observableOutput": "공동 작업 속에서 끝낸 자기 몫의 결과물",
+          "goalKey": "COMPLETE_OUTPUT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
+          "flags": [
+            "LOW_CONFIDENCE"
+          ]
+        },
+        {
+          "caseId": "RC02",
+          "id": "P01-10",
+          "title": "나를 힘들게 하는 성격",
+          "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 다른 사람과 나눌 몫과 주도권과 예측 가능한 비용과 관리 범위 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:year:stem:壬",
+            "PILLAR:day:branch:巳"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS"
+          ],
+          "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+          "action": "다른 사람과 나눌 몫과 주도권을 모든 상황에 적용하려 하면 예측 가능한 비용과 관리 범위를 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "scenarioRuleId": "",
+          "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연간 겁재, 일지 정재)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
+          "semantic": "peer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthBranch-yearStem",
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1272,7 +1405,7 @@
       "semanticReviewWarnings": [
         {
           "priorId": "V56-B2-P01-02-monthStem-dayBranch",
-          "candidateId": "V56-B2-P01-10-monthStem-hourStem",
+          "candidateId": "V56-B2-P01-10-yearBranch-monthStem",
           "overlappingMotifs": [
             "opportunity-choice",
             "rules"
@@ -1304,6 +1437,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 비견, 시지 정인)",
           "counter": "직접 시도할 여건이 없다면 배운 내용을 정리하는 데 그칠 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1330,6 +1468,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 편재, 일지 상관)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1357,6 +1500,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 상관, 시지 정인)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1383,6 +1531,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1409,6 +1562,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월간 편재, 시지 정인)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1435,6 +1593,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1462,6 +1625,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 월지 비견, 연간 편재)",
           "counter": "각자의 결정 권한이 이미 확실하면 기회 자체를 검토하는 데 집중할 수 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할을 정하는 것",
+          "observableOutput": "합의된 역할 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1489,6 +1657,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월지 비견, 시간 상관)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1497,51 +1670,61 @@
           "caseId": "RC03",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+          "candidateId": "V56-B2-P01-09-monthBranch-yearBranch",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때의 조건부 해석. 우선 확인할 기준: 열려 있는 선택지와 기회비용. 함께 검토할 기준: 기존 절차에서 바꿀 만한 부분.",
+          "claim": "자기 몫의 일을 직접 마무리할 수 있을 때의 조건부 해석. 우선 확인할 기준: 내가 맡을 몫과 결정권. 함께 검토할 기준: 기존 절차에서 바꿀 만한 부분.",
           "sourceIds": [
-            "PILLAR:month:stem:乙",
-            "PILLAR:day:branch:亥"
+            "PILLAR:month:branch:酉",
+            "PILLAR:year:branch:亥"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
-            "NATAL:TEN_GODS"
+            "NATAL:TEN_GODS",
+            "NATAL:STRUCTURE:PRIMARY"
           ],
-          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (편재와 상관의 계산된 상징을 적용한 가설)",
-          "scenarioRuleId": "P01-09:output|wealth:편재|상관",
-          "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 편재, 일지 상관)",
-          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
-          "semantic": "output|wealth",
+          "trigger": "자기 몫의 일을 직접 마무리할 수 있을 때",
+          "action": "스스로 결정하고 맡을 몫을 구분하는 일과 기존 과정에서 바꿀 만한 부분을 찾아 제안하는 일을 함께 살펴 맡은 몫을 결과물로 끝맺으려는 모습",
+          "scenarioRuleId": "P01-09:output|peer:비견|상관",
+          "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월지 비견, 연지 상관)",
+          "counter": "공동의 결정이 필요한 작업이라면 자기 방식만으로 끝낼 수는 없음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
+          "semantic": "output|peer",
+          "actionGoal": "자기 몫의 일을 직접 끝맺는 것",
+          "observableOutput": "직접 끝낸 자기 몫의 결과물",
+          "goalKey": "COMPLETE_OUTPUT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
+            "LOW_CONFIDENCE"
           ]
         },
         {
           "caseId": "RC03",
           "id": "P01-10",
           "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-monthStem-hourStem",
+          "candidateId": "V56-B2-P01-10-yearBranch-monthStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 열려 있는 선택지와 기회비용과 기존 절차에서 바꿀 만한 부분 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 기존 절차에서 바꿀 만한 부분과 열려 있는 선택지와 기회비용 사이에 조정이 필요한 상황을 살펴봅니다.",
           "sourceIds": [
-            "PILLAR:month:stem:乙",
-            "PILLAR:hour:stem:壬"
+            "PILLAR:year:branch:亥",
+            "PILLAR:month:stem:乙"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
-          "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-          "action": "열려 있는 선택지와 기회비용을 모든 상황에 적용하려 하면 기존 절차에서 바꿀 만한 부분을 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "trigger": "여러 결과를 한꺼번에 마무리하려고 할 때",
+          "action": "기존 절차에서 바꿀 만한 부분을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
           "scenarioRuleId": "",
-          "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 편재, 시간 상관)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
+          "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 연지 상관, 월간 편재)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthBranch-yearBranch",
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -1569,12 +1752,12 @@
       "absent": [],
       "semanticReviewWarnings": [
         {
-          "priorId": "V56-B2-P01-01-monthStem-dayBranch",
-          "candidateId": "V56-B2-P01-10-yearStem-monthStem",
+          "priorId": "V56-B2-P01-02-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-10-monthBranch-yearStem",
           "overlappingMotifs": [
             "role-boundary",
-            "execution",
-            "pressure"
+            "self-direction",
+            "opportunity-choice"
           ]
         }
       ],
@@ -1601,6 +1784,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월간 편관, 일지 비견)",
           "counter": "기한이 넉넉하고 권한이 분명하면 시작 순서를 직접 정할 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|peer",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1628,6 +1816,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월지 정재, 일지 비견)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1654,6 +1847,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1680,6 +1878,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1706,6 +1909,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 월간 편관, 시간 편재)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
           "semantic": "officer|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1732,6 +1940,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1758,6 +1971,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1784,6 +2002,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1792,37 +2015,10 @@
           "caseId": "RC04",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+          "candidateId": "V56-B2-P01-09-yearStem-monthStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "협력하면서 개인의 책임과 공동 규칙을 함께 정할 때의 조건부 해석. 우선 확인할 기준: 압박 속 우선 처리할 책임. 함께 검토할 기준: 내가 맡을 몫과 결정권.",
-          "sourceIds": [
-            "PILLAR:month:stem:甲",
-            "PILLAR:day:branch:戌"
-          ],
-          "evidenceIds": [
-            "NATAL:PILLARS",
-            "NATAL:TEN_GODS"
-          ],
-          "trigger": "협력하면서 개인의 책임과 공동 규칙을 함께 정할 때",
-          "action": "시급한 요청의 우선 책임을 정리한 다음 스스로 결정하고 맡을 몫을 구분하는 두 과정을 연결할 가능성을 살피는 모습",
-          "scenarioRuleId": "P01-09:officer|peer:편관|비견",
-          "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월간 편관, 일지 비견)",
-          "counter": "책임과 권한이 이미 합의됐다면 직접 조율할 필요가 줄어들 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
-          "semantic": "officer|peer",
-          "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
-          ]
-        },
-        {
-          "caseId": "RC04",
-          "id": "P01-10",
-          "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-yearStem-monthStem",
-          "type": "structured",
-          "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 내가 맡을 몫과 결정권과 압박 속 우선 처리할 책임 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "협력하면서 개인의 책임과 공동 규칙을 함께 정할 때의 조건부 해석. 우선 확인할 기준: 내가 맡을 몫과 결정권. 함께 검토할 기준: 압박 속 우선 처리할 책임.",
           "sourceIds": [
             "PILLAR:year:stem:戊",
             "PILLAR:month:stem:甲"
@@ -1831,12 +2027,49 @@
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
-          "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
-          "action": "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 압박 속 우선 처리할 책임을 고려할 여유가 줄어들 수 있다는 부담 가설",
-          "scenarioRuleId": "",
+          "trigger": "협력하면서 개인의 책임과 공동 규칙을 함께 정할 때",
+          "action": "스스로 결정하고 맡을 몫을 구분하는 일과 시급한 요청의 우선 책임을 정리하는 일을 함께 살펴 자기 몫과 공동 절차를 나눈 역할 범위를 정하려는 모습",
+          "scenarioRuleId": "P01-09:officer|peer:비견|편관",
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 연간 비견, 월간 편관)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
+          "counter": "책임과 권한이 이미 합의됐다면 직접 조율할 필요가 줄어들 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|peer",
+          "actionGoal": "자기 몫과 공동 절차의 경계를 정하는 것",
+          "observableOutput": "구분된 자기 역할 범위",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
+          "flags": [
+            "LOW_CONFIDENCE"
+          ]
+        },
+        {
+          "caseId": "RC04",
+          "id": "P01-10",
+          "title": "나를 힘들게 하는 성격",
+          "candidateId": "V56-B2-P01-10-monthBranch-yearStem",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 예측 가능한 비용과 관리 범위와 내가 맡을 몫과 결정권 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:month:branch:子",
+            "PILLAR:year:stem:戊"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS",
+            "NATAL:STRUCTURE:PRIMARY"
+          ],
+          "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
+          "action": "예측 가능한 비용과 관리 범위를 모든 상황에 적용하려 하면 내가 맡을 몫과 결정권을 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "scenarioRuleId": "",
+          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월지 정재, 연간 비견)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
+          "semantic": "peer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-yearStem-monthStem",
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -1895,6 +2128,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 겁재, 시지 편인)",
           "counter": "검증된 방법이 충분하다면 낯선 방법을 찾지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1922,6 +2160,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 겁재, 일지 정재)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1948,6 +2191,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 연간 식신, 시지 편인)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -1974,6 +2222,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연간 식신, 일지 정재)",
           "counter": "결정할 조건이 이미 분명하다면 의견을 짧게 전달할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2000,6 +2253,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 정재, 시지 편인)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -2027,6 +2285,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 정재, 시간 정인)",
           "counter": "바뀐 정보가 비용과 계약 조건에 영향을 주지 않으면 기존 선택을 유지할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2053,6 +2316,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연지 비견, 일지 정재)",
           "counter": "개인 비용이 없는 공동 작업에서는 역할만 나누면 될 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할과 비용 부담을 정하는 것",
+          "observableOutput": "합의된 역할과 비용 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2079,6 +2347,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월간 겁재, 연간 식신)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2087,28 +2360,31 @@
           "caseId": "RC05",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "자신이 맡을 범위를 정한 뒤 여러 선택지를 좁혀야 할 때의 조건부 해석. 우선 확인할 기준: 다른 사람과 나눌 몫과 주도권. 함께 검토할 기준: 예측 가능한 비용과 관리 범위.",
+          "claim": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때의 조건부 해석. 우선 확인할 기준: 다른 사람과 나눌 몫과 주도권. 함께 검토할 기준: 하나씩 끝까지 만드는 과정.",
           "sourceIds": [
             "PILLAR:month:branch:丑",
-            "PILLAR:day:branch:子"
+            "PILLAR:year:stem:庚"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:RELATIONS"
+            "NATAL:TEN_GODS"
           ],
-          "trigger": "자신이 맡을 범위를 정한 뒤 여러 선택지를 좁혀야 할 때",
-          "action": "공동의 성과와 배분 책임을 조정한 다음 정해진 예산과 관리 가능한 범위를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
-          "scenarioRuleId": "P01-09:peer|wealth:겁재|정재",
-          "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 겁재, 일지 정재)",
-          "counter": "선택 범위가 이미 정해져 있다면 가능한 대안만 검토할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "peer|wealth",
+          "trigger": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+          "action": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+          "scenarioRuleId": "P01-09:output|peer:겁재|식신",
+          "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 겁재, 연간 식신)",
+          "counter": "맡은 몫의 경계가 정해지지 않았다면 결과물보다 분담을 먼저 정해야 할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
+          "semantic": "output|peer",
+          "actionGoal": "함께 하는 일 안에서 자기 몫을 끝맺는 것",
+          "observableOutput": "공동 작업 속에서 끝낸 자기 몫의 결과물",
+          "goalKey": "COMPLETE_OUTPUT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
+            "LOW_CONFIDENCE"
           ]
         },
         {
@@ -2133,6 +2409,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 겁재, 시간 정인)",
           "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthBranch-yearStem",
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2199,6 +2480,11 @@
           "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 편인, 연지 겁재)",
           "counter": "검증된 방법이 충분하다면 낯선 방법을 찾지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2225,6 +2511,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월간 정인, 일지 정재)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2253,6 +2544,11 @@
           "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 편인, 시지 식신)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2279,6 +2575,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 시지 식신, 일지 정재)",
           "counter": "결정할 조건이 이미 분명하다면 의견을 짧게 전달할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -2307,6 +2608,11 @@
           "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 편인, 일지 정재)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -2334,6 +2640,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 연지 겁재, 월간 정인)",
           "counter": "새 정보가 처음 결정의 전제와 무관하면 맡은 일을 그대로 이어갈 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2361,6 +2672,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연지 겁재, 일지 정재)",
           "counter": "성과 배분과 지출 담당이 이미 정해졌다면 새로 협상할 필요가 없을 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할과 비용 부담을 정하는 것",
+          "observableOutput": "합의된 역할과 비용 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2387,6 +2703,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 연지 겁재, 시지 식신)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2395,37 +2716,10 @@
           "caseId": "RC06",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+          "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
           "claim": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때의 조건부 해석. 우선 확인할 기준: 예측 가능한 비용과 관리 범위. 함께 검토할 기준: 하나씩 끝까지 만드는 과정.",
-          "sourceIds": [
-            "PILLAR:day:branch:子",
-            "PILLAR:hour:branch:申"
-          ],
-          "evidenceIds": [
-            "NATAL:PILLARS",
-            "NATAL:TEN_GODS"
-          ],
-          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (정재와 식신의 계산된 상징을 적용한 가설)",
-          "scenarioRuleId": "P01-09:output|wealth:정재|식신",
-          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 일지 정재, 시지 식신)",
-          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
-          "semantic": "output|wealth",
-          "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
-          ]
-        },
-        {
-          "caseId": "RC06",
-          "id": "P01-10",
-          "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-dayBranch-hourStem",
-          "type": "structured",
-          "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 예측 가능한 비용과 관리 범위와 하나씩 끝까지 만드는 과정 사이에 조정이 필요한 상황을 살펴봅니다.",
           "sourceIds": [
             "PILLAR:day:branch:子",
             "PILLAR:hour:stem:庚"
@@ -2434,12 +2728,49 @@
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
-          "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
-          "action": "예측 가능한 비용과 관리 범위를 모든 상황에 적용하려 하면 하나씩 끝까지 만드는 과정을 고려할 여유가 줄어들 수 있다는 부담 가설",
-          "scenarioRuleId": "",
+          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교해 결과물의 활용 방법을 정하려는 모습",
+          "scenarioRuleId": "P01-09:output|wealth:정재|식신",
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 일지 정재, 시간 식신)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
+          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": "만든 결과물의 활용 방법을 고르는 것",
+          "observableOutput": "활용 방법을 정한 결과물",
+          "goalKey": "ALLOCATE_OUTPUT_USE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
+          "flags": [
+            "LOW_CONFIDENCE"
+          ]
+        },
+        {
+          "caseId": "RC06",
+          "id": "P01-10",
+          "title": "나를 힘들게 하는 성격",
+          "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 익숙하지 않은 방식의 가능성과 하나씩 끝까지 만드는 과정 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:month:branch:巳",
+            "PILLAR:hour:stem:庚"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS",
+            "NATAL:STRUCTURE:PRIMARY"
+          ],
+          "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
+          "action": "익숙하지 않은 방식의 가능성을 모든 상황에 적용하려 하면 하나씩 끝까지 만드는 과정을 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "scenarioRuleId": "",
+          "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월지 편인, 시간 식신)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
+          "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-dayBranch-hourStem",
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2476,7 +2807,7 @@
         },
         {
           "priorId": "V56-B2-P01-02-monthBranch-dayBranch",
-          "candidateId": "V56-B2-P01-10-monthStem-dayBranch",
+          "candidateId": "V56-B2-P01-10-monthStem-hourBranch",
           "overlappingMotifs": [
             "verification",
             "rules"
@@ -2507,6 +2838,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월지 정인, 연간 정관)",
           "counter": "절차가 이미 충분히 익숙하다면 별도 확인 없이 시작할 수도 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2534,6 +2870,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월지 정인, 일지 상관)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2560,6 +2901,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 상관, 시간 편인)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -2587,6 +2933,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 일지 상관, 연간 정관)",
           "counter": "격식이 필요 없는 자리에서는 설명의 순서를 달리할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|output",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2613,6 +2964,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 연지 정재, 시간 편인)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2640,6 +2996,11 @@
           "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 연지 정재, 일지 상관)",
           "counter": "차이가 작고 다시 시도할 수 있다면 당장 계획을 바꾸지 않을 수도 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2666,6 +3027,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2692,6 +3058,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2700,38 +3071,10 @@
           "caseId": "RC07",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+          "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때의 조건부 해석. 우선 확인할 기준: 예측 가능한 비용과 관리 범위. 함께 검토할 기준: 기존 절차에서 바꿀 만한 부분.",
-          "sourceIds": [
-            "PILLAR:year:branch:寅",
-            "PILLAR:day:branch:亥"
-          ],
-          "evidenceIds": [
-            "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:RELATIONS"
-          ],
-          "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
-          "action": "만드는 과정의 완성도와 결과가 활용될 가능성을 함께 비교하는 모습 (정재와 상관의 계산된 상징을 적용한 가설)",
-          "scenarioRuleId": "P01-09:output|wealth:정재|상관",
-          "basis": "우선 기준: 예측 가능한 비용과 관리 범위 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 연지 정재, 일지 상관)",
-          "counter": "활용처가 정해져 있다면 결과물을 만드는 일 자체에 집중할 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
-          "semantic": "output|wealth",
-          "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
-          ]
-        },
-        {
-          "caseId": "RC07",
-          "id": "P01-10",
-          "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-monthStem-dayBranch",
-          "type": "structured",
-          "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 이미 알고 있는 정보와 이해의 근거와 기존 절차에서 바꿀 만한 부분 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "새로 익힌 내용을 직접 결과물로 만들어 볼 때의 조건부 해석. 우선 확인할 기준: 이미 알고 있는 정보와 이해의 근거. 함께 검토할 기준: 기존 절차에서 바꿀 만한 부분.",
           "sourceIds": [
             "PILLAR:month:stem:戊",
             "PILLAR:day:branch:亥"
@@ -2740,12 +3083,48 @@
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
+          "trigger": "새로 익힌 내용을 직접 결과물로 만들어 볼 때",
+          "action": "익숙한 설명의 근거를 확인하는 일과 기존 과정에서 바꿀 만한 부분을 찾아 제안하는 일을 함께 살펴 익힌 내용을 실제 결과물로 옮겨 보려는 모습",
+          "scenarioRuleId": "P01-09:output|resource:정인|상관",
+          "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 정인, 일지 상관)",
+          "counter": "실습 기회나 필요한 자원이 부족하면 이해와 실행 사이에 간격이 생길 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
+          "semantic": "output|resource",
+          "actionGoal": "익힌 내용을 실제 결과물로 옮기는 것",
+          "observableOutput": "실제 수행 순서와 그 결과",
+          "goalKey": "PRODUCE_FROM_KNOWLEDGE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
+          "flags": [
+            "LOW_CONFIDENCE"
+          ]
+        },
+        {
+          "caseId": "RC07",
+          "id": "P01-10",
+          "title": "나를 힘들게 하는 성격",
+          "candidateId": "V56-B2-P01-10-monthStem-hourBranch",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 이미 알고 있는 정보와 이해의 근거와 기존 절차에서 바꿀 만한 부분 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:month:stem:戊",
+            "PILLAR:hour:branch:亥"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS"
+          ],
           "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
           "action": "이미 알고 있는 정보와 이해의 근거를 모든 상황에 적용하려 하면 기존 절차에서 바꿀 만한 부분을 고려할 여유가 줄어들 수 있다는 부담 가설",
           "scenarioRuleId": "",
-          "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 정인, 일지 상관)",
+          "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 기존 절차에서 바꿀 만한 부분 (출처: 월간 정인, 시지 상관)",
           "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 정해진 방식에 빈틈이 보일 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -2815,6 +3194,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 일지 정인, 시지 겁재)",
           "counter": "직접 시도할 여건이 없다면 배운 내용을 정리하는 데 그칠 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2843,6 +3227,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 상관, 일지 정인)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2871,6 +3260,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 상관, 시지 겁재)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2898,6 +3292,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월지 상관, 연간 편관)",
           "counter": "격식이 필요 없는 자리에서는 설명의 순서를 달리할 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|output",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2924,6 +3323,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 연간 편관, 일지 정인)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2950,6 +3354,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 시지 겁재, 월간 편인)",
           "counter": "새 정보가 처음 결정의 전제와 무관하면 맡은 일을 그대로 이어갈 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -2976,6 +3385,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 연간 편관, 시지 겁재)",
           "counter": "담당 범위가 이미 정해져 있다면 절차를 따르는 데 집중할 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|peer",
+          "actionGoal": "함께 하는 일의 역할을 정하는 것",
+          "observableOutput": "합의된 역할 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3002,6 +3416,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 연간 편관, 월간 편인)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -3011,25 +3430,31 @@
           "caseId": "RC08",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+          "candidateId": "V56-B2-P01-09-monthBranch-dayBranch",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때의 조건부 해석. 우선 확인할 기준: 이미 알고 있는 정보와 이해의 근거. 함께 검토할 기준: 다른 사람과 나눌 몫과 주도권.",
+          "claim": "새로 익힌 내용을 직접 결과물로 만들어 볼 때의 조건부 해석. 우선 확인할 기준: 기존 절차에서 바꿀 만한 부분. 함께 검토할 기준: 이미 알고 있는 정보와 이해의 근거.",
           "sourceIds": [
-            "PILLAR:day:branch:子",
-            "PILLAR:hour:branch:卯"
+            "PILLAR:month:branch:午",
+            "PILLAR:day:branch:子"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
             "NATAL:TEN_GODS",
+            "NATAL:STRUCTURE:PRIMARY",
             "NATAL:RELATIONS"
           ],
-          "trigger": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때",
-          "action": "익숙한 설명의 근거를 확인한 다음 공동의 성과와 배분 책임을 조정하는 두 과정을 연결할 가능성을 살피는 모습",
-          "scenarioRuleId": "P01-09:peer|resource:정인|겁재",
-          "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 일지 정인, 시지 겁재)",
-          "counter": "함께 판단해야 하는 일에서는 내 기준만으로 결론 내리지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "peer|resource",
+          "trigger": "새로 익힌 내용을 직접 결과물로 만들어 볼 때",
+          "action": "기존 과정에서 바꿀 만한 부분을 찾아 제안하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 익힌 내용을 실제 결과물로 옮겨 보려는 모습",
+          "scenarioRuleId": "P01-09:output|resource:상관|정인",
+          "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 상관, 일지 정인)",
+          "counter": "실습 기회나 필요한 자원이 부족하면 이해와 실행 사이에 간격이 생길 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+          "semantic": "output|resource",
+          "actionGoal": "익힌 내용을 실제 결과물로 옮기는 것",
+          "observableOutput": "실제 수행 순서와 그 결과",
+          "goalKey": "PRODUCE_FROM_KNOWLEDGE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "REUSED_SOURCE_PAIR"
@@ -3058,6 +3483,11 @@
           "basis": "우선 기준: 기존 절차에서 바꿀 만한 부분 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 연지 상관, 일지 정인)",
           "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -3108,6 +3538,11 @@
           "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 편인, 시간 겁재)",
           "counter": "검증된 방법이 충분하다면 낯선 방법을 찾지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3136,6 +3571,11 @@
           "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 편인, 시지 정재)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3162,6 +3602,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 연지 식신, 일지 편인)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3189,6 +3634,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 연지 식신, 시지 정재)",
           "counter": "결정할 조건이 이미 분명하다면 의견을 짧게 전달할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|wealth",
+          "actionGoal": "의견을 상대에게 전달하는 것",
+          "observableOutput": "구분해 전달한 설명",
+          "goalKey": "EXPLAIN_VIEW",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3215,6 +3665,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3241,6 +3696,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 비견, 일지 편인)",
           "counter": "새 정보가 처음 결정의 전제와 무관하면 맡은 일을 그대로 이어갈 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3267,6 +3727,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월간 비견, 시지 정재)",
           "counter": "담당자와 관리비가 이미 결정됐다면 분담 논의가 짧아질 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": "함께 하는 일의 역할과 비용 부담을 정하는 것",
+          "observableOutput": "합의된 역할과 비용 분담",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3293,6 +3758,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 월간 비견, 연지 식신)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3301,54 +3771,60 @@
           "caseId": "RC09",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+          "candidateId": "V56-B2-P01-09-yearStem-monthStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "설명이 서로 다른 제안을 비교해야 할 때의 조건부 해석. 우선 확인할 기준: 익숙하지 않은 방식의 가능성. 함께 검토할 기준: 예측 가능한 비용과 관리 범위.",
+          "claim": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때의 조건부 해석. 우선 확인할 기준: 익숙하지 않은 방식의 가능성. 함께 검토할 기준: 내가 맡을 몫과 결정권.",
           "sourceIds": [
-            "PILLAR:month:branch:寅",
-            "PILLAR:hour:branch:酉"
+            "PILLAR:year:stem:甲",
+            "PILLAR:month:stem:丙"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:STRUCTURE:PRIMARY",
-            "NATAL:RELATIONS"
+            "NATAL:TEN_GODS"
           ],
-          "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
-          "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 정해진 예산과 관리 가능한 범위를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
-          "scenarioRuleId": "P01-09:resource|wealth:편인|정재",
-          "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 월지 편인, 시지 정재)",
-          "counter": "검증할 정보가 부족하면 당장 결론을 내리지 않을 수도 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "resource|wealth",
+          "trigger": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때",
+          "action": "기존 설명과 다른 접근의 가능성을 검토하는 일과 스스로 결정하고 맡을 몫을 구분하는 일을 함께 살펴 스스로 결정할 범위를 정하려는 모습",
+          "scenarioRuleId": "P01-09:peer|resource:편인|비견",
+          "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 연간 편인, 월간 비견)",
+          "counter": "함께 판단해야 하는 일에서는 내 기준만으로 결론 내리지 않을 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
+          "semantic": "peer|resource",
+          "actionGoal": "확인한 정보로 스스로 결정할 범위를 정하는 것",
+          "observableOutput": "스스로 결정할 범위",
+          "goalKey": "SET_DECISION_SCOPE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
+            "LOW_CONFIDENCE"
           ]
         },
         {
           "caseId": "RC09",
           "id": "P01-10",
           "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-dayBranch-hourBranch",
+          "candidateId": "V56-B2-P01-10-monthStem-dayBranch",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 익숙하지 않은 방식의 가능성과 예측 가능한 비용과 관리 범위 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 내가 맡을 몫과 결정권과 익숙하지 않은 방식의 가능성 사이에 조정이 필요한 상황을 살펴봅니다.",
           "sourceIds": [
-            "PILLAR:day:branch:寅",
-            "PILLAR:hour:branch:酉"
+            "PILLAR:month:stem:丙",
+            "PILLAR:day:branch:寅"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:RELATIONS"
+            "NATAL:TEN_GODS"
           ],
-          "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
-          "action": "익숙하지 않은 방식의 가능성을 모든 상황에 적용하려 하면 예측 가능한 비용과 관리 범위를 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+          "action": "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 익숙하지 않은 방식의 가능성을 고려할 여유가 줄어들 수 있다는 부담 가설",
           "scenarioRuleId": "",
-          "basis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 예측 가능한 비용과 관리 범위 (출처: 일지 편인, 시지 정재)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 유지 비용을 감당해야 할 때에는 다른 반응도 함께 검토",
-          "semantic": "resource|wealth",
+          "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 비견, 일지 편인)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+          "semantic": "peer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-yearStem-monthStem",
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3407,6 +3883,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 비견, 일지 편인)",
           "counter": "검증된 방법이 충분하다면 낯선 방법을 찾지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3434,6 +3915,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 식신, 일지 편인)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3461,6 +3947,11 @@
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 다른 사람과 나눌 몫과 주도권 (출처: 월지 식신, 시지 겁재)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 공로·역할을 함께 조정해야 할 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3487,6 +3978,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3513,6 +4009,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3540,6 +4041,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3566,6 +4072,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3593,6 +4104,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 하나씩 끝까지 만드는 과정 (출처: 연간 비견, 월지 식신)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 꾸준히 쌓아야 할 결과가 있을 때에는 다른 반응도 함께 검토",
           "semantic": "output|peer",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -3602,38 +4118,10 @@
           "caseId": "RC10",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+          "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
           "claim": "새로 익힌 내용을 직접 결과물로 만들어 볼 때의 조건부 해석. 우선 확인할 기준: 하나씩 끝까지 만드는 과정. 함께 검토할 기준: 익숙하지 않은 방식의 가능성.",
-          "sourceIds": [
-            "PILLAR:month:branch:未",
-            "PILLAR:day:branch:卯"
-          ],
-          "evidenceIds": [
-            "NATAL:PILLARS",
-            "NATAL:TEN_GODS",
-            "NATAL:STRUCTURE:PRIMARY"
-          ],
-          "trigger": "새로 익힌 내용을 직접 결과물로 만들어 볼 때",
-          "action": "작업을 단계적으로 완성한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
-          "scenarioRuleId": "P01-09:output|resource:식신|편인",
-          "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 식신, 일지 편인)",
-          "counter": "실습 기회나 필요한 자원이 부족하면 이해와 실행 사이에 간격이 생길 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
-          "semantic": "output|resource",
-          "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
-          ]
-        },
-        {
-          "caseId": "RC10",
-          "id": "P01-10",
-          "title": "나를 힘들게 하는 성격",
-          "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
-          "type": "structured",
-          "status": "READY_FOR_REVIEW",
-          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 하나씩 끝까지 만드는 과정과 익숙하지 않은 방식의 가능성 사이에 조정이 필요한 상황을 살펴봅니다.",
           "sourceIds": [
             "PILLAR:month:branch:未",
             "PILLAR:hour:stem:乙"
@@ -3643,12 +4131,48 @@
             "NATAL:TEN_GODS",
             "NATAL:STRUCTURE:PRIMARY"
           ],
-          "trigger": "여러 결과를 한꺼번에 마무리하려고 할 때",
-          "action": "하나씩 끝까지 만드는 과정을 모든 상황에 적용하려 하면 익숙하지 않은 방식의 가능성을 고려할 여유가 줄어들 수 있다는 부담 가설",
-          "scenarioRuleId": "",
+          "trigger": "새로 익힌 내용을 직접 결과물로 만들어 볼 때",
+          "action": "작업을 단계적으로 완성하는 일과 기존 설명과 다른 접근의 가능성을 검토하는 일을 함께 살펴 익힌 내용을 실제 결과물로 옮겨 보려는 모습",
+          "scenarioRuleId": "P01-09:output|resource:식신|편인",
           "basis": "우선 기준: 하나씩 끝까지 만드는 과정 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 식신, 시간 편인)",
-          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+          "counter": "실습 기회나 필요한 자원이 부족하면 이해와 실행 사이에 간격이 생길 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "output|resource",
+          "actionGoal": "익힌 내용을 실제 결과물로 옮기는 것",
+          "observableOutput": "실제 수행 순서와 그 결과",
+          "goalKey": "PRODUCE_FROM_KNOWLEDGE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
+          "flags": [
+            "LOW_CONFIDENCE"
+          ]
+        },
+        {
+          "caseId": "RC10",
+          "id": "P01-10",
+          "title": "나를 힘들게 하는 성격",
+          "candidateId": "V56-B2-P01-10-monthStem-hourStem",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 내가 맡을 몫과 결정권과 익숙하지 않은 방식의 가능성 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:month:stem:丁",
+            "PILLAR:hour:stem:乙"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS"
+          ],
+          "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+          "action": "내가 맡을 몫과 결정권을 모든 상황에 적용하려 하면 익숙하지 않은 방식의 가능성을 고려할 여유가 줄어들 수 있다는 부담 가설",
+          "scenarioRuleId": "",
+          "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 비견, 시간 편인)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+          "semantic": "peer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthBranch-hourStem",
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3669,12 +4193,10 @@
       "dayMaster": "壬",
       "structure": "편관격",
       "strength": "신약",
-      "selected": 9,
-      "structured": 5,
-      "ready": 5,
-      "absent": [
-        "P01-10"
-      ],
+      "selected": 10,
+      "structured": 7,
+      "ready": 7,
+      "absent": [],
       "semanticReviewWarnings": [
         {
           "priorId": "V56-B2-P01-02-monthStem-dayBranch",
@@ -3683,6 +4205,16 @@
             "role-boundary",
             "opportunity-choice",
             "rules"
+          ]
+        },
+        {
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+          "overlappingMotifs": [
+            "role-boundary",
+            "verification",
+            "execution",
+            "pressure"
           ]
         }
       ],
@@ -3710,6 +4242,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
           "counter": "절차가 이미 충분히 익숙하다면 별도 확인 없이 시작할 수도 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3736,6 +4273,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
           "semantic": "officer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3762,6 +4304,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3788,6 +4335,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3814,6 +4366,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
           "semantic": "officer|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -3841,6 +4398,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
           "counter": "바뀐 정보가 비용과 계약 조건에 영향을 주지 않으면 기존 선택을 유지할 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3867,6 +4429,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3893,6 +4460,11 @@
           "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "officer|resource",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -3901,46 +4473,65 @@
           "caseId": "RC11",
           "id": "P01-09",
           "title": "내 성격의 가장 큰 장점",
-          "candidateId": "V56-X-P01-09-2",
-          "type": "legacy",
-          "status": "DO_NOT_GENERATE",
-          "claim": "월간 편재의 '다양한 기회와 자원 배치'와 일지 편관의 '긴장 속의 책임과 대응'를 비교하며 다른 성질 두 가지가 서로 도울 때 생기는 강점 살펴본다. 핵심은 서로 다른 두 십성 계열이 연결되는 점이다.",
+          "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때의 조건부 해석. 우선 확인할 기준: 압박 속 우선 처리할 책임. 함께 검토할 기준: 이미 알고 있는 정보와 이해의 근거.",
           "sourceIds": [
-            "PILLAR:month:stem:丙",
-            "PILLAR:day:branch:戌"
+            "PILLAR:day:branch:戌",
+            "PILLAR:hour:stem:辛"
           ],
           "evidenceIds": [
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
-          "trigger": "",
-          "action": "",
-          "scenarioRuleId": "",
-          "basis": "",
-          "counter": "",
-          "semantic": "",
+          "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+          "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+          "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+          "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 편관, 시간 정인)",
+          "counter": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+          "semantic": "officer|resource",
+          "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+          "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+          "goalKey": "APPLY_PROCEDURE_SCOPE",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
-            "LOW_CONFIDENCE",
-            "REUSED_SOURCE_PAIR"
+            "LOW_CONFIDENCE"
           ]
         },
         {
           "caseId": "RC11",
           "id": "P01-10",
           "title": "나를 힘들게 하는 성격",
-          "candidateId": "",
-          "type": "empty",
-          "status": "DO_NOT_GENERATE",
-          "claim": "",
-          "sourceIds": [],
-          "evidenceIds": [],
-          "trigger": "",
-          "action": "",
+          "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+          "type": "structured",
+          "status": "READY_FOR_REVIEW",
+          "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 압박 속 우선 처리할 책임과 이미 알고 있는 정보와 이해의 근거 사이에 조정이 필요한 상황을 살펴봅니다.",
+          "sourceIds": [
+            "PILLAR:month:branch:戌",
+            "PILLAR:hour:stem:辛"
+          ],
+          "evidenceIds": [
+            "NATAL:PILLARS",
+            "NATAL:TEN_GODS",
+            "NATAL:STRUCTURE:PRIMARY"
+          ],
+          "trigger": "정해진 절차를 모두 지키려다 일정과 조율해야 할 때",
+          "action": "압박 속 우선 처리할 책임을 모든 상황에 적용하려 하면 이미 알고 있는 정보와 이해의 근거를 고려할 여유가 줄어들 수 있다는 부담 가설",
           "scenarioRuleId": "",
-          "basis": "",
-          "counter": "",
-          "semantic": "",
-          "flags": []
+          "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+          "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+          "semantic": "officer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-dayBranch-hourStem",
+          "flags": [
+            "LOW_CONFIDENCE",
+            "SEMANTIC_OVERLAP"
+          ]
         }
       ]
     },
@@ -3997,6 +4588,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 내가 맡을 몫과 결정권 (출처: 월지 정인, 일지 비견)",
           "counter": "직접 시도할 여건이 없다면 배운 내용을 정리하는 데 그칠 수 있음. 혼자 책임질 범위가 분명해질 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+          "observableOutput": "정해진 시작 단계",
+          "goalKey": "START_ORDER",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4024,6 +4620,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 월간 겁재, 시간 편재)",
           "counter": "처음부터 친밀한 분위기이거나 역할 구분이 없는 관계에서는 같은 태도가 나타날 수 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
           "semantic": "peer|wealth",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4050,6 +4651,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 비견, 시지 편인)",
           "counter": "충분히 쉬어야 하는 날에는 아무것도 정리하지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4076,6 +4682,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4103,6 +4714,11 @@
           "basis": "우선 기준: 이미 알고 있는 정보와 이해의 근거 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 월지 정인, 시간 편재)",
           "counter": "손실이 작고 되돌릴 수 있는 선택이라면 간단히 결정할 수도 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+          "observableOutput": "선택 전에 우선 확인할 조건",
+          "goalKey": "CHOOSE_OPTION",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4129,6 +4745,11 @@
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 겁재, 시지 편인)",
           "counter": "새 정보가 처음 결정의 전제와 무관하면 맡은 일을 그대로 이어갈 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+          "observableOutput": "유지할 부분과 바꿀 부분의 구분",
+          "goalKey": "REVISE_COMMITMENT",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4155,6 +4776,11 @@
           "basis": "",
           "counter": "",
           "semantic": "",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE"
           ]
@@ -4181,6 +4807,11 @@
           "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 연간 편재, 시지 편인)",
           "counter": "손실이나 마감이 급하면 확인보다 임시 대응이 앞설 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "resource|wealth",
+          "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+          "observableOutput": "문제 대응의 우선순위",
+          "goalKey": "RESPOND_TO_PROBLEM",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "SEMANTIC_OVERLAP"
@@ -4193,7 +4824,7 @@
           "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
           "type": "structured",
           "status": "READY_FOR_REVIEW",
-          "claim": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때의 조건부 해석. 우선 확인할 기준: 다른 사람과 나눌 몫과 주도권. 함께 검토할 기준: 익숙하지 않은 방식의 가능성.",
+          "claim": "함께 판단할 사람들과 필요한 정보를 나눌 수 있을 때의 조건부 해석. 우선 확인할 기준: 다른 사람과 나눌 몫과 주도권. 함께 검토할 기준: 익숙하지 않은 방식의 가능성.",
           "sourceIds": [
             "PILLAR:month:stem:庚",
             "PILLAR:hour:branch:未"
@@ -4202,12 +4833,17 @@
             "NATAL:PILLARS",
             "NATAL:TEN_GODS"
           ],
-          "trigger": "자기 판단에 필요한 정보를 충분히 확인할 수 있을 때",
-          "action": "공동의 성과와 배분 책임을 조정한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+          "trigger": "함께 판단할 사람들과 필요한 정보를 나눌 수 있을 때",
+          "action": "공동의 성과와 배분 책임을 조정하는 일과 기존 설명과 다른 접근의 가능성을 검토하는 일을 함께 살펴 함께 정할 부분과 스스로 정할 부분을 나누려는 모습",
           "scenarioRuleId": "P01-09:peer|resource:겁재|편인",
           "basis": "우선 기준: 다른 사람과 나눌 몫과 주도권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 겁재, 시지 편인)",
-          "counter": "함께 판단해야 하는 일에서는 내 기준만으로 결론 내리지 않을 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+          "counter": "혼자 결정해도 되는 일이라면 정보를 나누는 과정을 줄일 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": "함께 정할 부분과 스스로 정할 부분을 나누는 것",
+          "observableOutput": "함께 정할 부분과 스스로 정할 부분의 구분",
+          "goalKey": "ALLOCATE_RESPONSIBILITY",
+          "goalOutputSource": "SCENE_RULE",
+          "linkedStrengthCandidateId": null,
           "flags": [
             "LOW_CONFIDENCE",
             "REUSED_SOURCE_PAIR"
@@ -4235,6 +4871,11 @@
           "basis": "우선 기준: 내가 맡을 몫과 결정권 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 비견, 시지 편인)",
           "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
           "semantic": "peer|resource",
+          "actionGoal": null,
+          "observableOutput": null,
+          "goalKey": null,
+          "goalOutputSource": null,
+          "linkedStrengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
           "flags": [
             "LOW_CONFIDENCE"
           ]

@@ -2,12 +2,12 @@
   "version": "V20 root-cause audit",
   "testMode": "offline 12 fictional birth dates using Swiss solar-term substitute",
   "total": 120,
-  "selected": 119,
-  "writingReady": 96,
-  "unapproved": 24,
+  "selected": 120,
+  "writingReady": 98,
+  "unapproved": 22,
   "unapprovedReasons": {
-    "NO_SELECTED_CANDIDATE": 1,
-    "NO_STRUCTURED_BEHAVIOR": 23,
+    "NO_SELECTED_CANDIDATE": 0,
+    "NO_STRUCTURED_BEHAVIOR": 22,
     "STRUCTURED_BUT_NOT_WRITING_READY": 0
   },
   "rc11": [
@@ -15,46 +15,65 @@
       "caseId": "RC11",
       "id": "P01-09",
       "title": "내 성격의 가장 큰 장점",
-      "candidateId": "V56-X-P01-09-2",
-      "type": "legacy",
-      "status": "DO_NOT_GENERATE",
-      "claim": "월간 편재의 '다양한 기회와 자원 배치'와 일지 편관의 '긴장 속의 책임과 대응'를 비교하며 다른 성질 두 가지가 서로 도울 때 생기는 강점 살펴본다. 핵심은 서로 다른 두 십성 계열이 연결되는 점이다.",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "type": "structured",
+      "status": "READY_FOR_REVIEW",
+      "claim": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때의 조건부 해석. 우선 확인할 기준: 압박 속 우선 처리할 책임. 함께 검토할 기준: 이미 알고 있는 정보와 이해의 근거.",
       "sourceIds": [
-        "PILLAR:month:stem:丙",
-        "PILLAR:day:branch:戌"
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
       ],
       "evidenceIds": [
         "NATAL:PILLARS",
         "NATAL:TEN_GODS"
       ],
-      "trigger": "",
-      "action": "",
-      "scenarioRuleId": "",
-      "basis": "",
-      "counter": "",
-      "semantic": "",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 편관, 시간 정인)",
+      "counter": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "semantic": "officer|resource",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "goalOutputSource": "SCENE_RULE",
+      "linkedStrengthCandidateId": null,
       "flags": [
-        "LOW_CONFIDENCE",
-        "REUSED_SOURCE_PAIR"
+        "LOW_CONFIDENCE"
       ]
     },
     {
       "caseId": "RC11",
       "id": "P01-10",
       "title": "나를 힘들게 하는 성격",
-      "candidateId": "",
-      "type": "empty",
-      "status": "DO_NOT_GENERATE",
-      "claim": "",
-      "sourceIds": [],
-      "evidenceIds": [],
-      "trigger": "",
-      "action": "",
+      "candidateId": "V56-B2-P01-10-monthBranch-hourStem",
+      "type": "structured",
+      "status": "READY_FOR_REVIEW",
+      "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 압박 속 우선 처리할 책임과 이미 알고 있는 정보와 이해의 근거 사이에 조정이 필요한 상황을 살펴봅니다.",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "evidenceIds": [
+        "NATAL:PILLARS",
+        "NATAL:TEN_GODS",
+        "NATAL:STRUCTURE:PRIMARY"
+      ],
+      "trigger": "정해진 절차를 모두 지키려다 일정과 조율해야 할 때",
+      "action": "압박 속 우선 처리할 책임을 모든 상황에 적용하려 하면 이미 알고 있는 정보와 이해의 근거를 고려할 여유가 줄어들 수 있다는 부담 가설",
       "scenarioRuleId": "",
-      "basis": "",
-      "counter": "",
-      "semantic": "",
-      "flags": []
+      "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+      "counter": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "semantic": "officer|resource",
+      "actionGoal": null,
+      "observableOutput": null,
+      "goalKey": null,
+      "goalOutputSource": null,
+      "linkedStrengthCandidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
     }
   ],
   "failedRegressions": [

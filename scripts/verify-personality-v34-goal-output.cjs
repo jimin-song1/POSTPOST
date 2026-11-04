@@ -17,10 +17,12 @@ const examples=[
  ['누가 지출을 맡을지 합의하는 모습','여럿이 비용을 나눌 때',true],
  ['시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습','문제가 생길 때',false],
  ['기회비용을 고려하고 낯선 방식을 검토하는 모습','여러 선택지가 있을 때',false],
- ['', '시험', false]
+ ['', '시험', false],
+ ['대안별 기회비용과 활용 가능성을 검토한 다음 합의된 기준과 절차를 확인하는 모습','여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때',false] // V35: V34 false positive (기회비용…합의)
 ];
 for(const [a,t,expected] of examples){const o=extract(a,t);assert.equal(o.goalOutputEvidence==='EXPLICIT_SCENE',expected);assert.equal(Boolean(o.actionGoal),expected);assert.equal(Boolean(o.observableOutput),expected)}
-assert(code.includes('...extractGoalOutputV34(roleSpecific,sceneTrigger)'),'generator does not populate fields');
+// V35: the generator now calls goalOutputForScene(), which uses the rule table and falls back to extractGoalOutputV34.
+assert(code.includes('...goalOutputForScene(')&&/const v34=extractGoalOutputV34\(action,trigger\)/.test(code),'generator does not populate fields');
 assert(code.includes('actionGoal: string | null')&&code.includes('observableOutput: string | null'));
 const report={version:'V34',newTests:examples.length+2,passed:true,mode:'extraction unit + source contract; not 12-chart run',selectionEngineChanges:false,rc11Approved:0};
 fs.mkdirSync(path.join(root,'docs/v34_goal_output'),{recursive:true});
