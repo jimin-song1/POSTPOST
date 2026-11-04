@@ -20,7 +20,8 @@
     "test:personality-realcharts-v14": "node scripts/verify-personality-realcharts-v14.cjs",
     "test:personality-copy-v14": "node scripts/verify-personality-copy-v14.cjs",
     "test:personality-scenes-v15": "node scripts/verify-personality-scene-v15.cjs",
-    "test:personality-goal-output-v35": "node scripts/verify-personality-crosscharts-v17.cjs && node scripts/verify-personality-v35-goal-output-overlap.cjs"
+    "test:personality-goal-output-v35": "node scripts/verify-personality-crosscharts-v17.cjs && node scripts/verify-personality-v35-goal-output-overlap.cjs",
+    "test:personality-style-v35": "node scripts/verify-personality-v35-style-examples.cjs"
   },
   "dependencies": {
     "lunisolar-ephemeris": "^0.4.1",

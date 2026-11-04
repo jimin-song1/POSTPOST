@@ -17,6 +17,7 @@ main의 기존 파일과 충돌하는 변경은 없습니다(ZIP이 main의 상�
 - 09번은 새 원국 위치쌍을 우선하고, 10번이 앞 장을 다시 풀어 쓰는 경우는 제외합니다.
 - V34 추출기 오탐("기회비용…합의"를 비용 합의로 판정) 수정
 - V35.1: 09번 문장의 근거 없는 순서("한 다음") 제거, 겁재 전용 장면과 목표 추가, 내부 메모 문구 제거
+- V35.2: korean-writing-style 스킬의 부드러운 규칙을 원고 검사에 비차단 경고로 추가(`reviewCustomerKoreanWriting`)
 
 ## 수치 (12개 날짜 기반 명식, 오프라인 Swiss 절기 fixture)
 
@@ -33,8 +34,8 @@ main의 기존 파일과 충돌하는 변경은 없습니다(ZIP이 main의 상�
 
 ## 검증
 
-- 회귀 스크립트 24/24 정상 종료, 신규 `verify-personality-v35-goal-output-overlap.cjs` 18/18
-- vitest 스펙: 작성 환경에서 npm 설치가 막혀 있어 호환 실행기로 V34와 V35를 비교했습니다. 761/773 → 768/778, 새 실패 0, 오래된 실패 2개 해소
+- 회귀 스크립트 25/25 정상 종료, 신규 `verify-personality-v35-goal-output-overlap.cjs` 18/18, 문체 검사 스크립트 통과
+- vitest 스펙: 작성 환경에서 npm 설치가 막혀 있어 호환 실행기로 V34와 V35를 비교했습니다. 761/773 → 772/782, 새 실패 0, 오래된 실패 2개 해소
 - **이 PR의 CI가 처음으로 정식 `npm ci`, `npm run typecheck`, vitest를 돌립니다.** `tests/personality-editorial.spec.ts`의 "does not repeat the same ten-god contrast…" 실패는 V34부터 있던 것으로(V27 분류), 이 PR이 만든 실패가 아닙니다.
 
 ## 범위 밖, 남은 일

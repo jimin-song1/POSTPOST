@@ -8,7 +8,7 @@ import {
   type PersonalityWritingBrief,
 } from "./personality-editorial.v1";
 import { PERSONALITY_SECTIONS } from "./personality-candidates.v1";
-import { KOREAN_CUSTOMER_WRITING_STYLE_PROMPT, lintCustomerKoreanWriting } from "./korean-writing-style.v1";
+import { KOREAN_CUSTOMER_WRITING_STYLE_PROMPT, lintCustomerKoreanWriting, reviewCustomerKoreanWriting } from "./korean-writing-style.v1";
 import { findUnsupportedPersonalityClaims } from "./personality-claim-guard.v1";
 import { auditPersonalityManuscript, PERSONALITY_SECTION_BOUNDARIES } from "./personality-manuscript-audit.v1";
 
@@ -204,6 +204,12 @@ export function buildPersonalityEvidence(analysis: SajuAnalysis): Interpretation
   ];
 }
 
+/** V35: non-blocking Korean style review hits for the human editor (appended to the manuscript audit). */
+export function styleReviewWarnings(draft: PersonalityDraft): string[] {
+  return draft.sections.flatMap(section=>reviewCustomerKoreanWriting([section.headline,section.lead,...section.paragraphs].join("\n"))
+    .map(code=>section.id+": korean writing review "+code));
+}
+
 /** One generate + at most one repair; no output is customer-published. */
 export async function generatePersonalityV56Draft(
   analysis:SajuAnalysis, provider:PersonalityWritingProvider, relationshipStatus:RelationshipStatus,
@@ -227,12 +233,12 @@ export async function generatePersonalityV56Draft(
     return {status:"provider_error",error:error instanceof Error?error.message:"provider failed"};
   }
   let checked=validatePersonalityDraft(output,brief,evidence);
-  if (checked.ok) return {status:"draft_needs_review",draft:checked.draft,brief,repaired:false,reviewWarnings:auditPersonalityManuscript(checked.draft.sections).findings.map(f=>f.sectionId+": "+f.code+" "+f.message)};
+  if (checked.ok) return {status:"draft_needs_review",draft:checked.draft,brief,repaired:false,reviewWarnings:auditPersonalityManuscript(checked.draft.sections).findings.map(f=>f.sectionId+": "+f.code+" "+f.message).concat(styleReviewWarnings(checked.draft))};
   const firstErrors=checked.errors;
   try {output=await provider.generate({...request,repair:{previousOutput:output,errors:firstErrors}});} catch(error) {
     return {status:"provider_error",error:error instanceof Error?error.message:"provider failed during repair"};
   }
   checked=validatePersonalityDraft(output,brief,evidence);
-  if (checked.ok) return {status:"draft_needs_review",draft:checked.draft,brief,repaired:true,reviewWarnings:auditPersonalityManuscript(checked.draft.sections).findings.map(f=>f.sectionId+": "+f.code+" "+f.message)};
+  if (checked.ok) return {status:"draft_needs_review",draft:checked.draft,brief,repaired:true,reviewWarnings:auditPersonalityManuscript(checked.draft.sections).findings.map(f=>f.sectionId+": "+f.code+" "+f.message).concat(styleReviewWarnings(checked.draft))};
   return {status:"failed_validation",attempts:2,errors:checked.errors};
 }

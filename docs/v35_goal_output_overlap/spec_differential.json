@@ -1,5 +1,5 @@
 {
-  "files": 54,
+  "files": 55,
   "loadErrors": [
     "tests/ai-interpretation.spec.ts",
     "tests/api-validation.spec.ts",
@@ -14,10 +14,34 @@
     "total": 773
   },
   "v35": {
-    "passed": 768,
-    "total": 778
+    "passed": 772,
+    "total": 782
   },
   "changed": [
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > passes the reference strength draft",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > flags engine wording and ten-god terms that should stay out of customer body text",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > flags stacked hedging and three identical sentence endings",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > does not treat ordinary words like 시간 or 월간 as saju terms",
+      null,
+      true
+    ],
     [
       "tests/personality-behavior.v2.spec.ts",
       "V5.6 conditional behavior hypotheses (not personality truth) > passes real engine evidence into the review brief without user identity or invented motives",

@@ -32,3 +32,28 @@ export function lintCustomerKoreanWriting(text: string): string[] {
   for (const rule of HARD_STYLE_RULES) if (rule.pattern.test(text)) errors.push(rule.code);
   return errors;
 }
+
+/**
+ * V35: non-blocking review checks for the skill's "soft" rules
+ * (.agents/skills/korean-writing-style/SKILL.md). Heuristic only: a hit means
+ * "a human editor should look", never an automatic rejection.
+ * Ordinary words such as 시간(time) or 월간(monthly) are intentionally not matched.
+ */
+const REVIEW_STYLE_RULES: ReadonlyArray<{code:string;test:(text:string)=>boolean}> = [
+  {code:"HEDGE_REPEAT",test:t=>(t.match(/수(?:도)?\s*있습니다/gu)??[]).length>=3},
+  {code:"TRANSLATIONESE",test:t=>/[을를]\s*통해|의\s*관점에서|[을를]\s*가지고\s*있|에\s*의해/u.test(t)},
+  {code:"STOCK_PHRASE",test:t=>/결론적으로|요약하면|주목할\s*만한|시사하는\s*바|혁신적인/u.test(t)},
+  {code:"EMPTY_CLOSER",test:t=>/중요한\s*것은|다른\s*셈입니다|같은\s*사람이라도/u.test(t)},
+  {code:"POINT_ENDING",test:t=>/라는\s*점에서|라는\s*뜻입니다|한\s*것입니다/u.test(t)},
+  {code:"INTENSIFIER",test:t=>/매우|굉장히/u.test(t)},
+  {code:"SAJU_TERM_IN_BODY",test:t=>/편관|정관|편인|정인|편재|정재|식신|상관|비견|겁재|십성|월지|일지|시지|연지|천간|지지|원국/u.test(t)},
+  {code:"ENGINE_WORDING",test:t=>/가설|조건부|명리\s*상징|두\s*과정을\s*연결/u.test(t)},
+  {code:"SAME_ENDING_X3",test:t=>{
+    const ends=t.split(/(?<=[.!?])\s+/u).map(x=>x.trim().replace(/[.!?]+$/u,"").slice(-3)).filter(Boolean);
+    for(let i=2;i<ends.length;i++) if(ends[i]===ends[i-1]&&ends[i]===ends[i-2]) return true;
+    return false;
+  }},
+];
+export function reviewCustomerKoreanWriting(text: string): string[] {
+  return REVIEW_STYLE_RULES.filter(rule=>rule.test(text)).map(rule=>rule.code);
+}
