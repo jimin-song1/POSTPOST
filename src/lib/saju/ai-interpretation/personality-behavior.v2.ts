@@ -776,8 +776,10 @@ export function generateConditionalBehaviorCandidates(a:SajuAnalysis):Personalit
           `소제목 '${section.axis}'에 두 상징의 우선순위가 달라질 조건을 가설로 연결`,...context],
         inferenceLevel:"CONDITIONAL_INTERPRETATION",
         semanticPairKey:[primary.god,secondary.god].sort().join("|"),
-        ...(baselineScene ? {scenarioRuleId:"P01-01:baseline:" + ("ruleId" in baselineScene ? baselineScene.ruleId.slice("P01-01:".length) : pairFamily)} : {}),
-        ...(cooperationScene ? {scenarioRuleId:("ruleId" in cooperationScene ? cooperationScene.ruleId : "P01-07:cooperation:"+pairFamily)} : {}),
+        // V35: the `?? TABLE[...]` union collapses to StrengthScene, so `"ruleId" in` left ruleId
+        // typed unknown (typecheck error since V34). Read it through an explicit optional view.
+        ...(baselineScene ? {scenarioRuleId:"P01-01:baseline:" + ((baselineScene as Partial<AnchoredScene>).ruleId?.slice("P01-01:".length) ?? pairFamily)} : {}),
+        ...(cooperationScene ? {scenarioRuleId:((cooperationScene as Partial<AnchoredScene>).ruleId ?? "P01-07:cooperation:"+pairFamily)} : {}),
         ...(strengthScene ? {scenarioRuleId:strengthScene.ruleId} : {}),
         ...(expressionScene ? {scenarioRuleId:expressionScene.ruleId} : {}),
         ...(revisionScene ? {scenarioRuleId:"P01-06:revision:"+familyPair(primary.family,secondary.family)} : {}),

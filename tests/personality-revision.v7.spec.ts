@@ -5,7 +5,7 @@ import { selectPersonalityInterpretations, createPersonalityWritingBrief } from 
 import { canonicalBehaviorCandidates, verifyGeneratedBehaviorContract } from '../src/lib/saju/ai-interpretation/personality-claim-guard.v1';
 import type { SajuAnalysis } from '../src/types/saju-analysis';
 
-const analysis=sample.response as SajuAnalysis;
+const analysis=sample.response as unknown as SajuAnalysis;
 describe('V5.6 P01-06 decision revision scene', () => {
   it('selects a traceable post-decision behavior without replacing P01-05', () => {
     const plan=selectPersonalityInterpretations(analysis);

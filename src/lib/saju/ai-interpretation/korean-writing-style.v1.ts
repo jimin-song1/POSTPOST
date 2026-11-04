@@ -15,19 +15,21 @@ export const KOREAN_CUSTOMER_WRITING_STYLE_PROMPT = `고객에게 보여 주는 
 사실의 정확성, 엔진 근거 제한, 위험 영역에 관한 기존 지침을 글쓰기보다 우선 적용하세요.`;
 
 const HARD_STYLE_RULES: ReadonlyArray<{code:string;pattern:RegExp}> = [
-  {code:"EM_DASH",pattern:/\u2014/u},
-  {code:"MIDDLE_DOT",pattern:/\u00b7/u},
-  {code:"HARSH_COLOQUIALISM",pattern:/박아\s*두|박아둠|때려\s*박|갈아\s*끼우/u},
-  {code:"DOUBLE_PASSIVE",pattern:/판단되어진|보여집/u},
-  {code:"TRANSLATION_CALQUE",pattern:/에\s*있어서|으로부터의|로의\s+전환|(?:문제|방법|결과)의\s+가치가\s+분명/u},
-  {code:"AI_STOCK_PHRASE",pattern:/이\s*결과가\s*시사하는\s*바|새로운\s*가능성의\s*토대를\s*마련|혁신적인\s*방식으로\s*풀|요약하면\s*(?:두|세|[0-9]+)\s*가지/u},
-  {code:"AI_META_EXPLANATION",pattern:/(?:이|본)\s*(?:해석|풀이)(?:은|에서는|의|으로)|(?:이|이번)\s*장(?:의|에서는)|풀이할\s*수\s*있습니다|(?:그런|이런)\s*뜻은\s*아닙니다/u},
+  {code:"EM_DASH",pattern:/\u2014/},
+  {code:"MIDDLE_DOT",pattern:/\u00b7/},
+  {code:"HARSH_COLOQUIALISM",pattern:/박아\s*두|박아둠|때려\s*박|갈아\s*끼우/},
+  {code:"DOUBLE_PASSIVE",pattern:/판단되어진|보여집/},
+  {code:"TRANSLATION_CALQUE",pattern:/에\s*있어서|으로부터의|로의\s+전환|(?:문제|방법|결과)의\s+가치가\s+분명/},
+  {code:"AI_STOCK_PHRASE",pattern:/이\s*결과가\s*시사하는\s*바|새로운\s*가능성의\s*토대를\s*마련|혁신적인\s*방식으로\s*풀|요약하면\s*(?:두|세|[0-9]+)\s*가지/},
+  {code:"AI_META_EXPLANATION",pattern:/(?:이|본)\s*(?:해석|풀이)(?:은|에서는|의|으로)|(?:이|이번)\s*장(?:의|에서는)|풀이할\s*수\s*있습니다|(?:그런|이런)\s*뜻은\s*아닙니다/},
 ];
 
+/* V35: no regex uses the `u` flag. The project targets ES5 (tsconfig) and none of the
+ * patterns need unicode mode (BMP literals and \\u escapes only). */
 /** Deterministic hard check. Nuanced Korean style still requires human review. */
 export function lintCustomerKoreanWriting(text: string): string[] {
   const errors:string[]=[];
-  const enDashOutsideRange=text.replace(/(?:[A-Za-z0-9]\s*\u2013\s*[A-Za-z0-9])/gu,"");
+  const enDashOutsideRange=text.replace(/(?:[A-Za-z0-9]\s*\u2013\s*[A-Za-z0-9])/g,"");
   if (enDashOutsideRange.includes("\u2013")) errors.push("EN_DASH_OUTSIDE_RANGE");
   for (const rule of HARD_STYLE_RULES) if (rule.pattern.test(text)) errors.push(rule.code);
   return errors;
@@ -40,16 +42,16 @@ export function lintCustomerKoreanWriting(text: string): string[] {
  * Ordinary words such as 시간(time) or 월간(monthly) are intentionally not matched.
  */
 const REVIEW_STYLE_RULES: ReadonlyArray<{code:string;test:(text:string)=>boolean}> = [
-  {code:"HEDGE_REPEAT",test:t=>(t.match(/수(?:도)?\s*있습니다/gu)??[]).length>=3},
-  {code:"TRANSLATIONESE",test:t=>/[을를]\s*통해|의\s*관점에서|[을를]\s*가지고\s*있|에\s*의해/u.test(t)},
-  {code:"STOCK_PHRASE",test:t=>/결론적으로|요약하면|주목할\s*만한|시사하는\s*바|혁신적인/u.test(t)},
-  {code:"EMPTY_CLOSER",test:t=>/중요한\s*것은|다른\s*셈입니다|같은\s*사람이라도/u.test(t)},
-  {code:"POINT_ENDING",test:t=>/라는\s*점에서|라는\s*뜻입니다|한\s*것입니다/u.test(t)},
-  {code:"INTENSIFIER",test:t=>/매우|굉장히/u.test(t)},
-  {code:"SAJU_TERM_IN_BODY",test:t=>/편관|정관|편인|정인|편재|정재|식신|상관|비견|겁재|십성|월지|일지|시지|연지|천간|지지|원국/u.test(t)},
-  {code:"ENGINE_WORDING",test:t=>/가설|조건부|명리\s*상징|두\s*과정을\s*연결/u.test(t)},
+  {code:"HEDGE_REPEAT",test:t=>(t.match(/수(?:도)?\s*있습니다/g)??[]).length>=3},
+  {code:"TRANSLATIONESE",test:t=>/[을를]\s*통해|의\s*관점에서|[을를]\s*가지고\s*있|에\s*의해/.test(t)},
+  {code:"STOCK_PHRASE",test:t=>/결론적으로|요약하면|주목할\s*만한|시사하는\s*바|혁신적인/.test(t)},
+  {code:"EMPTY_CLOSER",test:t=>/중요한\s*것은|다른\s*셈입니다|같은\s*사람이라도/.test(t)},
+  {code:"POINT_ENDING",test:t=>/라는\s*점에서|라는\s*뜻입니다|한\s*것입니다/.test(t)},
+  {code:"INTENSIFIER",test:t=>/매우|굉장히/.test(t)},
+  {code:"SAJU_TERM_IN_BODY",test:t=>/편관|정관|편인|정인|편재|정재|식신|상관|비견|겁재|십성|월지|일지|시지|연지|천간|지지|원국/.test(t)},
+  {code:"ENGINE_WORDING",test:t=>/가설|조건부|명리\s*상징|두\s*과정을\s*연결/.test(t)},
   {code:"SAME_ENDING_X3",test:t=>{
-    const ends=t.split(/(?<=[.!?])\s+/u).map(x=>x.trim().replace(/[.!?]+$/u,"").slice(-3)).filter(Boolean);
+    const ends=t.split(/(?<=[.!?])\s+/).map(x=>x.trim().replace(/[.!?]+$/,"").slice(-3)).filter(Boolean);
     for(let i=2;i<ends.length;i++) if(ends[i]===ends[i-1]&&ends[i]===ends[i-2]) return true;
     return false;
   }},
