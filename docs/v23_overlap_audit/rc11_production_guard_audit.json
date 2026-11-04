@@ -1,0 +1,409 @@
+{
+  "version": "V23",
+  "mode": "read-only production-algorithm risk inspection",
+  "notes": [
+    "Candidate text scores are tri-gram lexical indicators only, not semantic ground truth.",
+    "The production editor uses motif overlap and family matching; no candidate selection rules modified.",
+    "Adversarial synthetic examples demonstrate both potential over-blocking and under-blocking."
+  ],
+  "rc11": {
+    "candidateCount": 9,
+    "priorStructured": 5,
+    "rows": [
+      {
+        "id": "V56-B2-P01-09-monthStem-dayBranch",
+        "rule": "P01-09:officer|wealth:편재|편관",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-05",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:month:stem:丙"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-02",
+            "sharedSources": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ],
+            "actionSimilarity": 0.029,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-05",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.029,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-08",
+            "sharedSources": [
+              "PILLAR:day:branch:戌"
+            ],
+            "actionSimilarity": 0.023,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "대안별 기회비용과 활용 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-monthBranch-hourStem",
+        "rule": "P01-09:officer|resource:편관|정인",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-08",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [],
+        "closestByAction": [
+          {
+            "section": "P01-08",
+            "sharedSources": [],
+            "actionSimilarity": 0.024,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ],
+            "actionSimilarity": 0.014,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-06",
+            "sharedSources": [],
+            "actionSimilarity": 0.011,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-monthBranch-yearStem",
+        "rule": "P01-09:officer|resource:편관|편인",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-08",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:year:stem:庚"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-08",
+            "sharedSources": [
+              "PILLAR:year:stem:庚"
+            ],
+            "actionSimilarity": 0.034,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-05",
+            "sharedSources": [],
+            "actionSimilarity": 0.029,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [
+              "PILLAR:month:branch:戌"
+            ],
+            "actionSimilarity": 0.013,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "시급한 요청의 우선 책임을 정리한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-dayBranch-hourStem",
+        "rule": "P01-09:officer|resource:편관|정인",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-08",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:day:branch:戌"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-08",
+            "sharedSources": [
+              "PILLAR:day:branch:戌"
+            ],
+            "actionSimilarity": 0.024,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [
+              "PILLAR:hour:stem:辛"
+            ],
+            "actionSimilarity": 0.014,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-06",
+            "sharedSources": [],
+            "actionSimilarity": 0.011,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-monthStem-hourBranch",
+        "rule": "P01-09:officer|wealth:편재|정관",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-05",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:month:stem:丙",
+          "PILLAR:hour:branch:丑"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-05",
+            "sharedSources": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ],
+            "actionSimilarity": 0.04,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-02",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.019,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [],
+            "actionSimilarity": 0.014,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "대안별 기회비용과 활용 가능성을 검토한 다음 합의된 기준과 절차를 확인하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-monthStem-hourStem",
+        "rule": "P01-09:resource|wealth:편재|정인",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-05",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:month:stem:丙"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-05",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.03,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-02",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.019,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [
+              "PILLAR:hour:stem:辛"
+            ],
+            "actionSimilarity": 0.014,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "대안별 기회비용과 활용 가능성을 검토한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-yearBranch-monthStem",
+        "rule": "P01-09:officer|wealth:편관|편재",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-05",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:month:stem:丙"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-05",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.05,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-02",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.029,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-08",
+            "sharedSources": [],
+            "actionSimilarity": 0.023,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "시급한 요청의 우선 책임을 정리한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-yearStem-dayBranch",
+        "rule": "P01-09:officer|resource:편인|편관",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-08",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:year:stem:庚",
+          "PILLAR:day:branch:戌"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-08",
+            "sharedSources": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:day:branch:戌"
+            ],
+            "actionSimilarity": 0.034,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-01",
+            "sharedSources": [],
+            "actionSimilarity": 0.013,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-05",
+            "sharedSources": [],
+            "actionSimilarity": 0.01,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습"
+      },
+      {
+        "id": "V56-B2-P01-09-yearStem-monthStem",
+        "rule": "P01-09:resource|wealth:편인|편재",
+        "originalDecision": "REJECTED",
+        "originalFlags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "editorReportedMatch": "P01-05",
+        "reportedMatchPresent": true,
+        "reportedMatchSharedSources": [
+          "PILLAR:month:stem:丙"
+        ],
+        "closestByAction": [
+          {
+            "section": "P01-05",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.051,
+            "editorReportedMatch": true
+          },
+          {
+            "section": "P01-08",
+            "sharedSources": [
+              "PILLAR:year:stem:庚"
+            ],
+            "actionSimilarity": 0.023,
+            "editorReportedMatch": false
+          },
+          {
+            "section": "P01-02",
+            "sharedSources": [
+              "PILLAR:month:stem:丙"
+            ],
+            "actionSimilarity": 0.019,
+            "editorReportedMatch": false
+          }
+        ],
+        "sourceCount": 2,
+        "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습"
+      }
+    ]
+  },
+  "guardCounterexamples": {
+    "sameMotifsDifferentAction": {
+      "repeatedMotifs": [
+        "verification",
+        "opportunity-choice",
+        "responsibility"
+      ],
+      "nearDuplicate": true,
+      "penalty": 8
+    },
+    "sameSceneSameMotifs": {
+      "repeatedMotifs": [
+        "verification",
+        "opportunity-choice",
+        "responsibility"
+      ],
+      "nearDuplicate": true,
+      "penalty": 8
+    },
+    "distinctMotifsSimilarWords": {
+      "repeatedMotifs": [],
+      "nearDuplicate": false,
+      "penalty": 0
+    }
+  },
+  "selected": 119,
+  "ready": 96,
+  "warning": "Do not deploy: RC11 P01-10 missing and legacy regressions unresolved."
+}

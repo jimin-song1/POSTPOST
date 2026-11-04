@@ -1,0 +1,13 @@
+{
+  "cases": 12,
+  "selected": 119,
+  "unselected": 1,
+  "blocked": 24,
+  "verdictCounts": {
+    "DISTINCT_OR_UNDETERMINED": 66,
+    "SINGLE_AXIS_REVIEW": 14,
+    "NOT_COMPARABLE": 28
+  }
+}
+
+STDERR

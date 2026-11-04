@@ -1,0 +1,16 @@
+{
+  "passed": 7,
+  "failed": 0,
+  "chapter01": {
+    "structured": 6,
+    "uniqueAction": 5
+  },
+  "chapter07": {
+    "structured": 5,
+    "uniqueAction": 4,
+    "uniqueRule": 4
+  },
+  "originalBehaviorV14": 34,
+  "currentBehaviorV15": 45,
+  "unresolved": []
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "RC01",
+    "solarDate": "1989-08-15",
+    "engineDayPillar": "丁未",
+    "independentCalendarDayPillar": "丁未",
+    "matched": true
+  },
+  {
+    "id": "RC02",
+    "solarDate": "1992-03-18",
+    "engineDayPillar": "癸巳",
+    "independentCalendarDayPillar": "癸巳",
+    "matched": true
+  },
+  {
+    "id": "RC03",
+    "solarDate": "1995-09-17",
+    "engineDayPillar": "辛亥",
+    "independentCalendarDayPillar": "辛亥",
+    "matched": true
+  },
+  {
+    "id": "RC04",
+    "solarDate": "1998-12-17",
+    "engineDayPillar": "戊戌",
+    "independentCalendarDayPillar": "戊戌",
+    "matched": true
+  },
+  {
+    "id": "RC05",
+    "solarDate": "2001-01-25",
+    "engineDayPillar": "戊子",
+    "independentCalendarDayPillar": "戊子",
+    "matched": true
+  },
+  {
+    "id": "RC06",
+    "solarDate": "2003-05-15",
+    "engineDayPillar": "戊子",
+    "independentCalendarDayPillar": "戊子",
+    "matched": true
+  }
+]

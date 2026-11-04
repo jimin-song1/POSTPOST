@@ -1,0 +1,43 @@
+{
+  "baseline": "V29",
+  "gateVersion": "V30",
+  "description": "Regression floor only; not production accuracy or coverage certification",
+  "checks": [
+    {
+      "name": "six chart selection completeness unchanged",
+      "status": "PASS"
+    },
+    {
+      "name": "twelve chart selection and reviewability do not regress",
+      "status": "PASS"
+    },
+    {
+      "name": "RC11 unresolved outcome is explicitly present and not silently approved",
+      "status": "PASS"
+    },
+    {
+      "name": "RC11 P01-09 remains unstructured and therefore is not called a validated strength",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "six": {
+    "total": 60,
+    "selected": 60,
+    "structured": 50
+  },
+  "twelve": {
+    "total": 120,
+    "selected": 119,
+    "structured": 96,
+    "ready": 96,
+    "empty": 1
+  },
+  "rc11": {
+    "selected": 9,
+    "ready": 5,
+    "chapter09": "legacy",
+    "chapter10": "empty"
+  }
+}

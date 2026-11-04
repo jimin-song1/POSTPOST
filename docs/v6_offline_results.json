@@ -1,0 +1,123 @@
+{
+  "testType": "offline targeted runtime, NOT vitest or full app build",
+  "tests": 10,
+  "passed": 10,
+  "failed": 0,
+  "overlapReviews": 1,
+  "selected": [
+    {
+      "section": "P01-01",
+      "candidate": "V56-B2-P01-01-monthBranch-hourStem",
+      "behavior": true
+    },
+    {
+      "section": "P01-02",
+      "candidate": "V56-B2-P01-02-monthStem-dayBranch",
+      "behavior": true
+    },
+    {
+      "section": "P01-03",
+      "candidate": "V56-B2-P01-03-monthStem-hourStem",
+      "behavior": true
+    },
+    {
+      "section": "P01-04",
+      "candidate": "V56-B2-P01-04-monthStem-yearBranch",
+      "behavior": true
+    },
+    {
+      "section": "P01-05",
+      "candidate": "V56-B2-P01-05-dayBranch-hourStem",
+      "behavior": true
+    },
+    {
+      "section": "P01-06",
+      "candidate": "V56-B2-P01-06-yearBranch-hourStem",
+      "behavior": true
+    },
+    {
+      "section": "P01-07",
+      "candidate": "V56-B2-P01-07-monthBranch-yearBranch",
+      "behavior": true
+    },
+    {
+      "section": "P01-08",
+      "candidate": "V56-B2-P01-08-monthBranch-hourBranch",
+      "behavior": true
+    },
+    {
+      "section": "P01-09",
+      "candidate": "V56-B2-P01-09-monthStem-dayBranch",
+      "behavior": true
+    },
+    {
+      "section": "P01-10",
+      "candidate": "V56-B2-P01-10-monthBranch-dayBranch",
+      "behavior": true
+    }
+  ],
+  "results": [
+    {
+      "name": "P01-04 selects structured output-based hypothesis",
+      "status": "PASS",
+      "detail": {
+        "id": "V56-B2-P01-04-monthStem-yearBranch",
+        "sourceIds": [
+          "PILLAR:month:stem:丁",
+          "PILLAR:year:branch:辰"
+        ],
+        "claim": "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때, 업무나 공식적인 역할의 설명에서는 예측 가능한 비용과 설명하려는 제안의 범위를 구별하는 방식과 실제로 진행한 순서를 함께 설명하는 방식을 해석 가설로 검토합니다. 말의 양이나 실제 대화 습관을 단정하지 않습니다."
+      }
+    },
+    {
+      "name": "P01-04 pair has output plus a genuinely distinct family",
+      "status": "PASS",
+      "detail": {
+        "pair": [
+          "식신",
+          "정재"
+        ],
+        "scene": "업무나 공식적인 역할의 설명에서는 예측 가능한 비용과 설명하려는 제안의 범위를 구별하는 방식과 실제로 진행한 순서를 함께 설명하는 방식을 가능성으로 검토하는 가설"
+      }
+    },
+    {
+      "name": "no output signal means no P01-04 B2 candidate",
+      "status": "PASS"
+    },
+    {
+      "name": "tampered behavioral meaning fails canonical contract",
+      "status": "PASS"
+    },
+    {
+      "name": "normal behavior passes canonical contract",
+      "status": "PASS"
+    },
+    {
+      "name": "all ten sections still have selected candidates",
+      "status": "PASS",
+      "detail": {
+        "behaviorCount": 10,
+        "legacyFallbacks": []
+      }
+    },
+    {
+      "name": "repeated ten-god names require distinct chapter roles and a verified strength link",
+      "status": "PASS",
+      "detail": {
+        "reusedPairs": 1
+      }
+    },
+    {
+      "name": "writer brief receives P01-04 hypothesis",
+      "status": "PASS"
+    },
+    {
+      "name": "missing ten-gods has no conditional behavior candidate",
+      "status": "PASS"
+    },
+    {
+      "name": "TypeScript syntax check of modified/new code",
+      "status": "PASS"
+    }
+  ]
+}

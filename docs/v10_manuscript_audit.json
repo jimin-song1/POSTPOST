@@ -1,0 +1,102 @@
+{
+  "testType": "Node + isolated TypeScript transpilation, not npm Vitest or actual AI API",
+  "checks": [
+    {
+      "name": "10 complete sections in original and revised",
+      "result": "PASS"
+    },
+    {
+      "name": "all section scope descriptions defined",
+      "result": "PASS"
+    },
+    {
+      "name": "02 is always a reader-validation finding",
+      "result": "PASS"
+    },
+    {
+      "name": "03 is always a personal-history validation finding",
+      "result": "PASS"
+    },
+    {
+      "name": "original and revised contain no structural hard blockers",
+      "result": "PASS"
+    },
+    {
+      "name": "reject missing contrast in 02",
+      "result": "PASS"
+    },
+    {
+      "name": "reject first impression presented as observed certainty",
+      "result": "PASS"
+    },
+    {
+      "name": "reject private chapter without a private context",
+      "result": "PASS"
+    },
+    {
+      "name": "warn when chapter 09 is only decision making",
+      "result": "PASS"
+    },
+    {
+      "name": "warn when chapter 10 repeats group roles",
+      "result": "PASS"
+    },
+    {
+      "name": "warn on hedging formulas",
+      "result": "PASS"
+    },
+    {
+      "name": "original and revised leave 02 and 03 requiring user validation",
+      "result": "PASS"
+    },
+    {
+      "name": "revised manuscript excludes forbidden punctuation",
+      "result": "PASS"
+    },
+    {
+      "name": "generation validator receives manuscript audit",
+      "result": "PASS"
+    },
+    {
+      "name": "TypeScript syntax of generation changes",
+      "result": "PASS"
+    }
+  ],
+  "tests": 15,
+  "passed": 15,
+  "failed": 0,
+  "original": {
+    "status": "review_required",
+    "findings": [
+      {
+        "sectionId": "P01-02",
+        "code": "FIRST_IMPRESSION_NEEDS_READER_VALIDATION",
+        "level": "REVIEW",
+        "message": "실제로 다른 사람이 어떻게 평가하는지는 원국만으로 알 수 없습니다. 고객 반응 검증이 필요합니다."
+      },
+      {
+        "sectionId": "P01-03",
+        "code": "PRIVATE_HABIT_UNOBSERVED",
+        "level": "REVIEW",
+        "message": "혼자 있을 때 실제 무엇을 하는지는 확인하지 못했습니다. 관찰 사실처럼 단정하지 마세요."
+      }
+    ]
+  },
+  "revised": {
+    "status": "review_required",
+    "findings": [
+      {
+        "sectionId": "P01-02",
+        "code": "FIRST_IMPRESSION_NEEDS_READER_VALIDATION",
+        "level": "REVIEW",
+        "message": "실제로 다른 사람이 어떻게 평가하는지는 원국만으로 알 수 없습니다. 고객 반응 검증이 필요합니다."
+      },
+      {
+        "sectionId": "P01-03",
+        "code": "PRIVATE_HABIT_UNOBSERVED",
+        "level": "REVIEW",
+        "message": "혼자 있을 때 실제 무엇을 하는지는 확인하지 못했습니다. 관찰 사실처럼 단정하지 마세요."
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 import { AI_INTERPRETATION_V1 as RULE } from "@/rules/ai-interpretation.v1";
 import type { InterpretationInput,StructuredInterpretation } from "@/types/ai-interpretation";
 import {LIFETIME_REPORT_V2} from "@/rules/lifetime-report.v2";
+import { lintCustomerKoreanWriting } from "./korean-writing-style.v1";
 
 export class GroundingValidationError extends Error {readonly code="GROUNDING_VALIDATION_FAILED" as const;
   constructor(message:string){super(message);this.name="GroundingValidationError";}}
@@ -60,6 +61,12 @@ export function validateGrounding(report:StructuredInterpretation,input:Interpre
     row.evidenceIds.map(id=>evidenceById.get(id)!.value),input.minimalContext.requestedYear);
 
   const combined=texts(report).join("\n");
+  // Lint only generated customer-facing prose: fixed schema/report titles are not generated copy.
+  const authored=[report.headline,report.summary,report.disclaimer,...report.highlights,...report.cautions,
+    ...report.sections.flatMap(row=>[row.body,row.headline??"",row.lead??"",...(row.paragraphs??[]),...(row.keyPoints??[]),row.mascotComment??"",row.professionalDetails?.summary??""]),
+    ...report.timeline.flatMap(row=>[row.title,row.body])].join("\n");
+  const styleIssues=lintCustomerKoreanWriting(authored);
+  if(styleIssues.length)throw new GroundingValidationError("고객용 한국어 문체 검증 실패: "+styleIssues.join(", "));
   for(const phrase of [...RULE.prohibitedCertainty,...RULE.prohibitedStarClaims])if(combined.includes(phrase))
     throw new GroundingValidationError(`금지된 확정 표현: ${phrase}`);
   if(input.reportType==="LIFETIME_GENERAL")for(const phrase of [...LIFETIME_REPORT_V2.prohibitedChildrenClaims,...LIFETIME_REPORT_V2.prohibitedWellnessClaims,...LIFETIME_REPORT_V2.prohibitedAxisConfusion])if(combined.includes(phrase))throw new GroundingValidationError(`평생총운 금지 표현: ${phrase}`);

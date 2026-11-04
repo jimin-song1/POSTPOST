@@ -1,0 +1,67 @@
+{
+  "version": "V24",
+  "status": "SHADOW_DIAGNOSTIC_NOT_DEPLOYABLE",
+  "notes": [
+    "No production guard or editorial-selection change.",
+    "3-gram similarity reflects lexical overlap, not semantic equivalence.",
+    "No original behaviorHypothesis decisionBasis/trigger persisted for all RC11 candidates in V21 snapshot; cannot retroactively reclassify them."
+  ],
+  "synthetic": [
+    {
+      "name": "same motifs, distinct action",
+      "legacyBlock": true,
+      "decision": "REVIEW_MOTIF_OVERLAP",
+      "dimensions": {
+        "action": 0,
+        "basis": 0,
+        "trigger": 0
+      },
+      "sharedMotifs": [
+        "verification",
+        "opportunity-choice",
+        "responsibility"
+      ]
+    },
+    {
+      "name": "different motifs, exact action",
+      "legacyBlock": false,
+      "decision": "BLOCK_EXACT_ACTION",
+      "dimensions": {
+        "action": 1,
+        "basis": null,
+        "trigger": 1
+      },
+      "sharedMotifs": []
+    },
+    {
+      "name": "same motifs, same action",
+      "legacyBlock": true,
+      "decision": "BLOCK_EXACT_ACTION",
+      "dimensions": {
+        "action": 1,
+        "basis": 1,
+        "trigger": 1
+      },
+      "sharedMotifs": [
+        "verification",
+        "opportunity-choice",
+        "responsibility"
+      ]
+    },
+    {
+      "name": "missing dimensions",
+      "legacyBlock": false,
+      "decision": "REVIEW_INCOMPLETE",
+      "dimensions": {
+        "action": 0,
+        "basis": null,
+        "trigger": null
+      },
+      "sharedMotifs": []
+    }
+  ],
+  "rc11": {
+    "candidates": 9,
+    "overlapRejected": 9
+  }
+}

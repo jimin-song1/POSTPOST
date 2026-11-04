@@ -1,0 +1,67 @@
+{
+  "mode": "2026-11-02 offline Swiss-term adapter, six fabricated birth date/time charts, NOT the production JPL path",
+  "originalBehaviorV14": 34,
+  "currentBehaviorV15": 45,
+  "originalTriggersV14": 25,
+  "currentTriggersV15": 32,
+  "chapter07": {
+    "structured": 5,
+    "uniqueAction": 4,
+    "uniqueRule": 4
+  },
+  "chapter01": {
+    "structured": 6,
+    "uniqueAction": 5
+  },
+  "unresolved": [],
+  "checks": [
+    {
+      "name": "6 computed-date charts have stable 60 slots",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "01 has at least four distinct starting-scene meanings",
+      "result": "PASS",
+      "detail": "5/6"
+    },
+    {
+      "name": "07 has distinct shared-cost, joint-authority and shared-credit scenes",
+      "result": "PASS",
+      "detail": [
+        "P01-07:cooperation:public-budget-vs-own-scope",
+        "P01-07:cooperation:personal-expenditure-vs-joint-role",
+        "P01-07:cooperation:opportunity-vs-decision-authority",
+        "P01-07:cooperation:collective-credit-vs-cost"
+      ]
+    },
+    {
+      "name": "07 mode is traceable to actual computed ten-god and position values",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "all emitted scenes are conditional and do not claim proven personality",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "09 and 04 remaining template repetition is explicitly flagged rather than hidden",
+      "result": "PASS",
+      "detail": {
+        "four": 4,
+        "nine": 5,
+        "alerts": []
+      }
+    },
+    {
+      "name": "selection stays deterministic in stored chart run",
+      "result": "PASS",
+      "detail": {
+        "rows": 60
+      }
+    }
+  ],
+  "passed": 7,
+  "failed": 0
+}

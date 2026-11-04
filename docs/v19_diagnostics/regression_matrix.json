@@ -1,0 +1,80 @@
+[
+  {
+    "test": "V6",
+    "exitCode": 1,
+    "log": "docs/v19_diagnostics/V6.log",
+    "summary": "{\n  \"tests\": 10,\n  \"passed\": 9,\n  \"failed\": 1,\n  \"overlapReviews\": 1,\n  \"selected04\": \"V56-B2-P01-04-monthStem-yearBranch\"\n}"
+  },
+  {
+    "test": "V7",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V7.log",
+    "summary": "{\n  \"tests\": 14,\n  \"passed\": 14,\n  \"failed\": 0,\n  \"overlapPairs\": 1,\n  \"p06\": \"V56-B2-P01-06-yearBranch-hourStem\",\n  \"structured\": 10\n}"
+  },
+  {
+    "test": "V8",
+    "exitCode": 1,
+    "log": "docs/v19_diagnostics/V8.log",
+    "summary": "{\n  \"tests\": 16,\n  \"passed\": 15,\n  \"failed\": 1,\n  \"overlapWarnings\": 1,\n  \"selected\": 10\n}"
+  },
+  {
+    "test": "V9",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V9.log",
+    "summary": "{\n  \"tests\": 12,\n  \"passed\": 12,\n  \"failed\": 0,\n  \"overlapWarnings\": 1,\n  \"sectionsSelected\": 10\n}"
+  },
+  {
+    "test": "V10",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V10.log",
+    "summary": "{\n  \"tests\": 15,\n  \"passed\": 15,\n  \"failed\": 0,\n  \"original\": [\n    \"FIRST_IMPRESSION_NEEDS_READER_VALIDATION\",\n    \"PRIVATE_HABIT_UNOBSERVED\"\n  ],\n  \"revised\": [\n    \"FIRST_IMPRESSION_NEEDS_READER_VALIDATION\",\n    \"PRIVATE_HABIT_UNOBSERVED\"\n  ]\n}"
+  },
+  {
+    "test": "V12",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V12.log",
+    "summary": "{\n  \"tests\": 13,\n  \"passed\": 13,\n  \"failed\": 0,\n  \"selected\": 118,\n  \"behaviorReady\": 69,\n  \"strength\": 10,\n  \"weakness\": 10,\n  \"alerts\": [\n    {\n      \"priorId\": \"V56-B2-P01-04-monthStem-yearBranch\",\n      \"candidateId\": \"V56-B2-P01-05-dayBranch-hourStem\",\n      \"overlappingMotifs\": [\n        \"verification\",\n        \"opportunity-choice\"\n      ]\n    }\n  ]\n}"
+  },
+  {
+    "test": "V13",
+    "exitCode": 1,
+    "log": "docs/v19_diagnostics/V13.log",
+    "summary": "\n  \"selected\": 115,\n  \"structured\": 63,\n  \"strength\": 7,\n  \"weakness\": 7,\n  \"writingReadyStrength\": 7,\n  \"writingReadyWeakness\": 7,\n  \"failedNames\": [\n    \"V13 count is 118 selected and 69 structured slots\",\n    \"nine prior strength scenes plus one supported recovered scene\",\n    \"resource heavy B05 recovers evidence-aligned strength and weakness\",\n    \"B10 remains unapproved when actual selected actions repeat earlier chapter\",\n    \"all structured P01-09 scenes match symbolic family rule\"\n  ]\n}"
+  },
+  {
+    "test": "V14_real",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V14_real.log",
+    "summary": "alityAlerts\": [],\n  \"perSection\": [\n    [\n      \"P01-01\",\n      6,\n      6\n    ],\n    [\n      \"P01-02\",\n      6,\n      6\n    ],\n    [\n      \"P01-03\",\n      4,\n      4\n    ],\n    [\n      \"P01-04\",\n      4,\n      4\n    ],\n    [\n      \"P01-05\",\n      5,\n      5\n    ],\n    [\n      \"P01-06\",\n      3,\n      3\n    ],\n    [\n      \"P01-07\",\n      5,\n      5\n    ],\n    [\n      \"P01-08\",\n      5,\n      5\n    ],\n    [\n      \"P01-09\",\n      6,\n      6\n    ],\n    [\n      \"P01-10\",\n      6,\n      6\n    ]\n  ]\n}"
+  },
+  {
+    "test": "V14_copy",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V14_copy.log",
+    "summary": "{\n  \"reviewedSections\": 6,\n  \"styleViolations\": 0,\n  \"findings\": []\n}"
+  },
+  {
+    "test": "V15",
+    "exitCode": 1,
+    "log": "docs/v19_diagnostics/V15.log",
+    "summary": "{\n  \"passed\": 6,\n  \"failed\": 1,\n  \"chapter01\": {\n    \"structured\": 6,\n    \"uniqueAction\": 5\n  },\n  \"chapter07\": {\n    \"structured\": 5,\n    \"uniqueAction\": 4,\n    \"uniqueRule\": 4\n  },\n  \"originalBehaviorV14\": 34,\n  \"currentBehaviorV15\": 45,\n  \"unresolved\": []\n}"
+  },
+  {
+    "test": "V16",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V16.log",
+    "summary": "{\n  \"test\": \"offline six synthetic birth-date/time charts; Swiss solar term adapter, not production JPL\",\n  \"selected\": 60,\n  \"structured\": 50,\n  \"uniqueAction\": 45,\n  \"uniqueTriggers\": 32,\n  \"chapter04\": {\n    \"count\": 4,\n    \"actions\": 4,\n    \"rules\": 2\n  },\n  \"chapter09\": {\n    \"count\": 6,\n    \"actions\": 5,\n    \"rules\": 5\n  },\n  \"customerAIManuscriptVerified\": false,\n  \"psychologicalAccuracyVerified\": false,\n  \"passed\": true\n}"
+  },
+  {
+    "test": "V17",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V17.log",
+    "summary": " }\n  ],\n  \"perSection\": [\n    [\n      \"P01-01\",\n      12,\n      12\n    ],\n    [\n      \"P01-02\",\n      12,\n      12\n    ],\n    [\n      \"P01-03\",\n      9,\n      9\n    ],\n    [\n      \"P01-04\",\n      7,\n      7\n    ],\n    [\n      \"P01-05\",\n      9,\n      9\n    ],\n    [\n      \"P01-06\",\n      8,\n      8\n    ],\n    [\n      \"P01-07\",\n      7,\n      7\n    ],\n    [\n      \"P01-08\",\n      10,\n      10\n    ],\n    [\n      \"P01-09\",\n      11,\n      11\n    ],\n    [\n      \"P01-10\",\n      11,\n      11\n    ]\n  ]\n}"
+  },
+  {
+    "test": "V18",
+    "exitCode": 0,
+    "log": "docs/v19_diagnostics/V18.log",
+    "summary": "{\n  \"cases\": 12,\n  \"selected\": 119,\n  \"unselected\": 1,\n  \"blocked\": 24,\n  \"verdictCounts\": {\n    \"DISTINCT_OR_UNDETERMINED\": 66,\n    \"SINGLE_AXIS_REVIEW\": 14,\n    \"NOT_COMPARABLE\": 28\n  }\n}"
+  }
+]

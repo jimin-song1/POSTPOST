@@ -1,0 +1,99 @@
+{
+  "note": "synthetic rule coverage, not personality accuracy; legacy checks for god-pair uniqueness replaced by constrained chapter-role reuse",
+  "checks": [
+    {
+      "name": "all 12 synthetic cases executed without crash",
+      "passed": true
+    },
+    {
+      "name": "strength chapter 09 now has supported structured scenes in different signal combinations",
+      "passed": true,
+      "details": {
+        "behavior": 10,
+        "triggers": 3
+      }
+    },
+    {
+      "name": "weakness chapter 10 only follows a linked structured strength",
+      "passed": true,
+      "details": {
+        "behavior": 10
+      }
+    },
+    {
+      "name": "public/private, choice, and pressure triggers are not one fixed sentence",
+      "passed": true,
+      "details": [
+        {
+          "section": "P01-02",
+          "triggers": 5
+        },
+        {
+          "section": "P01-05",
+          "triggers": 4
+        },
+        {
+          "section": "P01-08",
+          "triggers": 5
+        }
+      ]
+    },
+    {
+      "name": "every selected source ID still agrees with synthetic source positions",
+      "passed": true
+    },
+    {
+      "name": "original reference case still returns ten selected behavior hypotheses",
+      "passed": true
+    },
+    {
+      "name": "strength hypothesis retains the exact natal candidate contract",
+      "passed": true
+    },
+    {
+      "name": "weakness linkage reuses exactly one strength position and carries the selected strength to the brief",
+      "passed": true
+    },
+    {
+      "name": "strength does not repeat the pre-decision choice scene",
+      "passed": true
+    },
+    {
+      "name": "unresolved overlap reports remain visible rather than silently disappearing",
+      "passed": true,
+      "details": {
+        "alerts": 1
+      }
+    },
+    {
+      "name": "full section coverage is not falsely claimed across all synthetic cases",
+      "passed": true
+    },
+    {
+      "name": "edited TypeScript files contain no syntax errors",
+      "passed": true
+    },
+    {
+      "name": "selection remains deterministic",
+      "passed": true
+    }
+  ],
+  "passed": 13,
+  "failed": 0,
+  "stats": {
+    "selected": 118,
+    "behaviorReady": 69,
+    "strength": 10,
+    "weakness": 10,
+    "alerts": [
+      {
+        "priorId": "V56-B2-P01-04-monthStem-yearBranch",
+        "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+        "overlappingMotifs": [
+          "verification",
+          "opportunity-choice"
+        ]
+      }
+    ]
+  }
+}

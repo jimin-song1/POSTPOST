@@ -1,0 +1,28 @@
+{
+  "version": "V31",
+  "scope": "Strength chain editorial contract only; not a personality accuracy claim",
+  "checks": [
+    {
+      "name": "provenance and conditional 5-part chain",
+      "result": "PASS"
+    },
+    {
+      "name": "no novel outcome for decision-only scene",
+      "result": "PASS"
+    },
+    {
+      "name": "unverified alignment is not promoted",
+      "result": "PASS"
+    },
+    {
+      "name": "unlinked drawback is not auto-filled",
+      "result": "PASS"
+    },
+    {
+      "name": "RC11 unstructured candidate remains non-publishable",
+      "result": "PASS"
+    }
+  ],
+  "passed": 5,
+  "failed": 0
+}

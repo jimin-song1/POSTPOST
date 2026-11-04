@@ -1,0 +1,93 @@
+{
+  "version": "V20 root-cause audit",
+  "testMode": "offline 12 fictional birth dates using Swiss solar-term substitute",
+  "total": 120,
+  "selected": 119,
+  "writingReady": 96,
+  "unapproved": 24,
+  "unapprovedReasons": {
+    "NO_SELECTED_CANDIDATE": 1,
+    "NO_STRUCTURED_BEHAVIOR": 23,
+    "STRUCTURED_BUT_NOT_WRITING_READY": 0
+  },
+  "rc11": [
+    {
+      "caseId": "RC11",
+      "id": "P01-09",
+      "title": "내 성격의 가장 큰 장점",
+      "candidateId": "V56-X-P01-09-2",
+      "type": "legacy",
+      "status": "DO_NOT_GENERATE",
+      "claim": "월간 편재의 '다양한 기회와 자원 배치'와 일지 편관의 '긴장 속의 책임과 대응'를 비교하며 다른 성질 두 가지가 서로 도울 때 생기는 강점 살펴본다. 핵심은 서로 다른 두 십성 계열이 연결되는 점이다.",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ],
+      "evidenceIds": [
+        "NATAL:PILLARS",
+        "NATAL:TEN_GODS"
+      ],
+      "trigger": "",
+      "action": "",
+      "scenarioRuleId": "",
+      "basis": "",
+      "counter": "",
+      "semantic": "",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "REUSED_SOURCE_PAIR"
+      ]
+    },
+    {
+      "caseId": "RC11",
+      "id": "P01-10",
+      "title": "나를 힘들게 하는 성격",
+      "candidateId": "",
+      "type": "empty",
+      "status": "DO_NOT_GENERATE",
+      "claim": "",
+      "sourceIds": [],
+      "evidenceIds": [],
+      "trigger": "",
+      "action": "",
+      "scenarioRuleId": "",
+      "basis": "",
+      "counter": "",
+      "semantic": "",
+      "flags": []
+    }
+  ],
+  "failedRegressions": [
+    {
+      "test": "V6",
+      "log": "docs/v19_diagnostics/V6.log",
+      "failedNames": [],
+      "classification": "ASSERTION_REVIEW_REQUIRED",
+      "status": "OPEN"
+    },
+    {
+      "test": "V8",
+      "log": "docs/v19_diagnostics/V8.log",
+      "failedNames": [],
+      "classification": "ASSERTION_REVIEW_REQUIRED",
+      "status": "OPEN"
+    },
+    {
+      "test": "V13",
+      "log": "docs/v19_diagnostics/V13.log",
+      "failedNames": [],
+      "classification": "MULTIPLE_BEHAVIOR_CONTRACT_OR_FIXTURE_ASSUMPTIONS",
+      "status": "OPEN"
+    },
+    {
+      "test": "V15",
+      "log": "docs/v19_diagnostics/V15.log",
+      "failedNames": [],
+      "classification": "HISTORICAL_DIVERSITY_EXPECTATION_MISMATCH",
+      "status": "OPEN"
+    }
+  ],
+  "releaseReady": false,
+  "status": "BLOCKED_UNRESOLVED",
+  "note": "No inference behavior was changed. RC11 candidate generation must be improved without relaxing provenance/semantic-overlap checks. Passing this diagnostic is not release approval."
+}

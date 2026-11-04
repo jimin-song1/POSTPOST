@@ -1,0 +1,3209 @@
+{
+  "version": "V18",
+  "basis": "V17 12 birth-time fictional charts, 120 slots; no live API / no psychological validation",
+  "comparisonPrinciple": "behavior, decision basis and trigger are distinct axes; symbolic-family match by itself never proves content duplication",
+  "caseCount": 12,
+  "selected": 119,
+  "unselected": 1,
+  "blocked": [
+    {
+      "caseId": "RC01",
+      "sectionId": "P01-05",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC01",
+      "sectionId": "P01-06",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC02",
+      "sectionId": "P01-03",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC03",
+      "sectionId": "P01-04",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC03",
+      "sectionId": "P01-06",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC04",
+      "sectionId": "P01-03",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC04",
+      "sectionId": "P01-04",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC04",
+      "sectionId": "P01-06",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC04",
+      "sectionId": "P01-07",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC04",
+      "sectionId": "P01-08",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC07",
+      "sectionId": "P01-07",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC07",
+      "sectionId": "P01-08",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC09",
+      "sectionId": "P01-05",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC10",
+      "sectionId": "P01-04",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC10",
+      "sectionId": "P01-05",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC10",
+      "sectionId": "P01-06",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC10",
+      "sectionId": "P01-07",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC11",
+      "sectionId": "P01-03",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC11",
+      "sectionId": "P01-04",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC11",
+      "sectionId": "P01-07",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC11",
+      "sectionId": "P01-09",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC11",
+      "sectionId": "P01-10",
+      "reason": "STRENGTH_WITHOUT_STRUCTURED_BEHAVIOR",
+      "status": "DO_NOT_GENERATE",
+      "type": "empty"
+    },
+    {
+      "caseId": "RC12",
+      "sectionId": "P01-04",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    },
+    {
+      "caseId": "RC12",
+      "sectionId": "P01-07",
+      "reason": "REVIEW_REQUIRED",
+      "status": "DO_NOT_GENERATE",
+      "type": "legacy"
+    }
+  ],
+  "verdictCounts": {
+    "DISTINCT_OR_UNDETERMINED": 66,
+    "SINGLE_AXIS_REVIEW": 14,
+    "NOT_COMPARABLE": 28
+  },
+  "results": [
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthStem-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.0136986301369863
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05263157894736842
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.019801980198019802
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-03-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.020202020202020204
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24193548387096775
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-04-dayBranch-monthStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.234375
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-05-10",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-06-11",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-07-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.013157894736842105
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.39285714285714285
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-08-hourStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.03614457831325301
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3114754098360656
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC01",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3728813559322034
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.01282051282051282
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.0547945205479452
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.019801980198019802
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-03-11",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-04-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3620689655172414
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-05-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.00980392156862745
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.296875
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-06-hourBranch-yearBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.011904761904761904
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05128205128205128
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-07-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.014084507042253521
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3448275862068966
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-08-monthStem-yearBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.011764705882352941
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05263157894736842
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC02",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.022222222222222223
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3559322033898305
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.0136986301369863
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05194805194805195
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-03-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.23529411764705882
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-04-15",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-05-monthStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.00980392156862745
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3548387096774194
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-06-13",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-07-monthBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.014492753623188406
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.234375
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-08-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.012048192771084338
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.31666666666666665
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC03",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthStem-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.8222222222222222
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2982456140350877
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-03-18",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-04-10",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-05-monthStem-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.36363636363636365
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-06-11",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-07-1",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-X-P01-08-14",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC04",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-yearStem-monthStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.44
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.025
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.36666666666666664
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-03-yearStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05194805194805195
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-04-yearStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3064516129032258
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05555555555555555
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-05-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24242424242424243
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-06-dayBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.23529411764705882
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-07-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3389830508474576
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-08-monthStem-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3064516129032258
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC05",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3548387096774194
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-yearBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.02666666666666667
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05194805194805195
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.23880597014925373
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-03-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.0297029702970297
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2903225806451613
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-04-hourBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.5094339622641509
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-05-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.020202020202020204
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24615384615384617
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-06-yearBranch-monthStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.011494252873563218
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05063291139240506
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-07-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.012987012987012988
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24615384615384617
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-08-yearBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.03614457831325301
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3114754098360656
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC06",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-10-dayBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.022222222222222223
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.8604651162790697
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.014285714285714285
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05063291139240506
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2923076923076923
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-03-dayBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24242424242424243
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-04-dayBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24615384615384617
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-05-yearBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.01
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.36666666666666664
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-06-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.011111111111111112
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-07-10",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-08-1",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC07",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-yearBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2923076923076923
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-01-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.009523809523809525
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2647058823529412
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-03-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2923076923076923
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-04-monthBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05128205128205128
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-05-yearStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2727272727272727
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-06-hourBranch-monthStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.23529411764705882
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-07-yearStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.30158730158730157
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-08-yearStem-monthStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05128205128205128
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC08",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-10-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.010638297872340425
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.2647058823529412
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.024390243902439025
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3898305084745763
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.00909090909090909
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-03-yearBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.00909090909090909
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.22727272727272727
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-04-yearBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3064516129032258
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-X-P01-05-10",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-06-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.234375
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-07-monthStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3389830508474576
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-08-monthStem-yearBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05405405405405406
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC09",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-hourBranch",
+      "otherCandidateId": "V56-B2-P01-10-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.02040816326530612
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.8222222222222222
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.029411764705882353
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.02631578947368421
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3448275862068966
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.0196078431372549
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-03-monthBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.009615384615384616
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3559322033898305
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-04-11",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-05-2",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-P01-F",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-X-P01-07-9",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-08-yearStem-monthBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.24193548387096775
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC10",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthBranch-dayBranch",
+      "otherCandidateId": "V56-B2-P01-10-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.02197802197802198
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.8181818181818182
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-X-P01-03-13",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-X-P01-04-15",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-B2-P01-05-monthStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-B2-P01-06-monthStem-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-X-P01-07-1",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "V56-B2-P01-08-dayBranch-yearStem",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC11",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-X-P01-09-2",
+      "otherCandidateId": "",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-01"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-01-monthBranch-dayBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05194805194805195
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-02"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-02-monthStem-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3898305084745763
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-03"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-03-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.019230769230769232
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3389830508474576
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-04"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-X-P01-04-10",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-05"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-05-monthBranch-hourStem",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.009433962264150943
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.05
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-06"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-06-monthStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": true,
+          "exact": true,
+          "jaccard": 1
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "SINGLE_AXIS_REVIEW",
+      "sharedSymbolFamily": true
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-07"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-X-P01-07-5",
+      "metrics": {
+        "action": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "decision": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        },
+        "situation": {
+          "comparable": false,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "NOT_COMPARABLE",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-08"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-08-yearStem-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.011111111111111112
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3225806451612903
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": false
+    },
+    {
+      "caseId": "RC12",
+      "pair": [
+        "P01-09",
+        "P01-10"
+      ],
+      "strengthCandidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "otherCandidateId": "V56-B2-P01-10-dayBranch-hourBranch",
+      "metrics": {
+        "action": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.021739130434782608
+        },
+        "decision": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0.3389830508474576
+        },
+        "situation": {
+          "comparable": true,
+          "exact": false,
+          "jaccard": 0
+        }
+      },
+      "verdict": "DISTINCT_OR_UNDETERMINED",
+      "sharedSymbolFamily": true
+    }
+  ]
+}

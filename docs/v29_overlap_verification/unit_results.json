@@ -1,0 +1,26 @@
+{
+  "version": "V29",
+  "mode": "UNIT_CONTRACT_ONLY",
+  "results": [
+    {
+      "name": "same-action-different-motifs",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "same-action-punctuation",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "motif-overlap-different-action",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "distinct-action-distinct-motifs",
+      "actual": false,
+      "expected": false
+    }
+  ]
+}

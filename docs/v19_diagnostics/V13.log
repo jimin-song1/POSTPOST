@@ -1,0 +1,19 @@
+{
+  "passed": 10,
+  "failed": 5,
+  "selected": 115,
+  "structured": 63,
+  "strength": 7,
+  "weakness": 7,
+  "writingReadyStrength": 7,
+  "writingReadyWeakness": 7,
+  "failedNames": [
+    "V13 count is 118 selected and 69 structured slots",
+    "nine prior strength scenes plus one supported recovered scene",
+    "resource heavy B05 recovers evidence-aligned strength and weakness",
+    "B10 remains unapproved when actual selected actions repeat earlier chapter",
+    "all structured P01-09 scenes match symbolic family rule"
+  ]
+}
+
+STDERR

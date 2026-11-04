@@ -1,0 +1,19 @@
+{
+  "tests": 13,
+  "passed": 13,
+  "failed": 0,
+  "selected": 118,
+  "behaviorReady": 69,
+  "strength": 10,
+  "weakness": 10,
+  "alerts": [
+    {
+      "priorId": "V56-B2-P01-04-monthStem-yearBranch",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "overlappingMotifs": [
+        "verification",
+        "opportunity-choice"
+      ]
+    }
+  ]
+}

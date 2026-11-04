@@ -1,0 +1,518 @@
+{
+  "withinChartOverlap": [
+    {
+      "caseId": "RC01",
+      "collisions": [
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-08",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|peer"
+        },
+        {
+          "a": "P01-07",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC02",
+      "collisions": [
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC03",
+      "collisions": [
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC04",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|peer"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|peer"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|peer"
+        }
+      ]
+    },
+    {
+      "caseId": "RC05",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-07",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|wealth"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|wealth"
+        },
+        {
+          "a": "P01-05",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        },
+        {
+          "a": "P01-07",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC06",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-05",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        },
+        {
+          "a": "P01-04",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-04",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC07",
+      "collisions": [
+        {
+          "a": "P01-02",
+          "b": "P01-03",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC08",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-05",
+          "b": "P01-08",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        }
+      ]
+    },
+    {
+      "caseId": "RC09",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC10",
+      "collisions": [
+        {
+          "a": "P01-02",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-08",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|peer"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "output|resource"
+        }
+      ]
+    },
+    {
+      "caseId": "RC11",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-08",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|resource"
+        },
+        {
+          "a": "P01-02",
+          "b": "P01-05",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "officer|wealth"
+        }
+      ]
+    },
+    {
+      "caseId": "RC12",
+      "collisions": [
+        {
+          "a": "P01-01",
+          "b": "P01-03",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-01",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-06",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-03",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-05",
+          "b": "P01-08",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "resource|wealth"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-09",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-06",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        },
+        {
+          "a": "P01-09",
+          "b": "P01-10",
+          "exactAction": false,
+          "sharedSemantic": true,
+          "semantic": "peer|resource"
+        }
+      ]
+    }
+  ],
+  "total": 120,
+  "selected": 119,
+  "structured": 96,
+  "ready": 96,
+  "empty": 1,
+  "legacy": 23,
+  "uniqueBehavioralActions": 77,
+  "uniqueTriggers": 49,
+  "duplicateTriggers": 24,
+  "duplicateAction": 13,
+  "qualityAlerts": [
+    {
+      "code": "REPEATED_BEHAVIOR_TEMPLATE",
+      "sectionId": "P01-01",
+      "unique": 6,
+      "count": 12,
+      "ratio": 0.5
+    },
+    {
+      "code": "REPEATED_BEHAVIOR_TEMPLATE",
+      "sectionId": "P01-06",
+      "unique": 4,
+      "count": 8,
+      "ratio": 0.5
+    }
+  ],
+  "perSection": [
+    [
+      "P01-01",
+      12,
+      12
+    ],
+    [
+      "P01-02",
+      12,
+      12
+    ],
+    [
+      "P01-03",
+      9,
+      9
+    ],
+    [
+      "P01-04",
+      7,
+      7
+    ],
+    [
+      "P01-05",
+      9,
+      9
+    ],
+    [
+      "P01-06",
+      8,
+      8
+    ],
+    [
+      "P01-07",
+      7,
+      7
+    ],
+    [
+      "P01-08",
+      10,
+      10
+    ],
+    [
+      "P01-09",
+      11,
+      11
+    ],
+    [
+      "P01-10",
+      11,
+      11
+    ]
+  ]
+}
+
+STDERR
+calculate RC01
+RC01 {"pillars":{"year":"己巳","month":"壬申","day":"丁未","hour":"丙午"},"selected":10,"structured":8,"ready":8}
+calculate RC02
+RC02 {"pillars":{"year":"壬申","month":"癸卯","day":"癸巳","hour":"丙辰"},"selected":10,"structured":9,"ready":9}
+calculate RC03
+RC03 {"pillars":{"year":"乙亥","month":"乙酉","day":"辛亥","hour":"壬辰"},"selected":10,"structured":8,"ready":8}
+calculate RC04
+RC04 {"pillars":{"year":"戊寅","month":"甲子","day":"戊戌","hour":"壬戌"},"selected":10,"structured":5,"ready":5}
+calculate RC05
+RC05 {"pillars":{"year":"庚辰","month":"己丑","day":"戊子","hour":"丁巳"},"selected":10,"structured":10,"ready":10}
+calculate RC06
+RC06 {"pillars":{"year":"癸未","month":"丁巳","day":"戊子","hour":"庚申"},"selected":10,"structured":10,"ready":10}
+calculate RC07
+RC07 {"pillars":{"year":"丙寅","month":"戊戌","day":"辛亥","hour":"己亥"},"selected":10,"structured":8,"ready":8}
+calculate RC08
+RC08 {"pillars":{"year":"庚午","month":"壬午","day":"甲子","hour":"丁卯"},"selected":10,"structured":10,"ready":10}
+calculate RC09
+RC09 {"pillars":{"year":"甲戌","month":"丙寅","day":"丙寅","hour":"丁酉"},"selected":10,"structured":9,"ready":9}
+calculate RC10
+RC10 {"pillars":{"year":"丁丑","month":"丁未","day":"丁卯","hour":"乙巳"},"selected":10,"structured":6,"ready":6}
+calculate RC11
+RC11 {"pillars":{"year":"庚辰","month":"丙戌","day":"壬戌","hour":"辛丑"},"selected":9,"structured":5,"ready":5}
+calculate RC12
+RC12 {"pillars":{"year":"乙酉","month":"庚辰","day":"辛酉","hour":"乙未"},"selected":10,"structured":8,"ready":8}

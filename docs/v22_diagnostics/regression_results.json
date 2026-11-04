@@ -1,0 +1,72 @@
+[
+  {
+    "script": "verify-personality-copy-v14.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"reviewedSections\": 6,\n  \"styleViolations\": 0,\n  \"findings\": []\n}\n"
+  },
+  {
+    "script": "verify-personality-crosscharts-v17.cjs",
+    "exitCode": 0,
+    "tail": "\":\"丁巳\"},\"selected\":10,\"structured\":10,\"ready\":10}\ncalculate RC06\nRC06 {\"pillars\":{\"year\":\"癸未\",\"month\":\"丁巳\",\"day\":\"戊子\",\"hour\":\"庚申\"},\"selected\":10,\"structured\":10,\"ready\":10}\ncalculate RC07\nRC07 {\"pillars\":{\"year\":\"丙寅\",\"month\":\"戊戌\",\"day\":\"辛亥\",\"hour\":\"己亥\"},\"selected\":10,\"structured\":8,\"ready\":8}\ncalculate RC08\nRC08 {\"pillars\":{\"year\":\"庚午\",\"month\":\"壬午\",\"day\":\"甲子\",\"hour\":\"丁卯\"},\"selected\":10,\"structured\":10,\"ready\":10}\ncalculate RC09\nRC09 {\"pillars\":{\"year\":\"甲戌\",\"month\":\"丙寅\",\"day\":\"丙寅\",\"hour\":\"丁酉\"},\"selected\":10,\"structured\":9,\"ready\":9}\ncalculate RC10\nRC10 {\"pillars\":{\"year\":\"丁丑\",\"month\":\"丁未\",\"day\":\"丁卯\",\"hour\":\"乙巳\"},\"selected\":10,\"structured\":6,\"ready\":6}\ncalculate RC11\nRC11 {\"pillars\":{\"year\":\"庚辰\",\"month\":\"丙戌\",\"day\":\"壬戌\",\"hour\":\"辛丑\"},\"selected\":9,\"structured\":5,\"ready\":5}\ncalculate RC12\nRC12 {\"pillars\":{\"year\":\"乙酉\",\"month\":\"庚辰\",\"day\":\"辛酉\",\"hour\":\"乙未\"},\"selected\":10,\"structured\":8,\"ready\":8}\n"
+  },
+  {
+    "script": "verify-personality-diversity-v12.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"tests\": 13,\n  \"passed\": 13,\n  \"failed\": 0,\n  \"selected\": 118,\n  \"behaviorReady\": 69,\n  \"strength\": 10,\n  \"weakness\": 10,\n  \"alerts\": [\n    {\n      \"priorId\": \"V56-B2-P01-04-monthStem-yearBranch\",\n      \"candidateId\": \"V56-B2-P01-05-dayBranch-hourStem\",\n      \"overlappingMotifs\": [\n        \"verification\",\n        \"opportunity-choice\"\n      ]\n    }\n  ]\n}\n"
+  },
+  {
+    "script": "verify-personality-diversity-v13.cjs",
+    "exitCode": 1,
+    "tail": "{\n  \"passed\": 10,\n  \"failed\": 5,\n  \"selected\": 115,\n  \"structured\": 63,\n  \"strength\": 7,\n  \"weakness\": 7,\n  \"writingReadyStrength\": 7,\n  \"writingReadyWeakness\": 7,\n  \"failedNames\": [\n    \"V13 count is 118 selected and 69 structured slots\",\n    \"nine prior strength scenes plus one supported recovered scene\",\n    \"resource heavy B05 recovers evidence-aligned strength and weakness\",\n    \"B10 remains unapproved when actual selected actions repeat earlier chapter\",\n    \"all structured P01-09 scenes match symbolic family rule\"\n  ]\n}\n"
+  },
+  {
+    "script": "verify-personality-diversity-v8.cjs",
+    "exitCode": 1,
+    "tail": "{\n  \"tests\": 16,\n  \"passed\": 15,\n  \"failed\": 1,\n  \"overlapWarnings\": 1,\n  \"selected\": 10\n}\n"
+  },
+  {
+    "script": "verify-personality-expression-v6.cjs",
+    "exitCode": 1,
+    "tail": "{\n  \"tests\": 10,\n  \"passed\": 9,\n  \"failed\": 1,\n  \"overlapReviews\": 1,\n  \"selected04\": \"V56-B2-P01-04-monthStem-yearBranch\"\n}\n"
+  },
+  {
+    "script": "verify-personality-manuscript-v10.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"tests\": 15,\n  \"passed\": 15,\n  \"failed\": 0,\n  \"original\": [\n    \"FIRST_IMPRESSION_NEEDS_READER_VALIDATION\",\n    \"PRIVATE_HABIT_UNOBSERVED\"\n  ],\n  \"revised\": [\n    \"FIRST_IMPRESSION_NEEDS_READER_VALIDATION\",\n    \"PRIVATE_HABIT_UNOBSERVED\"\n  ]\n}\n"
+  },
+  {
+    "script": "verify-personality-realcharts-v14.cjs",
+    "exitCode": 0,
+    "tail": "\",\n      5,\n      5\n    ],\n    [\n      \"P01-08\",\n      5,\n      5\n    ],\n    [\n      \"P01-09\",\n      6,\n      6\n    ],\n    [\n      \"P01-10\",\n      6,\n      6\n    ]\n  ]\n}\ncalculate RC01\nRC01 {\"pillars\":{\"year\":\"己巳\",\"month\":\"壬申\",\"day\":\"丁未\",\"hour\":\"丙午\"},\"selected\":10,\"structured\":8,\"ready\":8}\ncalculate RC02\nRC02 {\"pillars\":{\"year\":\"壬申\",\"month\":\"癸卯\",\"day\":\"癸巳\",\"hour\":\"丙辰\"},\"selected\":10,\"structured\":9,\"ready\":9}\ncalculate RC03\nRC03 {\"pillars\":{\"year\":\"乙亥\",\"month\":\"乙酉\",\"day\":\"辛亥\",\"hour\":\"壬辰\"},\"selected\":10,\"structured\":8,\"ready\":8}\ncalculate RC04\nRC04 {\"pillars\":{\"year\":\"戊寅\",\"month\":\"甲子\",\"day\":\"戊戌\",\"hour\":\"壬戌\"},\"selected\":10,\"structured\":5,\"ready\":5}\ncalculate RC05\nRC05 {\"pillars\":{\"year\":\"庚辰\",\"month\":\"己丑\",\"day\":\"戊子\",\"hour\":\"丁巳\"},\"selected\":10,\"structured\":10,\"ready\":10}\ncalculate RC06\nRC06 {\"pillars\":{\"year\":\"癸未\",\"month\":\"丁巳\",\"day\":\"戊子\",\"hour\":\"庚申\"},\"selected\":10,\"structured\":10,\"ready\":10}\n"
+  },
+  {
+    "script": "verify-personality-release-gate-v19.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"charts\": 12,\n  \"slots\": 120,\n  \"selected\": 119,\n  \"writingReady\": 96,\n  \"unapproved\": 24,\n  \"failedRegressions\": [\n    \"V6\",\n    \"V8\",\n    \"V13\",\n    \"V15\"\n  ],\n  \"releaseReady\": false\n}\n"
+  },
+  {
+    "script": "verify-personality-revision-v7.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"tests\": 14,\n  \"passed\": 14,\n  \"failed\": 0,\n  \"overlapPairs\": 1,\n  \"p06\": \"V56-B2-P01-06-yearBranch-hourStem\",\n  \"structured\": 10\n}\n"
+  },
+  {
+    "script": "verify-personality-scene-v15.cjs",
+    "exitCode": 1,
+    "tail": "{\n  \"passed\": 6,\n  \"failed\": 1,\n  \"chapter01\": {\n    \"structured\": 6,\n    \"uniqueAction\": 5\n  },\n  \"chapter07\": {\n    \"structured\": 5,\n    \"uniqueAction\": 4,\n    \"uniqueRule\": 4\n  },\n  \"originalBehaviorV14\": 34,\n  \"currentBehaviorV15\": 45,\n  \"unresolved\": []\n}\n"
+  },
+  {
+    "script": "verify-personality-scene-v16.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"test\": \"offline six synthetic birth-date/time charts; Swiss solar term adapter, not production JPL\",\n  \"selected\": 60,\n  \"structured\": 50,\n  \"uniqueAction\": 45,\n  \"uniqueTriggers\": 32,\n  \"chapter04\": {\n    \"count\": 4,\n    \"actions\": 4,\n    \"rules\": 2\n  },\n  \"chapter09\": {\n    \"count\": 6,\n    \"actions\": 5,\n    \"rules\": 5\n  },\n  \"customerAIManuscriptVerified\": false,\n  \"psychologicalAccuracyVerified\": false,\n  \"passed\": true\n}\n"
+  },
+  {
+    "script": "verify-personality-strength-v9.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"tests\": 12,\n  \"passed\": 12,\n  \"failed\": 0,\n  \"overlapWarnings\": 1,\n  \"sectionsSelected\": 10\n}\n"
+  },
+  {
+    "script": "verify-personality-v20.cjs",
+    "exitCode": 0,
+    "tail": "{\n  \"total\": 120,\n  \"selected\": 119,\n  \"writingReady\": 96,\n  \"unapproved\": 24,\n  \"unapprovedReasons\": {\n    \"NO_SELECTED_CANDIDATE\": 1,\n    \"NO_STRUCTURED_BEHAVIOR\": 23,\n    \"STRUCTURED_BUT_NOT_WRITING_READY\": 0\n  },\n  \"failedRegressions\": [\n    \"V6\",\n    \"V8\",\n    \"V13\",\n    \"V15\"\n  ],\n  \"releaseReady\": false\n}\n"
+  }
+]
