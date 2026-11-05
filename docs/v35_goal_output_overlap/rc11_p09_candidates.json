@@ -1,0 +1,707 @@
+{
+  "chart": "RC11",
+  "section": "P01-09",
+  "earlierSelections": [
+    {
+      "section": "P01-01",
+      "id": "V56-B2-P01-01-monthBranch-hourStem",
+      "structured": true,
+      "goalKey": "START_ORDER",
+      "actionGoal": "새 일을 어디서부터 시작할지 정하는 것",
+      "observableOutput": "정해진 시작 단계"
+    },
+    {
+      "section": "P01-02",
+      "id": "V56-B2-P01-02-monthStem-dayBranch",
+      "structured": true,
+      "goalKey": null,
+      "actionGoal": null,
+      "observableOutput": null
+    },
+    {
+      "section": "P01-03",
+      "id": "V56-X-P01-03-13",
+      "structured": false,
+      "goalKey": null,
+      "actionGoal": null,
+      "observableOutput": null
+    },
+    {
+      "section": "P01-04",
+      "id": "V56-X-P01-04-15",
+      "structured": false,
+      "goalKey": null,
+      "actionGoal": null,
+      "observableOutput": null
+    },
+    {
+      "section": "P01-05",
+      "id": "V56-B2-P01-05-monthStem-hourBranch",
+      "structured": true,
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "제안을 고르기 전에 우선 확인할 조건을 정하는 것",
+      "observableOutput": "선택 전에 우선 확인할 조건"
+    },
+    {
+      "section": "P01-06",
+      "id": "V56-B2-P01-06-monthStem-yearStem",
+      "structured": true,
+      "goalKey": "REVISE_COMMITMENT",
+      "actionGoal": "이미 내린 결정을 유지할지 고칠지 정하는 것",
+      "observableOutput": "유지할 부분과 바꿀 부분의 구분"
+    },
+    {
+      "section": "P01-07",
+      "id": "V56-X-P01-07-1",
+      "structured": false,
+      "goalKey": null,
+      "actionGoal": null,
+      "observableOutput": null
+    },
+    {
+      "section": "P01-08",
+      "id": "V56-B2-P01-08-dayBranch-yearStem",
+      "structured": true,
+      "goalKey": "RESPOND_TO_PROBLEM",
+      "actionGoal": "예상 밖의 문제에 대응할 순서를 정하는 것",
+      "observableOutput": "문제 대응의 우선순위"
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "sources": "일지 戌, 시간 辛",
+      "tenGods": "정인|편관",
+      "family": "officer|resource",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 편관, 시간 정인)",
+      "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "decision": "SELECTED",
+      "editorialRank": 15,
+      "flags": [
+        "LOW_CONFIDENCE"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "목표와 산출물을 비교해 P01-08와 구별함: 목표(예상 밖의 문제에 대응할 순서를 정하는 것 ↔ 새 절차를 실제 일에 어디까지 적용할지 정하는 것), 산출물(문제 대응의 우선순위 ↔ 공식 기준과 대조해 정한 적용 범위). 공통 어휘(role-boundary, verification)는 본문에서 반복하지 않도록 검토"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "sources": "월간 丙, 일지 戌",
+      "tenGods": "편관|편재",
+      "family": "officer|wealth",
+      "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 시급한 요청의 우선 책임을 정리하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalKey": "CHOOSE_OPTION",
+      "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+      "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 13,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": true
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "SAME_GOAL_OR_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
+      "sources": "연지 辰, 월간 丙",
+      "tenGods": "편관|편재",
+      "family": "officer|wealth",
+      "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 대안별 기회비용과 활용 가능성을 검토하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalKey": "CHOOSE_OPTION",
+      "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 연지 편관, 월간 편재)",
+      "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 13,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "SAME_GOAL_OR_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
+      "sources": "월지 戌, 시간 辛",
+      "tenGods": "정인|편관",
+      "family": "officer|resource",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+      "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 11,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "DUPLICATE_NARRATIVE"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 섹션에서 동일 서사 사용됨: V56-B2-P01-09-dayBranch-hourStem"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": true
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "sources": "월간 丙, 시지 丑",
+      "tenGods": "정관|편재",
+      "family": "officer|wealth",
+      "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 합의된 기준과 절차를 확인하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalKey": "CHOOSE_OPTION",
+      "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+      "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 10,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "SAME_GOAL_OR_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": true
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-dayBranch",
+      "sources": "연간 庚, 일지 戌",
+      "tenGods": "편관|편인",
+      "family": "officer|resource",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "action": "기존 설명과 다른 접근의 가능성을 검토하는 일과 시급한 요청의 우선 책임을 정리하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "decisionBasis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 연간 편인, 일지 편관)",
+      "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 10,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-08"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": true
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-monthStem",
+      "sources": "연간 庚, 월간 丙",
+      "tenGods": "편인|편재",
+      "family": "resource|wealth",
+      "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+      "action": "기존 설명과 다른 접근의 가능성을 검토하는 일과 대안별 기회비용과 활용 가능성을 검토하는 일을 함께 살펴 선택지를 좁히려는 모습",
+      "actionGoal": "설명이 다른 제안 가운데 선택지를 좁히는 것",
+      "observableOutput": "좁혀진 선택지",
+      "goalKey": "CHOOSE_OPTION",
+      "decisionBasis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 연간 편인, 월간 편재)",
+      "counterCondition": "검증할 정보가 부족하면 당장 결론을 내리지 않을 수도 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 10,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "SAME_GOAL_OR_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": true
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
+      "sources": "월지 戌, 연간 庚",
+      "tenGods": "편관|편인",
+      "family": "officer|resource",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 기존 설명과 다른 접근의 가능성을 검토하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 편관, 연간 편인)",
+      "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+      "decision": "ALTERNATIVE",
+      "editorialRank": 4,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "REUSED_SOURCE_PAIR",
+        "SCENE_COMPARISON_UNAVAILABLE"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [
+        "P01-07"
+      ],
+      "evidenceInsufficient": false
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourStem",
+      "sources": "월간 丙, 시간 辛",
+      "tenGods": "정인|편재",
+      "family": "resource|wealth",
+      "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 선택지를 좁히려는 모습",
+      "actionGoal": "설명이 다른 제안 가운데 선택지를 좁히는 것",
+      "observableOutput": "좁혀진 선택지",
+      "goalKey": "CHOOSE_OPTION",
+      "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월간 편재, 시간 정인)",
+      "counterCondition": "검증할 정보가 부족하면 당장 결론을 내리지 않을 수도 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "decision": "REJECTED",
+      "editorialRank": 2,
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "reasons": [
+        "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+        "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+      ],
+      "comparisonWithEarlier": [
+        {
+          "section": "P01-01",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-02",
+          "goalOutput": "UNVERIFIED",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-05",
+          "goalOutput": "SAME_GOAL_OR_OUTPUT",
+          "motifNearDuplicate": true,
+          "nearDuplicate": true,
+          "samePair": false
+        },
+        {
+          "section": "P01-06",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        },
+        {
+          "section": "P01-08",
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "motifNearDuplicate": false,
+          "nearDuplicate": false,
+          "samePair": false
+        }
+      ],
+      "legacyPairReuse": [
+        "P01-03"
+      ],
+      "evidenceInsufficient": false
+    }
+  ],
+  "p10": {
+    "claim": "앞 절의 강점을 적용하는 범위가 넓어질 때의 부담을 검토합니다. 압박 속 우선 처리할 책임과 이미 알고 있는 정보와 이해의 근거 사이에 조정이 필요한 상황을 살펴봅니다.",
+    "strength": "주요 기준 두 가지를 구분할 수 있음: 압박 속 우선 처리할 책임 / 이미 알고 있는 정보와 이해의 근거",
+    "drawback": "첫째 기준(압박 속 우선 처리할 책임)에만 집중하면 둘째 기준(이미 알고 있는 정보와 이해의 근거)을 놓칠 수 있는 조건",
+    "unexpected": "설명을 검토할 시간이 주어질 때에는 기준의 우선순위가 바뀔 수 있다는 점",
+    "exampleScene": "예시: 정해진 절차를 모두 지키려다 일정과 조율해야 할 때 압박 속 우선 처리할 책임을 모든 상황에 적용하려 하면 이미 알고 있는 정보와 이해의 근거를 고려할 여유가 줄어들 수 있다는 부담 가설. 실제 과거 사건을 확인한 것이 아님",
+    "sourceIds": [
+      "PILLAR:month:branch:戌",
+      "PILLAR:hour:stem:辛"
+    ],
+    "evidenceIds": [
+      "NATAL:PILLARS",
+      "NATAL:TEN_GODS",
+      "NATAL:STRUCTURE:PRIMARY"
+    ],
+    "limits": [
+      "명리 상징에서 구성한 가설이며 당사자 행동·의도·감정을 관찰한 사실이 아닙니다.",
+      "지장간·격국은 같은 원국에서 파생된 자료이며 독립적인 인격 증거가 아닙니다.",
+      "심리적 동기·질환·가족 경험·직업 성과를 새로 만들어내지 않습니다.",
+      "앞 절의 장점과 같은 단어를 반복하지 말고 그것이 부담으로 바뀌는 조건만 설명합니다."
+    ],
+    "editorialContext": [
+      "월지 본기: 전통적 명리 해석에서 월령을 우선 고려"
+    ],
+    "counterConsiderations": [
+      "격국이 미성립/혼재일 수 있으므로 월지 신호 하나로 성격을 확정하지 않습니다.",
+      "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+    ],
+    "behaviorHypothesis": {
+      "axis": "강점이 부담으로 바뀌는 경계",
+      "trigger": "정해진 절차를 모두 지키려다 일정과 조율해야 할 때",
+      "observableBehavior": "압박 속 우선 처리할 책임을 모든 상황에 적용하려 하면 이미 알고 있는 정보와 이해의 근거를 고려할 여유가 줄어들 수 있다는 부담 가설",
+      "actionGoal": null,
+      "observableOutput": null,
+      "goalOutputEvidence": "INSUFFICIENT_SCENE",
+      "goalKey": null,
+      "outputKey": null,
+      "goalOutputSource": null,
+      "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+      "possibleMotive": null,
+      "counterCondition": "책임이나 정보가 제한된 상황에서는 기준을 완화하는 게 유리할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+      "structuralContext": [
+        "월지 戌의 지장간에는 본기 편관 외에 정재(middleQi)·정인(residualQi)도 있음. 동일 지지의 파생 정보이므로 독립 증거로 세지 않음",
+        "격국 상태 UNEXPOSED와 월지 본기 편관이 연결됨. 격이 존재한다는 사실만으로 실제 행동을 증명하지 않음"
+      ],
+      "inferenceSteps": [
+        "원국에서 PILLAR:month:branch:戌(편관) 확인",
+        "다른 기둥의 PILLAR:hour:stem:辛(정인) 확인",
+        "소제목 '강점이 부담으로 바뀌는 경계'에 두 상징의 우선순위가 달라질 조건을 가설로 연결",
+        "월지 戌의 지장간에는 본기 편관 외에 정재(middleQi)·정인(residualQi)도 있음. 동일 지지의 파생 정보이므로 독립 증거로 세지 않음",
+        "격국 상태 UNEXPOSED와 월지 본기 편관이 연결됨. 격이 존재한다는 사실만으로 실제 행동을 증명하지 않음",
+        "앞 절의 강점 V56-B2-P01-09-dayBranch-hourStem에서 확인된 원국 위치 한 곳에 새로운 위치의 신호를 연결해 부담 조건을 검토"
+      ],
+      "inferenceLevel": "CONDITIONAL_INTERPRETATION",
+      "semanticPairKey": "정인|편관",
+      "semanticFamilyPairKey": "officer|resource",
+      "semanticMotifs": [
+        "role-boundary",
+        "verification",
+        "execution",
+        "pressure"
+      ],
+      "linkedStrengthCandidateId": "V56-B2-P01-09-dayBranch-hourStem"
+    },
+    "linkedStrengthContext": {
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "behavior": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ]
+    }
+  }
+}

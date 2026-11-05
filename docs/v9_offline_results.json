@@ -1,0 +1,706 @@
+{
+  "runType": "isolated Node transpilation and regression, not full typecheck, Vitest, actual model writing or clinical/personality validation",
+  "sample": "SYNTHETIC_CORE_001",
+  "checks": [
+    {
+      "name": "all 10 sections selected in this one synthetic scenario",
+      "status": "PASS"
+    },
+    {
+      "name": "05 is about criteria before deciding",
+      "status": "PASS",
+      "details": {
+        "scene": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 이미 알고 있는 정보와 이해의 근거도 검토하는 가설"
+      }
+    },
+    {
+      "name": "09 is an evidence-backed concrete output action, not more choice",
+      "status": "PASS",
+      "details": {
+        "scene": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+        "rule": "P01-09:output|peer:겁재|식신"
+      }
+    },
+    {
+      "name": "05 / 09 are different behaviors",
+      "status": "PASS",
+      "details": {
+        "similarity": {
+          "repeatedMotifs": [],
+          "nearDuplicate": false,
+          "motifNearDuplicate": false,
+          "goalOutput": "DISTINCT_GOAL_AND_OUTPUT",
+          "penalty": 0
+        }
+      }
+    },
+    {
+      "name": "original problematic 05 / 09 remains detectable",
+      "status": "PASS"
+    },
+    {
+      "name": "10 inherits the exact selected 09 in writing brief",
+      "status": "PASS"
+    },
+    {
+      "name": "canonical behavior contract remains intact",
+      "status": "PASS"
+    },
+    {
+      "name": "tampered strength behavior blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "no output signal means no output-based strength rule",
+      "status": "PASS",
+      "details": {
+        "strength": "V56-B2-P01-09-monthBranch-hourStem"
+      }
+    },
+    {
+      "name": "all remaining semantic alerts stay visible for editorial review",
+      "status": "PASS",
+      "details": {
+        "overlapWarnings": 1
+      }
+    },
+    {
+      "name": "modified TS files transpile with no diagnostics",
+      "status": "PASS"
+    },
+    {
+      "name": "selection is deterministic",
+      "status": "PASS"
+    }
+  ],
+  "tests": 12,
+  "passed": 12,
+  "failed": 0,
+  "selection": [
+    {
+      "section": "P01-01",
+      "candidate": "V56-B2-P01-01-monthBranch-hourStem",
+      "rule": "P01-01:baseline:established-learning-vs-initiative",
+      "trigger": "이미 배운 지식을 활용할 수 있는 과제를 처음 맡았을 때",
+      "behavior": "알고 있는 방법을 먼저 확인하고 스스로 시험할 단계를 정하는 모습이라는 조건부 가설",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:hour:stem:壬"
+      ]
+    },
+    {
+      "section": "P01-02",
+      "candidate": "V56-B2-P01-02-monthStem-dayBranch",
+      "rule": null,
+      "trigger": "여러 사람 앞에서 의견이나 결과를 설명할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "behavior": "처음 만난 자리에서는 하나씩 끝까지 만드는 과정이 먼저 드러날 수 있고, 가까워진 뒤에는 열려 있는 선택지와 기회비용을 판단 기준으로 삼을 수도 있다는 가설",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:day:branch:未"
+      ]
+    },
+    {
+      "section": "P01-03",
+      "candidate": "V56-B2-P01-03-monthStem-hourStem",
+      "rule": null,
+      "trigger": "혼자서 만들거나 마무리할 일을 선택할 때",
+      "behavior": "혼자 있는 시간을 무엇을 익히거나 처리하는 데 쓸지 고르는 모습. 이때 하나씩 끝까지 만드는 과정을 먼저 고려하고 이미 알고 있는 정보와 이해의 근거도 검토하는 가설",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:hour:stem:壬"
+      ]
+    },
+    {
+      "section": "P01-04",
+      "candidate": "V56-B2-P01-04-monthStem-yearBranch",
+      "rule": "P01-04:output:식신|정재",
+      "trigger": "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때",
+      "behavior": "업무나 공식적인 역할의 설명에서는 예측 가능한 비용과 설명하려는 제안의 범위를 구별하는 방식과 실제로 진행한 순서를 함께 설명하는 방식을 가능성으로 검토하는 가설",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:year:branch:辰"
+      ]
+    },
+    {
+      "section": "P01-05",
+      "candidate": "V56-B2-P01-05-dayBranch-hourStem",
+      "rule": null,
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 확인할 정보도 함께 고려하는 상황",
+      "behavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 이미 알고 있는 정보와 이해의 근거도 검토하는 가설",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:壬"
+      ]
+    },
+    {
+      "section": "P01-06",
+      "candidate": "V56-B2-P01-06-yearBranch-hourStem",
+      "rule": "P01-06:revision:resource|wealth",
+      "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+      "behavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:hour:stem:壬"
+      ]
+    },
+    {
+      "section": "P01-07",
+      "candidate": "V56-B2-P01-07-monthBranch-yearBranch",
+      "rule": "P01-07:cooperation:assigned-duty-vs-fixed-cost",
+      "trigger": "함께 진행하는 일의 담당 범위와 반복 비용을 정할 때",
+      "behavior": "일을 맡는 사람과 비용을 관리할 사람을 구분해 합의하는 모습이라는 조건부 가설",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:year:branch:辰"
+      ]
+    },
+    {
+      "section": "P01-08",
+      "candidate": "V56-B2-P01-08-monthBranch-hourBranch",
+      "rule": null,
+      "trigger": "공동의 책임을 다시 나누어야 하는 문제가 생겼을 때 가능한 실행 방법을 선택해야 하는 상황",
+      "behavior": "문제가 생기면 내가 맡을 몫과 결정권을 먼저 확인할지, 하나씩 끝까지 만드는 과정에 집중할지 비교하는 가설",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:hour:branch:午"
+      ]
+    },
+    {
+      "section": "P01-09",
+      "candidate": "V56-B2-P01-09-yearStem-monthStem",
+      "rule": "P01-09:output|peer:겁재|식신",
+      "trigger": "여럿이 나눠 맡은 일에서 내 몫을 마무리해야 할 때",
+      "behavior": "공동의 성과와 배분 책임을 조정하는 일과 작업을 단계적으로 완성하는 일을 함께 살펴 공동 작업 안에서 맡은 몫을 결과물로 끝맺으려는 모습",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:month:stem:丁"
+      ]
+    },
+    {
+      "section": "P01-10",
+      "candidate": "V56-B2-P01-10-yearStem-dayBranch",
+      "rule": null,
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "behavior": "다른 사람과 나눌 몫과 주도권을 모든 상황에 적용하려 하면 열려 있는 선택지와 기회비용을 고려할 여유가 줄어들 수 있다는 부담 가설",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:day:branch:未"
+      ]
+    }
+  ],
+  "audit": {
+    "emptySections": [],
+    "singleCandidateSections": [],
+    "repeatedThemes": [
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-01-15"
+        ],
+        "theme": "P01-01:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-B2-P01-02-monthBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-02:PILLAR:hour:stem:壬|PILLAR:month:branch:卯"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-02-1"
+        ],
+        "theme": "P01-02:monthStem:식신:dayBranch:편재"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-02-15"
+        ],
+        "theme": "P01-02:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-B2-P01-03-monthBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-03:PILLAR:hour:stem:壬|PILLAR:month:branch:卯"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-03-13"
+        ],
+        "theme": "P01-03:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-03-3"
+        ],
+        "theme": "P01-03:dayBranch:편재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-03-16"
+        ],
+        "theme": "P01-03:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-04-monthStem-dayBranch"
+        ],
+        "theme": "behavior-v2:P01-04:PILLAR:day:branch:未|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-04-hourBranch-dayBranch"
+        ],
+        "theme": "behavior-v2:P01-04:PILLAR:day:branch:未|PILLAR:hour:branch:午"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-B2-P01-04-monthStem-hourStem"
+        ],
+        "theme": "behavior-v2:P01-04:PILLAR:hour:stem:壬|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-04-1"
+        ],
+        "theme": "P01-04:monthStem:식신:dayBranch:편재"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-04-14"
+        ],
+        "theme": "P01-04:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-X-P01-04-9"
+        ],
+        "theme": "P01-04:yearBranch:정재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-B2-P01-04-hourBranch-yearBranch"
+        ],
+        "theme": "behavior-v2:P01-04:PILLAR:hour:branch:午|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-04-16"
+        ],
+        "theme": "P01-04:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-05-14"
+        ],
+        "theme": "P01-05:monthStem:식신:dayBranch:편재"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-05-15"
+        ],
+        "theme": "P01-05:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-X-P01-05-18"
+        ],
+        "theme": "P01-05:dayBranch:편재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-X-P01-05-9"
+        ],
+        "theme": "P01-05:yearBranch:정재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-05-1"
+        ],
+        "theme": "P01-05:hourStem:정인:monthBranch:비견"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-06-dayBranch-hourBranch"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:day:branch:未|PILLAR:hour:branch:午"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-B2-P01-06-dayBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:day:branch:未|PILLAR:hour:stem:壬"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-06-dayBranch-monthStem"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:day:branch:未|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-B2-P01-06-monthBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:hour:stem:壬|PILLAR:month:branch:卯"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-B2-P01-06-yearBranch-hourBranch"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:hour:branch:午|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-B2-P01-06-yearBranch-monthStem"
+        ],
+        "theme": "behavior-v2:P01-06:PILLAR:month:stem:丁|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-06-14"
+        ],
+        "theme": "P01-06:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-X-P01-06-2"
+        ],
+        "theme": "P01-06:dayBranch:편재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-06-3"
+        ],
+        "theme": "P01-06:dayBranch:편재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-06-yearBranch-hourStem",
+          "V56-X-P01-06-12"
+        ],
+        "theme": "P01-06:yearBranch:정재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-06-17"
+        ],
+        "theme": "P01-06:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-X-P01-06-9"
+        ],
+        "theme": "P01-06:yearBranch:정재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-07-monthBranch-yearBranch",
+          "V56-X-P01-07-10"
+        ],
+        "theme": "P01-07:yearBranch:정재:monthBranch:비견"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-07-13"
+        ],
+        "theme": "P01-07:monthStem:식신:dayBranch:편재"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-X-P01-07-9"
+        ],
+        "theme": "P01-07:yearBranch:정재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-07-14"
+        ],
+        "theme": "P01-07:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-X-P01-07-17"
+        ],
+        "theme": "P01-07:dayBranch:편재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-06-yearBranch-hourStem",
+          "V56-X-P01-07-3"
+        ],
+        "theme": "P01-07:yearBranch:정재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-07-4"
+        ],
+        "theme": "P01-07:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-08-dayBranch-hourBranch"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:day:branch:未|PILLAR:hour:branch:午"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-08-dayBranch-monthStem"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:day:branch:未|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-B2-P01-08-dayBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:day:branch:未|PILLAR:hour:stem:壬"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-B2-P01-08-monthBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:hour:stem:壬|PILLAR:month:branch:卯"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-B2-P01-08-yearBranch-monthStem"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:month:stem:丁|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-X-P01-08-3"
+        ],
+        "theme": "P01-08:monthStem:식신:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-B2-P01-08-yearBranch-hourBranch"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:hour:branch:午|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-06-yearBranch-hourStem",
+          "V56-B2-P01-08-yearBranch-hourStem"
+        ],
+        "theme": "behavior-v2:P01-08:PILLAR:hour:stem:壬|PILLAR:year:branch:辰"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-08-monthBranch-hourBranch",
+          "V56-X-P01-08-1"
+        ],
+        "theme": "P01-08:monthBranch:비견:hourBranch:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-X-P01-08-13"
+        ],
+        "theme": "P01-08:monthStem:식신:dayBranch:편재"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-01-monthBranch-hourStem",
+          "V56-X-P01-08-16"
+        ],
+        "theme": "P01-08:monthBranch:비견:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-05-dayBranch-hourStem",
+          "V56-X-P01-08-17"
+        ],
+        "theme": "P01-08:dayBranch:편재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-04-monthStem-yearBranch",
+          "V56-X-P01-08-9"
+        ],
+        "theme": "P01-08:yearBranch:정재:monthStem:식신"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-07-monthBranch-yearBranch",
+          "V56-X-P01-08-10"
+        ],
+        "theme": "P01-08:yearBranch:정재:monthBranch:비견"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-06-yearBranch-hourStem",
+          "V56-X-P01-08-11"
+        ],
+        "theme": "P01-08:yearBranch:정재:hourStem:정인"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-02-monthStem-dayBranch",
+          "V56-B2-P01-10-monthStem-dayBranch"
+        ],
+        "theme": "behavior-v2:P01-10:PILLAR:day:branch:未|PILLAR:month:stem:丁"
+      },
+      {
+        "candidateIds": [
+          "V56-B2-P01-03-monthStem-hourStem",
+          "V56-B2-P01-10-monthStem-hourStem"
+        ],
+        "theme": "behavior-v2:P01-10:PILLAR:hour:stem:壬|PILLAR:month:stem:丁"
+      }
+    ],
+    "semanticOverlapReviews": [
+      {
+        "priorId": "V56-B2-P01-04-monthStem-yearBranch",
+        "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+        "overlappingMotifs": [
+          "verification",
+          "opportunity-choice"
+        ]
+      }
+    ],
+    "goalOutputReviews": [],
+    "droppedCandidateIds": [
+      "V56-X-P01-01-15",
+      "V56-B2-P01-02-monthBranch-hourStem",
+      "V56-X-P01-02-1",
+      "V56-X-P01-02-15",
+      "V56-B2-P01-03-monthBranch-hourStem",
+      "V56-X-P01-03-13",
+      "V56-X-P01-03-3",
+      "V56-X-P01-03-16",
+      "V56-B2-P01-04-monthStem-dayBranch",
+      "V56-B2-P01-04-hourBranch-dayBranch",
+      "V56-B2-P01-04-monthStem-hourStem",
+      "V56-X-P01-04-1",
+      "V56-X-P01-04-14",
+      "V56-X-P01-04-9",
+      "V56-B2-P01-04-hourBranch-yearBranch",
+      "V56-X-P01-04-16",
+      "V56-X-P01-05-14",
+      "V56-X-P01-05-15",
+      "V56-X-P01-05-18",
+      "V56-X-P01-05-9",
+      "V56-X-P01-05-1",
+      "V56-B2-P01-06-dayBranch-hourBranch",
+      "V56-B2-P01-06-dayBranch-hourStem",
+      "V56-B2-P01-06-dayBranch-monthStem",
+      "V56-B2-P01-06-monthBranch-hourStem",
+      "V56-B2-P01-06-yearBranch-hourBranch",
+      "V56-B2-P01-06-yearBranch-monthStem",
+      "V56-X-P01-06-14",
+      "V56-X-P01-06-2",
+      "V56-X-P01-06-3",
+      "V56-X-P01-06-12",
+      "V56-X-P01-06-17",
+      "V56-X-P01-06-9",
+      "V56-X-P01-07-10",
+      "V56-X-P01-07-13",
+      "V56-X-P01-07-9",
+      "V56-X-P01-07-14",
+      "V56-X-P01-07-17",
+      "V56-X-P01-07-3",
+      "V56-X-P01-07-4",
+      "V56-B2-P01-08-dayBranch-hourBranch",
+      "V56-B2-P01-08-dayBranch-monthStem",
+      "V56-B2-P01-08-dayBranch-hourStem",
+      "V56-B2-P01-08-monthBranch-hourStem",
+      "V56-B2-P01-08-yearBranch-monthStem",
+      "V56-X-P01-08-3",
+      "V56-B2-P01-08-yearBranch-hourBranch",
+      "V56-B2-P01-08-yearBranch-hourStem",
+      "V56-X-P01-08-1",
+      "V56-X-P01-08-13",
+      "V56-X-P01-08-16",
+      "V56-X-P01-08-17",
+      "V56-X-P01-08-9",
+      "V56-X-P01-08-10",
+      "V56-X-P01-08-11",
+      "V56-B2-P01-09-monthBranch-dayBranch",
+      "V56-B2-P01-09-monthBranch-hourBranch",
+      "V56-B2-P01-09-monthStem-hourStem",
+      "V56-B2-P01-09-yearStem-dayBranch",
+      "V56-B2-P01-09-monthBranch-yearBranch",
+      "V56-B2-P01-09-dayBranch-hourStem",
+      "V56-B2-P01-09-monthBranch-hourStem",
+      "V56-B2-P01-10-monthBranch-dayBranch",
+      "V56-B2-P01-10-monthBranch-yearBranch",
+      "V56-X-P01-10-13",
+      "V56-B2-P01-10-yearStem-monthStem",
+      "V56-X-P01-10-1",
+      "V56-X-P01-10-14",
+      "V56-X-P01-10-18",
+      "V56-X-P01-10-10",
+      "V56-X-P01-10-16",
+      "V56-X-P01-10-17",
+      "V56-X-P01-10-4",
+      "V56-X-P01-10-5",
+      "V56-X-P01-10-9",
+      "V56-X-P01-10-11",
+      "V56-X-P01-10-12",
+      "V56-X-P01-10-15",
+      "V56-X-P01-10-2",
+      "V56-X-P01-10-3",
+      "V56-X-P01-10-7",
+      "V56-X-P01-10-8",
+      "V56-B2-P01-10-dayBranch-hourBranch",
+      "V56-B2-P01-10-monthBranch-hourBranch",
+      "V56-X-P01-10-6",
+      "V56-B2-P01-10-dayBranch-hourStem",
+      "V56-B2-P01-10-monthBranch-hourStem",
+      "V56-B2-P01-10-monthStem-dayBranch",
+      "V56-B2-P01-10-monthStem-hourStem"
+    ],
+    "warnings": [
+      "편집상 우선순위는 심리 정확도, 미래 사건 예측, 용신 점수가 아닙니다.",
+      "다른 섹션의 가설/생활 장면은 장별로 반복하지 않습니다.",
+      "V56-B2-P01-04-monthStem-yearBranch와 V56-B2-P01-05-dayBranch-hourStem는 행동 주제(verification, opportunity-choice)가 겹침: 최종 문장 재검토 필요",
+      "대안 후보가 없는 소제목은 단일 규칙 매칭이며 후보 비교 검증을 완료한 것으로 간주하지 않습니다.",
+      "낮은 신뢰도의 가설은 독자에게 사실로 단정하지 않고 검증 가능한 명리 근거와 함께 설명합니다.",
+      "별도 작업이 완료되기 전까지 V5.6 해석을 고객에게 자동 제공하지 않습니다."
+    ]
+  }
+}

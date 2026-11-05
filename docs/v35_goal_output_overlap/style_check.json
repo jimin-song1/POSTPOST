@@ -1,0 +1,33 @@
+{
+  "version": "V35 style check",
+  "note": "Runtime lint + manuscript audit + heuristic skill rules. Human review still required.",
+  "engineHypotheses": {
+    "rows": 98,
+    "withHardViolations": 0,
+    "codeCounts": {
+      "ENGINE_WORDING": 86
+    }
+  },
+  "referenceDrafts": {
+    "rows": [
+      {
+        "section": "P01-09",
+        "text": "새 절차를 받아들일 때 무조건 전부 따르기보다, 실제로 어디까지 적용할지 범위를 정하는 데서 장점이 드러날 수 있습니다. 이때 지금 급하게 처리해야 할 책임과, 이미 알고 있던 설명이 새 절차와 맞는지를 함께 살핍니다. 그렇게 맞춰 본 끝에 실제 결과로 남는 것은 공식 기준과 하나씩 대조해 정한 적용 범위입니다. 충분히 익숙한 절차라면 이런 확인 없이 바로 따르기도 합니다.",
+        "hard": [],
+        "soft": [],
+        "hedges": 1
+      },
+      {
+        "section": "P01-10",
+        "text": "정해진 절차를 하나도 빠짐없이 지키려다 일정이 빠듯해지면, 이 장점이 부담으로 바뀔 수 있습니다. 급한 책임을 모든 상황에서 똑같이 앞세우면 이미 알고 있는 정보와 그 근거를 돌아볼 여유가 줄어듭니다. 책임이나 정보가 제한된 상황에서는 기준을 조금 느슨하게 두는 편이 나을 때도 있습니다.",
+        "hard": [],
+        "soft": [],
+        "hedges": 1
+      }
+    ],
+    "manuscriptAudit": {
+      "status": "no_rule_flags",
+      "findings": []
+    }
+  }
+}

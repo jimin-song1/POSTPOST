@@ -1,0 +1,1162 @@
+{
+  "version": "V33",
+  "sourceVersion": "V32 experimental candidates",
+  "mode": "read-only audit; no selection engine changes",
+  "candidateCount": 9,
+  "priorSectionCount": 8,
+  "pairCount": 72,
+  "exactActionPairs": 0,
+  "sameSourcePairCount": 7,
+  "sharedSourceCount": 44,
+  "approvedCandidates": 0,
+  "heldCandidates": 9,
+  "finding": "V32 persisted records do not independently state candidate-level action goal and concrete output; lexical variation alone cannot prove novel strengths.",
+  "requires": [
+    "explicit chart-grounded goal",
+    "observable output or no-output marker",
+    "trigger context",
+    "provenance",
+    "per-prior comparison"
+  ],
+  "candidates": [
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "scenarioRuleId": "P01-09:officer|wealth:편재|편관",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ],
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙",
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "SELECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [
+            "PILLAR:month:branch:戌",
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|편인",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:year:stem:庚"
+      ],
+      "action": "시급한 요청의 우선 책임을 정리한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [
+            "PILLAR:month:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:branch:戌",
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "scenarioRuleId": "P01-09:officer|wealth:편재|정관",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:branch:丑"
+      ],
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 합의된 기준과 절차를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙",
+            "PILLAR:hour:branch:丑"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourStem",
+      "scenarioRuleId": "P01-09:resource|wealth:편재|정인",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:stem:辛"
+      ],
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:stem:丙",
+            "PILLAR:hour:stem:辛"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
+      "scenarioRuleId": "P01-09:officer|wealth:편관|편재",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:stem:丙"
+      ],
+      "action": "시급한 요청의 우선 책임을 정리한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-dayBranch",
+      "scenarioRuleId": "P01-09:officer|resource:편인|편관",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:day:branch:戌"
+      ],
+      "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [
+            "PILLAR:year:stem:庚",
+            "PILLAR:day:branch:戌"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-monthStem",
+      "scenarioRuleId": "P01-09:resource|wealth:편인|편재",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:month:stem:丙"
+      ],
+      "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "originalDecision": "REJECTED",
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorAction": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+          "priorTrigger": "낯선 규칙을 처음 적용해야 할 때",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorAction": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+          "priorTrigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorAction": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+          "priorTrigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorAction": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+          "priorTrigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+          "sharedSources": [
+            "PILLAR:year:stem:庚",
+            "PILLAR:month:stem:丙"
+          ],
+          "sameSourcePair": true,
+          "sameSemanticFamily": true,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorAction": "",
+          "priorTrigger": "",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorAction": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+          "priorTrigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "sameSourcePair": false,
+          "sameSemanticFamily": false,
+          "sameAction": false,
+          "goalEvidence": "NOT_RECORDED",
+          "outputEvidence": "NOT_RECORDED",
+          "distinctGoalOutputProved": false,
+          "decision": "HOLD_INSUFFICIENT_GOAL_OUTPUT_EVIDENCE"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "testType": "dependency-free targeted runtime, not Vitest / real AI / full build",
+  "tests": 14,
+  "passed": 14,
+  "failed": 0,
+  "overlapReviews": [
+    {
+      "priorId": "V56-B2-P01-04-monthStem-yearBranch",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "overlappingMotifs": [
+        "verification",
+        "opportunity-choice"
+      ]
+    }
+  ],
+  "chosen": [
+    {
+      "section": "P01-01",
+      "id": "V56-B2-P01-01-monthBranch-hourStem",
+      "structured": true
+    },
+    {
+      "section": "P01-02",
+      "id": "V56-B2-P01-02-monthStem-dayBranch",
+      "structured": true
+    },
+    {
+      "section": "P01-03",
+      "id": "V56-B2-P01-03-monthStem-hourStem",
+      "structured": true
+    },
+    {
+      "section": "P01-04",
+      "id": "V56-B2-P01-04-monthStem-yearBranch",
+      "structured": true
+    },
+    {
+      "section": "P01-05",
+      "id": "V56-B2-P01-05-dayBranch-hourStem",
+      "structured": true
+    },
+    {
+      "section": "P01-06",
+      "id": "V56-B2-P01-06-yearBranch-hourStem",
+      "structured": true
+    },
+    {
+      "section": "P01-07",
+      "id": "V56-B2-P01-07-monthBranch-yearBranch",
+      "structured": true
+    },
+    {
+      "section": "P01-08",
+      "id": "V56-B2-P01-08-monthBranch-hourBranch",
+      "structured": true
+    },
+    {
+      "section": "P01-09",
+      "id": "V56-B2-P01-09-yearStem-monthStem",
+      "structured": true
+    },
+    {
+      "section": "P01-10",
+      "id": "V56-B2-P01-10-yearStem-dayBranch",
+      "structured": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "full section coverage",
+      "status": "PASS",
+      "detail": {
+        "count": 10
+      }
+    },
+    {
+      "name": "P01-06 selects a rule-backed conditional behavior",
+      "status": "PASS",
+      "detail": {
+        "id": "V56-B2-P01-06-yearBranch-hourStem",
+        "rule": "P01-06:revision:resource|wealth"
+      }
+    },
+    {
+      "name": "P01-06 has two distinct original pillars",
+      "status": "PASS",
+      "detail": {
+        "sourceIds": [
+          "PILLAR:year:branch:辰",
+          "PILLAR:hour:stem:壬"
+        ]
+      }
+    },
+    {
+      "name": "P01-05 first-choice and P01-06 revision have distinct triggers",
+      "status": "PASS",
+      "detail": {
+        "firstChoice": "비용과 얻을 것이 서로 다른 제안 앞에서 확인할 정보도 함께 고려하는 상황",
+        "revision": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때"
+      }
+    },
+    {
+      "name": "P01-06 has explicit new-information, revision and counter-condition",
+      "status": "PASS",
+      "detail": {
+        "behavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+        "counter": "바뀐 정보가 비용과 계약 조건에 영향을 주지 않으면 기존 선택을 유지할 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토"
+      }
+    },
+    {
+      "name": "P01-06 candidate remains canonical and unaltered",
+      "status": "PASS"
+    },
+    {
+      "name": "tampering P01-06 behavior with same evidence is rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "no revision family produces no revision candidates",
+      "status": "PASS"
+    },
+    {
+      "name": "no commitment family produces no revision candidates",
+      "status": "PASS"
+    },
+    {
+      "name": "V7 leaves prior P01-04 expression choice intact",
+      "status": "PASS"
+    },
+    {
+      "name": "V7 P01-06 writer brief gets rule-backed scenario",
+      "status": "PASS"
+    },
+    {
+      "name": "repeated ten-god names require distinct chapter roles and a verified strength link",
+      "status": "PASS",
+      "detail": {
+        "reusedPairs": 0
+      }
+    },
+    {
+      "name": "change files parse as TypeScript",
+      "status": "PASS"
+    },
+    {
+      "name": "second run deterministic",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,698 @@
+{
+  "testCase": "RC11",
+  "section": "P01-09",
+  "generatedCount": 9,
+  "selectedId": "V56-B2-P01-09-dayBranch-hourStem",
+  "selectedStructured": true,
+  "candidates": [
+    {
+      "id": "V56-B2-P01-09-monthStem-dayBranch",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편재|편관",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 시급한 요청의 우선 책임을 정리하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+        "decision": "REJECTED",
+        "editorialRank": 13,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "month",
+          "day"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월간에 직접 드러난 십성 신호",
+          "일지 본기: 개인 영역 해석에서 참고하는 위치",
+          "현재 소제목의 질문과 관련된 두 위치를 모두 비교",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_STEM",
+            "impact": 1,
+            "note": "월간에 직접 드러난 십성 신호",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "DAY_BRANCH_CONTEXT",
+            "impact": 1,
+            "note": "일지 본기: 개인 영역 해석에서 참고하는 위치",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "SECTION_POSITION_FIT",
+            "impact": 1,
+            "note": "현재 소제목의 질문과 관련된 두 위치를 모두 비교",
+            "evidenceIds": [
+              "NATAL:PILLARS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-monthBranch-hourStem",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
+        "decision": "REJECTED",
+        "editorialRank": 11,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS",
+          "NATAL:STRUCTURE:PRIMARY"
+        ],
+        "independentSourcePositions": [
+          "month",
+          "hour"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "DUPLICATE_NARRATIVE"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월지 본기: 전통적 명리 해석에서 월령을 우선 고려",
+          "격국 성립이 불확실하거나 월지 본기와 불일치하여 단정적 풀이 억제",
+          "다른 섹션에서 동일 서사 사용됨: V56-B2-P01-09-dayBranch-hourStem"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_COMMAND",
+            "impact": 2,
+            "note": "월지 본기: 전통적 명리 해석에서 월령을 우선 고려",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRUCTURE_UNCERTAIN",
+            "impact": -1,
+            "note": "격국 성립이 불확실하거나 월지 본기와 불일치하여 단정적 풀이 억제",
+            "evidenceIds": [
+              "NATAL:STRUCTURE:PRIMARY"
+            ],
+            "status": "CAUTION"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "격국이 미성립/혼재일 수 있으므로 월지 신호 하나로 성격을 확정하지 않습니다.",
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-monthBranch-yearStem",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:year:stem:庚"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|편인",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 기존 설명과 다른 접근의 가능성을 검토하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
+        "decision": "ALTERNATIVE",
+        "editorialRank": 4,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS",
+          "NATAL:STRUCTURE:PRIMARY"
+        ],
+        "independentSourcePositions": [
+          "year",
+          "month"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "REUSED_SOURCE_PAIR",
+          "SCENE_COMPARISON_UNAVAILABLE"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월지 본기: 전통적 명리 해석에서 월령을 우선 고려",
+          "격국 성립이 불확실하거나 월지 본기와 불일치하여 단정적 풀이 억제",
+          "앞 장의 후보가 추상 해석이므로 행동 장면의 차이를 확인할 수 없음. 수작업 검토 전 자동 발행 금지"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_COMMAND",
+            "impact": 2,
+            "note": "월지 본기: 전통적 명리 해석에서 월령을 우선 고려",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRUCTURE_UNCERTAIN",
+            "impact": -1,
+            "note": "격국 성립이 불확실하거나 월지 본기와 불일치하여 단정적 풀이 억제",
+            "evidenceIds": [
+              "NATAL:STRUCTURE:PRIMARY"
+            ],
+            "status": "CAUTION"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "격국이 미성립/혼재일 수 있으므로 월지 신호 하나로 성격을 확정하지 않습니다.",
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-dayBranch-hourStem",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+        "decision": "SELECTED",
+        "editorialRank": 15,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "day",
+          "hour"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "일지 본기: 개인 영역 해석에서 참고하는 위치",
+          "목표와 산출물을 비교해 P01-08와 구별함: 목표(예상 밖의 문제에 대응할 순서를 정하는 것 ↔ 새 절차를 실제 일에 어디까지 적용할지 정하는 것), 산출물(문제 대응의 우선순위 ↔ 공식 기준과 대조해 정한 적용 범위). 공통 어휘(role-boundary, verification)는 본문에서 반복하지 않도록 검토"
+        ],
+        "prioritySignals": [
+          {
+            "code": "DAY_BRANCH_CONTEXT",
+            "impact": 1,
+            "note": "일지 본기: 개인 영역 해석에서 참고하는 위치",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-monthStem-hourBranch",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:branch:丑"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편재|정관",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 합의된 기준과 절차를 확인하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+        "decision": "REJECTED",
+        "editorialRank": 10,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "month",
+          "hour"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월간에 직접 드러난 십성 신호",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_STEM",
+            "impact": 1,
+            "note": "월간에 직접 드러난 십성 신호",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-monthStem-hourStem",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:resource|wealth:편재|정인",
+      "action": "대안별 기회비용과 활용 가능성을 검토하는 일과 익숙한 설명의 근거를 확인하는 일을 함께 살펴 선택지를 좁히려는 모습",
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "설명이 다른 제안 가운데 선택지를 좁히는 것",
+      "observableOutput": "좁혀진 선택지",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-monthStem-hourStem",
+        "decision": "REJECTED",
+        "editorialRank": 2,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS",
+          "NATAL:RELATIONS"
+        ],
+        "independentSourcePositions": [
+          "month",
+          "hour"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월간에 직접 드러난 십성 신호",
+          "후보가 참조한 두 글자 사이의 실제 합충형파해 관계 존재",
+          "합충 관계의 성립과 오행 전환은 별개: COMBINATION_ONLY",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_STEM",
+            "impact": 1,
+            "note": "월간에 직접 드러난 십성 신호",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "DIRECT_RELATION",
+            "impact": 1,
+            "note": "후보가 참조한 두 글자 사이의 실제 합충형파해 관계 존재",
+            "evidenceIds": [
+              "NATAL:RELATIONS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "RELATION_TRANSFORMATION_UNCERTAIN",
+            "impact": 0,
+            "note": "합충 관계의 성립과 오행 전환은 별개: COMBINATION_ONLY",
+            "evidenceIds": [
+              "NATAL:RELATIONS"
+            ],
+            "status": "CAUTION"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "관계가 존재해도 합화나 성격·사건의 실제 변화를 확정하지 않습니다.",
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-yearBranch-monthStem",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:stem:丙"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편관|편재",
+      "action": "시급한 요청의 우선 책임을 정리하는 일과 대안별 기회비용과 활용 가능성을 검토하는 일을 함께 살펴 기준을 충족하는 선택지를 고르려는 모습",
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "공식 기준에 맞는 선택지를 고르는 것",
+      "observableOutput": "기준을 충족하는 선택지",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
+        "decision": "REJECTED",
+        "editorialRank": 13,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "year",
+          "month"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월간에 직접 드러난 십성 신호",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_STEM",
+            "impact": 1,
+            "note": "월간에 직접 드러난 십성 신호",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-yearStem-dayBranch",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:day:branch:戌"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편인|편관",
+      "action": "기존 설명과 다른 접근의 가능성을 검토하는 일과 시급한 요청의 우선 책임을 정리하는 일을 함께 살펴 새 절차를 어디까지 적용할지 정하려는 모습",
+      "goalKey": "APPLY_PROCEDURE_SCOPE",
+      "actionGoal": "새 절차를 실제 일에 어디까지 적용할지 정하는 것",
+      "observableOutput": "공식 기준과 대조해 정한 적용 범위",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-yearStem-dayBranch",
+        "decision": "REJECTED",
+        "editorialRank": 10,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "year",
+          "day"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "일지 본기: 개인 영역 해석에서 참고하는 위치",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-08"
+        ],
+        "prioritySignals": [
+          {
+            "code": "DAY_BRANCH_CONTEXT",
+            "impact": 1,
+            "note": "일지 본기: 개인 영역 해석에서 참고하는 위치",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    },
+    {
+      "id": "V56-B2-P01-09-yearStem-monthStem",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:month:stem:丙"
+      ],
+      "scenarioRuleId": "P01-09:resource|wealth:편인|편재",
+      "action": "기존 설명과 다른 접근의 가능성을 검토하는 일과 대안별 기회비용과 활용 가능성을 검토하는 일을 함께 살펴 선택지를 좁히려는 모습",
+      "goalKey": "CHOOSE_OPTION",
+      "actionGoal": "설명이 다른 제안 가운데 선택지를 좁히는 것",
+      "observableOutput": "좁혀진 선택지",
+      "goalOutputSource": "SCENE_RULE",
+      "assessment": {
+        "candidateId": "V56-B2-P01-09-yearStem-monthStem",
+        "decision": "REJECTED",
+        "editorialRank": 10,
+        "evidenceIds": [
+          "NATAL:PILLARS",
+          "NATAL:TEN_GODS"
+        ],
+        "independentSourcePositions": [
+          "year",
+          "month"
+        ],
+        "flags": [
+          "LOW_CONFIDENCE",
+          "SEMANTIC_OVERLAP"
+        ],
+        "reasons": [
+          "낮은 신뢰도의 전통적 해석 가설 — 에디터 검토 필요",
+          "앞 장에서 다룬 행동 주제와 겹칠 수 있어 후보 선정 점수를 낮춤",
+          "월간에 직접 드러난 십성 신호",
+          "다른 장과 행동 장면이 겹쳐 장점 후보를 제외함: P01-05 (목표 또는 산출물이 같음)"
+        ],
+        "prioritySignals": [
+          {
+            "code": "MONTH_STEM",
+            "impact": 1,
+            "note": "월간에 직접 드러난 십성 신호",
+            "evidenceIds": [
+              "NATAL:PILLARS",
+              "NATAL:TEN_GODS"
+            ],
+            "status": "SUPPORT"
+          },
+          {
+            "code": "STRENGTH_CONTEXT",
+            "impact": 0,
+            "note": "일간 강약은 사용 조건 참고값일 뿐 의지·성격의 강약이 아님: 신약",
+            "evidenceIds": [
+              "NATAL:STRENGTH:ADJUSTED"
+            ],
+            "status": "CONTEXT"
+          },
+          {
+            "code": "USEFUL_GOD_CONTEXT",
+            "impact": 0,
+            "note": "용신 관점 충돌/주용신 미확정은 성격 확신도 근거로 사용하지 않음",
+            "evidenceIds": [
+              "USEFUL_GOD:SYNTHESIS"
+            ],
+            "status": "CONTEXT"
+          }
+        ],
+        "counterConsiderations": [
+          "용신 선호나 종합 오행 점수를 개인의 심리 특성 점수로 환산하지 않습니다."
+        ]
+      }
+    }
+  ],
+  "chapter10": "V56-B2-P01-10-monthBranch-hourStem"
+}

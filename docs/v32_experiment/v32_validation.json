@@ -1,0 +1,25 @@
+{
+  "version": "V32",
+  "experimentOnly": true,
+  "engineChangeAccepted": false,
+  "checks": [
+    {
+      "name": "baseline preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "experiment changed RC11",
+      "status": "PASS"
+    },
+    {
+      "name": "overlap risk is recorded",
+      "status": "PASS"
+    },
+    {
+      "name": "no unreviewed promotion",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0
+}

@@ -1,0 +1,15 @@
+{
+  "tests": 15,
+  "passed": 15,
+  "failed": 0,
+  "original": [
+    "FIRST_IMPRESSION_NEEDS_READER_VALIDATION",
+    "PRIVATE_HABIT_UNOBSERVED"
+  ],
+  "revised": [
+    "FIRST_IMPRESSION_NEEDS_READER_VALIDATION",
+    "PRIVATE_HABIT_UNOBSERVED"
+  ]
+}
+
+STDERR

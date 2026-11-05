@@ -1,0 +1,36 @@
+{
+  "version": "V31",
+  "scope": "Strength chain editorial contract only; not a personality accuracy claim",
+  "checks": [
+    {
+      "name": "provenance and conditional 5-part chain",
+      "result": "PASS"
+    },
+    {
+      "name": "no novel outcome for decision-only scene",
+      "result": "PASS"
+    },
+    {
+      "name": "unverified alignment is not promoted",
+      "result": "PASS"
+    },
+    {
+      "name": "unlinked drawback is not auto-filled",
+      "result": "PASS"
+    },
+    {
+      "name": "RC11 unstructured candidate remains non-publishable (V34 snapshot)",
+      "result": "PASS"
+    },
+    {
+      "name": "V35 live RC11: a structured P01-09 must carry rule-table goal/output and a linked P01-10",
+      "result": "PASS"
+    },
+    {
+      "name": "V35 chain uses rule-table output instead of inferring one",
+      "result": "PASS"
+    }
+  ],
+  "passed": 7,
+  "failed": 0
+}

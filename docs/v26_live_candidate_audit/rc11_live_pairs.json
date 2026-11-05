@@ -1,0 +1,2101 @@
+{
+  "version": "V26",
+  "mode": "OFFLINE_LIVE_CALCULATION_SHADOW_ONLY",
+  "ephemeris": "Swiss term fixture, NOT production JPL provider",
+  "caseId": "RC11",
+  "structuredCandidates": 9,
+  "selected9": "V56-X-P01-09-2",
+  "structuredSelected9": false,
+  "selected10": null,
+  "automaticPromotions": 0,
+  "priorSections": 8,
+  "rows": [
+    {
+      "id": "V56-B2-P01-09-monthStem-dayBranch",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편재|편관",
+      "live": {
+        "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+        "observableBehavior": "대안별 기회비용과 활용 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+        "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification",
+          "opportunity-choice"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": true,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-monthBranch-hourStem",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "live": {
+        "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+        "observableBehavior": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+        "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": true,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-monthBranch-yearStem",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:year:stem:庚"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|편인",
+      "live": {
+        "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+        "observableBehavior": "시급한 요청의 우선 책임을 정리한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월지 편관, 연간 편인)",
+        "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 기존 설명만으로 납득되지 않을 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-dayBranch-hourStem",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "live": {
+        "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+        "observableBehavior": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 일지 편관, 시간 정인)",
+        "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-monthStem-hourBranch",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:branch:丑"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편재|정관",
+      "live": {
+        "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+        "observableBehavior": "대안별 기회비용과 활용 가능성을 검토한 다음 합의된 기준과 절차를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+        "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 공식적인 기준에 맞춰야 할 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "verification",
+          "opportunity-choice",
+          "rules"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification",
+            "rules"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice",
+            "rules"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "verification",
+            "opportunity-choice",
+            "rules"
+          ],
+          "exactAction": false,
+          "exactBasis": true,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-monthStem-hourStem",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:stem:辛"
+      ],
+      "scenarioRuleId": "P01-09:resource|wealth:편재|정인",
+      "live": {
+        "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+        "observableBehavior": "대안별 기회비용과 활용 가능성을 검토한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월간 편재, 시간 정인)",
+        "counterCondition": "검증할 정보가 부족하면 당장 결론을 내리지 않을 수도 있음. 설명을 검토할 시간이 주어질 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "verification",
+          "opportunity-choice"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "verification",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-yearBranch-monthStem",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:stem:丙"
+      ],
+      "scenarioRuleId": "P01-09:officer|wealth:편관|편재",
+      "live": {
+        "trigger": "여러 거래 조건 중 공식 기준에 맞는 선택지를 골라야 할 때",
+        "observableBehavior": "시급한 요청의 우선 책임을 정리한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 연지 편관, 월간 편재)",
+        "counterCondition": "선택권이 거의 없다면 기준을 충족하는 데 집중할 수 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification",
+          "opportunity-choice"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-yearStem-dayBranch",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:day:branch:戌"
+      ],
+      "scenarioRuleId": "P01-09:officer|resource:편인|편관",
+      "live": {
+        "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+        "observableBehavior": "기존 설명과 다른 접근의 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 연간 편인, 일지 편관)",
+        "counterCondition": "이미 충분히 익숙한 절차라면 별도의 설명을 확인할 일이 줄어들 수 있음. 기한이나 요구가 갑자기 엄격해질 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "role-boundary",
+          "verification"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "role-boundary",
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    },
+    {
+      "id": "V56-B2-P01-09-yearStem-monthStem",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:month:stem:丙"
+      ],
+      "scenarioRuleId": "P01-09:resource|wealth:편인|편재",
+      "live": {
+        "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+        "observableBehavior": "기존 설명과 다른 접근의 가능성을 검토한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+        "decisionBasis": "우선 기준: 익숙하지 않은 방식의 가능성 / 함께 보는 기준: 열려 있는 선택지와 기회비용 (출처: 연간 편인, 월간 편재)",
+        "counterCondition": "검증할 정보가 부족하면 당장 결론을 내리지 않을 수도 있음. 여러 제안이 동시에 나타날 때에는 다른 반응도 함께 검토",
+        "semanticMotifs": [
+          "verification",
+          "opportunity-choice"
+        ]
+      },
+      "oldDecision": "REJECTED",
+      "oldFlags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "comparisons": [
+        {
+          "priorSection": "P01-01",
+          "priorId": "V56-B2-P01-01-monthBranch-hourStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "낯선 규칙을 처음 적용해야 할 때",
+            "observableBehavior": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+            "semanticMotifs": [
+              "verification",
+              "rules",
+              "starting-approach",
+              "learning-before-action"
+            ],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-02",
+          "priorId": "V56-B2-P01-02-monthStem-dayBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사이에서도 약속의 범위를 정할 때를 비교하는 상황",
+            "observableBehavior": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "opportunity-choice",
+              "rules",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-03",
+          "priorId": "V56-X-P01-03-13",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:stem:辛"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-04",
+          "priorId": "V56-X-P01-04-15",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:month:branch:戌",
+              "PILLAR:day:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-05",
+          "priorId": "V56-B2-P01-05-monthStem-hourBranch",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+            "observableBehavior": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "opportunity-choice",
+              "rules"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:hour:branch:丑"
+            ]
+          },
+          "oldNearDuplicate": true,
+          "repeatedMotifs": [
+            "verification",
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "SEMANTIC_REVIEW"
+        },
+        {
+          "priorSection": "P01-06",
+          "priorId": "V56-B2-P01-06-monthStem-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+            "observableBehavior": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+            "decisionBasis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+            "semanticMotifs": [
+              "decision-revision",
+              "commitment-boundary",
+              "opportunity-choice"
+            ],
+            "sourceIds": [
+              "PILLAR:month:stem:丙",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "opportunity-choice"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        },
+        {
+          "priorSection": "P01-07",
+          "priorId": "V56-X-P01-07-1",
+          "priorStructured": false,
+          "prior": {
+            "trigger": null,
+            "observableBehavior": null,
+            "decisionBasis": null,
+            "semanticMotifs": [],
+            "sourceIds": [
+              "PILLAR:year:stem:庚",
+              "PILLAR:month:branch:戌"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "INSUFFICIENT_PREVIOUS_DATA"
+        },
+        {
+          "priorSection": "P01-08",
+          "priorId": "V56-B2-P01-08-dayBranch-yearStem",
+          "priorStructured": true,
+          "prior": {
+            "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+            "observableBehavior": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+            "decisionBasis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+            "semanticMotifs": [
+              "role-boundary",
+              "verification",
+              "execution",
+              "pressure"
+            ],
+            "sourceIds": [
+              "PILLAR:day:branch:戌",
+              "PILLAR:year:stem:庚"
+            ]
+          },
+          "oldNearDuplicate": false,
+          "repeatedMotifs": [
+            "verification"
+          ],
+          "exactAction": false,
+          "exactBasis": false,
+          "exactTrigger": false,
+          "classification": "NOT_PROVEN_DUPLICATE"
+        }
+      ],
+      "shadowDecision": "REVIEW_ONLY",
+      "promote": false
+    }
+  ]
+}

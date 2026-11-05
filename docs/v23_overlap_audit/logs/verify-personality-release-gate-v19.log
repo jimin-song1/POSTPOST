@@ -1,0 +1,14 @@
+{
+  "charts": 12,
+  "slots": 120,
+  "selected": 119,
+  "writingReady": 96,
+  "unapproved": 24,
+  "failedRegressions": [
+    "V6",
+    "V8",
+    "V13",
+    "V15"
+  ],
+  "releaseReady": false
+}

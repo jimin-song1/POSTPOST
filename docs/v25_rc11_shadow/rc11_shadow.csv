@@ -1,0 +1,10 @@
+candidateId,scenarioRuleId,editorReportedMatch,decisionBasisEvidence,triggerEvidence,shadowDecision,canPromote
+"V56-B2-P01-09-monthStem-dayBranch","P01-09:officer|wealth:편재|편관","P01-05","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-monthBranch-hourStem","P01-09:officer|resource:편관|정인","P01-08","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-monthBranch-yearStem","P01-09:officer|resource:편관|편인","P01-08","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-dayBranch-hourStem","P01-09:officer|resource:편관|정인","P01-08","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-monthStem-hourBranch","P01-09:officer|wealth:편재|정관","P01-05","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-monthStem-hourStem","P01-09:resource|wealth:편재|정인","P01-05","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-yearBranch-monthStem","P01-09:officer|wealth:편관|편재","P01-05","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-yearStem-dayBranch","P01-09:officer|resource:편인|편관","P01-08","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"
+"V56-B2-P01-09-yearStem-monthStem","P01-09:resource|wealth:편인|편재","P01-05","NOT_SAVED","NOT_SAVED","REVIEW_INCOMPLETE","false"

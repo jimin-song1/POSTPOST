@@ -1,0 +1,27 @@
+name: V5.6 personality candidate checks
+on:
+  pull_request:
+    paths:
+      - 'src/lib/saju/ai-interpretation/personality-candidates.v1.ts'
+      - 'tests/personality-candidates.spec.ts'
+      - 'src/lib/saju/ai-interpretation/personality-editorial.v1.ts'
+      - 'tests/personality-editorial.spec.ts'
+      - 'src/lib/saju/ai-interpretation/personality-generation.v1.ts'
+      - 'src/lib/saju/ai-interpretation/personality-openai.v1.ts'
+      - 'tests/personality-generation.spec.ts'
+      - '.github/workflows/v56-personality-check.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test -- tests/personality-candidates.spec.ts tests/personality-editorial.spec.ts tests/personality-generation.spec.ts

@@ -1,0 +1,43 @@
+{
+  "baseline": "V29",
+  "gateVersion": "V30 (V35 RC11 clauses)",
+  "description": "Regression floor only; not production accuracy or coverage certification",
+  "checks": [
+    {
+      "name": "six chart selection completeness unchanged",
+      "status": "PASS"
+    },
+    {
+      "name": "twelve chart selection and reviewability do not regress",
+      "status": "PASS"
+    },
+    {
+      "name": "RC11 outcome is explicit: unresolved, or resolved with evidence (not silently approved)",
+      "status": "PASS"
+    },
+    {
+      "name": "RC11 P01-10 is only filled when linked to the selected P01-09 strength",
+      "status": "PASS"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "six": {
+    "total": 60,
+    "selected": 60,
+    "structured": 50
+  },
+  "twelve": {
+    "total": 120,
+    "selected": 120,
+    "structured": 98,
+    "ready": 98,
+    "empty": 0
+  },
+  "rc11": {
+    "selected": 10,
+    "ready": 7,
+    "chapter09": "structured",
+    "chapter10": "structured"
+  }
+}

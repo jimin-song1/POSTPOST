@@ -1,0 +1,53 @@
+{
+  "V34_snapshot": {
+    "selected": 119,
+    "structured": 96,
+    "ready": 96,
+    "p09Structured": 11,
+    "p10Selected": 11,
+    "p09FreshSourcePair": 0
+  },
+  "V35_scope_none": {
+    "selected": 119,
+    "structured": 96,
+    "ready": 96,
+    "p09Structured": 11,
+    "p10Selected": 11,
+    "p09FreshSourcePair": 7,
+    "goalOutputReviews": 0,
+    "semanticOverlapReviews": 12,
+    "rc11": {
+      "p09": "V56-X-P01-09-10",
+      "p10": null
+    }
+  },
+  "V35_default_P01_09": {
+    "selected": 120,
+    "structured": 98,
+    "ready": 98,
+    "p09Structured": 12,
+    "p10Selected": 12,
+    "p09FreshSourcePair": 10,
+    "goalOutputReviews": 4,
+    "semanticOverlapReviews": 15,
+    "rc11": {
+      "p09": "V56-B2-P01-09-dayBranch-hourStem",
+      "p10": "V56-B2-P01-10-monthBranch-hourStem"
+    }
+  },
+  "V35_scope_all_experiment": {
+    "selected": 120,
+    "structured": 100,
+    "ready": 100,
+    "p09Structured": 12,
+    "p10Selected": 12,
+    "p09FreshSourcePair": 10,
+    "goalOutputReviews": 13,
+    "semanticOverlapReviews": 10,
+    "rc11": {
+      "p09": "V56-B2-P01-09-monthBranch-yearStem",
+      "p10": "V56-B2-P01-10-yearStem-monthStem"
+    }
+  },
+  "note": "scope_none = V35 tables + SAME tightening + fresh-pair preference, without the DISTINCT relaxation. scope_all relaxes every chapter and changes 01-08; rejected as default."
+}

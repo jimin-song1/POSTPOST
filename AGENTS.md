@@ -19,3 +19,7 @@ The repository itself defines its runtimes, services, dependencies, architecture
 Treat exact GitHub commit and PR state as durable source truth, preserve unrelated work, and do not make access to the user's computer a dependency of the workflow.
 
 When this repository is used as a template, keep this entry point and add the project's own engineering instructions alongside it.
+
+## Korean human-facing copy
+
+Before drafting or editing Korean text for human readers (including customer saju interpretations, headings, UI, PDFs, README, PR, issues and emails), read `.agents/skills/korean-writing-style/SKILL.md` and follow its language rules. Apply the skill to editorial text, not to code symbols or exact third-party quotations. The LLM generation pipeline uses a corresponding runtime style instruction and an output lint; changes to this skill alone do not update deployed AI prompts.

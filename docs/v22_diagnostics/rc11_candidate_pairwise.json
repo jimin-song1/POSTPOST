@@ -1,0 +1,525 @@
+{
+  "version": "V22",
+  "baseline": "V21",
+  "caseId": "RC11",
+  "mode": "diagnostic only",
+  "candidateCount": 9,
+  "priorStructured": [
+    {
+      "id": "P01-01",
+      "scenario": "P01-01:baseline:officer|resource",
+      "action": "규칙을 먼저 이해한 뒤 어느 순서로 시작할지 가늠하는 모습이라는 조건부 가설",
+      "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 이미 알고 있는 정보와 이해의 근거 (출처: 월지 편관, 시간 정인)",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ]
+    },
+    {
+      "id": "P01-02",
+      "scenario": "",
+      "action": "처음 만난 자리에서는 열려 있는 선택지와 기회비용이 먼저 드러날 수 있고, 가까워진 뒤에는 압박 속 우선 처리할 책임을 판단 기준으로 삼을 수도 있다는 가설",
+      "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 압박 속 우선 처리할 책임 (출처: 월간 편재, 일지 편관)",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ]
+    },
+    {
+      "id": "P01-05",
+      "scenario": "",
+      "action": "눈에 띄는 장점보다 우선 확인할 조건을 선택하는 모습. 이때 열려 있는 선택지와 기회비용을 먼저 고려하고 합의된 절차와 명확한 책임도 검토하는 가설",
+      "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 합의된 절차와 명확한 책임 (출처: 월간 편재, 시지 정관)",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:branch:丑"
+      ]
+    },
+    {
+      "id": "P01-06",
+      "scenario": "P01-06:revision:resource|wealth",
+      "action": "처음 선택한 비용이나 조건을 그대로 수용할지 새 정보에 맞춰 선택 범위를 바꿀지 구분하는 모습을 명리 상징으로 풀이한 조건부 가설",
+      "basis": "우선 기준: 열려 있는 선택지와 기회비용 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 월간 편재, 연간 편인)",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:year:stem:庚"
+      ]
+    },
+    {
+      "id": "P01-08",
+      "scenario": "",
+      "action": "문제가 생기면 압박 속 우선 처리할 책임을 먼저 확인할지, 익숙하지 않은 방식의 가능성에 집중할지 비교하는 가설",
+      "basis": "우선 기준: 압박 속 우선 처리할 책임 / 함께 보는 기준: 익숙하지 않은 방식의 가능성 (출처: 일지 편관, 연간 편인)",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:year:stem:庚"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "scenarioRuleId": "P01-09:officer|wealth:편재|편관",
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:戌"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-02",
+          "sharedSources": [
+            "PILLAR:month:stem:丙",
+            "PILLAR:day:branch:戌"
+          ],
+          "actionSimilarity": 0.029,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|편관",
+          "previousRule": null
+        },
+        {
+          "section": "P01-05",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.029,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|편관",
+          "previousRule": null
+        },
+        {
+          "section": "P01-08",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "actionSimilarity": 0.022,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|편관",
+          "previousRule": null
+        }
+      ],
+      "sameSource": [
+        "P01-02",
+        "P01-05",
+        "P01-08",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-08",
+          "sharedSources": [],
+          "actionSimilarity": 0.023,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [
+            "PILLAR:month:branch:戌",
+            "PILLAR:hour:stem:辛"
+          ],
+          "actionSimilarity": 0.014,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": "P01-01:baseline:officer|resource"
+        },
+        {
+          "section": "P01-06",
+          "sharedSources": [],
+          "actionSimilarity": 0.011,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": "P01-06:revision:resource|wealth"
+        }
+      ],
+      "sameSource": [
+        "P01-01"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthBranch-yearStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|편인",
+      "action": "시급한 요청의 우선 책임을 정리한 다음 기존 설명과 다른 접근의 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:month:branch:戌",
+        "PILLAR:year:stem:庚"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-08",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "actionSimilarity": 0.034,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-05",
+          "sharedSources": [],
+          "actionSimilarity": 0.029,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [
+            "PILLAR:month:branch:戌"
+          ],
+          "actionSimilarity": 0.013,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편인",
+          "previousRule": "P01-01:baseline:officer|resource"
+        }
+      ],
+      "sameSource": [
+        "P01-08",
+        "P01-01",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "scenarioRuleId": "P01-09:officer|resource:편관|정인",
+      "action": "시급한 요청의 우선 책임을 정리한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:day:branch:戌",
+        "PILLAR:hour:stem:辛"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-08",
+          "sharedSources": [
+            "PILLAR:day:branch:戌"
+          ],
+          "actionSimilarity": 0.023,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "actionSimilarity": 0.014,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": "P01-01:baseline:officer|resource"
+        },
+        {
+          "section": "P01-06",
+          "sharedSources": [],
+          "actionSimilarity": 0.011,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|정인",
+          "previousRule": "P01-06:revision:resource|wealth"
+        }
+      ],
+      "sameSource": [
+        "P01-08",
+        "P01-01",
+        "P01-02"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "scenarioRuleId": "P01-09:officer|wealth:편재|정관",
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 합의된 기준과 절차를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:branch:丑"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-05",
+          "sharedSources": [
+            "PILLAR:month:stem:丙",
+            "PILLAR:hour:branch:丑"
+          ],
+          "actionSimilarity": 0.04,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정관",
+          "previousRule": null
+        },
+        {
+          "section": "P01-02",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.019,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정관",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [],
+          "actionSimilarity": 0.014,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정관",
+          "previousRule": "P01-01:baseline:officer|resource"
+        }
+      ],
+      "sameSource": [
+        "P01-05",
+        "P01-02",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-monthStem-hourStem",
+      "scenarioRuleId": "P01-09:resource|wealth:편재|정인",
+      "action": "대안별 기회비용과 활용 가능성을 검토한 다음 익숙한 설명의 근거를 확인하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:hour:stem:辛"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-05",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.03,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-02",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.019,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정인",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [
+            "PILLAR:hour:stem:辛"
+          ],
+          "actionSimilarity": 0.014,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편재|정인",
+          "previousRule": "P01-01:baseline:officer|resource"
+        }
+      ],
+      "sameSource": [
+        "P01-05",
+        "P01-02",
+        "P01-01",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
+      "scenarioRuleId": "P01-09:officer|wealth:편관|편재",
+      "action": "시급한 요청의 우선 책임을 정리한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:stem:丙"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-05",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.05,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편재",
+          "previousRule": null
+        },
+        {
+          "section": "P01-02",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.029,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편재",
+          "previousRule": null
+        },
+        {
+          "section": "P01-08",
+          "sharedSources": [],
+          "actionSimilarity": 0.022,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편관|편재",
+          "previousRule": null
+        }
+      ],
+      "sameSource": [
+        "P01-05",
+        "P01-02",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-dayBranch",
+      "scenarioRuleId": "P01-09:officer|resource:편인|편관",
+      "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 시급한 요청의 우선 책임을 정리하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:day:branch:戌"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-08",
+          "sharedSources": [
+            "PILLAR:year:stem:庚",
+            "PILLAR:day:branch:戌"
+          ],
+          "actionSimilarity": 0.034,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편관",
+          "previousRule": null
+        },
+        {
+          "section": "P01-01",
+          "sharedSources": [],
+          "actionSimilarity": 0.013,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편관",
+          "previousRule": "P01-01:baseline:officer|resource"
+        },
+        {
+          "section": "P01-05",
+          "sharedSources": [],
+          "actionSimilarity": 0.01,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편관",
+          "previousRule": null
+        }
+      ],
+      "sameSource": [
+        "P01-08",
+        "P01-06",
+        "P01-02"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    },
+    {
+      "candidateId": "V56-B2-P01-09-yearStem-monthStem",
+      "scenarioRuleId": "P01-09:resource|wealth:편인|편재",
+      "action": "기존 설명과 다른 접근의 가능성을 검토한 다음 대안별 기회비용과 활용 가능성을 검토하는 두 과정을 연결할 가능성을 살피는 모습",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:month:stem:丙"
+      ],
+      "decision": "REJECTED",
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ],
+      "closest": [
+        {
+          "section": "P01-05",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.05,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편재",
+          "previousRule": null
+        },
+        {
+          "section": "P01-08",
+          "sharedSources": [
+            "PILLAR:year:stem:庚"
+          ],
+          "actionSimilarity": 0.023,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편재",
+          "previousRule": null
+        },
+        {
+          "section": "P01-02",
+          "sharedSources": [
+            "PILLAR:month:stem:丙"
+          ],
+          "actionSimilarity": 0.019,
+          "basisSimilarity": 0,
+          "sharedSemanticRule": "편인|편재",
+          "previousRule": null
+        }
+      ],
+      "sameSource": [
+        "P01-05",
+        "P01-08",
+        "P01-02",
+        "P01-06"
+      ],
+      "warning": "String similarity is descriptive, NOT the editor’s semantic-overlap algorithm or proof of actual meaning."
+    }
+  ],
+  "conclusions": {
+    "allRejected": true,
+    "allSemanticOverlap": true,
+    "legacyStrengthSelected": true,
+    "weaknessMissing": true,
+    "caution": "Overlap scores use text trigrams, not the production editorial overlap logic. Diagnosis does not validate personality accuracy."
+  }
+}

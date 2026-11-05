@@ -1,0 +1,79 @@
+{
+  "version": "V27",
+  "basedOn": "V26",
+  "purpose": "Classify persistent historical regression failures without changing production selection or silently rewriting historical tests",
+  "cases": [
+    {
+      "version": "V6",
+      "passed": 9,
+      "failed": 1,
+      "failures": [
+        {
+          "name": "P01-04 selects structured output-based hypothesis",
+          "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:    assert(p04.behaviorHypothesis.scenarioRuleId.startsWith('P01-04:output|')) "
+        }
+      ],
+      "classification": "outdated-rule-id-contract",
+      "guidance": "P01-04 scenarioRuleId prefix changed; validate current documented rule schema without weakening ten-god evidence checks."
+    },
+    {
+      "version": "V8",
+      "passed": 15,
+      "failed": 1,
+      "failures": [
+        {
+          "name": "existing 04 output and 06 revision special rules retained",
+          "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:    assert(h('04').scenarioRuleId.startsWith('P01-04:output|')) "
+        }
+      ],
+      "classification": "outdated-rule-id-contract",
+      "guidance": "Same P01-04 legacy prefix check; keep P01-06 separate assertion."
+    },
+    {
+      "version": "V13",
+      "passed": 10,
+      "failed": 5,
+      "failures": [
+        {
+          "name": "V13 count is 118 selected and 69 structured slots",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:  115 !== 118 "
+        },
+        {
+          "name": "nine prior strength scenes plus one supported recovered scene",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:  7 !== 10 "
+        },
+        {
+          "name": "resource heavy B05 recovers evidence-aligned strength and weakness",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal: + actual - expected  + 'legacy'"
+        },
+        {
+          "name": "B10 remains unapproved when actual selected actions repeat earlier chapter",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal: + actual - expected  + 'structured'"
+        },
+        {
+          "name": "all structured P01-09 scenes match symbolic family rule",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal: + actual - expected  + 'P01-09:output|wealth:식신|편재'"
+        }
+      ],
+      "classification": "selection-behavior-regression-and-old-fixtures",
+      "guidance": "115 selections vs expected 118, 63 structured vs 69; B05/B10 decisions reversed; audit causal candidates, not numeric expectation updates. Rule ID also gained ten-god suffix."
+    },
+    {
+      "version": "V15",
+      "passed": 6,
+      "failed": 1,
+      "failures": [
+        {
+          "name": "09 and 04 remaining template repetition is explicitly flagged rather than hidden",
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:  5 !== 3 "
+        }
+      ],
+      "classification": "outdated-exact-diversity-count",
+      "guidance": "09 observed 5 vs old 3; compare minimum diversity and semantic differentiation, not fixed count."
+    }
+  ],
+  "failedAssertions": 8,
+  "suitesFailed": 4,
+  "productionLogicChanged": false,
+  "releaseApproved": false
+}

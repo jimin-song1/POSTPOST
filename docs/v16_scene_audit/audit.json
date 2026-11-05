@@ -1,0 +1,20 @@
+{
+  "test": "offline six synthetic birth-date/time charts; Swiss solar term adapter, not production JPL",
+  "selected": 60,
+  "structured": 50,
+  "uniqueAction": 46,
+  "uniqueTriggers": 35,
+  "chapter04": {
+    "count": 4,
+    "actions": 4,
+    "rules": 2
+  },
+  "chapter09": {
+    "count": 6,
+    "actions": 6,
+    "rules": 6
+  },
+  "customerAIManuscriptVerified": false,
+  "psychologicalAccuracyVerified": false,
+  "passed": true
+}

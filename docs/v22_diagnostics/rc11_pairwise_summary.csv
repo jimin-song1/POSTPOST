@@ -1,0 +1,10 @@
+﻿candidateId,scenarioRuleId,decision,flags,closestSection,actionSimilarity,sharedSources
+"V56-B2-P01-09-monthStem-dayBranch","P01-09:officer|wealth:편재|편관","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-02","0.029","PILLAR:month:stem:丙|PILLAR:day:branch:戌"
+"V56-B2-P01-09-monthBranch-hourStem","P01-09:officer|resource:편관|정인","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-08","0.023",""
+"V56-B2-P01-09-monthBranch-yearStem","P01-09:officer|resource:편관|편인","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-08","0.034","PILLAR:year:stem:庚"
+"V56-B2-P01-09-dayBranch-hourStem","P01-09:officer|resource:편관|정인","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-08","0.023","PILLAR:day:branch:戌"
+"V56-B2-P01-09-monthStem-hourBranch","P01-09:officer|wealth:편재|정관","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-05","0.04","PILLAR:month:stem:丙|PILLAR:hour:branch:丑"
+"V56-B2-P01-09-monthStem-hourStem","P01-09:resource|wealth:편재|정인","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-05","0.03","PILLAR:month:stem:丙"
+"V56-B2-P01-09-yearBranch-monthStem","P01-09:officer|wealth:편관|편재","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-05","0.05","PILLAR:month:stem:丙"
+"V56-B2-P01-09-yearStem-dayBranch","P01-09:officer|resource:편인|편관","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-08","0.034","PILLAR:year:stem:庚|PILLAR:day:branch:戌"
+"V56-B2-P01-09-yearStem-monthStem","P01-09:resource|wealth:편인|편재","REJECTED","LOW_CONFIDENCE|SEMANTIC_OVERLAP","P01-05","0.05","PILLAR:month:stem:丙"

@@ -1,0 +1,134 @@
+{
+  "version": "V35",
+  "scope": "P01-09 goal/output overlap + P01-10 link; offline Swiss-fixture charts; not personality accuracy, not AI manuscript validation",
+  "checks": [
+    {
+      "name": "V34 extractor false positive fixed: 기회비용…합의 is not a cost agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "same goal key with different wording and motifs is a duplicate",
+      "status": "PASS"
+    },
+    {
+      "name": "distinct goal AND output clears a motif-only duplicate only when allowed",
+      "status": "PASS"
+    },
+    {
+      "name": "same output key with a different goal key is still a duplicate",
+      "status": "PASS"
+    },
+    {
+      "name": "missing or text-extracted goal can never prove independence",
+      "status": "PASS"
+    },
+    {
+      "name": "identical action stays a duplicate even with distinct goal/output (V29 floor)",
+      "status": "PASS"
+    },
+    {
+      "name": "goal/output comes from the rule table, not from ten-god labels; P01-02/03/10 stay null",
+      "status": "PASS"
+    },
+    {
+      "name": "deterministic: two runs produce identical selections",
+      "status": "PASS"
+    },
+    {
+      "name": "scope containment: P01-01..P01-08 selections are identical to V34 on all 12 charts",
+      "status": "PASS"
+    },
+    {
+      "name": "every structured P01-09 carries rule-table goal/output and an explicit output in its action",
+      "status": "PASS"
+    },
+    {
+      "name": "no selected P01-09 shares a goal or output with any earlier structured chapter",
+      "status": "PASS"
+    },
+    {
+      "name": "a motif overlap with an earlier chapter is cleared only by DISTINCT goal/output on a different source pair, and is logged for editing",
+      "status": "PASS"
+    },
+    {
+      "name": "every selected P01-10 is linked to the selected P01-09 with exactly one shared natal source",
+      "status": "PASS"
+    },
+    {
+      "name": "no selected P01-10 retells another chapter (same exact pair AND near-duplicate behavior)",
+      "status": "PASS"
+    },
+    {
+      "name": "RC11: P01-09 structured and READY, P01-10 linked and READY",
+      "status": "PASS"
+    },
+    {
+      "name": "V35.1: P01-09 sentences do not assert an unsupported order (\"한 다음\") and carry no internal ten-god note",
+      "status": "PASS"
+    },
+    {
+      "name": "V35.1: a 겁재 strength is never labelled with a solo-ownership scene or goal",
+      "status": "PASS"
+    },
+    {
+      "name": "P01-09 independent-evidence floor: fresh natal source pairs do not drop below the V35 measurement (8/12)",
+      "status": "PASS"
+    }
+  ],
+  "passed": 18,
+  "failed": 0,
+  "ablation": {
+    "V34_snapshot": {
+      "selected": 119,
+      "structured": 96,
+      "ready": 96,
+      "p09Structured": 11,
+      "p10Selected": 11,
+      "p09FreshSourcePair": 0
+    },
+    "V35_scope_none": {
+      "selected": 119,
+      "structured": 96,
+      "ready": 96,
+      "p09Structured": 11,
+      "p10Selected": 11,
+      "p09FreshSourcePair": 7,
+      "goalOutputReviews": 0,
+      "semanticOverlapReviews": 12,
+      "rc11": {
+        "p09": "V56-X-P01-09-10",
+        "p10": null
+      }
+    },
+    "V35_default_P01_09": {
+      "selected": 120,
+      "structured": 98,
+      "ready": 98,
+      "p09Structured": 12,
+      "p10Selected": 12,
+      "p09FreshSourcePair": 10,
+      "goalOutputReviews": 4,
+      "semanticOverlapReviews": 15,
+      "rc11": {
+        "p09": "V56-B2-P01-09-dayBranch-hourStem",
+        "p10": "V56-B2-P01-10-monthBranch-hourStem"
+      }
+    },
+    "V35_scope_all_experiment": {
+      "selected": 120,
+      "structured": 100,
+      "ready": 100,
+      "p09Structured": 12,
+      "p10Selected": 12,
+      "p09FreshSourcePair": 10,
+      "goalOutputReviews": 13,
+      "semanticOverlapReviews": 10,
+      "rc11": {
+        "p09": "V56-B2-P01-09-monthBranch-yearStem",
+        "p10": "V56-B2-P01-10-yearStem-monthStem"
+      }
+    },
+    "note": "scope_none = V35 tables + SAME tightening + fresh-pair preference, without the DISTINCT relaxation. scope_all relaxes every chapter and changes 01-08; rejected as default."
+  },
+  "releaseReady": false
+}

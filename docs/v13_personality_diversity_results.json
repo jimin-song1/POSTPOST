@@ -1,0 +1,1960 @@
+{
+  "suite": "V13 focused offline regression",
+  "fixtureType": "synthetic ten-god signal recombination, not independent calendar calculation or personality accuracy",
+  "selected": 116,
+  "structured": 65,
+  "strength": 8,
+  "weakness": 8,
+  "writingReadyStrength": 7,
+  "writingReadyWeakness": 7,
+  "passed": 15,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "same 12 synthetic cases and 120 slots",
+      "ok": true
+    },
+    {
+      "name": "all selected candidates retain canonical source contracts",
+      "ok": true
+    },
+    {
+      "name": "current selection counts are bounded by valid evidence, not historical snapshots",
+      "ok": true,
+      "detail": {
+        "selected": 116,
+        "structured": 65
+      }
+    },
+    {
+      "name": "structured weaknesses require a structured linked strength",
+      "ok": true
+    },
+    {
+      "name": "resource heavy B05 does not fabricate unsupported linked weakness",
+      "ok": true,
+      "detail": {
+        "strength": "structured",
+        "weakness": "structured"
+      }
+    },
+    {
+      "name": "one family B03 cannot manufacture distinct evidence",
+      "ok": true
+    },
+    {
+      "name": "B10 selected pair has canonical trace and strength-to-weakness link",
+      "ok": true
+    },
+    {
+      "name": "exact natal source pair reuse in strength requires a distinct actual scene",
+      "ok": true,
+      "detail": {
+        "reusedDistinctScenes": 2
+      }
+    },
+    {
+      "name": "all structured P01-09 scenes match symbolic family rule",
+      "ok": true
+    },
+    {
+      "name": "every structured weakness is linked to the exact selected strength and one shared position",
+      "ok": true
+    },
+    {
+      "name": "weakness trigger is no longer one fixed text",
+      "ok": true,
+      "detail": {
+        "differentTriggers": 5
+      }
+    },
+    {
+      "name": "source pair reuse cannot be mistaken for independent corroboration",
+      "ok": true
+    },
+    {
+      "name": "editorial warnings remain visible for unresolved overlap",
+      "ok": true,
+      "detail": {
+        "warnings": 14
+      }
+    },
+    {
+      "name": "deterministic source selection",
+      "ok": true
+    },
+    {
+      "name": "changed TS sources pass transpile parse",
+      "ok": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "B00_original",
+      "empty": [],
+      "overlapWarnings": 3
+    },
+    {
+      "id": "B01_peer_heavy",
+      "empty": [],
+      "overlapWarnings": 2
+    },
+    {
+      "id": "B02_output_heavy",
+      "empty": [],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B03_wealth_heavy",
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 0
+    },
+    {
+      "id": "B04_officer_heavy",
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B05_resource_heavy",
+      "empty": [],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B06_peer_wealth",
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B07_output_officer",
+      "empty": [],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B08_resource_output",
+      "empty": [],
+      "overlapWarnings": 1
+    },
+    {
+      "id": "B09_wealth_officer",
+      "empty": [
+        "P01-10"
+      ],
+      "overlapWarnings": 0
+    },
+    {
+      "id": "B10_resource_peer",
+      "empty": [],
+      "overlapWarnings": 0
+    },
+    {
+      "id": "B11_mixed",
+      "empty": [],
+      "overlapWarnings": 3
+    }
+  ],
+  "rows": [
+    {
+      "case": "B00_original",
+      "section": "P01-01",
+      "candidateId": "V56-B2-P01-01-monthBranch-hourStem",
+      "type": "structured",
+      "trigger": "이미 배운 지식을 활용할 수 있는 과제를 처음 맡았을 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:hour:stem:壬"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "type": "structured",
+      "trigger": "처음 만난 사람들과 함께 맡을 역할을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-03",
+      "candidateId": "V56-B2-P01-03-monthStem-hourStem",
+      "type": "structured",
+      "trigger": "혼자서 만들거나 마무리할 일을 선택할 때",
+      "family": "output|resource",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:hour:stem:壬"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-04",
+      "candidateId": "V56-B2-P01-04-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 확인할 정보도 함께 고려하는 상황",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:壬"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-yearBranch-hourBranch",
+      "type": "structured",
+      "trigger": "선택한 계획의 실제 성과가 예상과 다르게 나타날 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-07",
+      "candidateId": "V56-B2-P01-07-monthBranch-yearBranch",
+      "type": "structured",
+      "trigger": "함께 진행하는 일의 담당 범위와 반복 비용을 정할 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:year:branch:辰"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "공동의 책임을 다시 나누어야 하는 문제가 생겼을 때 가능한 실행 방법을 선택해야 하는 상황",
+      "family": "output|peer",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "type": "structured",
+      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B00_original",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+      "type": "structured",
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-01",
+      "candidateId": "V56-B2-P01-01-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "이미 배운 지식을 활용할 수 있는 과제를 처음 맡았을 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "type": "structured",
+      "trigger": "처음 만난 사람들과 함께 맡을 역할을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:卯",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:乙",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-05",
+      "candidateId": "V56-X-P01-05-18",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:甲"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-yearBranch-hourBranch",
+      "type": "structured",
+      "trigger": "이미 맡기로 한 일에 새로운 정보가 들어왔을 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:year:branch:寅",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-07",
+      "candidateId": "V56-B2-P01-07-yearBranch-dayBranch",
+      "type": "structured",
+      "trigger": "여럿이 공동으로 성과를 내면서 지출도 나누어야 할 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:寅",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-14",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:乙",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourBranch",
+      "type": "structured",
+      "trigger": "설명이 서로 다른 제안을 비교해야 할 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "REUSED_SOURCE_PAIR",
+        "SCENE_COMPARISON_UNAVAILABLE"
+      ]
+    },
+    {
+      "case": "B01_peer_heavy",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+      "type": "structured",
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "여러 사람 앞에서 의견이나 결과를 설명할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-03",
+      "candidateId": "V56-B2-P01-03-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "혼자서 만들거나 마무리할 일을 선택할 때",
+      "family": "output|peer",
+      "sourceIds": [
+        "PILLAR:month:branch:午",
+        "PILLAR:hour:branch:寅"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-04",
+      "candidateId": "V56-B2-P01-04-hourStem-dayBranch",
+      "type": "structured",
+      "trigger": "기존 설명에서 개선점을 이야기할 때, 제안의 조건을 설명하거나 여러 선택지를 논의할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:hour:stem:丙",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-05",
+      "candidateId": "V56-X-P01-05-2",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:hour:branch:寅",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-06",
+      "candidateId": "V56-X-P01-06-15",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:hour:branch:寅"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:丙",
+        "PILLAR:month:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-hourBranch-yearBranch",
+      "type": "structured",
+      "trigger": "공동의 책임을 다시 나누어야 하는 문제가 생겼을 때 가능한 실행 방법을 선택해야 하는 상황",
+      "family": "output|peer",
+      "sourceIds": [
+        "PILLAR:hour:branch:寅",
+        "PILLAR:year:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:丁",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "REUSED_SOURCE_PAIR"
+      ]
+    },
+    {
+      "case": "B02_output_heavy",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearBranch-dayBranch",
+      "type": "structured",
+      "trigger": "여러 결과를 한꺼번에 마무리하려고 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:巳",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-02",
+      "candidateId": "V56-X-P01-02-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:己",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:戌"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-10",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-05",
+      "candidateId": "V56-X-P01-05-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:hour:stem:戊",
+        "PILLAR:month:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-06",
+      "candidateId": "V56-X-P01-06-2",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:戊"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:戊",
+        "PILLAR:month:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:丑",
+        "PILLAR:hour:branch:戌"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-09",
+      "candidateId": "V56-X-P01-09-11",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B03_wealth_heavy",
+      "section": "P01-10",
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "공적인 자리에서 절차와 책임을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:辛",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-17",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:酉",
+        "PILLAR:hour:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-10",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:申",
+        "PILLAR:month:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:庚"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-06",
+      "candidateId": "V56-X-P01-06-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:year:stem:庚"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:庚",
+        "PILLAR:month:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-14",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:辛",
+        "PILLAR:hour:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-09",
+      "candidateId": "V56-X-P01-09-11",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:申",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B04_officer_heavy",
+      "section": "P01-10",
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-01",
+      "candidateId": "V56-B2-P01-01-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "낯선 규칙을 처음 적용해야 할 때",
+      "family": "officer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:子",
+        "PILLAR:hour:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "type": "structured",
+      "trigger": "처음 만난 사람들과 정보를 주고받을 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:子",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-18",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:壬"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:癸",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourBranch",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-dayBranch-yearBranch",
+      "type": "structured",
+      "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:year:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:壬",
+        "PILLAR:month:branch:子"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-hourBranch-yearBranch",
+      "type": "structured",
+      "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+      "family": "officer|resource",
+      "sourceIds": [
+        "PILLAR:hour:branch:申",
+        "PILLAR:year:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "type": "structured",
+      "trigger": "새로운 절차의 이유를 이해한 뒤 실제 적용 여부를 판단할 때",
+      "family": "officer|resource",
+      "sourceIds": [
+        "PILLAR:month:stem:癸",
+        "PILLAR:hour:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B05_resource_heavy",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:癸",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:year:stem:甲"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-yearBranch-dayBranch",
+      "type": "structured",
+      "trigger": "처음 만난 사람들과 함께 맡을 역할을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:卯",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-11",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:卯",
+        "PILLAR:month:branch:辰"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-15",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-05",
+      "candidateId": "V56-X-P01-05-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:hour:stem:戊",
+        "PILLAR:month:branch:辰"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-06",
+      "candidateId": "V56-X-P01-06-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:year:stem:甲"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-07",
+      "candidateId": "V56-B2-P01-07-yearStem-monthStem",
+      "type": "structured",
+      "trigger": "여럿이 공동으로 성과를 내면서 지출도 나누어야 할 때",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:year:stem:甲",
+        "PILLAR:month:stem:己"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:hour:branch:丑"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-09",
+      "candidateId": "V56-X-P01-09-2",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:己",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B06_peer_wealth",
+      "section": "P01-10",
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "공적인 자리에서 절차와 책임을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:庚",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-11",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:午",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-04",
+      "candidateId": "V56-B2-P01-04-yearStem-monthBranch",
+      "type": "structured",
+      "trigger": "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 공식적인 자리에서 의견을 전달해야 할 때",
+      "family": "officer|output",
+      "sourceIds": [
+        "PILLAR:year:stem:丁",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourBranch",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-dayBranch-yearBranch",
+      "type": "structured",
+      "trigger": "선택한 계획의 실제 성과가 예상과 다르게 나타날 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:year:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-5",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:丁",
+        "PILLAR:month:stem:庚"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-hourBranch-yearBranch",
+      "type": "structured",
+      "trigger": "기한이나 공식 기준이 갑자기 달라졌을 때 가능한 실행 방법을 선택해야 하는 상황",
+      "family": "officer|output",
+      "sourceIds": [
+        "PILLAR:hour:branch:酉",
+        "PILLAR:year:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-yearBranch-monthStem",
+      "type": "structured",
+      "trigger": "공동의 절차 안에서 결과물을 완성해야 할 때",
+      "family": "officer|output",
+      "sourceIds": [
+        "PILLAR:year:branch:午",
+        "PILLAR:month:stem:庚"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B07_output_officer",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-monthBranch-yearBranch",
+      "type": "structured",
+      "trigger": "정해진 절차를 모두 지키려다 일정과 조율해야 할 때",
+      "family": "officer|output",
+      "sourceIds": [
+        "PILLAR:month:branch:申",
+        "PILLAR:year:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "여러 사람 앞에서 의견이나 결과를 설명할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:丙",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-03",
+      "candidateId": "V56-B2-P01-03-yearBranch-hourBranch",
+      "type": "structured",
+      "trigger": "새로 알게 된 내용을 혼자 정리할 때",
+      "family": "output|resource",
+      "sourceIds": [
+        "PILLAR:year:branch:子",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-04",
+      "candidateId": "V56-B2-P01-04-monthBranch-yearBranch",
+      "type": "structured",
+      "trigger": "기존 설명에서 개선점을 이야기할 때, 익숙하지 않은 내용을 설명해 달라는 요청을 받았을 때",
+      "family": "output|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:巳",
+        "PILLAR:year:branch:子"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-yearBranch-dayBranch",
+      "type": "structured",
+      "trigger": "설명이 서로 다른 두 방안을 검토할 때 책임과 조건도 함께 고려하는 상황",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:子",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-dayBranch-hourBranch",
+      "type": "structured",
+      "trigger": "선택한 계획의 실제 성과가 예상과 다르게 나타날 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:癸",
+        "PILLAR:month:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:巳",
+        "PILLAR:hour:branch:午"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:丁"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B08_resource_output",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-yearStem-dayBranch",
+      "type": "structured",
+      "trigger": "새 정보를 더 알아볼지 현재 자료로 결론을 낼지 결정해야 할 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:year:stem:癸",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-3",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthStem-dayBranch",
+      "type": "structured",
+      "trigger": "공적인 자리에서 절차와 책임을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:庚",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-10",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 책임과 조건도 함께 고려하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:辛"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-06",
+      "candidateId": "V56-X-P01-06-6",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:己",
+        "PILLAR:month:branch:申"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-07",
+      "candidateId": "V56-B2-P01-07-yearBranch-monthStem",
+      "type": "structured",
+      "trigger": "공동의 규칙을 지키면서 비용을 나누어야 할 때",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:辰",
+        "PILLAR:month:stem:庚"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-08",
+      "candidateId": "V56-X-P01-08-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:申",
+        "PILLAR:hour:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-09",
+      "candidateId": "V56-X-P01-09-15",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:申",
+        "PILLAR:hour:stem:辛"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B09_wealth_officer",
+      "section": "P01-10",
+      "candidateId": "",
+      "type": "empty",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [],
+      "flags": []
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-01",
+      "candidateId": "V56-B2-P01-01-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "기존 설명만으로 해결하기 어려운 일을 처음 맡았을 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:寅",
+        "PILLAR:hour:branch:子"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthBranch-dayBranch",
+      "type": "structured",
+      "trigger": "처음 만난 사람들과 함께 맡을 역할을 정할 때와 가까운 사람과 개인적인 선택을 상의할 때를 비교하는 상황",
+      "family": "peer|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:寅",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:子"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-04",
+      "candidateId": "V56-X-P01-04-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:stem:甲",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "비용과 얻을 것이 서로 다른 제안 앞에서 확인할 정보도 함께 고려하는 상황",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:癸"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-dayBranch-yearBranch",
+      "type": "structured",
+      "trigger": "이미 선택한 제안의 조건을 뒷받침하는 정보가 달라졌을 때",
+      "family": "resource|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:year:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-07",
+      "candidateId": "V56-X-P01-07-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:year:stem:壬",
+        "PILLAR:month:branch:寅"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-monthBranch-yearBranch",
+      "type": "structured",
+      "trigger": "공동의 책임을 다시 나누어야 하는 문제가 생겼을 때 정보를 다시 이해하는 과정을 선택해야 하는 상황",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:寅",
+        "PILLAR:year:branch:亥"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-monthBranch-hourStem",
+      "type": "structured",
+      "trigger": "함께 판단할 사람들과 필요한 정보를 나눌 수 있을 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:branch:寅",
+        "PILLAR:hour:stem:癸"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B10_resource_peer",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-monthStem-hourStem",
+      "type": "structured",
+      "trigger": "스스로 맡는 일의 범위를 계속 넓히다 일정에 여유가 없어질 때",
+      "family": "peer|resource",
+      "sourceIds": [
+        "PILLAR:month:stem:甲",
+        "PILLAR:hour:stem:癸"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-01",
+      "candidateId": "V56-X-P01-01-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:year:stem:辛"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-02",
+      "candidateId": "V56-B2-P01-02-monthBranch-hourBranch",
+      "type": "structured",
+      "trigger": "공적인 자리에서 제안의 조건을 논의할 때와 친한 사람에게 생각을 편하게 표현할 때를 비교하는 상황",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:hour:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-03",
+      "candidateId": "V56-X-P01-03-1",
+      "type": "legacy",
+      "trigger": "",
+      "family": "",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-04",
+      "candidateId": "V56-B2-P01-04-hourStem-yearBranch",
+      "type": "structured",
+      "trigger": "만든 결과나 진행 순서를 다른 사람에게 설명할 때, 공식적인 자리에서 의견을 전달해야 할 때",
+      "family": "officer|output",
+      "sourceIds": [
+        "PILLAR:hour:stem:丁",
+        "PILLAR:year:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-05",
+      "candidateId": "V56-B2-P01-05-yearBranch-dayBranch",
+      "type": "structured",
+      "trigger": "규칙과 책임 조건이 다른 선택지 앞에서 책임과 조건도 함께 고려하는 상황",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:year:branch:酉",
+        "PILLAR:day:branch:未"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-06",
+      "candidateId": "V56-B2-P01-06-dayBranch-hourStem",
+      "type": "structured",
+      "trigger": "선택한 계획의 실제 성과가 예상과 다르게 나타날 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:day:branch:未",
+        "PILLAR:hour:stem:丁"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-07",
+      "candidateId": "V56-B2-P01-07-monthBranch-yearBranch",
+      "type": "structured",
+      "trigger": "공동의 규칙을 지키면서 비용을 나누어야 할 때",
+      "family": "officer|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:year:branch:酉"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-08",
+      "candidateId": "V56-B2-P01-08-monthBranch-hourStem",
+      "type": "structured",
+      "trigger": "비용이나 선택지가 예상과 달라졌을 때 가능한 실행 방법을 선택해야 하는 상황",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:branch:辰",
+        "PILLAR:hour:stem:丁"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-09",
+      "candidateId": "V56-B2-P01-09-monthStem-hourBranch",
+      "type": "structured",
+      "trigger": "결과물을 만들어 여러 활용 방법 중 하나를 골라야 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:戊",
+        "PILLAR:hour:branch:巳"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE"
+      ]
+    },
+    {
+      "case": "B11_mixed",
+      "section": "P01-10",
+      "candidateId": "V56-B2-P01-10-monthStem-hourStem",
+      "type": "structured",
+      "trigger": "여러 기회를 동시에 고려하느라 집중할 범위를 정해야 할 때",
+      "family": "output|wealth",
+      "sourceIds": [
+        "PILLAR:month:stem:戊",
+        "PILLAR:hour:stem:丁"
+      ],
+      "flags": [
+        "LOW_CONFIDENCE",
+        "SEMANTIC_OVERLAP"
+      ]
+    }
+  ]
+}

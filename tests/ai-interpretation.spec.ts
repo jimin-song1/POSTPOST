@@ -78,6 +78,11 @@ describe("AI_INTERPRETATION_V1",()=>{
     expect(()=>validateGrounding(output,input)).toThrow(GroundingValidationError);
   });
 
+  it("rejects style failures in authored report copy without changing fixed chapter titles",()=>{
+    const input=buildInterpretationInput(analysis,{reportType:"WEALTH",referenceInstant});
+    const output=validOutput(input); output.sections[0].body="재물·직업에 관심이 있습니다.";
+    expect(()=>validateGrounding(output,input)).toThrow(/고객용 한국어 문체 검증 실패/);
+  });
   it("J-K: repairs once and fails after exactly one unsuccessful repair",async()=>{
     const repairedProvider=new MockProvider([{bad:true},undefined]),repaired=await interpretSajuAnalysis(analysis,repairedProvider,{reportType:"WEALTH",referenceInstant});
     expect(repaired.status).toBe("completed");if(repaired.status==="completed")expect(repaired.metadata.repaired).toBe(true);expect(repairedProvider.calls).toHaveLength(2);

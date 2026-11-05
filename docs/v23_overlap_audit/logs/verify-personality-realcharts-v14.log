@@ -1,0 +1,77 @@
+calculate RC01
+RC01 {"pillars":{"year":"己巳","month":"壬申","day":"丁未","hour":"丙午"},"selected":10,"structured":8,"ready":8}
+calculate RC02
+RC02 {"pillars":{"year":"壬申","month":"癸卯","day":"癸巳","hour":"丙辰"},"selected":10,"structured":9,"ready":9}
+calculate RC03
+RC03 {"pillars":{"year":"乙亥","month":"乙酉","day":"辛亥","hour":"壬辰"},"selected":10,"structured":8,"ready":8}
+calculate RC04
+RC04 {"pillars":{"year":"戊寅","month":"甲子","day":"戊戌","hour":"壬戌"},"selected":10,"structured":5,"ready":5}
+calculate RC05
+RC05 {"pillars":{"year":"庚辰","month":"己丑","day":"戊子","hour":"丁巳"},"selected":10,"structured":10,"ready":10}
+calculate RC06
+RC06 {"pillars":{"year":"癸未","month":"丁巳","day":"戊子","hour":"庚申"},"selected":10,"structured":10,"ready":10}
+{
+  "total": 60,
+  "selected": 60,
+  "structured": 50,
+  "ready": 50,
+  "empty": 0,
+  "legacy": 10,
+  "uniqueBehavioralActions": 45,
+  "uniqueTriggers": 32,
+  "duplicateTriggers": 12,
+  "duplicateAction": 4,
+  "qualityAlerts": [],
+  "perSection": [
+    [
+      "P01-01",
+      6,
+      6
+    ],
+    [
+      "P01-02",
+      6,
+      6
+    ],
+    [
+      "P01-03",
+      4,
+      4
+    ],
+    [
+      "P01-04",
+      4,
+      4
+    ],
+    [
+      "P01-05",
+      5,
+      5
+    ],
+    [
+      "P01-06",
+      3,
+      3
+    ],
+    [
+      "P01-07",
+      5,
+      5
+    ],
+    [
+      "P01-08",
+      5,
+      5
+    ],
+    [
+      "P01-09",
+      6,
+      6
+    ],
+    [
+      "P01-10",
+      6,
+      6
+    ]
+  ]
+}

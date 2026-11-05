@@ -1,0 +1,100 @@
+{
+  "files": 55,
+  "loadErrors": [
+    "tests/ai-interpretation.spec.ts",
+    "tests/api-validation.spec.ts",
+    "tests/birth-place.spec.ts",
+    "tests/korean-writing-style.spec.ts",
+    "tests/lifetime-report.spec.ts",
+    "tests/personality-generation.spec.ts",
+    "tests/personality-priority.spec.ts"
+  ],
+  "base": {
+    "passed": 761,
+    "total": 773
+  },
+  "v35": {
+    "passed": 772,
+    "total": 782
+  },
+  "changed": [
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > passes the reference strength draft",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > flags engine wording and ten-god terms that should stay out of customer body text",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > flags stacked hedging and three identical sentence endings",
+      null,
+      true
+    ],
+    [
+      "tests/korean-writing-style.review.v35.spec.ts",
+      "V35 non-blocking Korean style review (editor hints, not accuracy checks) > does not treat ordinary words like 시간 or 월간 as saju terms",
+      null,
+      true
+    ],
+    [
+      "tests/personality-behavior.v2.spec.ts",
+      "V5.6 conditional behavior hypotheses (not personality truth) > passes real engine evidence into the review brief without user identity or invented motives",
+      false,
+      true
+    ],
+    [
+      "tests/personality-depth.v3.spec.ts",
+      "V5.6 section-specific depth checks, not personality accuracy > selects grounded behavior hypotheses for formerly abstract 02, 08, 10",
+      false,
+      true
+    ],
+    [
+      "tests/personality-goal-output.v35.spec.ts",
+      "V35 goal/output overlap (selection contract, not personality accuracy) > does not read 기회비용 followed by 합의 as a cost-sharing agreement",
+      null,
+      true
+    ],
+    [
+      "tests/personality-goal-output.v35.spec.ts",
+      "V35 goal/output overlap (selection contract, not personality accuracy) > treats the same goal with different wording as a duplicate",
+      null,
+      true
+    ],
+    [
+      "tests/personality-goal-output.v35.spec.ts",
+      "V35 goal/output overlap (selection contract, not personality accuracy) > clears a motif-only duplicate only when distinct goal/output is explicitly allowed",
+      null,
+      true
+    ],
+    [
+      "tests/personality-goal-output.v35.spec.ts",
+      "V35 goal/output overlap (selection contract, not personality accuracy) > never proves independence from a missing or text-extracted goal",
+      null,
+      true
+    ],
+    [
+      "tests/personality-goal-output.v35.spec.ts",
+      "V35 goal/output overlap (selection contract, not personality accuracy) > keeps chapters without a tangible output at null",
+      null,
+      true
+    ]
+  ],
+  "sharedFailures": [
+    "tests/fortune-synthesis.spec.ts :: SYNTHETIC_FORTUNE_SYNTHESIS_V1 > X-Y: duration-weights multi-segment summaries while retaining activation peaks and delta extremes",
+    "tests/interpretation-file-cache.spec.ts :: FileInterpretationCache > treats a corrupt entry as a miss without failing analysis",
+    "tests/personality-candidates.spec.ts :: V5.6 personality candidate layer > selects distinct, traceable candidates for a controlled multi-signal pattern",
+    "tests/personality-coverage.spec.ts :: V5.6 diverse-chart coverage (development quality, not psychological accuracy) > provides competing hypotheses for all ten headings in six contrasting charts",
+    "tests/personality-coverage.spec.ts :: V5.6 diverse-chart coverage (development quality, not psychological accuracy) > checks 36 extra nonrepresentative month/year combinations for empty topics",
+    "tests/personality-depth.v3.spec.ts :: V4: grounded strength and semantic repetition control > matches the strength scene to the actual ten-god families",
+    "tests/personality-editorial.spec.ts :: V5.6 editorial comparison before writing > does not repeat the same ten-god contrast as a V2 headline across chapters",
+    "tests/personality-expression.v6.spec.ts :: V5.6 V6: expression scenes need a real output signal > selects a new, traceable expression hypothesis for section 04",
+    "tests/seun-activation.spec.ts :: SYNTHETIC_SEUN_ACTIVATION_V1 > AG-AP: is deterministic, leaves every upstream axis immutable, and integrates only seun",
+    "tests/wolun-activation.spec.ts :: SYNTHETIC_WOLUN_ACTIVATION_V1 > J-M: excludes unsupported incomplete years, connects Seun, and splits Daeun inside a Wolun"
+  ]
+}
