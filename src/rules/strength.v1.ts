@@ -13,6 +13,8 @@ export const STRENGTH_V1 = {
   monthCommand: { same: 18, resource: 14, output: -10, wealth: -8, officer: -18 },
   deukRyeongMinimumExclusive: 0,
   deukJiBonus: 5,
+  /** 일지 본기가 인성일 때의 득지 점수. 통근(같은 오행)보다 낮게 둔다. */
+  deukJiResourceBonus: 4,
   deukSiBonus: 3,
   deukSe: { bonus: 5, penalty: -5, neutralDifferenceInclusive: 1 },
   visibleStem: {

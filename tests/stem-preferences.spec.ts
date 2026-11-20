@@ -55,7 +55,7 @@ describe("SYNTHETIC_STEM_PREFERENCES_V1", () => {
       element: TEN_GODS_V1.stemTraits[row.stem].element, yinYang: TEN_GODS_V1.stemTraits[row.stem].polarity });
     const second = integrated().stemPreferences;
     expect(second).toEqual(first);
-    const tied = pureRegression().out.stems.filter(row => row.score === 65).map(row => row.stem);
+    const tied = pureRegression().out.stems.filter(row => row.score === 38.75).map(row => row.stem);
     expect(tied).toEqual(["甲", "乙"]);
   });
 
@@ -89,18 +89,18 @@ describe("SYNTHETIC_STEM_PREFERENCES_V1", () => {
   it("K-P, AI: fixes all pure-pillar stem regression values without forcing direction", () => {
     const out = pureRegression().out;
     expect(out.stems.map(({ stem, score, role }) => [stem, score, role])).toEqual([
-      ["壬",69.91758241758242,"FAVORABLE"],["癸",69.91758241758242,"FAVORABLE"],
-      ["甲",65,"FAVORABLE"],["乙",65,"FAVORABLE"],["丁",61.08516483516484,"FAVORABLE"],
-      ["丙",56.689560439560445,"CONDITIONAL"],["戊",52.95454545454545,"CONDITIONAL"],
-      ["己",52.95454545454545,"CONDITIONAL"],["庚",52.22471910112359,"CONDITIONAL"],
-      ["辛",50.18181818181818,"CONDITIONAL"]]);
+      ["丁",77.3956043956044,"SECONDARY"],["丙",73,"SECONDARY"],
+      ["辛",69.54545454545455,"FAVORABLE"],["戊",67.27272727272727,"FAVORABLE"],
+      ["己",67.27272727272727,"FAVORABLE"],["庚",66.68539325842697,"FAVORABLE"],
+      ["壬",51.34065934065935,"CONDITIONAL"],["癸",51.34065934065935,"CONDITIONAL"],
+      ["甲",38.75,"NEUTRAL"],["乙",38.75,"NEUTRAL"]]);
     expect(stem(out,"丁").score).toBeGreaterThan(stem(out,"丙").score);
     expect(stem(out,"庚").engineSignals.find(row=>row.engine==="johu"))
       .toMatchObject({ rawScore:10, normalizedScore:60 });
     expect(stem(out,"辛").engineSignals.some(row=>row.engine==="johu")).toBe(false);
-    expect(out).toMatchObject({ primaryStems:[], secondaryStems:[],
-      favorableStems:["壬","癸","甲","乙","丁"],
-      conditionalStems:["丙","戊","己","庚","辛"], neutralStems:[], unfavorableStems:[] });
+    expect(out).toMatchObject({ primaryStems:[], secondaryStems:["丁","丙"],
+      favorableStems:["辛","戊","己","庚"],
+      conditionalStems:["壬","癸"], neutralStems:["甲","乙"], unfavorableStems:[] });
   });
 
   it("Q-U: records visible, hidden, absent and day-self availability without changing scores", () => {

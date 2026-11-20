@@ -70,9 +70,14 @@ export function calculateStrength(
   }
   const rooting = { rawScore: rawRootScore, score: appliedRootScore, cap: ROOTING_V1.cap, roots };
   const dayRoot = roots.some(({ pillar }) => pillar === "day");
-  const deukJi = { isObtained: dayRoot, relation: dayRoot ? "same" as const : null,
-    score: dayRoot ? STRENGTH_V1.deukJiBonus : STRENGTH_V1.minimum,
-    evidence: [`일지 ${hiddenBranches.day.branch}의 동일 오행 지장간: ${dayRoot ? "있음" : "없음"}`] };
+  const dayMainRelation = elementRelation(day.element, hiddenBranches.day.mainQi.element);
+  const dayResource = !dayRoot && dayMainRelation === "resource";
+  const deukJi = { isObtained: dayRoot || dayResource,
+    relation: dayRoot ? "same" as const : dayResource ? "resource" as const : null,
+    score: dayRoot ? STRENGTH_V1.deukJiBonus : dayResource ? STRENGTH_V1.deukJiResourceBonus : STRENGTH_V1.minimum,
+    evidence: [dayRoot ? `일지 ${hiddenBranches.day.branch}의 동일 오행 지장간: 있음`
+      : dayResource ? `일지 ${hiddenBranches.day.branch} 본기 ${hiddenBranches.day.mainQi.stem}의 resource 관계: 인성 득지`
+      : `일지 ${hiddenBranches.day.branch}의 동일 오행 지장간: 없음`] };
   evidence.push({ factor: "deukJi", pillar: "day", branch: hiddenBranches.day.branch, scoreDelta: deukJi.score });
 
   const hour = hiddenBranches.hour;

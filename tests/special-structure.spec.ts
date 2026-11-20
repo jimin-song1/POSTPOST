@@ -226,7 +226,7 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
   it("preserves the pure 乙亥/乙酉/甲子/戊辰 regression end to end", () => {
     const value = fixture(["乙", "乙", "甲", "戊"], ["亥", "酉", "子", "辰"]);
     const result = evaluateStructure(value.pillars, value.hidden, value.strength, value.adjusted, value.relations);
-    expect(value.strength).toMatchObject({ score: 49, level: "중화신약" });
+    expect(value.strength).toMatchObject({ score: 53, level: "중화신강" });
     expect(result.primary).toMatchObject({ type: "정관격", status: "UNEXPOSED" });
     expect(result.qualityEvaluation).toMatchObject({ integrity: "SUPPORTED", qualityScore: 58 });
     expect(result.specialStructure.candidates.map((row) => row.state)).toEqual([
@@ -234,18 +234,18 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
     ]);
     value.strength.adjusted = evaluateAdjustedDayMasterStrength(value.strength, value.native.nativeStrength, value.adjusted);
     expect(value.strength.adjusted)
-      .toMatchObject({ originalScore: 49, originalLevel: "중화신약",
-        score: 48.56864702945582, level: "중화신약" });
+      .toMatchObject({ originalScore: 53, originalLevel: "중화신강",
+        score: 52.56864702945582, level: "중화신강" });
     expect(evaluateEokbuUsefulGod(value.strength, value.adjusted, result.specialStructure).eokbu)
       .toMatchObject({ strengthSource: "adjusted", applicability: "STANDARD",
-        primaryElements: [], supportiveElements: ["water"], conditionalElements: ["wood"],
-        neutralElements: ["fire"], unfavorableElements: ["earth", "metal"],
+        primaryElements: [], supportiveElements: ["fire"], conditionalElements: ["earth", "metal"],
+        neutralElements: [], unfavorableElements: ["wood", "water"],
         elements: [
-          { element: "water", finalScore: 15, role: "SUPPORTIVE" },
-          { element: "wood", finalScore: 12, role: "CONDITIONAL" },
-          { element: "fire", finalScore: -3, role: "NEUTRAL" },
-          { element: "earth", finalScore: -7, role: "UNFAVORABLE" },
-          { element: "metal", finalScore: -12, role: "UNFAVORABLE" },
+          { element: "fire", finalScore: 16, role: "SUPPORTIVE" },
+          { element: "earth", finalScore: 14, role: "CONDITIONAL" },
+          { element: "metal", finalScore: 12, role: "CONDITIONAL" },
+          { element: "wood", finalScore: -9, role: "UNFAVORABLE" },
+          { element: "water", finalScore: -12, role: "UNFAVORABLE" },
         ] });
     expect(evaluateJohuUsefulGod(value.pillars, value.hidden, value.adjusted, value.relations))
       .toMatchObject({ status: "implemented", dayStem: "甲", monthBranch: "酉",
@@ -292,23 +292,23 @@ describe("SYNTHETIC_SPECIAL_STRUCTURE_V1 — independent upstream factors", () =
     expect(synthesis.effectiveEngineWeights).toEqual({ eokbu: 0.255, structure: 0.2125,
       johu: 0.2, byeongyak: 0, tonggwan: 0.085 });
     expect(synthesis.elements.map(({ element, score, role }) => [element, score, role])).toEqual([
-      ["water", 69.91758241758242, "FAVORABLE"],
-      ["fire", 65.48076923076924, "FAVORABLE"],
-      ["wood", 65, "FAVORABLE"],
-      ["earth", 52.95454545454545, "CONDITIONAL"],
-      ["metal", 52.22471910112359, "CONDITIONAL"]
+      ["fire", 81.79120879120879, "PRIMARY"],
+      ["earth", 67.27272727272727, "FAVORABLE"],
+      ["metal", 66.68539325842697, "FAVORABLE"],
+      ["water", 51.34065934065935, "CONDITIONAL"],
+      ["wood", 38.75, "NEUTRAL"]
     ]);
-    expect(synthesis.primaryElements).toEqual([]);
+    expect(synthesis.primaryElements).toEqual(["fire"]);
     expect(synthesis.secondaryElements).toEqual([]);
-    expect(synthesis.favorableElements).toEqual(["water", "fire", "wood"]);
-    expect(synthesis.conditionalElements).toEqual(["earth", "metal"]);
-    expect(synthesis.neutralElements).toEqual([]);
+    expect(synthesis.favorableElements).toEqual(["earth", "metal"]);
+    expect(synthesis.conditionalElements).toEqual(["water"]);
+    expect(synthesis.neutralElements).toEqual(["wood"]);
     expect(synthesis.unfavorableElements).toEqual([]);
-    expect(synthesis.highestElement).toBe("water");
-    const metal = synthesis.elements.find(row => row.element === "metal")!;
-    expect(metal.conflictingSignals).toBe(true);
-    expect(synthesis.conflicts.find(row => row.element === "metal")).toMatchObject({
-      positive: [{ engine: "structure", rawScore: 25, normalizedScore: 75 }],
+    expect(synthesis.highestElement).toBe("fire");
+    const water = synthesis.elements.find(row => row.element === "water")!;
+    expect(water.conflictingSignals).toBe(true);
+    expect(synthesis.conflicts.find(row => row.element === "water")).toMatchObject({
+      positive: [{ engine: "tonggwan", rawScore: 25 }],
       negative: [{ engine: "eokbu", rawScore: -12, normalizedScore: 35 }]
     });
 

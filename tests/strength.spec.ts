@@ -61,8 +61,10 @@ describe("SYNTHETIC_STRENGTH_V1", () => {
   });
   it("obtains day-branch root as a small extra factor", () => {
     const yes = synthetic(["庚", "辛", "甲", "庚"], ["酉", "酉", "亥", "酉"]);
-    const no = synthetic(["庚", "辛", "甲", "庚"], ["酉", "酉", "子", "酉"]);
-    expect(yes.deukJi).toMatchObject({ isObtained: true, score: 5 });
+    const resource = synthetic(["庚", "辛", "甲", "庚"], ["酉", "酉", "子", "酉"]);
+    const no = synthetic(["庚", "辛", "甲", "庚"], ["酉", "酉", "午", "酉"]);
+    expect(yes.deukJi).toMatchObject({ isObtained: true, relation: "same", score: 5 });
+    expect(resource.deukJi).toMatchObject({ isObtained: true, relation: "resource", score: 4 });
     expect(no.deukJi).toMatchObject({ isObtained: false, score: 0 });
   });
   it.each([["卯", "same", true, 3], ["子", "resource", true, 3], ["酉", "officer", false, 0]] as const)(
@@ -103,12 +105,13 @@ describe("SYNTHETIC_STRENGTH_V1", () => {
     [59, "중화신강"], [60, "신강"], [72, "신강"], [73, "태강"],
     [85, "태강"], [86, "극왕"], [0, "극약"], [100, "극왕"]
   ] as const)("maps score %d to %s", (score, level) => expect(strengthLevel(score)).toBe(level));
-  it("keeps the pure-pillar regression month 酉 adverse without matching external service levels", () => {
+  it("keeps the pure-pillar regression month 酉 adverse while counting the day-branch resource", () => {
     const result = fixture();
     expect(result.dayMaster).toMatchObject({ stem: "甲", element: "wood" });
     expect(result.deukRyeong).toMatchObject({ relation: "officer", score: -18, isObtained: false });
-    expect(result.score).toBe(49);
-    expect(result.level).toBe("중화신약");
+    expect(result.deukJi).toMatchObject({ isObtained: true, relation: "resource", score: 4 });
+    expect(result.score).toBe(53);
+    expect(result.level).toBe("중화신강");
     expect(result.score).toBe(result.evidence.reduce((sum, item) => sum + item.scoreDelta, 0));
     expect(result).toEqual(fixture());
   });
