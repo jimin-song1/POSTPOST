@@ -123,17 +123,31 @@
 
 ## 그래프 점수 출처
 
-그래프 점수는 `feat/v57-graph-scores` 커밋의 `buildGraphScores()`(src/lib/saju/presentation/graph-scores.ts)가 계산한다. 본문은 각 점수의 근거(factors)만 사용해 그래프와 같은 판단 기준을 유지한다.
+그래프 점수는 `buildGraphScores()`(src/lib/saju/presentation/graph-scores.ts, 규칙 src/rules/graph-score.v1.ts)가 계산한다. 편별 항목에 값을 배정하는 일은 `buildLifetimeTocGraphPlan()`(src/lib/saju/presentation/lifetime-toc-14.ts, 규칙 src/rules/lifetime-toc-14.v1.ts)이 맡는다. 이 함수는 점수를 새로 계산하지 않고 고르기만 한다. 본문은 여기서 고른 값과 각 점수의 근거(factors)만 사용해 그래프와 같은 판단 기준을 유지한다.
 
-| 편 | 사용 값 |
-|---|---|
-| 제4편 | natal.work |
-| 제5편 | natal.wealth, yearly/daeun의 wealth |
-| 제6편 | natal.love, yearly/daeun의 love |
-| 제7편 | yearly/daeun의 health |
-| 제10편 | natal.lifeStages |
-| 제11편 | daeun (황금기는 overall 최고 구간, 가장 힘든 시기는 overall 최저 구간) |
-| 제12편 | yearly |
+| 편 | 항목 | 사용 값 |
+|---|---|---|
+| 제4편 | 직업, 사업, 학업 그래프 | part4.bars (natal.work) |
+| 제4편 | 직업운이 상승하는 시기, 조심해야 하는 시기 | part4.rising, part4.caution |
+| 제5편 | 재물운 그래프 | part5.bars (natal.wealth) |
+| 제5편 | 재물운이 상승하는 시기, 하락하는 시기 | part5.rising, part5.falling |
+| 제6편 | 애정운 그래프 | part6.radar (natal.love) |
+| 제6편 | 애정운이 상승하는 시기, 조심해야 하는 시기 | part6.rising, part6.caution |
+| 제7편 | 건강운 그래프, 건강을 조심해야 하는 시기 | part7.series, part7.caution |
+| 제10편 | 십이운성 그래프 | part10.curve (natal.lifeStages) |
+| 제11편 | 대운표, 지난, 현재, 다음 대운 | part11.series, previous, current, next |
+| 제11편 | 인생의 황금기, 가장 힘든 시기 | part11.golden, part11.hardest |
+| 제12편 | 5년 연운 그래프, 연도별 풀이 | part12.years |
+| 제12편 | 연도별 꼭 챙길 한 가지 | part12.years[].focus |
+
+시기 선택 규칙:
+
+- 제4~7편의 시기는 기준 연도부터 10년 안에서 점수가 높은 해 2개, 낮은 해 2개를 고른다. 같은 해가 상승 시기와 조심 시기에 함께 들어가지 않는다.
+- 제11편의 황금기와 가장 힘든 시기는 현재 대운과 이후 대운 안에서만 고른다. 지난 대운은 "지난 대운 풀이"에서 다룬다.
+- 제12편의 꼭 챙길 한 가지는 그해 재물운, 애정운, 직업운, 건강운 가운데 60점 미만인 가장 낮은 분야를 조심할 것으로 고른다. 모두 60점 이상이면 가장 높은 분야를 살릴 것으로 고른다.
+- 제3편의 감정과 행동은 성격 엔진의 행동 후보를 쓰고, 제14편의 꼭 전하고 싶은 말은 앞 편에서 나온 내용만 잇는다. 둘 다 그래프 값을 쓰지 않는다.
+
+문체를 다듬은 문장은 `checkFactPreservation()`(src/lib/saju/ai-interpretation/fact-preservation.v1.ts)으로 다듬기 전 문장과 연도, 간지, 숫자, 십성, 강약, 격국 라벨이 같은지 대조한다.
 
 ## 고객 입력
 
